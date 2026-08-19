@@ -1,16 +1,16 @@
 import { useEffect } from 'react';
 import { X, Heart } from 'lucide-react';
-import { products } from '@/data/catalog';
 import type { Product } from '@/data/catalog';
 
 type Props = {
+  products: Product[];
   open: boolean;
   wishlist: Set<string>;
   onClose: () => void;
   onSelect: (product: Product) => void;
 };
 
-export default function WishlistDrawer({ open, wishlist, onClose, onSelect }: Props) {
+export default function WishlistDrawer({ products, open, wishlist, onClose, onSelect }: Props) {
   useEffect(() => {
     if (open) {
       document.body.style.overflow = 'hidden';

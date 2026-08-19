@@ -4,6 +4,7 @@ import { Plus, Heart, ArrowLeft } from 'lucide-react';
 import type { Product } from '@/data/catalog';
 
 type Props = {
+  products: Product[];
   categoryName: string;
   onQuickAdd: (product: Product) => void;
   onToggleWishlist: (productId: string) => void;
@@ -13,6 +14,7 @@ type Props = {
 
 export default function CategoryProducts({
   categoryName,
+  products,
   onQuickAdd,
   onToggleWishlist,
   wishlist,

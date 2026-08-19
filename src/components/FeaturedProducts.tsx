@@ -6,6 +6,7 @@ import { Plus, Heart } from 'lucide-react';
 import { createShopifyCheckout, isShopifyEnabled, findVariantGidByTitle } from '@/lib/shopify';
 
 type Props = {
+  products: Product[];
   onQuickAdd: (product: Product) => void;
   onToggleWishlist: (productId: string) => void;
   wishlist: Set<string>;
@@ -13,7 +14,7 @@ type Props = {
 
 const filters = ['Todos', 'Novedades', ...womenSubcategories, 'Sale'] as const;
 
-export default function FeaturedProducts({ onQuickAdd, onToggleWishlist, wishlist }: Props) {
+export default function FeaturedProducts({ products, onQuickAdd, onToggleWishlist, wishlist }: Props) {
   const [active, setActive] = useState<(typeof filters)[number]>('Todos');
 
   const filtered = products.filter((p) => {
@@ -84,6 +85,7 @@ function ProductCard({
   isWishlisted: boolean;
 }) {
   const { ref, inView } = useReveal<HTMLDivElement>();
+  const navigate = useNavigate();
   const [activeSwatch, setActiveSwatch] = useState(0);
   const [stock, setStock] = useState<number | null>(null);
 

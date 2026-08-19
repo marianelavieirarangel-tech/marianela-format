@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Heart, Share2, ArrowLeft, Minus, Plus } from 'lucide-react';
-import type { Product, CartItem } from '@/data/catalog';
+import type { Product } from '@/data/catalog';
+import type { CartItem } from '@/components/QuickAddModal';
 
 type Props = {
   product: Product;

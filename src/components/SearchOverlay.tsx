@@ -1,15 +1,15 @@
 import { useEffect, useState } from 'react';
 import { X, Search as SearchIcon } from 'lucide-react';
-import { products } from '@/data/catalog';
 import type { Product } from '@/data/catalog';
 
 type Props = {
+  products: Product[];
   open: boolean;
   onClose: () => void;
   onSelect: (product: Product) => void;
 };
 
-export default function SearchOverlay({ open, onClose, onSelect }: Props) {
+export default function SearchOverlay({ products, open, onClose, onSelect }: Props) {
   const [query, setQuery] = useState('');
 
   useEffect(() => {

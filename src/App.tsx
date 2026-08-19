@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Routes, Route, useParams, useNavigate } from 'react-router-dom';
 import Header from '@/components/Header';
 import Hero from '@/components/Hero';
@@ -16,6 +16,7 @@ import WishlistDrawer from '@/components/WishlistDrawer';
 import NewsletterModal from '@/components/NewsletterModal';
 import type { Product } from '@/data/catalog';
 import { categorySlugs, products, navLinks, womenSubcategories } from '@/data/catalog';
+import { fetchShopifyProducts, isShopifyEnabled } from '@/lib/shopify';
 
 export default function App() {
   const [quickAddProduct, setQuickAddProduct] = useState<Product | null>(null);
@@ -27,6 +28,14 @@ export default function App() {
   const [cart, setCart] = useState<CartItem[]>([]);
   const [wishlist, setWishlist] = useState<Set<string>>(new Set());
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [catalogProducts, setCatalogProducts] = useState(products);
+
+  useEffect(() => {
+    if (!isShopifyEnabled()) return;
+    fetchShopifyProducts()
+      .then(setCatalogProducts)
+      .catch((error) => console.error('No se pudo cargar el catálogo de Shopify:', error));
+  }, []);
 
   const cartCount = cart.reduce((sum, i) => sum + i.quantity, 0);
 
@@ -72,7 +81,7 @@ export default function App() {
   function ProductPage() {
     const { id } = useParams();
     const navigate = useNavigate();
-    const product = products.find((p) => p.id === id);
+    const product = catalogProducts.find((p) => p.id === id);
     if (!product) return <div className="p-8">Producto no encontrado.</div>;
     return (
       <ProductDetail
@@ -101,6 +110,7 @@ export default function App() {
     return (
       <CategoryProducts
         categoryName={categoryName}
+        products={catalogProducts}
         onQuickAdd={openQuickAdd}
         onToggleWishlist={toggleWishlist}
         wishlist={wishlist}
@@ -113,7 +123,7 @@ export default function App() {
     <>
       <Hero />
       <CategoryGrid onSelectCategory={setSelectedCategory} />
-      <FeaturedProducts onQuickAdd={openQuickAdd} onToggleWishlist={toggleWishlist} wishlist={wishlist} />
+      <FeaturedProducts products={catalogProducts} onQuickAdd={openQuickAdd} onToggleWishlist={toggleWishlist} wishlist={wishlist} />
       <EditorialBanner />
     </>
   );
@@ -168,6 +178,7 @@ export default function App() {
         onCheckout={() => setCheckoutOpen(true)}
       />
       <SearchOverlay
+      products={catalogProducts}
         open={searchOpen}
         onClose={() => setSearchOpen(false)}
         onSelect={(p) => {
@@ -176,6 +187,7 @@ export default function App() {
         }}
       />
       <WishlistDrawer
+        products={catalogProducts}
         open={wishlistOpen}
         wishlist={wishlist}
         onClose={() => setWishlistOpen(false)}
