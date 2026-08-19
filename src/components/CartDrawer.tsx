@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { X, Plus, Minus, Trash2, ShoppingBag } from 'lucide-react';
 import type { CartItem } from './QuickAddModal';
 
@@ -8,10 +8,12 @@ type Props = {
   onClose: () => void;
   onUpdateQty: (index: number, qty: number) => void;
   onRemove: (index: number) => void;
-  onCheckout?: () => void;
+  onCheckout?: () => Promise<void>;
 };
 
 export default function CartDrawer({ open, items, onClose, onUpdateQty, onRemove, onCheckout }: Props) {
+  const [checkoutLoading, setCheckoutLoading] = useState(false);
+  const [checkoutError, setCheckoutError] = useState('');
   useEffect(() => {
     if (open) {
       document.body.style.overflow = 'hidden';
@@ -135,14 +137,25 @@ export default function CartDrawer({ open, items, onClose, onUpdateQty, onRemove
               <span className="font-serif text-2xl text-ink-900">${subtotal}</span>
             </div>
             <p className="text-xs text-ink-400 mb-5">Impuestos y envío calculados al finalizar la compra</p>
-            <button 
-              onClick={() => {
-                onCheckout?.();
-                onClose();
+            {checkoutError && (
+              <p className="mb-4 text-sm text-red-600" role="alert">{checkoutError}</p>
+            )}
+            <button
+              disabled={checkoutLoading}
+              onClick={async () => {
+                if (!onCheckout) return;
+                setCheckoutError('');
+                setCheckoutLoading(true);
+                try {
+                  await onCheckout();
+                } catch (error) {
+                  setCheckoutError(error instanceof Error ? error.message : 'No se pudo abrir el checkout.');
+                  setCheckoutLoading(false);
+                }
               }}
-              className="btn-primary w-full"
+              className="btn-primary w-full disabled:cursor-wait disabled:opacity-60"
             >
-              Finalizar Compra
+              {checkoutLoading ? 'Conectando con Shopify...' : 'Finalizar Compra'}
             </button>
             <button onClick={onClose} className="w-full mt-3 text-xs uppercase tracking-widest text-ink-500 hover:text-ink-800 link-underline mx-auto">
               Seguir Explorando

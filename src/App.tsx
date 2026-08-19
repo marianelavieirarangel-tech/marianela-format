@@ -16,7 +16,7 @@ import WishlistDrawer from '@/components/WishlistDrawer';
 import NewsletterModal from '@/components/NewsletterModal';
 import type { Product } from '@/data/catalog';
 import { categorySlugs, products, navLinks, womenSubcategories } from '@/data/catalog';
-import { fetchShopifyProducts, isShopifyEnabled } from '@/lib/shopify';
+import { createShopifyCheckout, fetchShopifyProducts, isShopifyEnabled } from '@/lib/shopify';
 
 export default function App() {
   const [quickAddProduct, setQuickAddProduct] = useState<Product | null>(null);
@@ -27,7 +27,6 @@ export default function App() {
   const [wishlistOpen, setWishlistOpen] = useState(false);
   const [cart, setCart] = useState<CartItem[]>([]);
   const [wishlist, setWishlist] = useState<Set<string>>(new Set());
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [catalogProducts, setCatalogProducts] = useState(products);
   const [catalogError, setCatalogError] = useState<string | null>(null);
 
@@ -88,6 +87,19 @@ export default function App() {
     setSelectedProduct(product);
   };
 
+  const handleDirectCheckout = async () => {
+    if (!cart.length) return;
+    const items = cart.map((item) => ({
+      variantId: item.product.shopifyVariantId,
+      quantity: item.quantity,
+    }));
+    if (items.some((item) => !item.variantId)) {
+      throw new Error('Este producto no tiene una variante de Shopify disponible.');
+    }
+    const checkoutUrl = await createShopifyCheckout(items);
+    window.location.href = checkoutUrl;
+  };
+
   function ProductPage() {
     const { id } = useParams();
     const navigate = useNavigate();
@@ -137,7 +149,7 @@ export default function App() {
         </div>
       )}
       <Hero />
-      <CategoryGrid onSelectCategory={setSelectedCategory} />
+      <CategoryGrid />
       <FeaturedProducts products={catalogProducts} onQuickAdd={openQuickAdd} onToggleWishlist={toggleWishlist} wishlist={wishlist} />
       <EditorialBanner />
     </>
@@ -150,7 +162,6 @@ export default function App() {
         onOpenCart={() => setCartOpen(true)}
         onOpenSearch={() => setSearchOpen(true)}
         onOpenWishlist={() => setWishlistOpen(true)}
-        onSelectCategory={setSelectedCategory}
       />
 
       <main>
@@ -192,7 +203,7 @@ export default function App() {
         onClose={() => setCartOpen(false)}
         onUpdateQty={handleUpdateQty}
         onRemove={handleRemove}
-        onCheckout={() => setCheckoutOpen(true)}
+        onCheckout={handleDirectCheckout}
       />
       <SearchOverlay
       products={catalogProducts}
