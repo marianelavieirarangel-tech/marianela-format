@@ -15,7 +15,7 @@ import SearchOverlay from '@/components/SearchOverlay';
 import WishlistDrawer from '@/components/WishlistDrawer';
 import NewsletterModal from '@/components/NewsletterModal';
 import type { Product } from '@/data/catalog';
-import { products } from '@/data/catalog';
+import { categorySlugs, products, navLinks, womenSubcategories } from '@/data/catalog';
 
 export default function App() {
   const [quickAddProduct, setQuickAddProduct] = useState<Product | null>(null);
@@ -85,6 +85,30 @@ export default function App() {
     );
   }
 
+  function CategoryRoute() {
+    const { slug } = useParams();
+    const deslug = (s = '') =>
+      s
+        .toString()
+        .replace(/-/g, ' ')
+        .replace(/\b\w/g, (c) => c.toUpperCase());
+
+    // try to match existing category names first
+    const candidates = [...womenSubcategories, ...navLinks.map((n) => n.label)];
+    const match = candidates.find((c) => (categorySlugs[c] ?? c) === slug);
+    const categoryName = match || deslug(slug);
+
+    return (
+      <CategoryProducts
+        categoryName={categoryName}
+        onQuickAdd={openQuickAdd}
+        onToggleWishlist={toggleWishlist}
+        wishlist={wishlist}
+        onBack={() => { /* navigate back handled inside component if needed */ }}
+      />
+    );
+  }
+
   const homeContent = (
     <>
       <Hero />
@@ -108,27 +132,20 @@ export default function App() {
         <Routes>
           <Route
             path="/"
-            element={
-              checkoutOpen ? (
+            element={checkoutOpen ? (
                 <CheckoutPage
                   items={cart}
                   onClose={() => setCheckoutOpen(false)}
                   onUpdateQty={handleUpdateQty}
                   onRemove={handleRemove}
                 />
-              ) : selectedCategory ? (
-                <CategoryProducts
-                  categoryName={selectedCategory}
-                  onQuickAdd={openQuickAdd}
-                  onToggleWishlist={toggleWishlist}
-                  wishlist={wishlist}
-                  onBack={() => setSelectedCategory(null)}
-                />
               ) : (
                 homeContent
-              )
-            }
+              )}
           />
+
+          <Route path="/category/:slug" element={<CategoryRoute />} />
+          <Route path="/:slug" element={<CategoryRoute />} />
 
           <Route path="/product/:id" element={<ProductPage />} />
         </Routes>

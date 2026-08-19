@@ -172,6 +172,19 @@ export const navLinks = [
   { label: 'Sale', href: '#novedades' },
 ];
 
+export const categorySlugs: Record<string, string> = {
+  Bikini: 'bikinis',
+  'Traje de Baño': 'trajes-de-bano',
+  Tankini: 'tankinis',
+  Trikini: 'trikinis',
+  'Fuera del Agua': 'fuera-del-agua',
+  Accesorios: 'accesorios',
+  Lencería: 'lenceria',
+  Loungewear: 'loungewear',
+  Novedades: 'novedades',
+  Sale: 'sale',
+};
+
 export const womenSubcategories = [
   'Novedades',
   'Bikini',

@@ -1,6 +1,7 @@
-import { categories } from '@/data/catalog';
+import { categories, categorySlugs } from '@/data/catalog';
 import { useReveal } from '@/hooks/useReveal';
 import { ArrowRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 type Props = {
   onSelectCategory?: (categoryName: string) => void;
@@ -44,16 +45,16 @@ function CategoryCard({
   index: number;
   onSelect?: (categoryName: string) => void;
 }) {
-  const { ref, inView } = useReveal<HTMLDivElement>();
+  const { ref, inView } = useReveal<HTMLAnchorElement>();
+  const slug = categorySlugs[category.name] ?? category.name.toLowerCase();
 
   const handleClick = () => {
-    if (onSelect) {
-      onSelect(category.name);
-    }
+    onSelect?.(category.name);
   };
 
   return (
-    <div
+    <Link
+      to={`/${slug}`}
       ref={ref}
       onClick={handleClick}
       className={`reveal ${inView ? 'in-view' : ''} group relative overflow-hidden bg-ink-100 cursor-pointer`}
@@ -91,6 +92,6 @@ function CategoryCard({
           />
         </div>
       </div>
-    </div>
+    </Link>
   );
 }

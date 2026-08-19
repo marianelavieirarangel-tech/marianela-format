@@ -1,6 +1,7 @@
 import { Search, Heart, ShoppingBag, Menu, X, User, ChevronDown } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { navLinks, womenSubcategories } from '@/data/catalog';
+import { useNavigate } from 'react-router-dom';
+import { categorySlugs, navLinks, womenSubcategories } from '@/data/catalog';
 
 type Props = {
   cartCount: number;
@@ -11,6 +12,21 @@ type Props = {
 };
 
 export default function Header({ cartCount, onOpenCart, onOpenSearch, onOpenWishlist, onSelectCategory }: Props) {
+  const navigate = useNavigate();
+  const slugify = (s: string) =>
+    s
+      .toString()
+      .normalize('NFD')
+      .replace(/\p{Diacritic}/gu, '')
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/(^-|-$)/g, '');
+  const goToCategory = (categoryName: string) => {
+    const slug = categorySlugs[categoryName] ?? slugify(categoryName);
+    onSelectCategory?.(categoryName);
+    navigate(`/${slug}`);
+  };
+
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [womenDropdown, setWomenDropdown] = useState(false);
@@ -58,12 +74,12 @@ export default function Header({ cartCount, onOpenCart, onOpenSearch, onOpenWish
           <div className="flex items-center justify-between h-20 lg:h-24">
             {/* Left nav (desktop) */}
             <nav className="hidden lg:flex items-center gap-8 flex-1">
-              <a
-                href={navLinks[0].href}
+              <button
+                onClick={() => goToCategory(navLinks[0].label)}
                 className="text-[11px] uppercase tracking-widest text-ink-700 hover:text-ink-900 link-underline"
               >
                 {navLinks[0].label}
-              </a>
+              </button>
               {/* Mujeres dropdown */}
               <div className="relative group">
                 <button
@@ -84,7 +100,7 @@ export default function Header({ cartCount, onOpenCart, onOpenSearch, onOpenWish
                       <button
                         key={cat}
                         onClick={() => {
-                          onSelectCategory?.(cat);
+                          goToCategory(cat);
                           setWomenDropdown(false);
                         }}
                         className="block w-full text-left py-2 text-[10px] uppercase tracking-widest text-ink-700 hover:text-blush-500 transition-colors whitespace-nowrap"
@@ -116,15 +132,15 @@ export default function Header({ cartCount, onOpenCart, onOpenSearch, onOpenWish
             {/* Right nav (desktop) */}
             <nav className="hidden lg:flex items-center gap-8 flex-1 justify-end">
               {navLinks.slice(2).map((link) => (
-                <a
+                <button
                   key={link.label}
-                  href={link.href}
+                  onClick={() => goToCategory(link.label)}
                   className={`text-[11px] uppercase tracking-widest link-underline ${
                     link.label === 'Sale' ? 'text-blush-500 hover:text-blush-700' : 'text-ink-700 hover:text-ink-900'
                   }`}
                 >
                   {link.label}
-                </a>
+                </button>
               ))}
             </nav>
 
@@ -185,13 +201,15 @@ export default function Header({ cartCount, onOpenCart, onOpenSearch, onOpenWish
             </button>
           </div>
           <nav className="flex flex-col px-6 py-8 gap-1">
-            <a
-              href={navLinks[0].href}
-              onClick={() => setMobileOpen(false)}
+            <button
+              onClick={() => {
+                goToCategory(navLinks[0].label);
+                setMobileOpen(false);
+              }}
               className="py-4 font-serif text-2xl border-b border-ink-100 text-ink-800 hover:text-blush-500 transition-colors"
             >
               {navLinks[0].label}
-            </a>
+            </button>
             {/* Mobile Mujeres dropdown */}
             <button
               onClick={() => setMobileWomenOpen(!mobileWomenOpen)}
@@ -206,7 +224,7 @@ export default function Header({ cartCount, onOpenCart, onOpenSearch, onOpenWish
                   <button
                     key={cat}
                     onClick={() => {
-                      onSelectCategory?.(cat);
+                      goToCategory(cat);
                       setMobileOpen(false);
                       setMobileWomenOpen(false);
                     }}
@@ -218,16 +236,18 @@ export default function Header({ cartCount, onOpenCart, onOpenSearch, onOpenWish
               </div>
             )}
             {navLinks.slice(2).map((link) => (
-              <a
+              <button
                 key={link.label}
-                href={link.href}
-                onClick={() => setMobileOpen(false)}
+                onClick={() => {
+                  goToCategory(link.label);
+                  setMobileOpen(false);
+                }}
                 className={`py-4 font-serif text-2xl border-b border-ink-100 transition-colors ${
                   link.label === 'Sale' ? 'text-blush-500' : 'text-ink-800 hover:text-blush-500'
                 }`}
               >
                 {link.label}
-              </a>
+              </button>
             ))}
             <div className="flex items-center gap-6 pt-8 text-ink-600">
               <button className="flex items-center gap-2 text-sm tracking-wide hover:text-blush-500">
