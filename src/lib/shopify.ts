@@ -92,7 +92,7 @@ function getTag(tags: string[], hasCompareAtPrice: boolean): Product['tag'] {
 export async function fetchShopifyProducts() {
   const result = await shopifyRequest<ShopifyCatalogResponse>(
     `query Catalog {
-      products(first: 100, query: "published_status:published") {
+      products(first: 100) {
         nodes {
           id
           title

@@ -29,12 +29,22 @@ export default function App() {
   const [wishlist, setWishlist] = useState<Set<string>>(new Set());
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [catalogProducts, setCatalogProducts] = useState(products);
+  const [catalogError, setCatalogError] = useState<string | null>(null);
 
   useEffect(() => {
     if (!isShopifyEnabled()) return;
     fetchShopifyProducts()
-      .then(setCatalogProducts)
-      .catch((error) => console.error('No se pudo cargar el catálogo de Shopify:', error));
+      .then((shopifyProducts) => {
+        if (shopifyProducts.length === 0) {
+          throw new Error('Shopify no devolvió productos publicados.');
+        }
+        setCatalogProducts(shopifyProducts);
+      })
+      .catch((error) => {
+        const message = error instanceof Error ? error.message : 'Error desconocido de Shopify.';
+        setCatalogError(message);
+        console.error('No se pudo cargar el catálogo de Shopify:', error);
+      });
   }, []);
 
   const cartCount = cart.reduce((sum, i) => sum + i.quantity, 0);
@@ -121,6 +131,11 @@ export default function App() {
 
   const homeContent = (
     <>
+      {catalogError && (
+        <div className="bg-blush-100 px-6 py-3 text-center text-sm text-ink-800">
+          No se pudo cargar Shopify: {catalogError}. Mostrando catálogo de respaldo.
+        </div>
+      )}
       <Hero />
       <CategoryGrid onSelectCategory={setSelectedCategory} />
       <FeaturedProducts products={catalogProducts} onQuickAdd={openQuickAdd} onToggleWishlist={toggleWishlist} wishlist={wishlist} />
