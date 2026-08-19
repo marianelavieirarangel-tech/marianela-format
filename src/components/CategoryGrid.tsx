@@ -54,7 +54,7 @@ function CategoryCard({
 
   return (
     <Link
-      to={`/${slug}`}
+      to={`/collections/${slug}`}
       ref={ref}
       onClick={handleClick}
       className={`reveal ${inView ? 'in-view' : ''} group relative overflow-hidden bg-ink-100 cursor-pointer`}

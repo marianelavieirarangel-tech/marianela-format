@@ -170,6 +170,8 @@ export default function App() {
           />
 
           <Route path="/category/:slug" element={<CategoryRoute />} />
+          <Route path="/collections/:slug" element={<CategoryRoute />} />
+          <Route path="/collection/:slug" element={<CategoryRoute />} />
           <Route path="/:slug" element={<CategoryRoute />} />
 
           <Route path="/product/:id" element={<ProductPage />} />

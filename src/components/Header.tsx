@@ -24,7 +24,7 @@ export default function Header({ cartCount, onOpenCart, onOpenSearch, onOpenWish
   const goToCategory = (categoryName: string) => {
     const slug = categorySlugs[categoryName] ?? slugify(categoryName);
     onSelectCategory?.(categoryName);
-    navigate(`/${slug}`);
+    navigate(`/collections/${slug}`);
   };
 
   const [scrolled, setScrolled] = useState(false);
