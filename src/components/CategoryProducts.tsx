@@ -1,4 +1,4 @@
-import { products, womenSubcategories } from '@/data/catalog';
+import { products } from '@/data/catalog';
 import { useReveal } from '@/hooks/useReveal';
 import { Plus, Heart, ArrowLeft } from 'lucide-react';
 import type { Product } from '@/data/catalog';
@@ -18,7 +18,12 @@ export default function CategoryProducts({
   wishlist,
   onBack,
 }: Props) {
-  const filtered = products.filter((p) => p.category === categoryName);
+  const filtered = products.filter((product) => {
+    if (categoryName === 'Sale' || categoryName === 'Novedades') {
+      return product.tag === categoryName;
+    }
+    return product.category === categoryName;
+  });
 
   return (
     <section className="min-h-screen bg-sand-50">
