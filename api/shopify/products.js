@@ -26,7 +26,7 @@ const query = `query Catalog {
   }
 }`;
 
-module.exports = async function handler(req, res) {
+export default async function handler(req, res) {
   if (!SHOP_DOMAIN || !STOREFRONT_TOKEN) {
     return res.status(500).json({ error: 'Faltan las variables de Shopify en Vercel.' });
   }
