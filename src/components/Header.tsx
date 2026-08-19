@@ -1,7 +1,7 @@
 import { Search, Heart, ShoppingBag, Menu, X, User, ChevronDown } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { categorySlugs, navLinks, womenSubcategories } from '@/data/catalog';
+import { categorySlugs, navLinks, womenMenuSubcategories } from '@/data/catalog';
 
 type Props = {
   cartCount: number;
@@ -96,7 +96,7 @@ export default function Header({ cartCount, onOpenCart, onOpenSearch, onOpenWish
                     onMouseLeave={() => setWomenDropdown(false)}
                     className="absolute top-full left-0 bg-sand-50 shadow-lg border border-ink-100 py-4 px-6 min-w-max z-50"
                   >
-                    {womenSubcategories.map((cat) => (
+                    {womenMenuSubcategories.map((cat) => (
                       <button
                         key={cat}
                         onClick={() => {
@@ -220,7 +220,7 @@ export default function Header({ cartCount, onOpenCart, onOpenSearch, onOpenWish
             </button>
             {mobileWomenOpen && (
               <div className="bg-ink-50 flex flex-col gap-0">
-                {womenSubcategories.map((cat) => (
+                {womenMenuSubcategories.map((cat) => (
                   <button
                     key={cat}
                     onClick={() => {

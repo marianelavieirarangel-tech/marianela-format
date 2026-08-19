@@ -198,6 +198,10 @@ export const womenSubcategories = [
   'Sale',
 ];
 
+export const womenMenuSubcategories = womenSubcategories.filter(
+  (category) => !['Novedades', 'Lencería', 'Loungewear'].includes(category),
+);
+
 export const footerLinks = {
   'Atención al Cliente': [
     'Envíos y Devoluciones',
