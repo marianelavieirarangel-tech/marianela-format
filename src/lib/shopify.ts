@@ -51,6 +51,22 @@ async function shopifyRequest<T>(query: string, variables: Record<string, unknow
   return result.data;
 }
 
+export async function findVariantGidByTitle(name: string) {
+  const result = await shopifyRequest<ProductSearchResponse>(
+    `query FindProduct($query: String!) {
+      products(first: 1, query: $query) {
+        nodes {
+          title
+          variants(first: 1) { nodes { id } }
+        }
+      }
+    }`,
+    { query: `title:${JSON.stringify(name)}` },
+  );
+  const variantId = result.products.nodes[0]?.variants.nodes[0]?.id;
+  return variantId || null;
+}
+
 export async function createShopifyCheckout(items: { name: string; quantity: number }[]) {
   const productData = await Promise.all(
     items.map((item) =>

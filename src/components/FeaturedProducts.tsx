@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { products, type Product, womenSubcategories } from '@/data/catalog';
 import { useReveal } from '@/hooks/useReveal';
 import { Plus, Heart } from 'lucide-react';
-import { createShopifyCheckout, isShopifyEnabled } from '@/lib/shopify';
+import { createShopifyCheckout, isShopifyEnabled, findVariantGidByTitle } from '@/lib/shopify';
 
 type Props = {
   onQuickAdd: (product: Product) => void;
@@ -84,6 +84,42 @@ function ProductCard({
 }) {
   const { ref, inView } = useReveal<HTMLDivElement>();
   const [activeSwatch, setActiveSwatch] = useState(0);
+  const [stock, setStock] = useState<number | null>(null);
+
+  useEffect(() => {
+    let mounted = true;
+    async function loadInventory() {
+      if (!isShopifyEnabled()) return;
+      try {
+        let variantGid = product.shopifyVariantId || null;
+        if (!variantGid) {
+          variantGid = await findVariantGidByTitle(product.name);
+        }
+        if (!variantGid) {
+          // Could not map to Shopify variant
+          if (mounted) setStock(null);
+          return;
+        }
+        const resp = await fetch(`/api/shopify/inventory?variantGid=${encodeURIComponent(variantGid)}`);
+        if (!resp.ok) {
+          if (mounted) setStock(null);
+          return;
+        }
+        const data = await resp.json();
+        if (data?.ok && Array.isArray(data.inventory_levels)) {
+          const total = data.inventory_levels.reduce((s: number, it: any) => s + (it.available || 0), 0);
+          if (mounted) setStock(total);
+        } else {
+          if (mounted) setStock(null);
+        }
+      } catch (err) {
+        console.error('Error loading inventory', err);
+        if (mounted) setStock(null);
+      }
+    }
+    loadInventory();
+    return () => { mounted = false };
+  }, [product.id]);
 
   return (
     <div
@@ -174,6 +210,17 @@ function ProductCard({
           <span className="text-ink-900 text-base font-light">${product.price}</span>
           {product.originalPrice && (
             <span className="text-ink-400 text-sm line-through font-light">${product.originalPrice}</span>
+          )}
+        </div>
+
+        {/* Inventory status */}
+        <div className="mt-2">
+          {stock === null ? (
+            <span className="text-ink-400 text-sm">—</span>
+          ) : stock > 0 ? (
+            <span className="text-green-600 text-sm">En stock ({stock})</span>
+          ) : (
+            <span className="text-red-600 text-sm">Agotado</span>
           )}
         </div>
 
