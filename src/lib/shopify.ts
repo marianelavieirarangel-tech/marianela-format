@@ -30,6 +30,7 @@ type ShopifyCatalogResponse = {
       description: string;
       productType: string;
       tags: string[];
+      collections: { nodes: Array<{ handle: string; title: string }> };
       featuredImage: { url: string } | null;
       images: { nodes: Array<{ url: string }> };
       priceRange: { minVariantPrice: { amount: string } };
@@ -77,8 +78,9 @@ async function shopifyRequest<T>(query: string, variables: Record<string, unknow
 
 const knownCategories = ['Bikini', 'Traje de Baño', 'Tankini', 'Trikini', 'Fuera del Agua', 'Accesorios', 'Lencería', 'Loungewear'] as const;
 
-function getCategory(productType: string, tags: string[]): Product['category'] {
-  const values = [productType, ...tags].map((value) => value.toLowerCase());
+function getCategory(productType: string, tags: string[], collections: Array<{ handle: string; title: string }>): Product['category'] {
+  const values = [productType, ...tags, ...collections.flatMap((collection) => [collection.handle, collection.title])]
+    .map((value) => value.toLowerCase());
   return knownCategories.find((category) => values.some((value) => value.includes(category.toLowerCase()))) ?? 'Accesorios';
 }
 
@@ -99,6 +101,7 @@ export async function fetchShopifyProducts() {
           description
           productType
           tags
+          collections(first: 20) { nodes { handle title } }
           featuredImage { url }
           images(first: 1) { nodes { url } }
           priceRange { minVariantPrice { amount } }
@@ -122,7 +125,7 @@ export async function fetchShopifyProducts() {
       return {
         id: product.id.split('/').pop() ?? product.id,
         name: product.title,
-        category: getCategory(product.productType, product.tags),
+        category: getCategory(product.productType, product.tags, product.collections.nodes),
         price,
         originalPrice: compareAtPrice > price ? compareAtPrice : undefined,
         image: product.featuredImage?.url ?? product.images.nodes[0].url,
