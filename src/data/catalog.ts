@@ -8,6 +8,8 @@ export type Product = {
   swatches: { name: string; hex: string }[];
   tag?: 'Novedades' | 'Sale' | 'Bestseller';
   description: string;
+  // Optional: map this product to a Shopify variant GID (gid://...)
+  shopifyVariantId?: string;
 };
 
 export const products: Product[] = [

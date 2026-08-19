@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { products, type Product, womenSubcategories } from '@/data/catalog';
 import { useReveal } from '@/hooks/useReveal';
 import { Plus, Heart } from 'lucide-react';
+import { createShopifyCheckout, isShopifyEnabled } from '@/lib/shopify';
 
 type Props = {
   onQuickAdd: (product: Product) => void;
@@ -174,6 +175,41 @@ function ProductCard({
           {product.originalPrice && (
             <span className="text-ink-400 text-sm line-through font-light">${product.originalPrice}</span>
           )}
+        </div>
+
+        {/* Buy on Shopify button */}
+        <div className="mt-3">
+          <button
+            onClick={async () => {
+              if (!isShopifyEnabled()) {
+                alert('Integración Shopify no configurada. Define VITE_SHOPIFY_STORE_DOMAIN y VITE_SHOPIFY_STOREFRONT_TOKEN en .env');
+                return;
+              }
+              if (!product.shopifyVariantId) {
+                // Fallback: try to create checkout by product name (requires matching product in Shopify)
+                if (!confirm('No hay Variant ID configurado para este producto. Intento crear checkout usando el nombre del producto en Shopify?')) return;
+                try {
+                  const url = await createShopifyCheckout([{ name: product.name, quantity: 1 }]);
+                  window.location.href = url;
+                } catch (err: any) {
+                  console.error(err);
+                  alert('Error al crear checkout: ' + (err?.message || String(err)));
+                }
+                return;
+              }
+
+              try {
+                const url = await createShopifyCheckout([{ name: product.name, quantity: 1 }]);
+                window.location.href = url;
+              } catch (err: any) {
+                console.error(err);
+                alert('Error al crear checkout: ' + (err?.message || String(err)));
+              }
+            }}
+            className="mt-2 w-full py-2 text-sm uppercase tracking-widest bg-blush-500 text-sand-50 hover:bg-blush-600 transition-colors"
+          >
+            Comprar
+          </button>
         </div>
       </div>
     </div>

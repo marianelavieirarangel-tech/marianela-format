@@ -2,6 +2,10 @@ const storeDomain = import.meta.env.VITE_SHOPIFY_STORE_DOMAIN;
 const storefrontToken = import.meta.env.VITE_SHOPIFY_STOREFRONT_TOKEN;
 const storefrontApiUrl = `https://${storeDomain}/api/2025-07/graphql.json`;
 
+export function isShopifyEnabled() {
+  return Boolean(storeDomain && storefrontToken);
+}
+
 type ShopifyResponse<T> = {
   data?: T;
   errors?: { message: string }[];
