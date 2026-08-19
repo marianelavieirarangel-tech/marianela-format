@@ -95,27 +95,9 @@ function getTag(tags: string[], hasCompareAtPrice: boolean): Product['tag'] {
 }
 
 export async function fetchShopifyProducts() {
-  const result = await shopifyRequest<ShopifyCatalogResponse>(
-    `query Catalog {
-      products(first: 100) {
-        nodes {
-          id
-          title
-          description
-          productType
-          tags
-          collections(first: 20) { nodes { handle title } }
-          featuredImage { url }
-          images(first: 1) { nodes { url } }
-          priceRange { minVariantPrice { amount } }
-          compareAtPriceRange { minVariantPrice { amount } }
-          variants(first: 1) {
-            nodes { id selectedOptions { name value } }
-          }
-        }
-      }
-    }`,
-  );
+  const response = await fetch('/api/shopify/products');
+  const result = (await response.json()) as ShopifyCatalogResponse & { error?: string };
+  if (!response.ok) throw new Error(result.error || `Vercel respondió con ${response.status}.`);
 
   return result.products.nodes
     .filter((product) => product.featuredImage || product.images.nodes[0])
