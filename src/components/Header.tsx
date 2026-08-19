@@ -1,6 +1,6 @@
 import { Search, Heart, ShoppingBag, Menu, X, User, ChevronDown } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { categorySlugs, navLinks, womenSubcategories } from '@/data/catalog';
 
 type Props = {
@@ -123,11 +123,11 @@ export default function Header({ cartCount, onOpenCart, onOpenSearch, onOpenWish
             </button>
 
             {/* Logo */}
-            <a href="#top" className="flex flex-col items-center lg:flex-1 lg:justify-center">
+            <Link to="/" className="flex flex-col items-center lg:flex-1 lg:justify-center">
               <span className="font-serif text-2xl lg:text-3xl tracking-[0.15em] text-ink-900 leading-none">
                 MARIANELA VIEIRA
               </span>
-            </a>
+            </Link>
 
             {/* Right nav (desktop) */}
             <nav className="hidden lg:flex items-center gap-8 flex-1 justify-end">
