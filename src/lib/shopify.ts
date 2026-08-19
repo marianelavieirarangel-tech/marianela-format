@@ -143,7 +143,13 @@ export async function createShopifyCheckout(items: { variantId?: string; quantit
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ items }),
   });
-  const result = (await response.json()) as { checkoutUrl?: string; error?: string };
+  const body = await response.text();
+  let result: { checkoutUrl?: string; error?: string } = {};
+  try {
+    result = JSON.parse(body) as { checkoutUrl?: string; error?: string };
+  } catch {
+    throw new Error(body.slice(0, 160) || `Vercel respondió con ${response.status}.`);
+  }
   if (!response.ok || !result.checkoutUrl) {
     throw new Error(result.error || 'No se pudo abrir el checkout de Shopify.');
   }

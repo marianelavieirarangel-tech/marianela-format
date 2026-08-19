@@ -13,6 +13,7 @@
   "routes": [
     { "handle": "filesystem" },
     { "src": "/api/shopify/products", "dest": "/api/shopify/products.js" },
+    { "src": "/api/shopify/checkout", "dest": "/api/shopify/checkout.js" },
     { "src": "/(.*)", "dest": "/index.html" }
   ]
 }
