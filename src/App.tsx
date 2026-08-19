@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Routes, Route, useParams, useNavigate } from 'react-router-dom';
 import Header from '@/components/Header';
 import Hero from '@/components/Hero';
 import CategoryGrid from '@/components/CategoryGrid';
@@ -14,6 +15,7 @@ import SearchOverlay from '@/components/SearchOverlay';
 import WishlistDrawer from '@/components/WishlistDrawer';
 import NewsletterModal from '@/components/NewsletterModal';
 import type { Product } from '@/data/catalog';
+import { products } from '@/data/catalog';
 
 export default function App() {
   const [quickAddProduct, setQuickAddProduct] = useState<Product | null>(null);
@@ -67,6 +69,31 @@ export default function App() {
     setSelectedProduct(product);
   };
 
+  function ProductPage() {
+    const { id } = useParams();
+    const navigate = useNavigate();
+    const product = products.find((p) => p.id === id);
+    if (!product) return <div className="p-8">Producto no encontrado.</div>;
+    return (
+      <ProductDetail
+        product={product}
+        onBack={() => navigate(-1)}
+        onAddToCart={handleAddToCart}
+        isWishlisted={wishlist.has(product.id)}
+        onToggleWishlist={toggleWishlist}
+      />
+    );
+  }
+
+  const homeContent = (
+    <>
+      <Hero />
+      <CategoryGrid onSelectCategory={setSelectedCategory} />
+      <FeaturedProducts onQuickAdd={openQuickAdd} onToggleWishlist={toggleWishlist} wishlist={wishlist} />
+      <EditorialBanner />
+    </>
+  );
+
   return (
     <div className="min-h-screen bg-sand-50">
       <Header
@@ -78,41 +105,33 @@ export default function App() {
       />
 
       <main>
-        {checkoutOpen ? (
-          <CheckoutPage
-            items={cart}
-            onClose={() => setCheckoutOpen(false)}
-            onUpdateQty={handleUpdateQty}
-            onRemove={handleRemove}
+        <Routes>
+          <Route
+            path="/"
+            element={
+              checkoutOpen ? (
+                <CheckoutPage
+                  items={cart}
+                  onClose={() => setCheckoutOpen(false)}
+                  onUpdateQty={handleUpdateQty}
+                  onRemove={handleRemove}
+                />
+              ) : selectedCategory ? (
+                <CategoryProducts
+                  categoryName={selectedCategory}
+                  onQuickAdd={openQuickAdd}
+                  onToggleWishlist={toggleWishlist}
+                  wishlist={wishlist}
+                  onBack={() => setSelectedCategory(null)}
+                />
+              ) : (
+                homeContent
+              )
+            }
           />
-        ) : selectedProduct ? (
-          <ProductDetail
-            product={selectedProduct}
-            onBack={() => setSelectedProduct(null)}
-            onAddToCart={handleAddToCart}
-            isWishlisted={wishlist.has(selectedProduct.id)}
-            onToggleWishlist={toggleWishlist}
-          />
-        ) : selectedCategory ? (
-          <CategoryProducts
-            categoryName={selectedCategory}
-            onQuickAdd={openQuickAdd}
-            onToggleWishlist={toggleWishlist}
-            wishlist={wishlist}
-            onBack={() => setSelectedCategory(null)}
-          />
-        ) : (
-          <>
-            <Hero />
-            <CategoryGrid onSelectCategory={setSelectedCategory} />
-            <FeaturedProducts
-              onQuickAdd={openQuickAdd}
-              onToggleWishlist={toggleWishlist}
-              wishlist={wishlist}
-            />
-            <EditorialBanner />
-          </>
-        )}
+
+          <Route path="/product/:id" element={<ProductPage />} />
+        </Routes>
       </main>
 
       <Footer />

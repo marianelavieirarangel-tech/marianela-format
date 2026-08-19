@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { products, type Product, womenSubcategories } from '@/data/catalog';
 import { useReveal } from '@/hooks/useReveal';
 import { Plus, Heart } from 'lucide-react';
@@ -184,7 +185,7 @@ function ProductCard({
         <p className="text-[10px] uppercase tracking-widest text-ink-400 mb-1.5">{product.category}</p>
         <h3 
           className="font-serif text-xl text-ink-900 font-normal leading-tight mb-2 cursor-pointer hover:text-blush-500 transition-colors"
-          onClick={() => onQuickAdd(product)}
+          onClick={() => navigate(`/product/${product.id}`)}
         >
           {product.name}
         </h3>
