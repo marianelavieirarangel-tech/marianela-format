@@ -1,6 +1,6 @@
-import { products } from '@/data/catalog';
 import { useReveal } from '@/hooks/useReveal';
 import { Plus, Heart, ArrowLeft } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import type { Product } from '@/data/catalog';
 
 type Props = {
@@ -94,6 +94,7 @@ function ProductCard({
   isWishlisted: boolean;
 }) {
   const { ref, inView } = useReveal<HTMLDivElement>();
+  const navigate = useNavigate();
 
   return (
     <div
@@ -104,7 +105,7 @@ function ProductCard({
       {/* Image */}
       <div 
         className="relative mb-4 bg-ink-50 aspect-[2/3] overflow-hidden cursor-pointer group"
-        onClick={() => onQuickAdd(product)}
+        onClick={() => navigate(`/product/${product.id}`)}
       >
         <img
           src={product.image}
@@ -136,7 +137,10 @@ function ProductCard({
 
         {/* Quick add button */}
         <button
-          onClick={() => onQuickAdd(product)}
+          onClick={(event) => {
+            event.stopPropagation();
+            onQuickAdd(product);
+          }}
           className="absolute bottom-4 left-4 w-10 h-10 bg-ink-900 text-sand-50 rounded-full flex items-center justify-center transition-all hover:bg-blush-500 opacity-0 group-hover:opacity-100"
           aria-label="Agregar al carrito"
         >
@@ -162,7 +166,7 @@ function ProductCard({
       <div className="flex-1">
         <h3 
           className="font-serif text-lg text-ink-900 mb-2 line-clamp-2 hover:text-blush-500 transition-colors cursor-pointer"
-          onClick={() => onQuickAdd(product)}
+          onClick={() => navigate(`/product/${product.id}`)}
         >
           {product.name}
         </h3>
