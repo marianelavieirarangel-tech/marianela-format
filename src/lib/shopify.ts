@@ -48,13 +48,6 @@ type ShopifyCatalogResponse = {
   };
 };
 
-type CartCreateResponse = {
-  cartCreate: {
-    cart: { checkoutUrl: string } | null;
-    userErrors: { message: string }[];
-  };
-};
-
 async function shopifyRequest<T>(query: string, variables: Record<string, unknown> = {}) {
   const response = await fetch(storefrontApiUrl, {
     method: 'POST',
@@ -144,47 +137,15 @@ export async function findVariantGidByTitle(name: string) {
   return variantId || null;
 }
 
-export async function createShopifyCheckout(items: { name: string; quantity: number }[]) {
-  const productData = await Promise.all(
-    items.map((item) =>
-      shopifyRequest<ProductSearchResponse>(
-        `query FindProduct($query: String!) {
-          products(first: 1, query: $query) {
-            nodes {
-              title
-              variants(first: 1) { nodes { id } }
-            }
-          }
-        }`,
-        { query: `title:${JSON.stringify(item.name)}` },
-      ),
-    ),
-  );
-
-  const lines = productData.map((result, index) => {
-    const variantId = result.products.nodes[0]?.variants.nodes[0]?.id;
-    if (!variantId) {
-      throw new Error(`No se encontró una variante de Shopify para “${items[index].name}”.`);
-    }
-    return { merchandiseId: variantId, quantity: items[index].quantity };
+export async function createShopifyCheckout(items: { variantId?: string; quantity: number }[]) {
+  const response = await fetch('/api/shopify/checkout', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ items }),
   });
-
-  const result = await shopifyRequest<CartCreateResponse>(
-    `mutation CreateCart($lines: [CartLineInput!]) {
-      cartCreate(input: { lines: $lines }) {
-        cart { checkoutUrl }
-        userErrors { message }
-      }
-    }`,
-    { lines },
-  );
-
-  const { cart, userErrors } = result.cartCreate;
-  if (userErrors.length) {
-    throw new Error(userErrors[0].message);
+  const result = (await response.json()) as { checkoutUrl?: string; error?: string };
+  if (!response.ok || !result.checkoutUrl) {
+    throw new Error(result.error || 'No se pudo abrir el checkout de Shopify.');
   }
-  if (!cart?.checkoutUrl) {
-    throw new Error('Shopify no devolvió una URL de checkout.');
-  }
-  return cart.checkoutUrl;
+  return result.checkoutUrl;
 }

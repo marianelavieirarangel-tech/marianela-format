@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { products, type Product, womenSubcategories } from '@/data/catalog';
+import { type Product, womenSubcategories } from '@/data/catalog';
 import { useReveal } from '@/hooks/useReveal';
 import { Plus, Heart } from 'lucide-react';
 import { createShopifyCheckout, isShopifyEnabled, findVariantGidByTitle } from '@/lib/shopify';
@@ -110,7 +110,10 @@ function ProductCard({
         }
         const data = await resp.json();
         if (data?.ok && Array.isArray(data.inventory_levels)) {
-          const total = data.inventory_levels.reduce((s: number, it: any) => s + (it.available || 0), 0);
+          const total = data.inventory_levels.reduce(
+            (sum: number, item: { available?: number }) => sum + (item.available || 0),
+            0,
+          );
           if (mounted) setStock(total);
         } else {
           if (mounted) setStock(null);
@@ -235,25 +238,12 @@ function ProductCard({
                 alert('Integración Shopify no configurada. Define VITE_SHOPIFY_STORE_DOMAIN y VITE_SHOPIFY_STOREFRONT_TOKEN en .env');
                 return;
               }
-              if (!product.shopifyVariantId) {
-                // Fallback: try to create checkout by product name (requires matching product in Shopify)
-                if (!confirm('No hay Variant ID configurado para este producto. Intento crear checkout usando el nombre del producto en Shopify?')) return;
-                try {
-                  const url = await createShopifyCheckout([{ name: product.name, quantity: 1 }]);
-                  window.location.href = url;
-                } catch (err: any) {
-                  console.error(err);
-                  alert('Error al crear checkout: ' + (err?.message || String(err)));
-                }
-                return;
-              }
-
               try {
-                const url = await createShopifyCheckout([{ name: product.name, quantity: 1 }]);
+                const url = await createShopifyCheckout([{ variantId: product.shopifyVariantId, quantity: 1 }]);
                 window.location.href = url;
-              } catch (err: any) {
+              } catch (err) {
                 console.error(err);
-                alert('Error al crear checkout: ' + (err?.message || String(err)));
+                alert('Error al crear checkout: ' + (err instanceof Error ? err.message : String(err)));
               }
             }}
             className="mt-2 w-full py-2 text-sm uppercase tracking-widest bg-blush-500 text-sand-50 hover:bg-blush-600 transition-colors"

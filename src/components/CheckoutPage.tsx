@@ -44,9 +44,9 @@ export default function CheckoutPage({ items, onClose, onUpdateQty, onRemove }: 
 
     try {
       const checkoutUrl = await createShopifyCheckout(
-        items.map((item) => ({ name: item.product.name, quantity: item.quantity })),
+        items.map((item) => ({ variantId: item.product.shopifyVariantId, quantity: item.quantity })),
       );
-      window.location.assign(checkoutUrl);
+      window.location.href = checkoutUrl;
     } catch (error) {
       setCheckoutError(error instanceof Error ? error.message : 'No pudimos abrir el checkout de Shopify.');
     }
