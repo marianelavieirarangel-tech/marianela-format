@@ -1,0 +1,10 @@
+.git/
+shopify-theme/
+studio/
+*.zip
+node_modules/
+.env
+.env.local
+.DS_Store
+.vscode/
+*.log
