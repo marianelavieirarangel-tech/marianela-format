@@ -96,7 +96,13 @@ function getTag(tags: string[], hasCompareAtPrice: boolean): Product['tag'] {
 
 export async function fetchShopifyProducts() {
   const response = await fetch('/api/shopify/products');
-  const result = (await response.json()) as ShopifyCatalogResponse & { error?: string };
+  const body = await response.text();
+  let result: ShopifyCatalogResponse & { error?: string };
+  try {
+    result = JSON.parse(body) as ShopifyCatalogResponse & { error?: string };
+  } catch {
+    throw new Error(body.slice(0, 160) || `Vercel respondió con ${response.status}.`);
+  }
   if (!response.ok) throw new Error(result.error || `Vercel respondió con ${response.status}.`);
 
   return result.products.nodes
