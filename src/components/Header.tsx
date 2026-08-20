@@ -2,6 +2,7 @@ import { Search, Heart, ShoppingBag, Menu, X, User, ChevronDown } from 'lucide-r
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { categorySlugs, navLinks, womenMenuSubcategories } from '@/data/catalog';
+import { getShopifyAccountLoginUrl } from '@/lib/shopify';
 
 type Props = {
   cartCount: number;
@@ -153,6 +154,13 @@ export default function Header({ cartCount, onOpenCart, onOpenSearch, onOpenWish
               >
                 <Search size={19} strokeWidth={1.5} />
               </button>
+              <a
+                href={getShopifyAccountLoginUrl()}
+                className="hidden sm:block text-ink-800 hover:text-blush-500 transition-colors"
+                aria-label="Mi cuenta"
+              >
+                <User size={19} strokeWidth={1.5} />
+              </a>
               <button
                 onClick={onOpenWishlist}
                 className="hidden sm:block text-ink-800 hover:text-blush-500 transition-colors"
@@ -250,9 +258,13 @@ export default function Header({ cartCount, onOpenCart, onOpenSearch, onOpenWish
               </button>
             ))}
             <div className="flex items-center gap-6 pt-8 text-ink-600">
-              <button className="flex items-center gap-2 text-sm tracking-wide hover:text-blush-500">
+              <a
+                href={getShopifyAccountLoginUrl()}
+                onClick={() => setMobileOpen(false)}
+                className="flex items-center gap-2 text-sm tracking-wide hover:text-blush-500"
+              >
                 <User size={18} strokeWidth={1.5} /> Mi Cuenta
-              </button>
+              </a>
             </div>
           </nav>
         </div>

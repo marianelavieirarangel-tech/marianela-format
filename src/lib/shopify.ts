@@ -11,6 +11,10 @@ export function isShopifyEnabled() {
   return Boolean(storeDomain && storefrontToken);
 }
 
+export function getShopifyAccountLoginUrl() {
+  return `https://${storeDomain}/account/login`;
+}
+
 type ShopifyResponse<T> = {
   data?: T;
   errors?: { message: string }[];
