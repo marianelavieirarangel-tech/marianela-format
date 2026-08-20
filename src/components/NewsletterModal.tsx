@@ -154,6 +154,7 @@ export default function NewsletterModal() {
   const [accepted, setAccepted] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState('');
+  const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
     const dismissed = sessionStorage.getItem(STORAGE_KEY);
@@ -177,7 +178,7 @@ export default function NewsletterModal() {
     sessionStorage.setItem(STORAGE_KEY, '1');
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
     if (!email || !phone || !birthday) {
@@ -188,8 +189,28 @@ export default function NewsletterModal() {
       setError('Debes aceptar los términos y condiciones.');
       return;
     }
-    setSubmitted(true);
-    setTimeout(() => close(), 2800);
+    setSubmitting(true);
+    try {
+      const response = await fetch('/api/shopify/newsletter', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, phone, countryCode, birthday }),
+      });
+      const body = await response.text();
+      let result: { error?: string } = {};
+      try {
+        result = JSON.parse(body) as { error?: string };
+      } catch {
+        throw new Error(body.slice(0, 160) || 'Respuesta inválida del servidor.');
+      }
+      if (!response.ok) throw new Error(result.error || 'No se pudo completar la suscripción.');
+      setSubmitted(true);
+      setTimeout(() => close(), 2800);
+    } catch (submitError) {
+      setError(submitError instanceof Error ? submitError.message : 'No se pudo completar la suscripción.');
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   if (!open) return null;
@@ -351,9 +372,10 @@ export default function NewsletterModal() {
                   {/* Submit */}
                   <button
                     type="submit"
+                    disabled={submitting}
                     className="w-full py-4 bg-ink-900 text-sand-50 text-[11px] uppercase tracking-widest transition-all duration-500 hover:bg-ink-800 hover:tracking-ultra"
                   >
-                    Suscribirme
+                    {submitting ? 'Enviando...' : 'Suscribirme'}
                   </button>
                 </form>
               </>

@@ -14,6 +14,7 @@
     { "handle": "filesystem" },
     { "src": "/api/shopify/products", "dest": "/api/shopify/products.js" },
     { "src": "/api/shopify/checkout", "dest": "/api/shopify/checkout.js" },
+    { "src": "/api/shopify/newsletter", "dest": "/api/shopify/newsletter.js" },
     { "src": "/(.*)", "dest": "/index.html" }
   ]
 }
