@@ -14,6 +14,15 @@ type Props = {
   onBack: () => void;
 };
 
+function getProductBadge(product: Product) {
+  if (product.originalPrice && product.originalPrice > product.price) {
+    const discount = Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100);
+    return `-${discount}%`;
+  }
+
+  return product.tag ?? '';
+}
+
 export default function CategoryProducts({
   categoryName,
   products,
@@ -101,6 +110,7 @@ function ProductCard({
 }) {
   const { ref, inView } = useReveal<HTMLDivElement>();
   const navigate = useNavigate();
+  const badgeText = getProductBadge(product);
 
   return (
     <div
@@ -120,10 +130,10 @@ function ProductCard({
         />
 
         {/* Tags */}
-        {product.tag && (
+        {badgeText && (
           <div className="absolute top-4 left-4">
-            <span className="inline-block bg-blush-500 text-sand-50 text-[10px] font-medium px-3 py-1.5 tracking-widest uppercase">
-              {product.tag}
+            <span className="inline-block bg-blush-500 text-sand-50 text-[10px] font-medium px-3 py-1.5 tracking-widest uppercase rounded-full">
+              {badgeText}
             </span>
           </div>
         )}
