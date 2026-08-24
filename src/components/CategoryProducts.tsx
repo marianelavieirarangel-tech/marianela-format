@@ -33,7 +33,7 @@ export default function CategoryProducts({
   return (
     <section className="min-h-screen bg-sand-50">
       {/* Header */}
-      <div className="bg-sand-100 sticky top-[72px] z-20">
+      <div className="bg-sand-100 sticky top-[72px] z-20 lg:top-[84px]">
         <div className="mx-auto max-w-7xl px-6 lg:px-10 py-2.5 lg:py-3">
           <button
             onClick={onBack}

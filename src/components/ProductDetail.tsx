@@ -43,7 +43,7 @@ export default function ProductDetail({
   return (
     <div className="min-h-screen bg-sand-50">
       {/* Header */}
-      <div className="sticky top-24 z-20 bg-sand-50">
+      <div className="sticky top-[72px] z-20 bg-sand-50 lg:top-[84px]">
         <div className="mx-auto max-w-7xl px-6 lg:px-10 py-3">
           <button
             onClick={onBack}
