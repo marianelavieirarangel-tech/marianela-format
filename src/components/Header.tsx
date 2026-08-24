@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { categorySlugs, navLinks, womenMenuSubcategories } from '@/data/catalog';
 import { getShopifyAccountLoginUrl } from '@/lib/shopify';
+import logo from '@/assets/marianela-logo.png';
 
 type Props = {
   cartCount: number;
@@ -124,10 +125,12 @@ export default function Header({ cartCount, onOpenCart, onOpenSearch, onOpenWish
             </button>
 
             {/* Logo */}
-            <Link to="/" className="flex flex-col items-center lg:flex-1 lg:justify-center">
-              <span className="font-serif text-2xl lg:text-3xl tracking-[0.15em] text-ink-900 leading-none">
-                MARIANELA VIEIRA
-              </span>
+            <Link to="/" className="flex flex-col items-center lg:flex-1 lg:justify-center" aria-label="Marianela Vieira inicio">
+              <img
+                src={logo}
+                alt="Marianela Vieira logo"
+                className="h-14 w-auto max-w-[260px] object-contain lg:h-16"
+              />
             </Link>
 
             {/* Right nav (desktop) */}
