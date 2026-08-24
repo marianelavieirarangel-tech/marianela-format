@@ -163,12 +163,12 @@ function ProductCard({
         {/* Tag */}
         {badgeText && (
           <span
-            className={`absolute top-3 left-3 px-3 py-1 text-[9px] uppercase tracking-widest ${
+            className={`absolute top-3 left-3 px-2.5 py-1.5 text-[8px] font-medium uppercase tracking-[0.18em] rounded-full shadow-sm border border-white/30 ${
               product.originalPrice && product.originalPrice > product.price
                 ? 'bg-blush-500 text-sand-50'
                 : product.tag === 'Bestseller'
                 ? 'bg-ink-900 text-sand-50'
-                : 'bg-sand-50 text-ink-800'
+                : 'bg-sand-50/90 text-ink-800'
             }`}
           >
             {badgeText}
