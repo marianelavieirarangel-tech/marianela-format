@@ -107,19 +107,6 @@ export const products: Product[] = [
     tag: 'Novedades',
     description: 'Traje de baño de una pieza con escote profundo y tela de secado rápido. Corte que esculpe la figura.',
   },
-  {
-    id: 'p8',
-    name: 'Bikini Sunset Rojo',
-    category: 'Bikini',
-    price: 86,
-    originalPrice: 104,
-    image: 'https://images.pexels.com/photos/17367636/pexels-photo-17367636.jpeg?auto=compress&cs=tinysrgb&h=900&w=600',
-    swatches: [
-      { name: 'Rojo', hex: '#c96a55' },
-      { name: 'Noir', hex: '#1a1611' },
-    ],
-    description: 'Bikini de triángulo con tirantes ajustables y panty de tiro medio. Tejido resistente al cloro.',
-  },
 ];
 
 export const categories = [
