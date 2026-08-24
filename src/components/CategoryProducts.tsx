@@ -34,17 +34,17 @@ export default function CategoryProducts({
     <section className="min-h-screen bg-sand-50">
       {/* Header */}
       <div className="bg-sand-100 sticky top-24 z-20">
-        <div className="mx-auto max-w-7xl px-6 lg:px-10 py-5 lg:py-6">
+        <div className="mx-auto max-w-7xl px-6 lg:px-10 py-3 lg:py-4">
           <button
             onClick={onBack}
-            className="flex items-center gap-2 text-ink-700 hover:text-blush-500 transition-colors mb-3"
+            className="flex items-center gap-2 text-ink-700 hover:text-blush-500 transition-colors mb-2"
           >
             <ArrowLeft size={18} strokeWidth={1.5} />
             <span className="text-sm uppercase tracking-widest">Volver</span>
           </button>
           <div className="flex items-end justify-between">
             <div>
-              <p className="text-blush-500 text-[11px] tracking-ultra uppercase mb-2">
+              <p className="text-blush-500 text-[11px] tracking-ultra uppercase mb-1">
                 Nuestras Colecciones
               </p>
               <h1 className="font-serif text-4xl lg:text-5xl text-ink-900 font-light tracking-wide">
