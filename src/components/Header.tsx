@@ -77,9 +77,9 @@ export default function Header({ cartCount, onOpenCart, onOpenSearch, onOpenWish
         }`}
       >
         <div className="mx-auto max-w-7xl px-6 lg:px-10">
-          <div className="grid grid-cols-[1fr_auto_1fr] items-center h-20 lg:h-24">
+          <div className="grid grid-cols-[1fr_auto_1fr] items-center h-[72px] lg:h-[84px]">
             {/* Left nav (desktop) */}
-            <nav className="hidden lg:flex items-center gap-8 justify-self-start">
+            <nav className="hidden lg:flex items-center gap-6 justify-self-start">
               <button
                 onClick={() => goToCategory(navLinks[0].label)}
                 className="text-[11px] uppercase tracking-widest text-ink-700 hover:text-ink-900 link-underline"
@@ -131,20 +131,20 @@ export default function Header({ cartCount, onOpenCart, onOpenSearch, onOpenWish
             {/* Logo */}
             <button
               onClick={handleLogoClick}
-              className="flex items-center justify-center justify-self-center"
+              className="flex items-center justify-center justify-self-center -translate-y-1 sm:-translate-y-1.5 lg:-translate-y-2"
               aria-label="Marianela Vieira inicio"
               type="button"
             >
               <img
                 src={logo}
                 alt="Marianela Vieira logo"
-                className="h-28 w-auto max-w-[500px] object-contain sm:h-32 lg:h-36"
+                className="h-24 w-auto max-w-[440px] object-contain sm:h-28 lg:h-32"
               />
             </button>
 
             {/* Right nav (desktop) */}
-            <div className="hidden lg:flex items-center justify-self-end gap-8">
-              <nav className="flex items-center gap-8">
+            <div className="hidden lg:flex items-center justify-self-end gap-6">
+              <nav className="flex items-center gap-6">
                 {navLinks.slice(2).map((link) => (
                   <button
                     key={link.label}
