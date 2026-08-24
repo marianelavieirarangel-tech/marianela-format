@@ -1,4 +1,5 @@
 import { useReveal } from '@/hooks/useReveal';
+import filosofiaLenceria from '@/assets/filosofia-lenceria.jpg';
 
 export default function EditorialBanner() {
   const { ref, inView } = useReveal<HTMLDivElement>();
@@ -8,7 +9,7 @@ export default function EditorialBanner() {
       {/* Background */}
       <div className="absolute inset-0">
         <img
-          src="https://images.pexels.com/photos/30219293/pexels-photo-30219293.jpeg?auto=compress&cs=tinysrgb&h=1200&w=2000"
+          src={filosofiaLenceria}
           alt="Editorial Marianela Vieira"
           className="h-full w-full object-cover object-center opacity-50"
           loading="lazy"
