@@ -129,7 +129,7 @@ export default function Header({ cartCount, onOpenCart, onOpenSearch, onOpenWish
               <img
                 src={logo}
                 alt="Marianela Vieira logo"
-                className="h-20 w-auto max-w-[360px] object-contain lg:h-24"
+                className="h-24 w-auto max-w-[420px] object-contain lg:h-28"
               />
             </Link>
 
