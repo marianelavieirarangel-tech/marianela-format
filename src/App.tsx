@@ -17,6 +17,7 @@ import WishlistDrawer from '@/components/WishlistDrawer';
 import NewsletterModal from '@/components/NewsletterModal';
 import type { Product } from '@/data/catalog';
 import { categorySlugs, products, navLinks, womenSubcategories } from '@/data/catalog';
+import { currencyOptions, type CurrencyCode } from '@/lib/currency';
 import { createShopifyCheckout, fetchShopifyProducts, isShopifyEnabled } from '@/lib/shopify';
 
 const CART_STORAGE_KEY = 'marianela-cart';
@@ -50,6 +51,7 @@ export default function App() {
   const [wishlist, setWishlist] = useState<Set<string>>(new Set());
   const [catalogProducts, setCatalogProducts] = useState(products);
   const [catalogError, setCatalogError] = useState<string | null>(null);
+  const [currency, setCurrency] = useState<CurrencyCode>('PEN');
   const showFloatingWhatsapp = location.pathname !== '/';
 
   useEffect(() => {
@@ -140,6 +142,7 @@ export default function App() {
     return (
       <ProductDetail
         product={product}
+        currency={currency}
         onBack={() => navigate(-1)}
         onAddToCart={handleAddToCart}
         isWishlisted={wishlist.has(product.id)}
@@ -166,6 +169,7 @@ export default function App() {
       <CategoryProducts
         categoryName={categoryName}
         products={catalogProducts}
+        currency={currency}
         onQuickAdd={openQuickAdd}
         onToggleWishlist={toggleWishlist}
         wishlist={wishlist}
@@ -183,7 +187,7 @@ export default function App() {
       )}
       <Hero />
       <CategoryGrid />
-      <FeaturedProducts products={catalogProducts} onQuickAdd={openQuickAdd} onToggleWishlist={toggleWishlist} wishlist={wishlist} />
+      <FeaturedProducts products={catalogProducts} currency={currency} onQuickAdd={openQuickAdd} onToggleWishlist={toggleWishlist} wishlist={wishlist} />
       <EditorialBanner />
     </>
   );
@@ -192,6 +196,8 @@ export default function App() {
     <div className="min-h-screen bg-sand-50">
       <Header
         cartCount={cartCount}
+        currency={currency}
+        onCurrencyChange={setCurrency}
         onOpenCart={() => setCartOpen(true)}
         onOpenSearch={() => setSearchOpen(true)}
         onOpenWishlist={() => setWishlistOpen(true)}
@@ -204,6 +210,7 @@ export default function App() {
             element={checkoutOpen ? (
                 <CheckoutPage
                   items={cart}
+                  currency={currency}
                   onClose={() => setCheckoutOpen(false)}
                   onUpdateQty={handleUpdateQty}
                   onRemove={handleRemove}
@@ -239,20 +246,23 @@ export default function App() {
       {/* Overlays */}
       <QuickAddModal
         product={quickAddProduct}
+        currency={currency}
         onClose={() => setQuickAddProduct(null)}
         onAddToCart={handleAddToCart}
       />
       <CartDrawer
         open={cartOpen}
         items={cart}
+        currency={currency}
         onClose={() => setCartOpen(false)}
         onUpdateQty={handleUpdateQty}
         onRemove={handleRemove}
         onCheckout={handleDirectCheckout}
       />
       <SearchOverlay
-      products={catalogProducts}
+        products={catalogProducts}
         open={searchOpen}
+        currency={currency}
         onClose={() => setSearchOpen(false)}
         onSelect={(p) => {
           setSearchOpen(false);
@@ -263,6 +273,7 @@ export default function App() {
         products={catalogProducts}
         open={wishlistOpen}
         wishlist={wishlist}
+        currency={currency}
         onClose={() => setWishlistOpen(false)}
         onSelect={(p) => {
           setWishlistOpen(false);

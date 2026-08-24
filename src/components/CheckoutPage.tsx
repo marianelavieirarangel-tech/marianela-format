@@ -2,15 +2,17 @@ import { useState } from 'react';
 import { X, Trash2 } from 'lucide-react';
 import type { CartItem } from '@/components/QuickAddModal';
 import { createShopifyCheckout } from '@/lib/shopify';
+import { formatPrice, type CurrencyCode } from '@/lib/currency';
 
 type Props = {
   items: CartItem[];
+  currency: CurrencyCode;
   onClose: () => void;
   onUpdateQty: (index: number, qty: number) => void;
   onRemove: (index: number) => void;
 };
 
-export default function CheckoutPage({ items, onClose, onUpdateQty, onRemove }: Props) {
+export default function CheckoutPage({ items, currency, onClose, onUpdateQty, onRemove }: Props) {
   const [email, setEmail] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -309,7 +311,7 @@ export default function CheckoutPage({ items, onClose, onUpdateQty, onRemove }: 
                         </button>
                       </div>
                       <p className="text-sm font-medium text-ink-900 mt-2">
-                        ${(item.product.price * item.quantity).toFixed(2)}
+                        {formatPrice(item.product.price * item.quantity, currency)}
                       </p>
                     </div>
                   </div>
@@ -342,12 +344,12 @@ export default function CheckoutPage({ items, onClose, onUpdateQty, onRemove }: 
               <div className="space-y-3">
                 <div className="flex justify-between text-sm">
                   <span className="text-ink-600">Subtotal</span>
-                  <span className="font-medium text-ink-900">${subtotal.toFixed(2)}</span>
+                  <span className="font-medium text-ink-900">{formatPrice(subtotal, currency)}</span>
                 </div>
                 {discount > 0 && (
                   <div className="flex justify-between text-sm text-blush-600">
                     <span>Descuento</span>
-                    <span>-${discount.toFixed(2)}</span>
+                    <span>-{formatPrice(discount, currency)}</span>
                   </div>
                 )}
                 <div className="flex justify-between text-sm border-t border-ink-200 pt-3">
@@ -356,11 +358,11 @@ export default function CheckoutPage({ items, onClose, onUpdateQty, onRemove }: 
                       ? 'Retiro en Tienda (Gratis)' 
                       : `Envío ${shipping === 0 ? '(Gratis)' : ''}`}
                   </span>
-                  <span className="font-medium text-ink-900">${shipping.toFixed(2)}</span>
+                  <span className="font-medium text-ink-900">{formatPrice(shipping, currency)}</span>
                 </div>
                 <div className="flex justify-between text-lg font-medium border-t border-ink-200 pt-3">
                   <span className="text-ink-900">Total</span>
-                  <span className="text-ink-900">${total.toFixed(2)}</span>
+                  <span className="text-ink-900">{formatPrice(total, currency)}</span>
                 </div>
               </div>
             </div>

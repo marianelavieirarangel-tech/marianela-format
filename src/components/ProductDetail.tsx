@@ -2,9 +2,11 @@ import { useState } from 'react';
 import { Heart, Share2, ArrowLeft, Minus, Plus, MessageCircle } from 'lucide-react';
 import type { Product } from '@/data/catalog';
 import type { CartItem } from '@/components/QuickAddModal';
+import { formatPrice, type CurrencyCode } from '@/lib/currency';
 
 type Props = {
   product: Product;
+  currency: CurrencyCode;
   onBack: () => void;
   onAddToCart: (item: CartItem) => void;
   isWishlisted: boolean;
@@ -13,6 +15,7 @@ type Props = {
 
 export default function ProductDetail({
   product,
+  currency,
   onBack,
   onAddToCart,
   isWishlisted,
@@ -82,10 +85,10 @@ export default function ProductDetail({
 
             {/* Price */}
             <div className="flex items-center gap-3 mb-8 pb-8 border-b border-ink-200">
-              <span className="font-numeric text-3xl text-ink-900 font-medium">${product.price}</span>
+              <span className="font-numeric text-3xl text-ink-900 font-medium">{formatPrice(product.price, currency)}</span>
               {product.originalPrice && (
                 <span className="font-numeric text-ink-400 text-lg line-through font-medium">
-                  ${product.originalPrice}
+                  {formatPrice(product.originalPrice, currency)}
                 </span>
               )}
             </div>

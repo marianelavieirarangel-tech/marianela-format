@@ -1,17 +1,19 @@
 import { useEffect, useState } from 'react';
 import { X, Plus, Minus, Trash2, ShoppingBag } from 'lucide-react';
 import type { CartItem } from './QuickAddModal';
+import { formatPrice, type CurrencyCode } from '@/lib/currency';
 
 type Props = {
   open: boolean;
   items: CartItem[];
+  currency: CurrencyCode;
   onClose: () => void;
   onUpdateQty: (index: number, qty: number) => void;
   onRemove: (index: number) => void;
   onCheckout?: () => Promise<void>;
 };
 
-export default function CartDrawer({ open, items, onClose, onUpdateQty, onRemove, onCheckout }: Props) {
+export default function CartDrawer({ open, items, currency, onClose, onUpdateQty, onRemove, onCheckout }: Props) {
   const [checkoutLoading, setCheckoutLoading] = useState(false);
   const [checkoutError, setCheckoutError] = useState('');
   useEffect(() => {
@@ -57,7 +59,7 @@ export default function CartDrawer({ open, items, onClose, onUpdateQty, onRemove
           <div className="px-6 py-5 bg-sand-100/70 border-b border-ink-100">
             <p className="text-xs text-ink-600 font-light mb-2">
               {remaining > 0 ? (
-                <>Te faltan <span className="text-ink-900 font-medium">${remaining}</span> para envío gratis</>
+                <>Te faltan <span className="text-ink-900 font-medium">{formatPrice(remaining, currency)}</span> para envío gratis</>
               ) : (
                 <span className="text-sage-600">¡Felicidades! Tu envío es gratis</span>
               )}
@@ -94,7 +96,7 @@ export default function CartDrawer({ open, items, onClose, onUpdateQty, onRemove
                     <p className="text-[10px] uppercase tracking-wide text-ink-400 mt-1">
                       {item.color} · Talla {item.size}
                     </p>
-                    <p className="font-numeric text-ink-900 text-sm mt-1">${item.product.price}</p>
+                    <p className="font-numeric text-ink-900 text-sm mt-1">{formatPrice(item.product.price, currency)}</p>
 
                     <div className="mt-auto flex items-center justify-between">
                       <div className="inline-flex items-center border border-ink-200">
@@ -134,7 +136,7 @@ export default function CartDrawer({ open, items, onClose, onUpdateQty, onRemove
           <div className="border-t border-ink-100 p-6 bg-sand-50">
             <div className="flex items-baseline justify-between mb-1">
               <span className="text-sm text-ink-600">Subtotal</span>
-              <span className="font-numeric text-2xl text-ink-900 font-medium">${subtotal}</span>
+              <span className="font-numeric text-2xl text-ink-900 font-medium">{formatPrice(subtotal, currency)}</span>
             </div>
             <p className="text-xs text-ink-400 mb-5">Impuestos y envío calculados al finalizar la compra</p>
             {checkoutError && (

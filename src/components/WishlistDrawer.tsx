@@ -1,16 +1,18 @@
 import { useEffect } from 'react';
 import { X, Heart } from 'lucide-react';
 import type { Product } from '@/data/catalog';
+import { formatPrice, type CurrencyCode } from '@/lib/currency';
 
 type Props = {
   products: Product[];
   open: boolean;
   wishlist: Set<string>;
+  currency: CurrencyCode;
   onClose: () => void;
   onSelect: (product: Product) => void;
 };
 
-export default function WishlistDrawer({ products, open, wishlist, onClose, onSelect }: Props) {
+export default function WishlistDrawer({ products, open, wishlist, currency, onClose, onSelect }: Props) {
   useEffect(() => {
     if (open) {
       document.body.style.overflow = 'hidden';
@@ -73,7 +75,7 @@ export default function WishlistDrawer({ products, open, wishlist, onClose, onSe
                     </div>
                   </div>
                   <h3 className="font-serif text-sm text-ink-900 leading-tight">{p.name}</h3>
-                  <p className="font-numeric text-xs text-ink-500 mt-0.5">${p.price}</p>
+                  <p className="font-numeric text-xs text-ink-500 mt-0.5">{formatPrice(p.price, currency)}</p>
                 </button>
               ))}
             </div>
