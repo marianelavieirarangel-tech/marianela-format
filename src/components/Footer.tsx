@@ -1,5 +1,5 @@
 import { footerLinks } from '@/data/catalog';
-import { Instagram, Facebook, Twitter, Mail } from 'lucide-react';
+import { Instagram, Music2, Mail } from 'lucide-react';
 import { useState } from 'react';
 
 export default function Footer() {
@@ -66,19 +66,27 @@ export default function Footer() {
           <div className="col-span-2 lg:col-span-2">
             <h4 className="font-serif text-2xl tracking-[0.15em] text-sand-50 mb-4">MARIANELA VIEIRA</h4>
             <p className="text-sand-200 text-sm font-light leading-relaxed max-w-xs mb-6">
-              Ropa de baño y lencería que celebra tu confianza corporal. Diseñadas para todas las formas, todos los cuerpos, toda la belleza.
+              Innovación, diseño y sofisticación en cada pieza de ropa de baño. Celebramos la autenticidad de cada silueta.
             </p>
             <div className="flex items-center gap-4">
-              {[Instagram, Facebook, Twitter].map((Icon, i) => (
-                <a
-                  key={i}
-                  href="#"
-                  className="w-10 h-10 border border-ink-600 flex items-center justify-center hover:border-sand-200 hover:text-sand-50 transition-colors"
-                  aria-label="Red social"
-                >
-                  <Icon size={16} strokeWidth={1.5} />
-                </a>
-              ))}
+              <a
+                href="https://www.instagram.com/marianela_official/"
+                target="_blank"
+                rel="noreferrer"
+                className="w-10 h-10 border border-ink-600 flex items-center justify-center hover:border-sand-200 hover:text-sand-50 transition-colors"
+                aria-label="Instagram de Marianela Vieira"
+              >
+                <Instagram size={16} strokeWidth={1.5} />
+              </a>
+              <a
+                href="https://www.tiktok.com/@marianelavieira"
+                target="_blank"
+                rel="noreferrer"
+                className="w-10 h-10 border border-ink-600 flex items-center justify-center hover:border-sand-200 hover:text-sand-50 transition-colors"
+                aria-label="TikTok de Marianela Vieira"
+              >
+                <Music2 size={16} strokeWidth={1.5} />
+              </a>
             </div>
           </div>
 
