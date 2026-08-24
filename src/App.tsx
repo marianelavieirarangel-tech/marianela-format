@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Routes, Route, useParams, useNavigate } from 'react-router-dom';
+import { Routes, Route, useParams, useNavigate, useLocation } from 'react-router-dom';
 import { MessageCircle } from 'lucide-react';
 import Header from '@/components/Header';
 import Hero from '@/components/Hero';
@@ -38,6 +38,7 @@ function readStoredCartId(): string | null {
 }
 
 export default function App() {
+  const location = useLocation();
   const [quickAddProduct, setQuickAddProduct] = useState<Product | null>(null);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [cartOpen, setCartOpen] = useState(false);
@@ -49,6 +50,7 @@ export default function App() {
   const [wishlist, setWishlist] = useState<Set<string>>(new Set());
   const [catalogProducts, setCatalogProducts] = useState(products);
   const [catalogError, setCatalogError] = useState<string | null>(null);
+  const showFloatingWhatsapp = location.pathname !== '/';
 
   useEffect(() => {
     window.localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cart));
@@ -148,6 +150,7 @@ export default function App() {
 
   function CategoryRoute() {
     const { slug } = useParams();
+    const navigate = useNavigate();
     const deslug = (s = '') =>
       s
         .toString()
@@ -166,7 +169,7 @@ export default function App() {
         onQuickAdd={openQuickAdd}
         onToggleWishlist={toggleWishlist}
         wishlist={wishlist}
-        onBack={() => { /* navigate back handled inside component if needed */ }}
+        onBack={() => navigate(-1)}
       />
     );
   }
@@ -221,15 +224,17 @@ export default function App() {
 
       <Footer />
 
-      <a
-        href="https://wa.me/51949217304?text=Hola%20MARIANELA%20Vieira%2C%20me%20gustar%C3%ADa%20consultar%20un%20producto."
-        target="_blank"
-        rel="noreferrer"
-        aria-label="Consultar por WhatsApp"
-        className="fixed bottom-5 right-5 z-50 flex items-center justify-center rounded-full border border-[#7ccf9a] bg-white/90 p-3 text-[#25D366] shadow-[0_12px_28px_rgba(28,37,27,0.08)] backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_16px_28px_rgba(28,37,27,0.12)]"
-      >
-        <MessageCircle size={22} strokeWidth={2} className="text-[#25D366]" />
-      </a>
+      {showFloatingWhatsapp && (
+        <a
+          href="https://wa.me/51949217304?text=Hola%20MARIANELA%20Vieira%2C%20me%20gustar%C3%ADa%20consultar%20un%20producto."
+          target="_blank"
+          rel="noreferrer"
+          aria-label="Consultar por WhatsApp"
+          className="fixed bottom-5 right-5 z-50 flex items-center justify-center rounded-full border border-[#7ccf9a] bg-white/90 p-3 text-[#25D366] shadow-[0_12px_28px_rgba(28,37,27,0.08)] backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_16px_28px_rgba(28,37,27,0.12)]"
+        >
+          <MessageCircle size={22} strokeWidth={2} className="text-[#25D366]" />
+        </a>
+      )}
 
       {/* Overlays */}
       <QuickAddModal
