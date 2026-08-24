@@ -73,7 +73,7 @@ export default function WishlistDrawer({ products, open, wishlist, onClose, onSe
                     </div>
                   </div>
                   <h3 className="font-serif text-sm text-ink-900 leading-tight">{p.name}</h3>
-                  <p className="text-xs text-ink-500 mt-0.5">${p.price}</p>
+                  <p className="font-numeric text-xs text-ink-500 mt-0.5">${p.price}</p>
                 </button>
               ))}
             </div>

@@ -213,9 +213,9 @@ function ProductCard({
 
         {/* Price */}
         <div className="flex items-baseline gap-2">
-          <span className="text-ink-900 text-base font-light">${product.price}</span>
+          <span className="font-numeric text-ink-900 text-base font-medium">${product.price}</span>
           {product.originalPrice && (
-            <span className="text-ink-400 text-sm line-through font-light">${product.originalPrice}</span>
+            <span className="font-numeric text-ink-400 text-sm line-through font-medium">${product.originalPrice}</span>
           )}
         </div>
 

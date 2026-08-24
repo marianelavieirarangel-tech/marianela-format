@@ -75,9 +75,9 @@ export default function QuickAddModal({ product, onClose, onAddToCart }: Props) 
             <h2 className="font-serif text-3xl text-ink-900 font-light leading-tight mb-3">{product.name}</h2>
 
             <div className="flex items-baseline gap-2 mb-6">
-              <span className="text-ink-900 text-xl font-light">${product.price}</span>
+              <span className="font-numeric text-ink-900 text-xl font-medium">${product.price}</span>
               {product.originalPrice && (
-                <span className="text-ink-400 text-base line-through">${product.originalPrice}</span>
+                <span className="font-numeric text-ink-400 text-base line-through font-medium">${product.originalPrice}</span>
               )}
             </div>
 

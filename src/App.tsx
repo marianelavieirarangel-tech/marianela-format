@@ -220,6 +220,17 @@ export default function App() {
 
       <Footer />
 
+      <a
+        href="https://wa.me/52949217304?text=Hola%20MARIANELA%20Vieira%2C%20me%20gustar%C3%ADa%20consultar%20sobre%20un%20producto."
+        target="_blank"
+        rel="noreferrer"
+        aria-label="Consultar por WhatsApp"
+        className="fixed bottom-5 right-5 z-50 flex items-center gap-3 rounded-full border border-[#1fbc5c] bg-[#25D366] px-4 py-3 text-sand-50 shadow-[0_18px_35px_rgba(37,211,102,0.35)] transition-all duration-300 hover:scale-[1.03] hover:shadow-[0_20px_40px_rgba(37,211,102,0.45)]"
+      >
+        <span className="flex h-8 w-8 items-center justify-center rounded-full bg-white/15 text-lg">✆</span>
+        <span className="hidden sm:inline text-[10px] font-medium uppercase tracking-[0.2em]">WhatsApp</span>
+      </a>
+
       {/* Overlays */}
       <QuickAddModal
         product={quickAddProduct}

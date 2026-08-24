@@ -80,9 +80,9 @@ export default function ProductDetail({
 
             {/* Price */}
             <div className="flex items-center gap-3 mb-8 pb-8 border-b border-ink-200">
-              <span className="font-serif text-3xl text-ink-900">${product.price}</span>
+              <span className="font-numeric text-3xl text-ink-900 font-medium">${product.price}</span>
               {product.originalPrice && (
-                <span className="text-ink-400 text-lg line-through">
+                <span className="font-numeric text-ink-400 text-lg line-through font-medium">
                   ${product.originalPrice}
                 </span>
               )}

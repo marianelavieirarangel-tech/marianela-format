@@ -176,9 +176,9 @@ function ProductCard({
 
         {/* Price */}
         <div className="flex items-center gap-2">
-          <span className="text-ink-900 font-medium">${product.price}</span>
+          <span className="font-numeric text-ink-900 font-medium">${product.price}</span>
           {product.originalPrice && (
-            <span className="text-ink-400 text-sm line-through">${product.originalPrice}</span>
+            <span className="font-numeric text-ink-400 text-sm line-through">${product.originalPrice}</span>
           )}
         </div>
       </div>
