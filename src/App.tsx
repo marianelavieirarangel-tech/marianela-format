@@ -225,10 +225,11 @@ export default function App() {
         target="_blank"
         rel="noreferrer"
         aria-label="Consultar por WhatsApp"
-        className="fixed bottom-5 right-5 z-50 flex items-center gap-3 rounded-full border border-[#1fbc5c] bg-[#25D366] px-4 py-3 text-sand-50 shadow-[0_18px_35px_rgba(37,211,102,0.35)] transition-all duration-300 hover:scale-[1.03] hover:shadow-[0_20px_40px_rgba(37,211,102,0.45)]"
+        className="fixed bottom-5 right-5 z-50 flex items-center justify-center rounded-full border border-[#7ccf9a] bg-white/90 p-3 text-[#25D366] shadow-[0_12px_28px_rgba(28,37,27,0.08)] backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_16px_28px_rgba(28,37,27,0.12)]"
       >
-        <span className="flex h-8 w-8 items-center justify-center rounded-full bg-white/15 text-lg">✆</span>
-        <span className="hidden sm:inline text-[10px] font-medium uppercase tracking-[0.2em]">WhatsApp</span>
+        <span className="flex h-9 w-9 items-center justify-center rounded-full bg-[#25D366]/10 text-xl leading-none">
+          ✆
+        </span>
       </a>
 
       {/* Overlays */}
