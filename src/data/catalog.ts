@@ -118,7 +118,6 @@ export const products: Product[] = [
       { name: 'Rojo', hex: '#c96a55' },
       { name: 'Noir', hex: '#1a1611' },
     ],
-    tag: 'Sale',
     description: 'Bikini de triángulo con tirantes ajustables y panty de tiro medio. Tejido resistente al cloro.',
   },
 ];
