@@ -38,15 +38,15 @@ export default function FeaturedProducts({ products, currency, onQuickAdd, onTog
             </h2>
           </div>
           {/* Filters */}
-          <div className="flex flex-wrap gap-1">
+          <div className="flex flex-wrap gap-2">
             {filters.map((f) => (
               <button
                 key={f}
                 onClick={() => setActive(f)}
-                className={`px-5 py-2.5 text-[11px] uppercase tracking-widest transition-all duration-300 border ${
+                className={`px-4 py-2 text-[10px] uppercase tracking-[0.22em] transition-all duration-300 border leading-none ${
                   active === f
-                    ? 'bg-ink-900 text-sand-50 border-ink-900'
-                    : 'border-ink-200 text-ink-600 hover:border-ink-400 hover:text-ink-800'
+                    ? 'bg-ink-900 text-sand-50 border-ink-900 shadow-sm'
+                    : 'border-ink-200 text-ink-600 hover:border-ink-400 hover:bg-ink-50 hover:text-ink-800'
                 }`}
               >
                 {f}
