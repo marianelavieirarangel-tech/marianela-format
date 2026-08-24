@@ -1,6 +1,6 @@
 import { Search, Heart, ShoppingBag, Menu, X, User, ChevronDown } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { categorySlugs, navLinks, womenMenuSubcategories } from '@/data/catalog';
 import { getShopifyAccountLoginUrl } from '@/lib/shopify';
 import logo from '@/assets/marianela-logo.png';
@@ -27,6 +27,10 @@ export default function Header({ cartCount, onOpenCart, onOpenSearch, onOpenWish
     const slug = categorySlugs[categoryName] ?? slugify(categoryName);
     onSelectCategory?.(categoryName);
     navigate(`/collections/${slug}`);
+  };
+  const handleLogoClick = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    navigate('/');
   };
 
   const [scrolled, setScrolled] = useState(false);
@@ -73,9 +77,9 @@ export default function Header({ cartCount, onOpenCart, onOpenSearch, onOpenWish
         }`}
       >
         <div className="mx-auto max-w-7xl px-6 lg:px-10">
-          <div className="flex items-center justify-between h-20 lg:h-24">
+          <div className="grid grid-cols-[1fr_auto_1fr] items-center h-20 lg:h-24">
             {/* Left nav (desktop) */}
-            <nav className="hidden lg:flex items-center gap-8 flex-1">
+            <nav className="hidden lg:flex items-center gap-8 justify-self-start">
               <button
                 onClick={() => goToCategory(navLinks[0].label)}
                 className="text-[11px] uppercase tracking-widest text-ink-700 hover:text-ink-900 link-underline"
@@ -118,58 +122,87 @@ export default function Header({ cartCount, onOpenCart, onOpenSearch, onOpenWish
             {/* Mobile menu button */}
             <button
               onClick={() => setMobileOpen(true)}
-              className="lg:hidden text-ink-800 hover:text-blush-500 transition-colors"
+              className="lg:hidden text-ink-800 hover:text-blush-500 transition-colors justify-self-start"
               aria-label="Abrir menú"
             >
               <Menu size={22} strokeWidth={1.5} />
             </button>
 
             {/* Logo */}
-            <Link to="/" className="flex flex-col items-center lg:flex-1 lg:justify-center" aria-label="Marianela Vieira inicio">
+            <button
+              onClick={handleLogoClick}
+              className="flex items-center justify-center justify-self-center"
+              aria-label="Marianela Vieira inicio"
+              type="button"
+            >
               <img
                 src={logo}
                 alt="Marianela Vieira logo"
                 className="h-28 w-auto max-w-[500px] object-contain sm:h-32 lg:h-36"
               />
-            </Link>
+            </button>
 
             {/* Right nav (desktop) */}
-            <nav className="hidden lg:flex items-center gap-8 flex-1 justify-end">
-              {navLinks.slice(2).map((link) => (
-                <button
-                  key={link.label}
-                  onClick={() => goToCategory(link.label)}
-                  className={`text-[11px] uppercase tracking-widest link-underline ${
-                    link.label === 'Sale' ? 'text-blush-500 hover:text-blush-700' : 'text-ink-700 hover:text-ink-900'
-                  }`}
-                >
-                  {link.label}
-                </button>
-              ))}
-            </nav>
+            <div className="hidden lg:flex items-center justify-self-end gap-8">
+              <nav className="flex items-center gap-8">
+                {navLinks.slice(2).map((link) => (
+                  <button
+                    key={link.label}
+                    onClick={() => goToCategory(link.label)}
+                    className={`text-[11px] uppercase tracking-widest link-underline ${
+                      link.label === 'Sale' ? 'text-blush-500 hover:text-blush-700' : 'text-ink-700 hover:text-ink-900'
+                    }`}
+                  >
+                    {link.label}
+                  </button>
+                ))}
+              </nav>
 
-            {/* Icons */}
-            <div className="flex items-center gap-4 lg:gap-5 lg:ml-6">
+              <div className="flex items-center gap-4 lg:gap-5">
+                <button
+                  onClick={onOpenSearch}
+                  className="text-ink-800 hover:text-blush-500 transition-colors"
+                  aria-label="Buscar"
+                >
+                  <Search size={19} strokeWidth={1.5} />
+                </button>
+                <a
+                  href={getShopifyAccountLoginUrl()}
+                  className="hidden sm:block text-ink-800 hover:text-blush-500 transition-colors"
+                  aria-label="Mi cuenta"
+                >
+                  <User size={19} strokeWidth={1.5} />
+                </a>
+                <button
+                  onClick={onOpenWishlist}
+                  className="hidden sm:block text-ink-800 hover:text-blush-500 transition-colors"
+                  aria-label="Favoritos"
+                >
+                  <Heart size={19} strokeWidth={1.5} />
+                </button>
+                <button
+                  onClick={onOpenCart}
+                  className="relative text-ink-800 hover:text-blush-500 transition-colors"
+                  aria-label="Bolsa de compras"
+                >
+                  <ShoppingBag size={19} strokeWidth={1.5} />
+                  {cartCount > 0 && (
+                    <span className="absolute -top-2 -right-2 bg-blush-500 text-sand-50 text-[9px] font-medium w-4 h-4 rounded-full flex items-center justify-center">
+                      {cartCount}
+                    </span>
+                  )}
+                </button>
+              </div>
+            </div>
+
+            {/* Mobile icons */}
+            <div className="lg:hidden flex items-center gap-3 justify-self-end">
               <button
                 onClick={onOpenSearch}
                 className="text-ink-800 hover:text-blush-500 transition-colors"
                 aria-label="Buscar"
               >
                 <Search size={19} strokeWidth={1.5} />
-              </button>
-              <a
-                href={getShopifyAccountLoginUrl()}
-                className="hidden sm:block text-ink-800 hover:text-blush-500 transition-colors"
-                aria-label="Mi cuenta"
-              >
-                <User size={19} strokeWidth={1.5} />
-              </a>
-              <button
-                onClick={onOpenWishlist}
-                className="hidden sm:block text-ink-800 hover:text-blush-500 transition-colors"
-                aria-label="Favoritos"
-              >
-                <Heart size={19} strokeWidth={1.5} />
               </button>
               <button
                 onClick={onOpenCart}
