@@ -14,7 +14,7 @@ type Props = {
   wishlist: Set<string>;
 };
 
-const filters = ['Todos', 'Novedades', ...womenSubcategories, 'Sale'] as const;
+const filters = Array.from(new Set(['Todos', 'Novedades', ...womenSubcategories, 'Sale'])) as const;
 
 export default function FeaturedProducts({ products, currency, onQuickAdd, onToggleWishlist, wishlist }: Props) {
   const [active, setActive] = useState<(typeof filters)[number]>('Todos');
