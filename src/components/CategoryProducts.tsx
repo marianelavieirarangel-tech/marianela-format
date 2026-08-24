@@ -2,10 +2,12 @@ import { useReveal } from '@/hooks/useReveal';
 import { Plus, Heart, ArrowLeft } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import type { Product } from '@/data/catalog';
+import { formatPrice, type CurrencyCode } from '@/lib/currency';
 
 type Props = {
   products: Product[];
   categoryName: string;
+  currency: CurrencyCode;
   onQuickAdd: (product: Product) => void;
   onToggleWishlist: (productId: string) => void;
   wishlist: Set<string>;
@@ -15,6 +17,7 @@ type Props = {
 export default function CategoryProducts({
   categoryName,
   products,
+  currency,
   onQuickAdd,
   onToggleWishlist,
   wishlist,
@@ -62,6 +65,7 @@ export default function CategoryProducts({
             <ProductCard
               key={product.id}
               product={product}
+              currency={currency}
               index={i}
               onQuickAdd={onQuickAdd}
               onToggleWishlist={onToggleWishlist}
@@ -82,12 +86,14 @@ export default function CategoryProducts({
 
 function ProductCard({
   product,
+  currency,
   index,
   onQuickAdd,
   onToggleWishlist,
   isWishlisted,
 }: {
   product: Product;
+  currency: CurrencyCode;
   index: number;
   onQuickAdd: (product: Product) => void;
   onToggleWishlist: (productId: string) => void;
@@ -176,9 +182,9 @@ function ProductCard({
 
         {/* Price */}
         <div className="flex items-center gap-2">
-          <span className="font-numeric text-ink-900 font-medium">${product.price}</span>
+          <span className="font-numeric text-ink-900 font-medium">{formatPrice(product.price, currency)}</span>
           {product.originalPrice && (
-            <span className="font-numeric text-ink-400 text-sm line-through">${product.originalPrice}</span>
+            <span className="font-numeric text-ink-400 text-sm line-through">{formatPrice(product.originalPrice, currency)}</span>
           )}
         </div>
       </div>

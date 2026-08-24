@@ -2,18 +2,29 @@ import { Search, Heart, ShoppingBag, Menu, X, User, ChevronDown } from 'lucide-r
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { categorySlugs, navLinks, womenMenuSubcategories } from '@/data/catalog';
+import { currencyOptions, type CurrencyCode } from '@/lib/currency';
 import { getShopifyAccountLoginUrl } from '@/lib/shopify';
 import logo from '@/assets/marianela-logo.png';
 
 type Props = {
   cartCount: number;
+  currency: CurrencyCode;
+  onCurrencyChange: (currency: CurrencyCode) => void;
   onOpenCart: () => void;
   onOpenSearch: () => void;
   onOpenWishlist: () => void;
   onSelectCategory?: (categoryName: string) => void;
 };
 
-export default function Header({ cartCount, onOpenCart, onOpenSearch, onOpenWishlist, onSelectCategory }: Props) {
+export default function Header({
+  cartCount,
+  currency,
+  onCurrencyChange,
+  onOpenCart,
+  onOpenSearch,
+  onOpenWishlist,
+  onSelectCategory,
+}: Props) {
   const navigate = useNavigate();
   const slugify = (s: string) =>
     s
@@ -159,6 +170,21 @@ export default function Header({ cartCount, onOpenCart, onOpenSearch, onOpenWish
               </nav>
 
               <div className="flex items-center gap-4 lg:gap-5">
+                <label className="relative hidden xl:block">
+                  <span className="sr-only">Moneda</span>
+                  <select
+                    value={currency}
+                    onChange={(event) => onCurrencyChange(event.target.value as CurrencyCode)}
+                    className="appearance-none rounded-full border border-ink-200 bg-sand-50 px-3 py-1.5 pr-8 text-[10px] uppercase tracking-[0.2em] text-ink-700 outline-none transition-colors hover:border-ink-400"
+                  >
+                    {currencyOptions.map((option) => (
+                      <option key={option} value={option}>
+                        {option}
+                      </option>
+                    ))}
+                  </select>
+                  <ChevronDown size={12} strokeWidth={2} className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 text-ink-500" />
+                </label>
                 <button
                   onClick={onOpenSearch}
                   className="text-ink-800 hover:text-blush-500 transition-colors"
@@ -197,6 +223,21 @@ export default function Header({ cartCount, onOpenCart, onOpenSearch, onOpenWish
 
             {/* Mobile icons */}
             <div className="lg:hidden flex items-center gap-3 justify-self-end">
+              <label className="relative">
+                <span className="sr-only">Moneda</span>
+                <select
+                  value={currency}
+                  onChange={(event) => onCurrencyChange(event.target.value as CurrencyCode)}
+                  className="appearance-none rounded-full border border-ink-200 bg-sand-50 px-2.5 py-1 pr-6 text-[10px] uppercase tracking-[0.2em] text-ink-700 outline-none"
+                >
+                  {currencyOptions.map((option) => (
+                    <option key={option} value={option}>
+                      {option}
+                    </option>
+                  ))}
+                </select>
+                <ChevronDown size={10} strokeWidth={2} className="pointer-events-none absolute right-1.5 top-1/2 -translate-y-1/2 text-ink-500" />
+              </label>
               <button
                 onClick={onOpenSearch}
                 className="text-ink-800 hover:text-blush-500 transition-colors"

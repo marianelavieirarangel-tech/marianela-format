@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { X, Plus, Minus, ShoppingBag } from 'lucide-react';
 import type { Product } from '@/data/catalog';
+import { formatPrice, type CurrencyCode } from '@/lib/currency';
 
 export type CartItem = {
   product: Product;
@@ -11,13 +12,14 @@ export type CartItem = {
 
 type Props = {
   product: Product | null;
+  currency: CurrencyCode;
   onClose: () => void;
   onAddToCart: (item: CartItem) => void;
 };
 
 const sizes = ['XS', 'S', 'M', 'L', 'XL'];
 
-export default function QuickAddModal({ product, onClose, onAddToCart }: Props) {
+export default function QuickAddModal({ product, currency, onClose, onAddToCart }: Props) {
   const [size, setSize] = useState('M');
   const [color, setColor] = useState('');
   const [qty, setQty] = useState(1);
@@ -75,9 +77,9 @@ export default function QuickAddModal({ product, onClose, onAddToCart }: Props) 
             <h2 className="font-serif text-3xl text-ink-900 font-light leading-tight mb-3">{product.name}</h2>
 
             <div className="flex items-baseline gap-2 mb-6">
-              <span className="font-numeric text-ink-900 text-xl font-medium">${product.price}</span>
+              <span className="font-numeric text-ink-900 text-xl font-medium">{formatPrice(product.price, currency)}</span>
               {product.originalPrice && (
-                <span className="font-numeric text-ink-400 text-base line-through font-medium">${product.originalPrice}</span>
+                <span className="font-numeric text-ink-400 text-base line-through font-medium">{formatPrice(product.originalPrice, currency)}</span>
               )}
             </div>
 
@@ -151,7 +153,7 @@ export default function QuickAddModal({ product, onClose, onAddToCart }: Props) 
               className="btn-primary w-full mt-auto"
             >
               <ShoppingBag size={15} strokeWidth={1.5} className="mr-2" />
-              Añadir a la Bolsa — ${product.price * qty}
+              Añadir a la Bolsa — {formatPrice(product.price * qty, currency)}
             </button>
           </div>
         </div>

@@ -3,10 +3,12 @@ import { useNavigate } from 'react-router-dom';
 import { type Product, womenSubcategories } from '@/data/catalog';
 import { useReveal } from '@/hooks/useReveal';
 import { Plus, Heart } from 'lucide-react';
+import { formatPrice, type CurrencyCode } from '@/lib/currency';
 import { createShopifyCheckout, isShopifyEnabled, findVariantGidByTitle } from '@/lib/shopify';
 
 type Props = {
   products: Product[];
+  currency: CurrencyCode;
   onQuickAdd: (product: Product) => void;
   onToggleWishlist: (productId: string) => void;
   wishlist: Set<string>;
@@ -14,7 +16,7 @@ type Props = {
 
 const filters = ['Todos', 'Novedades', ...womenSubcategories, 'Sale'] as const;
 
-export default function FeaturedProducts({ products, onQuickAdd, onToggleWishlist, wishlist }: Props) {
+export default function FeaturedProducts({ products, currency, onQuickAdd, onToggleWishlist, wishlist }: Props) {
   const [active, setActive] = useState<(typeof filters)[number]>('Todos');
 
   const filtered = products.filter((p) => {
@@ -59,6 +61,7 @@ export default function FeaturedProducts({ products, onQuickAdd, onToggleWishlis
             <ProductCard
               key={product.id}
               product={product}
+              currency={currency}
               index={i}
               onQuickAdd={onQuickAdd}
               onToggleWishlist={onToggleWishlist}
@@ -73,12 +76,14 @@ export default function FeaturedProducts({ products, onQuickAdd, onToggleWishlis
 
 function ProductCard({
   product,
+  currency,
   index,
   onQuickAdd,
   onToggleWishlist,
   isWishlisted,
 }: {
   product: Product;
+  currency: CurrencyCode;
   index: number;
   onQuickAdd: (p: Product) => void;
   onToggleWishlist: (id: string) => void;
@@ -213,9 +218,9 @@ function ProductCard({
 
         {/* Price */}
         <div className="flex items-baseline gap-2">
-          <span className="font-numeric text-ink-900 text-base font-medium">${product.price}</span>
+          <span className="font-numeric text-ink-900 text-base font-medium">{formatPrice(product.price, currency)}</span>
           {product.originalPrice && (
-            <span className="font-numeric text-ink-400 text-sm line-through font-medium">${product.originalPrice}</span>
+            <span className="font-numeric text-ink-400 text-sm line-through font-medium">{formatPrice(product.originalPrice, currency)}</span>
           )}
         </div>
 

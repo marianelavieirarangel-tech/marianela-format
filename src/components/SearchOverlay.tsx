@@ -1,15 +1,17 @@
 import { useEffect, useState } from 'react';
 import { X, Search as SearchIcon } from 'lucide-react';
 import type { Product } from '@/data/catalog';
+import { formatPrice, type CurrencyCode } from '@/lib/currency';
 
 type Props = {
   products: Product[];
   open: boolean;
+  currency: CurrencyCode;
   onClose: () => void;
   onSelect: (product: Product) => void;
 };
 
-export default function SearchOverlay({ products, open, onClose, onSelect }: Props) {
+export default function SearchOverlay({ products, open, currency, onClose, onSelect }: Props) {
   const [query, setQuery] = useState('');
 
   useEffect(() => {
@@ -114,7 +116,7 @@ export default function SearchOverlay({ products, open, onClose, onSelect }: Pro
                       />
                     </div>
                     <h3 className="font-serif text-sm text-ink-900 leading-tight">{p.name}</h3>
-                    <p className="font-numeric text-xs text-ink-500 mt-0.5">${p.price}</p>
+                    <p className="font-numeric text-xs text-ink-500 mt-0.5">{formatPrice(p.price, currency)}</p>
                   </button>
                 ))}
               </div>
