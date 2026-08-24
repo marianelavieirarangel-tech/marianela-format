@@ -27,7 +27,7 @@ export default function Hero() {
             <em className="text-blush-200">tu cuerpo</em>
           </h1>
           <p className="mt-7 text-sand-100 text-base lg:text-lg font-light leading-relaxed max-w-md animate-fade-up" style={{ animationDelay: '0.45s', opacity: 0 }}>
-            Loungewear y trajes de baño diseñados para celebrar la delicadeza de cada gesto.
+            Trajes de baño y piezas esenciales para celebrar la delicadeza de cada gesto.
           </p>
           <div className="mt-10 flex flex-col sm:flex-row gap-4 animate-fade-up" style={{ animationDelay: '0.65s', opacity: 0 }}>
             <a href="#novedades" className="group inline-flex items-center justify-center gap-3 px-10 py-4 bg-sand-50 text-ink-900 text-xs uppercase tracking-widest transition-all duration-500 hover:bg-blush-200 hover:tracking-ultra">

@@ -35,7 +35,7 @@ export default function SearchOverlay({ products, open, currency, onClose, onSel
       )
     : products.slice(0, 4);
 
-  const suggestions = ['Lencería', 'Loungewear', 'Trajes de Baño', 'Seda', 'Encaje'];
+  const suggestions = ['Bikini', 'Traje de Baño', 'Tankini', 'Seda', 'Encaje'];
 
   return (
     <div className={`fixed inset-0 z-50 ${open ? 'visible' : 'invisible'}`}>

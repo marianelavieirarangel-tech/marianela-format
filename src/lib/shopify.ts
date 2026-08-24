@@ -77,7 +77,7 @@ async function shopifyRequest<T>(query: string, variables: Record<string, unknow
   return result.data;
 }
 
-const knownCategories = ['Bikini', 'Traje de Baño', 'Tankini', 'Trikini', 'Fuera del Agua', 'Accesorios', 'Lencería', 'Loungewear'] as const;
+const knownCategories = ['Bikini', 'Traje de Baño', 'Tankini', 'Trikini', 'Fuera del Agua', 'Accesorios'] as const;
 
 function getCategory(productType: string, tags: string[], collections: Array<{ handle: string; title: string }>): Product['category'] {
   const values = [productType, ...tags, ...collections.flatMap((collection) => [collection.handle, collection.title])]

@@ -1,7 +1,7 @@
 export type Product = {
   id: string;
   name: string;
-  category: 'Bikini' | 'Traje de Baño' | 'Tankini' | 'Trikini' | 'Fuera del Agua' | 'Accesorios' | 'Lencería' | 'Loungewear';
+  category: 'Bikini' | 'Traje de Baño' | 'Tankini' | 'Trikini' | 'Fuera del Agua' | 'Accesorios';
   price: number;
   originalPrice?: number;
   image: string;
@@ -16,7 +16,7 @@ export const products: Product[] = [
   {
     id: 'p1',
     name: 'Conjunto Soirée de Encaje',
-    category: 'Lencería',
+    category: 'Fuera del Agua',
     price: 89,
     image: 'https://images.pexels.com/photos/9356533/pexels-photo-9356533.jpeg?auto=compress&cs=tinysrgb&h=900&w=600',
     swatches: [
@@ -30,7 +30,7 @@ export const products: Product[] = [
   {
     id: 'p2',
     name: 'Body Noir Velours',
-    category: 'Lencería',
+    category: 'Fuera del Agua',
     price: 74,
     image: 'https://images.pexels.com/photos/9132317/pexels-photo-9132317.jpeg?auto=compress&cs=tinysrgb&h=900&w=600',
     swatches: [
@@ -43,7 +43,7 @@ export const products: Product[] = [
   {
     id: 'p3',
     name: 'Conjunto Blanche Florale',
-    category: 'Lencería',
+    category: 'Fuera del Agua',
     price: 95,
     originalPrice: 120,
     image: 'https://images.pexels.com/photos/13362549/pexels-photo-13362549.jpeg?auto=compress&cs=tinysrgb&h=900&w=600',
@@ -57,7 +57,7 @@ export const products: Product[] = [
   {
     id: 'p4',
     name: 'Pijama Satin Élégance',
-    category: 'Loungewear',
+    category: 'Fuera del Agua',
     price: 128,
     image: 'https://images.pexels.com/photos/7162014/pexels-photo-7162014.jpeg?auto=compress&cs=tinysrgb&h=900&w=600',
     swatches: [
@@ -71,7 +71,7 @@ export const products: Product[] = [
   {
     id: 'p5',
     name: 'Camisole Rose Tendre',
-    category: 'Loungewear',
+    category: 'Fuera del Agua',
     price: 68,
     image: 'https://images.pexels.com/photos/7162012/pexels-photo-7162012.jpeg?auto=compress&cs=tinysrgb&h=900&w=600',
     swatches: [
@@ -84,7 +84,7 @@ export const products: Product[] = [
   {
     id: 'p6',
     name: 'Robe Soie Noir',
-    category: 'Loungewear',
+    category: 'Fuera del Agua',
     price: 142,
     image: 'https://images.pexels.com/photos/6976713/pexels-photo-6976713.jpeg?auto=compress&cs=tinysrgb&h=900&w=600',
     swatches: [
@@ -179,8 +179,6 @@ export const categorySlugs: Record<string, string> = {
   Trikini: 'trikinis',
   'Fuera del Agua': 'fuera-del-agua',
   Accesorios: 'accesorios',
-  Lencería: 'lenceria',
-  Loungewear: 'loungewear',
   Novedades: 'novedades',
   Sale: 'sale',
 };
@@ -193,13 +191,11 @@ export const womenSubcategories = [
   'Trikini',
   'Fuera del Agua',
   'Accesorios',
-  'Lencería',
-  'Loungewear',
   'Sale',
 ];
 
 export const womenMenuSubcategories = womenSubcategories.filter(
-  (category) => !['Novedades', 'Lencería', 'Loungewear'].includes(category),
+  (category) => !['Novedades'].includes(category),
 );
 
 export const footerLinks = {
