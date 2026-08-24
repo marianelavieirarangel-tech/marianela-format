@@ -85,8 +85,8 @@ function getCategory(productType: string, tags: string[], collections: Array<{ h
   return knownCategories.find((category) => values.some((value) => value.includes(category.toLowerCase()))) ?? 'Accesorios';
 }
 
-function getTag(tags: string[], hasCompareAtPrice: boolean): Product['tag'] {
-  if (hasCompareAtPrice) return 'Sale';
+function getTag(category: Product['category'], tags: string[], hasCompareAtPrice: boolean): Product['tag'] {
+  if (hasCompareAtPrice && category !== 'Bikini') return 'Sale';
   if (tags.some((tag) => tag.toLowerCase() === 'bestseller')) return 'Bestseller';
   if (tags.some((tag) => ['new', 'new arrival', 'novedades'].includes(tag.toLowerCase()))) return 'Novedades';
   return undefined;
@@ -111,15 +111,16 @@ export async function fetchShopifyProducts() {
       const compareAtPrice = Number(product.compareAtPriceRange.minVariantPrice.amount);
       const colors = variant?.selectedOptions.filter((option) => option.name.toLowerCase() === 'color') ?? [];
 
+      const category = getCategory(product.productType, product.tags, product.collections.nodes);
       return {
         id: product.id.split('/').pop() ?? product.id,
         name: product.title,
-        category: getCategory(product.productType, product.tags, product.collections.nodes),
+        category,
         price,
         originalPrice: compareAtPrice > price ? compareAtPrice : undefined,
         image: product.featuredImage?.url ?? product.images.nodes[0].url,
         swatches: colors.map((color) => ({ name: color.value, hex: '#d9b2a7' })),
-        tag: getTag(product.tags, compareAtPrice > price),
+        tag: getTag(category, product.tags, compareAtPrice > price),
         description: product.description || 'Una pieza de Marianela Vieira.',
         shopifyVariantId: variant?.id,
       };

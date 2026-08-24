@@ -30,7 +30,7 @@ export default function FeaturedProducts({ products, currency, onQuickAdd, onTog
 
   const filtered = products.filter((p) => {
     if (active === 'Todos') return true;
-    if (active === 'Sale') return p.tag === 'Sale';
+    if (active === 'Sale') return p.tag === 'Sale' && p.category !== 'Bikini';
     if (active === 'Novedades') return p.tag === 'Novedades';
     return p.category === active;
   });

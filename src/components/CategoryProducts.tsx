@@ -33,8 +33,11 @@ export default function CategoryProducts({
   onBack,
 }: Props) {
   const filtered = products.filter((product) => {
-    if (categoryName === 'Sale' || categoryName === 'Novedades') {
-      return product.tag === categoryName;
+    if (categoryName === 'Sale') {
+      return product.tag === 'Sale' && product.category !== 'Bikini';
+    }
+    if (categoryName === 'Novedades') {
+      return product.tag === 'Novedades';
     }
     return product.category === categoryName;
   });
