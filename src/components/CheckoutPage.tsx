@@ -43,7 +43,7 @@ export default function CheckoutPage({ items, onClose, onUpdateQty, onRemove }: 
     setCheckoutError('');
 
     try {
-      const checkoutUrl = await createShopifyCheckout(
+      const { checkoutUrl } = await createShopifyCheckout(
         items.map((item) => ({ variantId: item.product.shopifyVariantId, quantity: item.quantity })),
       );
       window.location.href = checkoutUrl;

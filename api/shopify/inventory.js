@@ -15,7 +15,7 @@ async function fetchJson(url, opts = {}) {
   }
 }
 
-module.exports = async function handler(req, res) {
+export default async function handler(req, res) {
   if (!SHOP_DOMAIN || !ADMIN_TOKEN) {
     return res.status(500).json({ error: 'Server misconfiguration: SHOPIFY_STORE_DOMAIN or SHOPIFY_ADMIN_TOKEN not set' });
   }

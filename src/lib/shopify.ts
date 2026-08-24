@@ -6,6 +6,7 @@ const storeDomain = String(import.meta.env.VITE_SHOPIFY_STORE_DOMAIN ?? '')
   .replace(/\/$/, '');
 const storefrontToken = import.meta.env.VITE_SHOPIFY_STOREFRONT_TOKEN;
 const storefrontApiUrl = `https://${storeDomain}/api/2025-07/graphql.json`;
+const CART_ID_STORAGE_KEY = 'marianela-cart-id';
 
 export function isShopifyEnabled() {
   return Boolean(storeDomain && storefrontToken);
@@ -141,21 +142,25 @@ export async function findVariantGidByTitle(name: string) {
   return variantId || null;
 }
 
-export async function createShopifyCheckout(items: { variantId?: string; quantity: number }[]) {
+export async function createShopifyCheckout(items: { variantId?: string; quantity: number }[], cartId?: string | null) {
+  const storedCartId = typeof window === 'undefined' ? null : window.localStorage.getItem(CART_ID_STORAGE_KEY);
   const response = await fetch('/api/shopify/checkout', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ items }),
+    body: JSON.stringify({ items, cartId: cartId || storedCartId || undefined }),
   });
   const body = await response.text();
-  let result: { checkoutUrl?: string; error?: string } = {};
+  let result: { checkoutUrl?: string; cartId?: string; error?: string } = {};
   try {
-    result = JSON.parse(body) as { checkoutUrl?: string; error?: string };
+    result = JSON.parse(body) as { checkoutUrl?: string; cartId?: string; error?: string };
   } catch {
     throw new Error(body.slice(0, 160) || `Vercel respondió con ${response.status}.`);
   }
   if (!response.ok || !result.checkoutUrl) {
     throw new Error(result.error || 'No se pudo abrir el checkout de Shopify.');
   }
-  return result.checkoutUrl;
+  if (result.cartId && typeof window !== 'undefined') {
+    window.localStorage.setItem(CART_ID_STORAGE_KEY, result.cartId);
+  }
+  return { checkoutUrl: result.checkoutUrl, cartId: result.cartId };
 }

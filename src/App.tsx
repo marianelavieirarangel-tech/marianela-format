@@ -18,6 +18,24 @@ import type { Product } from '@/data/catalog';
 import { categorySlugs, products, navLinks, womenSubcategories } from '@/data/catalog';
 import { createShopifyCheckout, fetchShopifyProducts, isShopifyEnabled } from '@/lib/shopify';
 
+const CART_STORAGE_KEY = 'marianela-cart';
+const CART_ID_STORAGE_KEY = 'marianela-cart-id';
+
+function readStoredCart(): CartItem[] {
+  if (typeof window === 'undefined') return [];
+  try {
+    const stored = JSON.parse(window.localStorage.getItem(CART_STORAGE_KEY) || '[]');
+    return Array.isArray(stored) ? stored : [];
+  } catch {
+    return [];
+  }
+}
+
+function readStoredCartId(): string | null {
+  if (typeof window === 'undefined') return null;
+  return window.localStorage.getItem(CART_ID_STORAGE_KEY);
+}
+
 export default function App() {
   const [quickAddProduct, setQuickAddProduct] = useState<Product | null>(null);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
@@ -25,10 +43,20 @@ export default function App() {
   const [checkoutOpen, setCheckoutOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [wishlistOpen, setWishlistOpen] = useState(false);
-  const [cart, setCart] = useState<CartItem[]>([]);
+  const [cart, setCart] = useState<CartItem[]>(readStoredCart);
+  const [cartId, setCartId] = useState<string | null>(readStoredCartId);
   const [wishlist, setWishlist] = useState<Set<string>>(new Set());
   const [catalogProducts, setCatalogProducts] = useState(products);
   const [catalogError, setCatalogError] = useState<string | null>(null);
+
+  useEffect(() => {
+    window.localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cart));
+  }, [cart]);
+
+  useEffect(() => {
+    if (cartId) window.localStorage.setItem(CART_ID_STORAGE_KEY, cartId);
+    else window.localStorage.removeItem(CART_ID_STORAGE_KEY);
+  }, [cartId]);
 
   useEffect(() => {
     if (!isShopifyEnabled()) return;
@@ -96,8 +124,9 @@ export default function App() {
     if (items.some((item) => !item.variantId)) {
       throw new Error('Este producto no tiene una variante de Shopify disponible.');
     }
-    const checkoutUrl = await createShopifyCheckout(items);
-    window.location.href = checkoutUrl;
+    const checkout = await createShopifyCheckout(items, cartId);
+    if (checkout.cartId && checkout.cartId !== cartId) setCartId(checkout.cartId);
+    window.location.href = checkout.checkoutUrl;
   };
 
   function ProductPage() {

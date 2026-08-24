@@ -4,13 +4,16 @@
 //   SHOPIFY_STORE_DOMAIN (myshop.myshopify.com)
 //   SHOPIFY_ADMIN_TOKEN (admin API token with write_webhooks scope)
 //   VERCEL_URL or PUBLIC_SITE_URL (the public URL where this app is hosted)
-// Optional:
-//   SHOPIFY_WEBHOOK_SECRET (to verify incoming webhooks; recommended)
+// Required:
+//   SHOPIFY_WEBHOOK_REGISTRATION_SECRET (admin-only endpoint secret)
+
+import crypto from 'node:crypto';
 
 const SHOP_DOMAIN = process.env.SHOPIFY_STORE_DOMAIN;
 const ADMIN_TOKEN = process.env.SHOPIFY_ADMIN_TOKEN;
 const VERCEL_URL = process.env.VERCEL_URL;
 const PUBLIC_SITE_URL = process.env.PUBLIC_SITE_URL; // alternative override
+const REGISTRATION_SECRET = process.env.SHOPIFY_WEBHOOK_REGISTRATION_SECRET;
 
 async function fetchJson(url, opts = {}) {
   const res = await fetch(url, opts);
@@ -22,24 +25,36 @@ async function fetchJson(url, opts = {}) {
   }
 }
 
-module.exports = async function handler(req, res) {
+export default async function handler(req, res) {
+  if (req.method !== 'POST') return res.status(405).json({ ok: false, error: 'Only POST allowed' });
+  if (!REGISTRATION_SECRET) {
+    return res.status(500).json({ ok: false, error: 'Missing SHOPIFY_WEBHOOK_REGISTRATION_SECRET in env' });
+  }
+  const providedSecret = req.headers.authorization?.replace(/^Bearer\s+/i, '') || req.headers['x-webhook-registration-secret'];
+  const expected = Buffer.from(REGISTRATION_SECRET);
+  const provided = Buffer.from(String(providedSecret || ''));
+  if (expected.length !== provided.length || !crypto.timingSafeEqual(expected, provided)) {
+    return res.status(401).json({ ok: false, error: 'Unauthorized' });
+  }
   if (!SHOP_DOMAIN || !ADMIN_TOKEN) {
     return res.status(500).json({ ok: false, error: 'Missing SHOPIFY_STORE_DOMAIN or SHOPIFY_ADMIN_TOKEN in env' });
   }
 
   // build the public address for webhook callbacks
   const baseUrl = PUBLIC_SITE_URL || (VERCEL_URL ? `https://${VERCEL_URL}` : null);
-  if (!baseUrl && !req.query.address) {
-    return res.status(400).json({ ok: false, error: 'No PUBLIC_SITE_URL or VERCEL_URL set. Provide address as query param or set PUBLIC_SITE_URL env var.' });
+  if (!baseUrl) {
+    return res.status(400).json({ ok: false, error: 'No PUBLIC_SITE_URL or VERCEL_URL set.' });
   }
 
-  const addressFromQuery = req.query.address;
-  const address = addressFromQuery || `${baseUrl.replace(/\/$/, '')}/api/shopify/webhook-handler`;
+  const address = `${baseUrl.replace(/\/$/, '')}/api/shopify/webhook-handler`;
 
   // topics to register by default; can be overridden with ?topics=topic1,topic2
   const defaultTopics = ['inventory_levels/update', 'inventory_items/update'];
   const topicsParam = req.query.topics;
   const topics = topicsParam ? String(topicsParam).split(',').map((s) => s.trim()) : defaultTopics;
+  if (topics.some((topic) => !defaultTopics.includes(topic))) {
+    return res.status(400).json({ ok: false, error: 'Unsupported webhook topic' });
+  }
 
   try {
     // Get existing webhooks

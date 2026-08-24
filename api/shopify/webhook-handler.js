@@ -4,7 +4,7 @@
 // Additionally: when inventory changes, warm the inventory endpoint cache by fetching
 // /api/shopify/inventory?variantId=... for affected variants so the edge cache is populated.
 
-const crypto = require('crypto');
+import crypto from 'node:crypto';
 
 const SHOPIFY_WEBHOOK_SECRET = process.env.SHOPIFY_WEBHOOK_SECRET || null;
 const SHOP_DOMAIN = process.env.SHOPIFY_STORE_DOMAIN;
@@ -31,7 +31,7 @@ async function fetchJson(url, opts = {}) {
   }
 }
 
-module.exports = async function handler(req, res) {
+export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ ok: false, error: 'Only POST allowed' });
 
   try {
@@ -39,16 +39,14 @@ module.exports = async function handler(req, res) {
     const hmacHeader = req.headers['x-shopify-hmac-sha256'];
     const topic = req.headers['x-shopify-topic'] || 'unknown';
 
-    if (SHOPIFY_WEBHOOK_SECRET) {
-      if (!hmacHeader) return res.status(401).json({ ok: false, error: 'Missing HMAC header' });
-      const hmac = crypto.createHmac('sha256', SHOPIFY_WEBHOOK_SECRET).update(rawBody).digest('base64');
-      const secureCompare = crypto.timingSafeEqual(Buffer.from(hmac), Buffer.from(String(hmacHeader)));
-      if (!secureCompare) {
-        console.warn('Webhook HMAC verification failed');
-        return res.status(401).json({ ok: false, error: 'HMAC verification failed' });
-      }
-    } else {
-      console.warn('SHOPIFY_WEBHOOK_SECRET not set — webhook payloads will not be verified');
+    if (!SHOPIFY_WEBHOOK_SECRET) return res.status(500).json({ ok: false, error: 'Webhook verification is not configured' });
+    if (!hmacHeader) return res.status(401).json({ ok: false, error: 'Missing HMAC header' });
+    const hmac = crypto.createHmac('sha256', SHOPIFY_WEBHOOK_SECRET).update(rawBody).digest('base64');
+    const expected = Buffer.from(hmac);
+    const provided = Buffer.from(String(hmacHeader));
+    if (expected.length !== provided.length || !crypto.timingSafeEqual(expected, provided)) {
+      console.warn('Webhook HMAC verification failed');
+      return res.status(401).json({ ok: false, error: 'HMAC verification failed' });
     }
 
     const payloadText = rawBody.toString('utf8');

@@ -96,13 +96,13 @@ async function findVariantByTitle(title) {
   for (const r of results) {
     if (!r.gid) continue;
     // Build pattern to find the product block by id and insert shopifyVariantId after description
-    const pattern = new RegExp(`(id:\s*'${escapeRegExp(r.id)}'[\s\S]*?description:\s*'([\\s\\S]*?)',)`, 'm');
+    const pattern = new RegExp(`(id:\\s*'${escapeRegExp(r.id)}'[\\s\\S]*?description:\\s*'([\\s\\S]*?)',)`, 'm');
     const insertText = `$1\n    shopifyVariantId: '${r.gid}',`;
     if (pattern.test(newContent)) {
       newContent = newContent.replace(pattern, insertText);
     } else {
       // fallback: find the object by id and insert before the closing of the object
-      const objPattern = new RegExp(`(id:\s*'${escapeRegExp(r.id)}'[\s\S]*?)(\\},)`, 'm');
+      const objPattern = new RegExp(`(id:\\s*'${escapeRegExp(r.id)}'[\\s\\S]*?)(\\},)`, 'm');
       if (objPattern.test(newContent)) {
         newContent = newContent.replace(objPattern, `$1    shopifyVariantId: '${r.gid}',\n  },`);
       } else {

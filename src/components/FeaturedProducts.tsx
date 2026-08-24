@@ -239,8 +239,8 @@ function ProductCard({
                 return;
               }
               try {
-                const url = await createShopifyCheckout([{ variantId: product.shopifyVariantId, quantity: 1 }]);
-                window.location.href = url;
+                const { checkoutUrl } = await createShopifyCheckout([{ variantId: product.shopifyVariantId, quantity: 1 }]);
+                window.location.href = checkoutUrl;
               } catch (err) {
                 console.error(err);
                 alert('Error al crear checkout: ' + (err instanceof Error ? err.message : String(err)));
