@@ -33,18 +33,18 @@ export default function CategoryProducts({
   return (
     <section className="min-h-screen bg-sand-50">
       {/* Header */}
-      <div className="bg-sand-100 sticky top-24 z-20">
-        <div className="mx-auto max-w-7xl px-6 lg:px-10 py-3 lg:py-4">
+      <div className="bg-sand-100 sticky top-[72px] z-20">
+        <div className="mx-auto max-w-7xl px-6 lg:px-10 py-2.5 lg:py-3">
           <button
             onClick={onBack}
-            className="flex items-center gap-2 text-ink-700 hover:text-blush-500 transition-colors mb-2"
+            className="flex items-center gap-2 text-ink-700 hover:text-blush-500 transition-colors mb-1.5"
           >
             <ArrowLeft size={18} strokeWidth={1.5} />
             <span className="text-sm uppercase tracking-widest">Volver</span>
           </button>
           <div className="flex items-end justify-between">
             <div>
-              <p className="text-blush-500 text-[11px] tracking-ultra uppercase mb-1">
+              <p className="text-blush-500 text-[11px] tracking-ultra uppercase mb-0.5">
                 Nuestras Colecciones
               </p>
               <h1 className="font-serif text-4xl lg:text-5xl text-ink-900 font-light tracking-wide">
@@ -59,7 +59,7 @@ export default function CategoryProducts({
       </div>
 
       {/* Products Grid */}
-      <div className="mx-auto max-w-7xl px-6 lg:px-10 py-16 lg:py-24">
+      <div className="mx-auto max-w-7xl px-6 lg:px-10 pt-6 pb-16 lg:pt-8 lg:pb-24">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {filtered.map((product, i) => (
             <ProductCard
