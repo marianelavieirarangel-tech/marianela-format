@@ -142,14 +142,14 @@ export default function Header({
             {/* Logo */}
             <button
               onClick={handleLogoClick}
-              className="flex items-center justify-center justify-self-center -translate-y-0.5 sm:-translate-y-1 lg:-translate-y-1.5"
+              className="flex items-center justify-center justify-self-center -translate-y-1 sm:-translate-y-1.5 lg:-translate-y-2"
               aria-label="Marianela Vieira inicio"
               type="button"
             >
               <img
                 src={logo}
                 alt="Marianela Vieira logo"
-                className="h-20 w-auto max-w-[380px] object-contain sm:h-24 lg:h-28"
+                className="h-20 w-auto max-w-[380px] object-contain sm:h-24 lg:h-30"
               />
             </button>
 

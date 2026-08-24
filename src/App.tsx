@@ -22,6 +22,7 @@ import { createShopifyCheckout, fetchShopifyProducts, isShopifyEnabled } from '@
 
 const CART_STORAGE_KEY = 'marianela-cart';
 const CART_ID_STORAGE_KEY = 'marianela-cart-id';
+const WISHLIST_STORAGE_KEY = 'marianela-wishlist';
 
 function readStoredCart(): CartItem[] {
   if (typeof window === 'undefined') return [];
@@ -38,6 +39,16 @@ function readStoredCartId(): string | null {
   return window.localStorage.getItem(CART_ID_STORAGE_KEY);
 }
 
+function readStoredWishlist(): Set<string> {
+  if (typeof window === 'undefined') return new Set();
+  try {
+    const stored = JSON.parse(window.localStorage.getItem(WISHLIST_STORAGE_KEY) || '[]');
+    return new Set(Array.isArray(stored) ? stored : []);
+  } catch {
+    return new Set();
+  }
+}
+
 export default function App() {
   const location = useLocation();
   const [quickAddProduct, setQuickAddProduct] = useState<Product | null>(null);
@@ -48,7 +59,7 @@ export default function App() {
   const [wishlistOpen, setWishlistOpen] = useState(false);
   const [cart, setCart] = useState<CartItem[]>(readStoredCart);
   const [cartId, setCartId] = useState<string | null>(readStoredCartId);
-  const [wishlist, setWishlist] = useState<Set<string>>(new Set());
+  const [wishlist, setWishlist] = useState<Set<string>>(readStoredWishlist);
   const [catalogProducts, setCatalogProducts] = useState(products);
   const [catalogError, setCatalogError] = useState<string | null>(null);
   const [currency, setCurrency] = useState<CurrencyCode>('PEN');
@@ -62,6 +73,10 @@ export default function App() {
     if (cartId) window.localStorage.setItem(CART_ID_STORAGE_KEY, cartId);
     else window.localStorage.removeItem(CART_ID_STORAGE_KEY);
   }, [cartId]);
+
+  useEffect(() => {
+    window.localStorage.setItem(WISHLIST_STORAGE_KEY, JSON.stringify([...wishlist]));
+  }, [wishlist]);
 
   useEffect(() => {
     if (!isShopifyEnabled()) return;
