@@ -16,6 +16,15 @@ type Props = {
 
 const filters = Array.from(new Set(['Todos', 'Novedades', ...womenSubcategories, 'Sale'])) as const;
 
+function getProductBadge(product: Product) {
+  if (product.originalPrice && product.originalPrice > product.price) {
+    const discount = Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100);
+    return `-${discount}%`;
+  }
+
+  return product.tag ?? '';
+}
+
 export default function FeaturedProducts({ products, currency, onQuickAdd, onToggleWishlist, wishlist }: Props) {
   const [active, setActive] = useState<(typeof filters)[number]>('Todos');
 
@@ -93,6 +102,7 @@ function ProductCard({
   const navigate = useNavigate();
   const [activeSwatch, setActiveSwatch] = useState(0);
   const [stock, setStock] = useState<number | null>(null);
+  const badgeText = getProductBadge(product);
 
   useEffect(() => {
     let mounted = true;
@@ -151,17 +161,17 @@ function ProductCard({
         />
 
         {/* Tag */}
-        {product.tag && (
+        {badgeText && (
           <span
             className={`absolute top-3 left-3 px-3 py-1 text-[9px] uppercase tracking-widest ${
-              product.tag === 'Sale'
+              product.originalPrice && product.originalPrice > product.price
                 ? 'bg-blush-500 text-sand-50'
                 : product.tag === 'Bestseller'
                 ? 'bg-ink-900 text-sand-50'
                 : 'bg-sand-50 text-ink-800'
             }`}
           >
-            {product.tag}
+            {badgeText}
           </span>
         )}
 
