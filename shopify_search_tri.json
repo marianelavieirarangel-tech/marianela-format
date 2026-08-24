@@ -1,0 +1,4 @@
+{
+  "query": "query Search($query: String!) { products(first:20, query: $query) { nodes { id title handle variants(first:20) { nodes { id title sku } } } } }",
+  "variables": { "query": "triangulo" }
+}
