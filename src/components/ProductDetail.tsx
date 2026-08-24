@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Heart, Share2, ArrowLeft, Minus, Plus } from 'lucide-react';
+import { Heart, Share2, ArrowLeft, Minus, Plus, MessageCircle } from 'lucide-react';
 import type { Product } from '@/data/catalog';
 import type { CartItem } from '@/components/QuickAddModal';
 
@@ -21,6 +21,8 @@ export default function ProductDetail({
   const [quantity, setQuantity] = useState(1);
   const [selectedSize, setSelectedSize] = useState<string>('');
   const [selectedColor, setSelectedColor] = useState<string>(product.swatches[0]?.name || '');
+  const waMessage = `Hola, me gustaría consultar el producto *${product.name}* y quisiera más información.`;
+  const waLink = `https://wa.me/51949217304?text=${encodeURIComponent(waMessage)}`;
 
   const handleAddToCart = () => {
     if (!selectedSize) {
@@ -204,6 +206,16 @@ export default function ProductDetail({
                 </button>
               </div>
             </div>
+
+            <a
+              href={waLink}
+              target="_blank"
+              rel="noreferrer"
+              className="mt-2 flex items-center justify-center gap-3 rounded-full border border-[#7ccf9a] bg-[#f6fff8] px-4 py-3 text-sm font-medium uppercase tracking-[0.18em] text-ink-800 transition-all hover:bg-[#ecfdf2]"
+            >
+              <MessageCircle size={18} className="text-[#25D366]" />
+              Consulta este producto por WhatsApp
+            </a>
 
             {/* Additional Info */}
             <div className="space-y-4 pt-8 border-t border-ink-200">
