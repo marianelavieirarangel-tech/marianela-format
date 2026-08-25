@@ -45,7 +45,10 @@ async function shopifyRequest(query, variables) {
   return { response, result: await response.json() };
 }
 
+const { setSecurityHeaders } = require('../_lib/security');
+
 export default async function handler(req, res) {
+  setSecurityHeaders(res);
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Método no permitido.' });
   }
