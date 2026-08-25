@@ -16,6 +16,7 @@ import SearchOverlay from '@/components/SearchOverlay';
 import WishlistDrawer from '@/components/WishlistDrawer';
 import NewsletterModal from '@/components/NewsletterModal';
 import InfoPage from '@/components/InfoPage';
+import CookiePreferences from '@/components/CookiePreferences';
 import type { Product } from '@/data/catalog';
 import { categorySlugs, products, navLinks, womenSubcategories, hiddenCategoryNames } from '@/data/catalog';
 import { currencyOptions, type CurrencyCode } from '@/lib/currency';
@@ -260,7 +261,7 @@ export default function App() {
           target="_blank"
           rel="noreferrer"
           aria-label="Consultar por WhatsApp"
-          className="fixed bottom-5 right-5 z-50 flex items-center justify-center rounded-full border border-[#7ccf9a] bg-white/90 p-3 text-[#25D366] shadow-[0_12px_28px_rgba(28,37,27,0.08)] backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_16px_28px_rgba(28,37,27,0.12)]"
+          className="fixed bottom-20 right-5 z-50 flex items-center justify-center rounded-full border border-[#7ccf9a] bg-white/90 p-3 text-[#25D366] shadow-[0_12px_28px_rgba(28,37,27,0.08)] backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_16px_28px_rgba(28,37,27,0.12)]"
         >
           <MessageCircle size={22} strokeWidth={2} className="text-[#25D366]" />
         </a>
@@ -304,6 +305,7 @@ export default function App() {
         }}
       />
       <NewsletterModal />
+      <CookiePreferences />
     </div>
   );
 }
