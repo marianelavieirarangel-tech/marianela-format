@@ -1,3 +1,5 @@
+import { setSecurityHeaders } from '../_lib/security.js';
+
 const SHOP_DOMAIN = String(
   process.env.SHOPIFY_STORE_DOMAIN || process.env.VITE_SHOPIFY_STORE_DOMAIN || '',
 )
@@ -27,6 +29,7 @@ const query = `query Catalog {
 }`;
 
 export default async function handler(req, res) {
+  setSecurityHeaders(res);
   if (!SHOP_DOMAIN || !STOREFRONT_TOKEN) {
     return res.status(500).json({ error: 'Faltan las variables de Shopify en Vercel.' });
   }

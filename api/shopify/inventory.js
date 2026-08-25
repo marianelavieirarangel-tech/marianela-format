@@ -2,6 +2,8 @@
 // Expects query param `variantGid` (gid://shopify/ProductVariant/123...) OR `variantId` (numeric)
 // Requires env vars (set in Vercel): SHOPIFY_STORE_DOMAIN and SHOPIFY_ADMIN_TOKEN
 
+import { setSecurityHeaders } from '../_lib/security.js';
+
 const SHOP_DOMAIN = process.env.SHOPIFY_STORE_DOMAIN; // e.g. myshop.myshopify.com
 const ADMIN_TOKEN = process.env.SHOPIFY_ADMIN_TOKEN; // Admin API access token (private)
 
@@ -16,6 +18,7 @@ async function fetchJson(url, opts = {}) {
 }
 
 export default async function handler(req, res) {
+  setSecurityHeaders(res);
   if (!SHOP_DOMAIN || !ADMIN_TOKEN) {
     return res.status(500).json({ error: 'Server misconfiguration: SHOPIFY_STORE_DOMAIN or SHOPIFY_ADMIN_TOKEN not set' });
   }

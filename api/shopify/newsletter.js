@@ -1,3 +1,5 @@
+import { setSecurityHeaders } from '../_lib/security.js';
+
 const SHOP_DOMAIN = String(process.env.SHOPIFY_STORE_DOMAIN || '')
   .trim()
   .replace(/^https?:\/\//, '')
@@ -12,6 +14,7 @@ const mutation = `mutation CreateNewsletterCustomer($input: CustomerInput!) {
 }`;
 
 export default async function handler(req, res) {
+  setSecurityHeaders(res);
   if (req.method !== 'POST') return res.status(405).json({ error: 'Método no permitido.' });
   if (!SHOP_DOMAIN || !ADMIN_TOKEN) {
     return res.status(500).json({ error: 'Falta SHOPIFY_STORE_DOMAIN o SHOPIFY_ADMIN_TOKEN en Vercel.' });

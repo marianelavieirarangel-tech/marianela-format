@@ -5,6 +5,7 @@
 // /api/shopify/inventory?variantId=... for affected variants so the edge cache is populated.
 
 import crypto from 'node:crypto';
+import { setSecurityHeaders } from '../_lib/security.js';
 
 const SHOPIFY_WEBHOOK_SECRET = process.env.SHOPIFY_WEBHOOK_SECRET || null;
 const SHOP_DOMAIN = process.env.SHOPIFY_STORE_DOMAIN;
@@ -32,6 +33,7 @@ async function fetchJson(url, opts = {}) {
 }
 
 export default async function handler(req, res) {
+  setSecurityHeaders(res);
   if (req.method !== 'POST') return res.status(405).json({ ok: false, error: 'Only POST allowed' });
 
   try {

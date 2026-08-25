@@ -8,6 +8,7 @@
 //   SHOPIFY_WEBHOOK_REGISTRATION_SECRET (admin-only endpoint secret)
 
 import crypto from 'node:crypto';
+import { setSecurityHeaders } from '../_lib/security.js';
 
 const SHOP_DOMAIN = process.env.SHOPIFY_STORE_DOMAIN;
 const ADMIN_TOKEN = process.env.SHOPIFY_ADMIN_TOKEN;
@@ -26,6 +27,7 @@ async function fetchJson(url, opts = {}) {
 }
 
 export default async function handler(req, res) {
+  setSecurityHeaders(res);
   if (req.method !== 'POST') return res.status(405).json({ ok: false, error: 'Only POST allowed' });
   if (!REGISTRATION_SECRET) {
     return res.status(500).json({ ok: false, error: 'Missing SHOPIFY_WEBHOOK_REGISTRATION_SECRET in env' });
