@@ -280,6 +280,31 @@ const refundSections: LegalSection[] = [
   },
 ];
 
+const shippingSections: LegalSection[] = [
+  {
+    title: '1. Estado de envío',
+    paragraphs: ['Al finalizar la preparación del pedido, recibirás un correo electrónico confirmando que ha sido procesado y entregado al operador logístico o courier. Cuando la empresa de mensajería se haga cargo del paquete, recibirás una notificación con los detalles y el enlace de seguimiento.'],
+  },
+  {
+    title: '2. Datos de envío',
+    paragraphs: ['Marianela Trajes de Baño S.A.C. utilizará exclusivamente los datos proporcionados durante el proceso de compra en marianelavieira.com. El cliente debe verificar que la dirección y los datos de contacto sean correctos y completos en el correo de confirmación.', 'La empresa no se responsabiliza por retrasos o entregas fallidas derivados de direcciones incorrectas, incompletas o de la falta de información necesaria para ubicar el lugar de entrega.'],
+  },
+  {
+    title: '3. Plazos de procesamiento y envío',
+    bullets: ['Los pedidos se procesarán dentro de las 48 horas hábiles posteriores a la confirmación del pago a través de Izipay.', 'El procesamiento se realiza de lunes a viernes en horario de oficina. Los pedidos realizados durante fines de semana o feriados se procesarán a partir del siguiente día hábil por la mañana.', 'Los plazos de entrega varían según el courier asignado y el destino dentro del Perú, incluyendo Lima Metropolitana, Callao y provincias.'],
+  },
+  {
+    title: '4. Recepción y entrega autorizada',
+    paragraphs: ['Al recibir el pedido, el cliente o la persona autorizada debe inspeccionar cuidadosamente el paquete antes de firmar el comprobante de entrega.'],
+    bullets: ['Si el paquete muestra señales de manipulación, daños o rupturas, firma el cargo con observaciones o rechaza la entrega.', 'Ante cualquier incidencia, notifica inmediatamente al courier y envía un reporte con evidencias fotográficas a soporte@marianelavieira.com.'],
+  },
+  {
+    title: '5. Retiro en tienda (Click & Collect)',
+    paragraphs: ['Puedes comprar online y retirar tu pedido sin costo adicional en nuestra sede autorizada: Jirón Preciados 145, 15038, Lima, Perú.'],
+    bullets: ['Procedimiento: selecciona la opción de recogida en tienda durante el pago. Cuando el pedido esté listo, recibirás una notificación por correo.', 'Requisitos: presenta tu DNI o Carnet de Extranjería y el correo electrónico de confirmación del pedido.', 'Devoluciones presenciales: los artículos pueden entregarse en el establecimiento para su revisión. Los reembolsos se procesan exclusivamente mediante el método de pago original, Izipay, y no se realizan devoluciones en efectivo en el local.'],
+  },
+];
+
 function LegalDocument({ title, intro, sections }: { title: string; intro: string; sections: LegalSection[] }) {
   return (
     <section className="mx-auto max-w-4xl px-6 py-16 lg:px-10 lg:py-24">
@@ -324,6 +349,10 @@ export default function InfoPage() {
 
   if (slug === 'refund-policy') {
     return <LegalDocument title={content.title} intro={content.intro} sections={refundSections} />;
+  }
+
+  if (slug === 'envios-y-devoluciones') {
+    return <LegalDocument title="Política de Envíos" intro="Información sobre el procesamiento, seguimiento, entrega y retiro de pedidos de Marianela Vieira." sections={shippingSections} />;
   }
 
   if (slug === 'guia-de-tallas') {
