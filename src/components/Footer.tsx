@@ -19,6 +19,15 @@ const footerLinkPaths: Record<string, string> = {
   'Aviso Legal': '/policies/legal-notice',
 };
 
+const footerBottomLinks = [
+  ['Política de Reembolso', '/policies/refund-policy'],
+  ['Política de Privacidad', '/policies/privacy-policy'],
+  ['Términos del Servicio', '/policies/terms-of-service'],
+  ['Política de Envíos', '/pages/envios-y-devoluciones'],
+  ['Información de Contacto', '/pages/contacto'],
+  ['Aviso Legal', '/policies/legal-notice'],
+] as const;
+
 export default function Footer() {
   const [email, setEmail] = useState('');
   const [submitted, setSubmitted] = useState(false);
@@ -130,7 +139,15 @@ export default function Footer() {
 
       {/* Bottom bar */}
       <div className="border-t border-ink-700">
-        <div className="mx-auto max-w-7xl px-6 lg:px-10 py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="mx-auto max-w-7xl px-6 lg:px-10 py-6">
+          <nav className="mb-5 flex flex-wrap justify-center gap-x-5 gap-y-2" aria-label="Enlaces legales">
+            {footerBottomLinks.map(([label, path]) => (
+              <Link key={path} to={path} className="text-xs text-ink-400 transition-colors hover:text-sand-50 link-underline">
+                {label}
+              </Link>
+            ))}
+          </nav>
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-ink-400 text-xs tracking-wide">
             © 2026 Marianela Vieira. Todos los derechos reservados.
           </p>
@@ -139,6 +156,7 @@ export default function Footer() {
             <span>Mastercard</span>
             <span>Amex</span>
             <span>PayPal</span>
+          </div>
           </div>
         </div>
       </div>

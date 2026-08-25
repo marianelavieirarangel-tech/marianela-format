@@ -72,6 +72,11 @@ const pageContent: Record<string, { title: string; intro: string; sections: stri
     intro: 'Información legal de Marianela Vieira.',
     sections: ['Este sitio y sus contenidos pertenecen a Marianela Vieira. Queda prohibida la reproducción no autorizada de sus textos, imágenes y diseños.'],
   },
+  'refund-policy': {
+    title: 'Política de Reembolso',
+    intro: 'Información sobre cambios, devoluciones y reembolsos de compras realizadas en Marianela Vieira.',
+    sections: ['Puedes solicitar un cambio o devolución dentro del plazo aplicable desde la recepción del pedido, siempre que la prenda esté sin uso, en perfecto estado y conserve sus etiquetas originales.', 'Una vez recibida y revisada la pieza, te informaremos la resolución de la solicitud. Cuando corresponda un reembolso, se realizará mediante el mismo método de pago utilizado en la compra, dentro de los plazos de la entidad financiera.', 'Para iniciar una solicitud, escribe a soporte@marianelavieira.com indicando tu número de pedido y el motivo de la solicitud.'],
+  },
 };
 
 const privacyPolicySections: LegalSection[] = [
