@@ -93,26 +93,25 @@ export default function Footer() {
 
       {/* Bottom bar */}
       <div className="border-t border-ink-700">
-        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-5 px-6 py-6 sm:flex-row lg:px-10">
-          <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2">
+        <div className="mx-auto max-w-7xl px-6 py-6 lg:px-10">
+          <div className="mb-5 flex flex-wrap items-center justify-center gap-x-4 gap-y-2">
             {footerBottomLinks.map(([label, path]) => (
               <Link key={path} to={path} className="text-xs text-ink-400 transition-colors hover:text-sand-50 link-underline">
                 {label}
               </Link>
             ))}
           </div>
-          <div className="flex shrink-0 flex-wrap items-center justify-center gap-2" aria-label="Medios de pago aceptados">
-            <span className="mr-1 text-[10px] uppercase tracking-widest text-ink-400">Pagos seguros con</span>
+          <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
+            <p className="text-center text-xs tracking-wide text-ink-400 sm:text-left">
+              © 2026 Marianela Vieira. Todos los derechos reservados.
+            </p>
+            <div className="flex shrink-0 flex-wrap items-center justify-center gap-2" aria-label="Medios de pago aceptados">
             <span className="border border-ink-600 px-3 py-1 text-xs font-semibold italic tracking-wide text-sand-100">Izipay</span>
             <span className="border border-ink-600 px-3 py-1 text-xs font-semibold italic tracking-wide text-sand-100">VISA</span>
             <span className="border border-ink-600 px-3 py-1 text-xs font-semibold tracking-wide text-sand-100">mastercard</span>
             <span className="border border-ink-600 px-3 py-1 text-[9px] font-semibold tracking-wide text-sand-100">AMERICAN EXPRESS</span>
+            </div>
           </div>
-        </div>
-        <div className="mx-auto max-w-7xl px-6 pb-6 lg:px-10">
-          <p className="text-center text-xs tracking-wide text-ink-400 sm:text-left">
-            © 2026 Marianela Vieira. Todos los derechos reservados.
-          </p>
           </div>
       </div>
     </footer>
