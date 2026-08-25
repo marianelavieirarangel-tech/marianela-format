@@ -78,7 +78,7 @@ const privacyPolicySections: LegalSection[] = [
   {
     title: 'Art. 1. El controlador de datos',
     paragraphs: [
-      'El responsable del tratamiento de los datos recopilados a través de la tienda online de Marianela Vieira es Marianela Trajes de Baño S.A.C., con RUC 20604664927, con domicilio fiscal y administrativo en Calle Preciados 145, Santiago de Surco, Lima, Lima, Perú.',
+      'El responsable del tratamiento de los datos recopilados a través de la tienda online de Marianela Vieira es Marianela Trajes de Baño S.A.C., con RUC 20604664927, con domicilio fiscal y administrativo en Jirón Preciados 145, 15038, Lima, Perú.',
       'Puedes contactar con la empresa escribiendo a soporte@marianelavieira.com.',
     ],
   },
@@ -142,7 +142,7 @@ const termsSections: LegalSection[] = [
   {
     title: '1. Sujetos',
     paragraphs: [
-      '1.1 El vendedor de los Productos es Marianela Trajes de Baño S.A.C., con RUC 20604664927, con domicilio fiscal y administrativo en Calle Preciados 145, Santiago de Surco, Lima, Lima, Perú.',
+      '1.1 El vendedor de los Productos es Marianela Trajes de Baño S.A.C., con RUC 20604664927, con domicilio fiscal y administrativo en Jirón Preciados 145, 15038, Lima, Perú.',
       '1.2 Correo electrónico de contacto y soporte: soporte@marianelavieira.com.',
       '1.3 Las ofertas están dirigidas a clientes adultos. Al realizar un pedido, el Cliente declara ser mayor de 18 años y tener capacidad legal para celebrar contratos vinculantes.',
     ],
@@ -215,7 +215,7 @@ const cookieSections: LegalSection[] = [
   {
     title: 'Titular del tratamiento',
     paragraphs: [
-      'Marianela Trajes de Baño S.A.C. | RUC: 20604664927 | Calle Preciados 145, Santiago de Surco, Lima, Lima, Perú | soporte@marianelavieira.com.',
+      'Marianela Trajes de Baño S.A.C. | RUC: 20604664927 | Jirón Preciados 145, 15038, Lima, Perú | soporte@marianelavieira.com.',
     ],
   },
 ];
@@ -248,7 +248,7 @@ const legalNoticeSections: LegalSection[] = [
   {
     title: 'Titular del sitio',
     paragraphs: [
-      'Marianela Trajes de Baño S.A.C. | RUC: 20604664927 | Calle Preciados 145, Santiago de Surco, Lima, Lima, Perú | soporte@marianelavieira.com.',
+      'Marianela Trajes de Baño S.A.C. | RUC: 20604664927 | Jirón Preciados 145, 15038, Lima, Perú | soporte@marianelavieira.com.',
     ],
   },
 ];
