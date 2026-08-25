@@ -57,6 +57,7 @@ export default function CartDrawer({ open, items, currency, onClose, onUpdateQty
         {/* Free shipping progress */}
         {items.length > 0 && (
           <div className="px-6 py-5 bg-sand-100/70 border-b border-ink-100">
+            <p className="mb-3 text-xs font-medium text-ink-800">¡Hola! Tu carrito te espera por 1 hora!</p>
             <p className="text-xs text-ink-600 font-light mb-2">
               {remaining > 0 ? (
                 <>Te faltan <span className="text-ink-900 font-medium">{formatPrice(remaining, currency)}</span> para envío gratis</>

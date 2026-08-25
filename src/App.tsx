@@ -21,14 +21,18 @@ import { currencyOptions, type CurrencyCode } from '@/lib/currency';
 import { createShopifyCheckout, fetchShopifyProducts, isShopifyEnabled } from '@/lib/shopify';
 
 const CART_STORAGE_KEY = 'marianela-cart';
+const CART_DURATION_MS = 60 * 60 * 1000;
 const CART_ID_STORAGE_KEY = 'marianela-cart-id';
 const WISHLIST_STORAGE_KEY = 'marianela-wishlist';
 
 function readStoredCart(): CartItem[] {
   if (typeof window === 'undefined') return [];
   try {
-    const stored = JSON.parse(window.localStorage.getItem(CART_STORAGE_KEY) || '[]');
-    return Array.isArray(stored) ? stored : [];
+    const stored = JSON.parse(window.localStorage.getItem(CART_STORAGE_KEY) || 'null');
+    if (Array.isArray(stored)) return stored;
+    if (stored && Array.isArray(stored.items) && Date.now() - stored.savedAt < CART_DURATION_MS) return stored.items;
+    if (stored?.savedAt) window.localStorage.removeItem(CART_STORAGE_KEY);
+    return [];
   } catch {
     return [];
   }
@@ -69,7 +73,11 @@ export default function App() {
   }, [location.pathname]);
 
   useEffect(() => {
-    window.localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cart));
+    if (cart.length) {
+      window.localStorage.setItem(CART_STORAGE_KEY, JSON.stringify({ items: cart, savedAt: Date.now() }));
+    } else {
+      window.localStorage.removeItem(CART_STORAGE_KEY);
+    }
   }, [cart]);
 
   useEffect(() => {
@@ -289,7 +297,7 @@ export default function App() {
           setQuickAddProduct(p);
         }}
       />
-      <CookiePreferences />
+      {!checkoutOpen && location.pathname === '/' && <CookiePreferences />}
     </div>
   );
 }
