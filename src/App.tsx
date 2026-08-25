@@ -13,7 +13,6 @@ import QuickAddModal, { type CartItem } from '@/components/QuickAddModal';
 import CartDrawer from '@/components/CartDrawer';
 import SearchOverlay from '@/components/SearchOverlay';
 import WishlistDrawer from '@/components/WishlistDrawer';
-import NewsletterModal from '@/components/NewsletterModal';
 import InfoPage from '@/components/InfoPage';
 import CookiePreferences from '@/components/CookiePreferences';
 import type { Product } from '@/data/catalog';
@@ -290,7 +289,6 @@ export default function App() {
           setQuickAddProduct(p);
         }}
       />
-      <NewsletterModal />
       <CookiePreferences />
     </div>
   );
