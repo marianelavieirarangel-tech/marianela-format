@@ -1,5 +1,5 @@
 import { footerLinks } from '@/data/catalog';
-import { Instagram, Music2, Mail } from 'lucide-react';
+import { Instagram, Music2, Mail, MessageCircle } from 'lucide-react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
@@ -114,6 +114,15 @@ export default function Footer() {
                 <Music2 size={16} strokeWidth={1.5} />
               </a>
             </div>
+            <a
+              href="https://wa.me/51949217304?text=Hola%20MARIANELA%20Vieira%2C%20necesito%20ayuda%20con%20mi%20talla."
+              target="_blank"
+              rel="noreferrer"
+              className="mt-5 inline-flex items-center gap-2 text-sm text-sand-200 transition-colors hover:text-sand-50"
+            >
+              <MessageCircle size={16} strokeWidth={1.5} className="text-[#25D366]" />
+              Soporte por WhatsApp
+            </a>
           </div>
 
           {/* Link columns */}

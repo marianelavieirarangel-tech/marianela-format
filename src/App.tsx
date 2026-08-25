@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { Routes, Route, useParams, useNavigate, useLocation } from 'react-router-dom';
-import { MessageCircle } from 'lucide-react';
 import Header from '@/components/Header';
 import Hero from '@/components/Hero';
 import CategoryGrid from '@/components/CategoryGrid';
@@ -65,7 +64,6 @@ export default function App() {
   const [catalogProducts, setCatalogProducts] = useState(products.filter((product) => !hiddenCategoryNames.has(product.category)));
   const [catalogError, setCatalogError] = useState<string | null>(null);
   const [currency, setCurrency] = useState<CurrencyCode>('PEN');
-  const showFloatingWhatsapp = location.pathname !== '/';
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
@@ -254,18 +252,6 @@ export default function App() {
       </main>
 
       <Footer />
-
-      {showFloatingWhatsapp && (
-        <a
-          href="https://wa.me/51949217304?text=Hola%20MARIANELA%20Vieira%2C%20me%20gustar%C3%ADa%20consultar%20un%20producto."
-          target="_blank"
-          rel="noreferrer"
-          aria-label="Consultar por WhatsApp"
-          className="fixed bottom-20 right-5 z-50 flex items-center justify-center rounded-full border border-[#7ccf9a] bg-white/90 p-3 text-[#25D366] shadow-[0_12px_28px_rgba(28,37,27,0.08)] backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_16px_28px_rgba(28,37,27,0.12)]"
-        >
-          <MessageCircle size={22} strokeWidth={2} className="text-[#25D366]" />
-        </a>
-      )}
 
       {/* Overlays */}
       <QuickAddModal

@@ -326,6 +326,27 @@ export default function InfoPage() {
     return <LegalDocument title={content.title} intro={content.intro} sections={refundSections} />;
   }
 
+  if (slug === 'guia-de-tallas') {
+    return (
+      <section className="mx-auto max-w-3xl px-6 py-16 lg:px-10 lg:py-24">
+        <p className="mb-4 text-xs uppercase tracking-[0.25em] text-blush-500">Marianela Vieira</p>
+        <h1 className="mb-6 font-serif text-4xl font-light tracking-wide text-ink-900 lg:text-5xl">{content.title}</h1>
+        <p className="mb-10 text-lg font-light leading-relaxed text-ink-600">{content.intro}</p>
+        <div className="space-y-6 border-t border-ink-200 pt-8">
+          {content.sections.map((section) => <p key={section} className="text-base font-light leading-relaxed text-ink-600">{section}</p>)}
+        </div>
+        <a
+          href="https://wa.me/51949217304?text=Hola%20MARIANELA%20Vieira%2C%20necesito%20ayuda%20para%20elegir%20mi%20talla."
+          target="_blank"
+          rel="noreferrer"
+          className="mt-10 inline-flex items-center gap-3 border border-[#7ccf9a] bg-[#f6fff8] px-5 py-3 text-sm font-medium uppercase tracking-widest text-ink-800 transition-colors hover:bg-[#ecfdf2]"
+        >
+          Soporte por WhatsApp
+        </a>
+      </section>
+    );
+  }
+
   return (
     <section className="mx-auto max-w-3xl px-6 py-16 lg:px-10 lg:py-24">
       <p className="mb-4 text-xs uppercase tracking-[0.25em] text-blush-500">Marianela Vieira</p>
