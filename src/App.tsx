@@ -15,6 +15,7 @@ import CartDrawer from '@/components/CartDrawer';
 import SearchOverlay from '@/components/SearchOverlay';
 import WishlistDrawer from '@/components/WishlistDrawer';
 import NewsletterModal from '@/components/NewsletterModal';
+import InfoPage from '@/components/InfoPage';
 import type { Product } from '@/data/catalog';
 import { categorySlugs, products, navLinks, womenSubcategories, hiddenCategoryNames } from '@/data/catalog';
 import { currencyOptions, type CurrencyCode } from '@/lib/currency';
@@ -246,6 +247,8 @@ export default function App() {
           <Route path="/:slug" element={<CategoryRoute />} />
 
           <Route path="/product/:id" element={<ProductPage />} />
+          <Route path="/pages/:slug" element={<InfoPage />} />
+          <Route path="/policies/:slug" element={<InfoPage />} />
         </Routes>
       </main>
 

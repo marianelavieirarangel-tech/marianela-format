@@ -1,7 +1,7 @@
 import { footerLinks } from '@/data/catalog';
 import { Instagram, Music2, Mail } from 'lucide-react';
 import { useState } from 'react';
-import { getShopifyStoreUrl } from '@/lib/shopify';
+import { Link } from 'react-router-dom';
 
 const footerLinkPaths: Record<string, string> = {
   'Envíos y Devoluciones': '/pages/envios-y-devoluciones',
@@ -115,7 +115,7 @@ export default function Footer() {
                 {links.map((link) => (
                   <li key={link}>
                     <a
-                      href={getShopifyStoreUrl(footerLinkPaths[link] || '/pages/contacto')}
+                      to={footerLinkPaths[link] || '/pages/contacto'}
                       className="text-sm font-light text-sand-200 transition-colors duration-300 hover:text-sand-50 link-underline"
                     >
                       {link}
