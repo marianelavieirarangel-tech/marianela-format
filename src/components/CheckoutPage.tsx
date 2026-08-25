@@ -135,7 +135,7 @@ export default function CheckoutPage({ items, currency, onClose, onUpdateQty, on
                             🏪 Jirón Preciados 145, 15038, Lima, Perú
                           </p>
                           <p className="text-xs text-ink-500">
-                            Lunes a Sábado: 10:00 AM - 7:00 PM
+                            Lunes a Sábado: 9:00 AM - 9:00 PM
                           </p>
                         </div>
                       </label>

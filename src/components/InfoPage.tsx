@@ -45,7 +45,7 @@ const pageContent: Record<string, { title: string; intro: string; sections: stri
   boutiques: {
     title: 'Boutiques',
     intro: 'Visítanos y descubre la colección en persona.',
-    sections: ['Encuéntranos en Jirón Preciados 145, 15038, Lima, Perú.', 'Horario de atención: lunes a sábado, de 10:00 AM a 7:00 PM.'],
+    sections: ['Encuéntranos en Jirón Preciados 145, 15038, Lima, Perú.', 'Horario de atención: lunes a sábado, de 9:00 AM a 9:00 PM.'],
   },
   'trabaja-con-nosotros': {
     title: 'Trabaja con Nosotros',
