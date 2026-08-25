@@ -198,7 +198,6 @@ export const footerLinks = {
   'La Maison': [
     'Nuestra Historia',
     'Sostenibilidad',
-    'Artesanía',
     'Boutiques',
     'Trabaja con Nosotros',
   ],

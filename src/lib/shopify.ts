@@ -16,6 +16,10 @@ export function getShopifyAccountLoginUrl() {
   return `https://${storeDomain}/account/login`;
 }
 
+export function getShopifyStoreUrl(path: string) {
+  return storeDomain ? `https://${storeDomain}${path}` : path;
+}
+
 type ShopifyResponse<T> = {
   data?: T;
   errors?: { message: string }[];

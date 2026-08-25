@@ -1,6 +1,23 @@
 import { footerLinks } from '@/data/catalog';
 import { Instagram, Music2, Mail } from 'lucide-react';
 import { useState } from 'react';
+import { getShopifyStoreUrl } from '@/lib/shopify';
+
+const footerLinkPaths: Record<string, string> = {
+  'Envíos y Devoluciones': '/pages/envios-y-devoluciones',
+  'Guía de Tallas': '/pages/guia-de-tallas',
+  'Cuidado de Prendas': '/pages/cuidado-de-prendas',
+  'Preguntas Frecuentes': '/pages/preguntas-frecuentes',
+  Contáctanos: '/pages/contacto',
+  'Nuestra Historia': '/pages/nuestra-historia',
+  Sostenibilidad: '/pages/sostenibilidad',
+  Boutiques: '/pages/boutiques',
+  'Trabaja con Nosotros': '/pages/trabaja-con-nosotros',
+  'Términos y Condiciones': '/policies/terms-of-service',
+  'Política de Privacidad': '/policies/privacy-policy',
+  'Política de Cookies': '/policies/cookie-policy',
+  'Aviso Legal': '/policies/legal-notice',
+};
 
 export default function Footer() {
   const [email, setEmail] = useState('');
@@ -98,8 +115,8 @@ export default function Footer() {
                 {links.map((link) => (
                   <li key={link}>
                     <a
-                      href="#"
-                      className="text-sm font-light text-sand-200 hover:text-sand-50 link-underline"
+                      href={getShopifyStoreUrl(footerLinkPaths[link] || '/pages/contacto')}
+                      className="text-sm font-light text-sand-200 transition-colors duration-300 hover:text-sand-50 link-underline"
                     >
                       {link}
                     </a>
