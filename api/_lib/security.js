@@ -19,4 +19,4 @@ function setSecurityHeaders(res) {
   res.setHeader('X-XSS-Protection', '0');
 }
 
-module.exports = { setSecurityHeaders };
+export { setSecurityHeaders };

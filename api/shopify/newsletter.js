@@ -11,7 +11,7 @@ const mutation = `mutation CreateNewsletterCustomer($input: CustomerInput!) {
   }
 }`;
 
-const { setSecurityHeaders } = require('../_lib/security');
+import { setSecurityHeaders } from '../_lib/security.js';
 
 // Basic in-memory rate limiting per IP (best-effort; serverless instances are ephemeral)
 const RATE_LIMIT_WINDOW_MS = 60 * 60 * 1000; // 1 hour

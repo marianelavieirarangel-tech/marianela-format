@@ -45,7 +45,7 @@ async function shopifyRequest(query, variables) {
   return { response, result: await response.json() };
 }
 
-const { setSecurityHeaders } = require('../_lib/security');
+import { setSecurityHeaders } from '../_lib/security.js';
 
 export default async function handler(req, res) {
   setSecurityHeaders(res);
