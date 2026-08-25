@@ -114,12 +114,12 @@ export default function Footer() {
               <ul className="space-y-3">
                 {links.map((link) => (
                   <li key={link}>
-                    <a
+                    <Link
                       to={footerLinkPaths[link] || '/pages/contacto'}
                       className="text-sm font-light text-sand-200 transition-colors duration-300 hover:text-sand-50 link-underline"
                     >
                       {link}
-                    </a>
+                    </Link>
                   </li>
                 ))}
               </ul>
