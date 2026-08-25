@@ -45,7 +45,10 @@ async function shopifyRequest(query, variables) {
   return { response, result: await response.json() };
 }
 
+const { setSecurityHeaders } = require('../_lib/security');
+
 export default async function handler(req, res) {
+  setSecurityHeaders(res);
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Método no permitido.' });
   }
@@ -111,7 +114,28 @@ export default async function handler(req, res) {
       }
     }
 
-    if (!checkoutUrl) return res.status(502).json({ error: 'Shopify no devolvió checkoutUrl.' });
+    if (!checkoutUrl) {
+      // Fallback: construct a storefront cart URL using numeric variant IDs if possible
+      try {
+        const pairs = lines
+          .map((l) => {
+            // merchandiseId may be a gid like gid://shopify/ProductVariant/123456789
+            const m = String(l.merchandiseId || '');
+            const match = m.match(/\/(\d+)$/);
+            if (match) return `${match[1]}:${l.quantity}`;
+            return null;
+          })
+          .filter(Boolean)
+          .join(',');
+        if (pairs) {
+          const cartUrl = `https://${SHOP_DOMAIN}/cart/${pairs}`;
+          return res.status(200).json({ checkoutUrl: cartUrl, cartId: activeCartId });
+        }
+      } catch (e) {
+        console.warn('Fallback cart URL build failed', e);
+      }
+      return res.status(502).json({ error: 'Shopify no devolvió checkoutUrl.' });
+    }
     return res.status(200).json({ checkoutUrl, cartId: activeCartId });
   } catch (error) {
     console.error('Shopify checkout error:', error);
