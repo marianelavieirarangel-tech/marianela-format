@@ -16,7 +16,7 @@ import SearchOverlay from '@/components/SearchOverlay';
 import WishlistDrawer from '@/components/WishlistDrawer';
 import NewsletterModal from '@/components/NewsletterModal';
 import type { Product } from '@/data/catalog';
-import { categorySlugs, products, navLinks, womenSubcategories } from '@/data/catalog';
+import { categorySlugs, products, navLinks, womenSubcategories, hiddenCategoryNames } from '@/data/catalog';
 import { currencyOptions, type CurrencyCode } from '@/lib/currency';
 import { createShopifyCheckout, fetchShopifyProducts, isShopifyEnabled } from '@/lib/shopify';
 
@@ -60,7 +60,7 @@ export default function App() {
   const [cart, setCart] = useState<CartItem[]>(readStoredCart);
   const [cartId, setCartId] = useState<string | null>(readStoredCartId);
   const [wishlist, setWishlist] = useState<Set<string>>(readStoredWishlist);
-  const [catalogProducts, setCatalogProducts] = useState(products);
+  const [catalogProducts, setCatalogProducts] = useState(products.filter((product) => !hiddenCategoryNames.has(product.category)));
   const [catalogError, setCatalogError] = useState<string | null>(null);
   const [currency, setCurrency] = useState<CurrencyCode>('PEN');
   const showFloatingWhatsapp = location.pathname !== '/';
@@ -82,10 +82,11 @@ export default function App() {
     if (!isShopifyEnabled()) return;
     fetchShopifyProducts()
       .then((shopifyProducts) => {
-        if (shopifyProducts.length === 0) {
+        const filteredShopifyProducts = shopifyProducts.filter((product) => !hiddenCategoryNames.has(product.category));
+        if (filteredShopifyProducts.length === 0) {
           throw new Error('Shopify no devolvió productos publicados.');
         }
-        setCatalogProducts(shopifyProducts);
+        setCatalogProducts(filteredShopifyProducts);
       })
       .catch((error) => {
         const message = error instanceof Error ? error.message : 'Error desconocido de Shopify.';

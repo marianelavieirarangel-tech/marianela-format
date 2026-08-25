@@ -2,6 +2,7 @@ import { useReveal } from '@/hooks/useReveal';
 import { Plus, Heart, ArrowLeft } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import type { Product } from '@/data/catalog';
+import { hiddenCategoryNames } from '@/data/catalog';
 import { formatPrice, type CurrencyCode } from '@/lib/currency';
 
 type Props = {
@@ -32,15 +33,17 @@ export default function CategoryProducts({
   wishlist,
   onBack,
 }: Props) {
-  const filtered = products.filter((product) => {
-    if (categoryName === 'Sale') {
-      return product.tag === 'Sale' && product.category !== 'Bikini';
-    }
-    if (categoryName === 'Novedades') {
-      return product.tag === 'Novedades';
-    }
-    return product.category === categoryName;
-  });
+  const filtered = products
+    .filter((product) => !hiddenCategoryNames.has(product.category))
+    .filter((product) => {
+      if (categoryName === 'Sale') {
+        return product.tag === 'Sale' && product.category !== 'Bikini';
+      }
+      if (categoryName === 'Novedades') {
+        return product.tag === 'Novedades';
+      }
+      return product.category === categoryName;
+    });
 
   return (
     <section className="min-h-screen bg-sand-50">

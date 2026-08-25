@@ -169,6 +169,8 @@ export const categorySlugs: Record<string, string> = {
   Sale: 'sale',
 };
 
+export const hiddenCategoryNames = new Set(['Lencería', 'Loungewear']);
+
 export const womenSubcategories = [
   'Novedades',
   'Bikini',
@@ -178,7 +180,7 @@ export const womenSubcategories = [
   'Fuera del Agua',
   'Accesorios',
   'Sale',
-];
+].filter((category) => !hiddenCategoryNames.has(category));
 
 export const womenMenuSubcategories = womenSubcategories.filter(
   (category) => !['Novedades'].includes(category),

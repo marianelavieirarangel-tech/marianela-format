@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { type Product, womenSubcategories } from '@/data/catalog';
+import { type Product, womenSubcategories, hiddenCategoryNames } from '@/data/catalog';
 import { useReveal } from '@/hooks/useReveal';
 import { Plus, Heart } from 'lucide-react';
 import { formatPrice, type CurrencyCode } from '@/lib/currency';
@@ -28,12 +28,14 @@ function getProductBadge(product: Product) {
 export default function FeaturedProducts({ products, currency, onQuickAdd, onToggleWishlist, wishlist }: Props) {
   const [active, setActive] = useState<(typeof filters)[number]>('Todos');
 
-  const filtered = products.filter((p) => {
-    if (active === 'Todos') return true;
-    if (active === 'Sale') return p.tag === 'Sale' && p.category !== 'Bikini';
-    if (active === 'Novedades') return p.tag === 'Novedades';
-    return p.category === active;
-  });
+  const filtered = products
+    .filter((p) => !hiddenCategoryNames.has(p.category))
+    .filter((p) => {
+      if (active === 'Todos') return true;
+      if (active === 'Sale') return p.tag === 'Sale' && p.category !== 'Bikini';
+      if (active === 'Novedades') return p.tag === 'Novedades';
+      return p.category === active;
+    });
 
   return (
     <section id="novedades" className="py-24 lg:py-32 bg-sand-100/60">
