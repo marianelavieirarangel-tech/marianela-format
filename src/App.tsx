@@ -55,6 +55,10 @@ export default function App() {
   const showFloatingWhatsapp = location.pathname !== '/';
 
   useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+  }, [location.pathname, location.key]);
+
+  useEffect(() => {
     window.localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cart));
   }, [cart]);
 
