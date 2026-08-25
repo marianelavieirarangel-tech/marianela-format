@@ -19,6 +19,15 @@ const footerLinkPaths: Record<string, string> = {
   'Aviso Legal': '/policies/legal-notice',
 };
 
+const footerBottomLinks = [
+  ['Política de Reembolso', '/policies/refund-policy'],
+  ['Política de Privacidad', '/policies/privacy-policy'],
+  ['Términos del Servicio', '/policies/terms-of-service'],
+  ['Política de Envíos', '/pages/envios-y-devoluciones'],
+  ['Información de Contacto', '/pages/contacto'],
+  ['Aviso Legal', '/policies/legal-notice'],
+] as const;
+
 export default function Footer() {
   const [email, setEmail] = useState('');
   const [submitted, setSubmitted] = useState(false);
@@ -108,7 +117,7 @@ export default function Footer() {
           </div>
 
           {/* Link columns */}
-          {Object.entries(footerLinks).map(([title, links]) => (
+          {Object.entries(footerLinks).filter(([title]) => title !== 'Legal').map(([title, links]) => (
             <div key={title}>
               <h5 className="text-[11px] uppercase tracking-widest text-sand-50 mb-5">{title}</h5>
               <ul className="space-y-3">
@@ -131,17 +140,26 @@ export default function Footer() {
       {/* Bottom bar */}
       <div className="border-t border-ink-700">
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-5 px-6 py-6 sm:flex-row lg:px-10">
-          <p className="text-ink-400 text-xs tracking-wide">
-            © 2026 Marianela Vieira. Todos los derechos reservados.
-          </p>
-          <div className="flex flex-wrap items-center justify-center gap-2" aria-label="Medios de pago aceptados">
-            <span className="mr-2 text-[10px] uppercase tracking-widest text-ink-400">Pagos seguros con</span>
-            <span className="border border-ink-600 bg-ink-800 px-3 py-1 text-xs font-semibold italic tracking-wide text-sand-50">Izipay</span>
-            <span className="border border-ink-600 bg-ink-800 px-3 py-1 text-xs font-semibold italic tracking-wide text-sand-50">VISA</span>
-            <span className="border border-ink-600 bg-ink-800 px-3 py-1 text-xs font-semibold tracking-wide text-sand-50">mastercard</span>
-            <span className="border border-ink-600 bg-ink-800 px-3 py-1 text-[9px] font-semibold tracking-wide text-sand-50">AMERICAN EXPRESS</span>
+          <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2">
+            {footerBottomLinks.map(([label, path]) => (
+              <Link key={path} to={path} className="text-xs text-ink-400 transition-colors hover:text-sand-50 link-underline">
+                {label}
+              </Link>
+            ))}
+          </div>
+          <div className="flex shrink-0 flex-wrap items-center justify-center gap-2" aria-label="Medios de pago aceptados">
+            <span className="mr-1 text-[10px] uppercase tracking-widest text-ink-400">Pagos seguros con</span>
+            <span className="border border-ink-600 px-3 py-1 text-xs font-semibold italic tracking-wide text-sand-100">Izipay</span>
+            <span className="border border-ink-600 px-3 py-1 text-xs font-semibold italic tracking-wide text-sand-100">VISA</span>
+            <span className="border border-ink-600 px-3 py-1 text-xs font-semibold tracking-wide text-sand-100">mastercard</span>
+            <span className="border border-ink-600 px-3 py-1 text-[9px] font-semibold tracking-wide text-sand-100">AMERICAN EXPRESS</span>
           </div>
         </div>
+        <div className="mx-auto max-w-7xl px-6 pb-6 lg:px-10">
+          <p className="text-center text-xs tracking-wide text-ink-400 sm:text-left">
+            © 2026 Marianela Vieira. Todos los derechos reservados.
+          </p>
+          </div>
       </div>
     </footer>
   );
