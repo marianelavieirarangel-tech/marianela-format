@@ -1,5 +1,4 @@
-import { ArrowLeft } from 'lucide-react';
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 const pageContent: Record<string, { title: string; intro: string; sections: string[] }> = {
   'envios-y-devoluciones': {
@@ -78,9 +77,6 @@ export default function InfoPage() {
 
   return (
     <section className="mx-auto max-w-3xl px-6 py-16 lg:px-10 lg:py-24">
-      <Link to="/" className="mb-12 inline-flex items-center gap-2 text-sm uppercase tracking-widest text-ink-600 transition-colors hover:text-blush-500">
-        <ArrowLeft size={18} strokeWidth={1.5} /> Volver a la tienda
-      </Link>
       <p className="mb-4 text-xs uppercase tracking-[0.25em] text-blush-500">Marianela Vieira</p>
       <h1 className="mb-6 font-serif text-4xl font-light tracking-wide text-ink-900 lg:text-5xl">{content.title}</h1>
       <p className="mb-10 text-lg font-light leading-relaxed text-ink-600">{content.intro}</p>
