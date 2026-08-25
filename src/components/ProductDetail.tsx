@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Heart, Share2, ArrowLeft, Minus, Plus, MessageCircle } from 'lucide-react';
 import type { Product } from '@/data/catalog';
 import type { CartItem } from '@/components/QuickAddModal';
@@ -24,8 +24,21 @@ export default function ProductDetail({
   const [quantity, setQuantity] = useState(1);
   const [selectedSize, setSelectedSize] = useState<string>('');
   const [selectedColor, setSelectedColor] = useState<string>(product.swatches[0]?.name || '');
+  const [selectedImage, setSelectedImage] = useState<string>(product.image);
   const waMessage = `Hola, me gustaría consultar el producto *${product.name}* y quisiera más información.`;
   const waLink = `https://wa.me/51949217304?text=${encodeURIComponent(waMessage)}`;
+
+  const galleryImages =
+    product.imagesByColor?.[selectedColor] ??
+    (product.imagesByColor ? Object.values(product.imagesByColor)[0] ?? [product.image] : [product.image]);
+
+  useEffect(() => {
+    if (galleryImages.length > 0) {
+      setSelectedImage(galleryImages[0]);
+    } else {
+      setSelectedImage(product.image);
+    }
+  }, [galleryImages, product.image]);
 
   const handleAddToCart = () => {
     if (!selectedSize) {
@@ -59,12 +72,29 @@ export default function ProductDetail({
       <div className="mx-auto max-w-7xl px-6 lg:px-10 py-12 lg:py-20">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
           {/* Image */}
-          <div className="flex items-center justify-center bg-ink-50 aspect-[3/4] overflow-hidden">
-            <img
-              src={product.image}
-              alt={product.name}
-              className="h-full w-full object-cover"
-            />
+          <div className="flex flex-col gap-4">
+            <div className="flex items-center justify-center bg-ink-50 aspect-[3/4] overflow-hidden">
+              <img
+                src={selectedImage || product.image}
+                alt={product.name}
+                className="h-full w-full object-cover"
+              />
+            </div>
+
+            {galleryImages.length > 1 && (
+              <div className="grid grid-cols-4 gap-3">
+                {galleryImages.map((imageUrl) => (
+                  <button
+                    key={imageUrl}
+                    type="button"
+                    onClick={() => setSelectedImage(imageUrl)}
+                    className={`border-2 overflow-hidden bg-ink-50 aspect-[4/5] ${selectedImage === imageUrl ? 'border-ink-900' : 'border-transparent'}`}
+                  >
+                    <img src={imageUrl} alt={`${product.name} vista`} className="h-full w-full object-cover" />
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
 
           {/* Info */}

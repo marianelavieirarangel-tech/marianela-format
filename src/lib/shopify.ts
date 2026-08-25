@@ -46,6 +46,7 @@ type ShopifyCatalogResponse = {
       variants: {
         nodes: Array<{
           id: string;
+          image?: { url: string } | null;
           selectedOptions: Array<{ name: string; value: string }>;
         }>;
       };
@@ -109,7 +110,26 @@ export async function fetchShopifyProducts() {
       const variant = product.variants.nodes[0];
       const price = Number(product.priceRange.minVariantPrice.amount);
       const compareAtPrice = Number(product.compareAtPriceRange.minVariantPrice.amount);
-      const colors = variant?.selectedOptions.filter((option) => option.name.toLowerCase() === 'color') ?? [];
+      const allProductImages = product.images.nodes.map((image) => image.url).filter(Boolean);
+      const galleryByColor = new Map<string, string[]>();
+      for (const currentVariant of product.variants.nodes) {
+        const colorOption = currentVariant.selectedOptions.find((option) => option.name.toLowerCase() === 'color');
+        if (!colorOption) continue;
+        const imageUrl = currentVariant.image?.url ?? product.featuredImage?.url ?? allProductImages[0];
+        if (!imageUrl) continue;
+        const existing = galleryByColor.get(colorOption.value) ?? [];
+        if (!existing.includes(imageUrl)) existing.push(imageUrl);
+        galleryByColor.set(colorOption.value, existing);
+      }
+
+      const colors = Array.from(galleryByColor.keys()).map((color) => ({ name: color, hex: '#d9b2a7' }));
+      const swatches = colors.length > 0 ? colors : (variant?.selectedOptions.filter((option) => option.name.toLowerCase() === 'color') ?? []);
+      const firstColor = swatches[0]?.name ?? 'Default';
+      const galleryImages = galleryByColor.get(firstColor) ?? allProductImages;
+      const coverImage = galleryImages[0] ?? product.featuredImage?.url ?? product.images.nodes[0]?.url ?? '';
+
+      const imagesByColor = Object.fromEntries(Array.from(galleryByColor.entries()));
+      const fallbackImagesByColor = allProductImages.length > 0 ? { [firstColor]: allProductImages } : undefined;
 
       return {
         id: product.id.split('/').pop() ?? product.id,
@@ -117,12 +137,13 @@ export async function fetchShopifyProducts() {
         category: getCategory(product.productType, product.tags, product.collections.nodes),
         price,
         originalPrice: compareAtPrice > price ? compareAtPrice : undefined,
-        image: product.featuredImage?.url ?? product.images.nodes[0].url,
-        swatches: colors.map((color) => ({ name: color.value, hex: '#d9b2a7' })),
+        image: coverImage,
+        imagesByColor: Object.keys(imagesByColor).length > 0 ? imagesByColor : fallbackImagesByColor,
+        swatches: swatches.map((color) => ({ name: color.name, hex: '#d9b2a7' })),
         tag: getTag(product.tags, compareAtPrice > price),
         description: product.description || 'Una pieza de Marianela Vieira.',
         shopifyVariantId: variant?.id,
-      };
+      }; 
     });
 }
 
