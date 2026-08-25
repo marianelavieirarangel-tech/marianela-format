@@ -16,11 +16,11 @@ const query = `query Catalog {
       tags
       collections(first: 20) { nodes { handle title } }
       featuredImage { url }
-      images(first: 1) { nodes { url } }
+      images(first: 20) { nodes { url } }
       priceRange { minVariantPrice { amount } }
       compareAtPriceRange { minVariantPrice { amount } }
-      variants(first: 1) {
-        nodes { id selectedOptions { name value } }
+      variants(first: 50) {
+        nodes { id selectedOptions { name value } image { url } }
       }
     }
   }

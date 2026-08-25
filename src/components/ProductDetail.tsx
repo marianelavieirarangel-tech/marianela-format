@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Heart, Share2, ArrowLeft, Minus, Plus, MessageCircle } from 'lucide-react';
 import type { Product } from '@/data/catalog';
 import type { CartItem } from '@/components/QuickAddModal';
@@ -24,8 +24,14 @@ export default function ProductDetail({
   const [quantity, setQuantity] = useState(1);
   const [selectedSize, setSelectedSize] = useState<string>('');
   const [selectedColor, setSelectedColor] = useState<string>(product.swatches[0]?.name || '');
+  const gallery = product.images?.length ? product.images : [product.image];
+  const [selectedImage, setSelectedImage] = useState(gallery[0]);
   const waMessage = `Hola, me gustaría consultar el producto *${product.name}* y quisiera más información.`;
   const waLink = `https://wa.me/51949217304?text=${encodeURIComponent(waMessage)}`;
+
+  useEffect(() => {
+    setSelectedImage(gallery[0]);
+  }, [product.id]);
 
   const handleAddToCart = () => {
     if (!selectedSize) {
@@ -58,13 +64,32 @@ export default function ProductDetail({
       {/* Product */}
       <div className="mx-auto max-w-7xl px-6 lg:px-10 py-12 lg:py-20">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
-          {/* Image */}
-          <div className="flex items-center justify-center bg-ink-50 aspect-[3/4] overflow-hidden">
-            <img
-              src={product.image}
-              alt={product.name}
-              className="h-full w-full object-cover"
-            />
+          {/* Image gallery */}
+          <div className="space-y-4">
+            <div className="flex items-center justify-center bg-ink-50 aspect-[3/4] overflow-hidden">
+              <img
+                src={selectedImage}
+                alt={product.name}
+                className="h-full w-full object-cover"
+              />
+            </div>
+            {gallery.length > 1 && (
+              <div className="grid grid-cols-4 gap-3" aria-label="Galería de imágenes">
+                {gallery.map((image, index) => (
+                  <button
+                    key={image}
+                    type="button"
+                    onClick={() => setSelectedImage(image)}
+                    className={`aspect-[3/4] overflow-hidden border-2 ${
+                      selectedImage === image ? 'border-ink-900' : 'border-transparent'
+                    }`}
+                    aria-label={`Ver imagen ${index + 1}`}
+                  >
+                    <img src={image} alt="" className="h-full w-full object-cover" />
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
 
           {/* Info */}

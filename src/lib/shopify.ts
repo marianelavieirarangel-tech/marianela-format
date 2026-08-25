@@ -47,6 +47,7 @@ type ShopifyCatalogResponse = {
         nodes: Array<{
           id: string;
           selectedOptions: Array<{ name: string; value: string }>;
+          image: { url: string } | null;
         }>;
       };
     }>;
@@ -112,6 +113,11 @@ export async function fetchShopifyProducts() {
       const colors = variant?.selectedOptions.filter((option) => option.name.toLowerCase() === 'color') ?? [];
 
       const category = getCategory(product.productType, product.tags, product.collections.nodes);
+      const images = Array.from(new Set([
+        product.featuredImage?.url,
+        ...product.images.nodes.map((image) => image.url),
+        ...product.variants.nodes.map((productVariant) => productVariant.image?.url).filter(Boolean),
+      ].filter(Boolean))) as string[];
       return {
         id: product.id.split('/').pop() ?? product.id,
         name: product.title,
@@ -119,6 +125,7 @@ export async function fetchShopifyProducts() {
         price,
         originalPrice: compareAtPrice > price ? compareAtPrice : undefined,
         image: product.featuredImage?.url ?? product.images.nodes[0].url,
+        images,
         swatches: colors.map((color) => ({ name: color.value, hex: '#d9b2a7' })),
         tag: getTag(category, product.tags, compareAtPrice > price),
         description: product.description || 'Una pieza de Marianela Vieira.',
