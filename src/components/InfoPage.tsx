@@ -68,12 +68,92 @@ const pageContent: Record<string, { title: string; intro: string; sections: stri
   },
 };
 
+const privacyPolicySections = [
+  {
+    title: 'Art. 1. El controlador de datos',
+    paragraphs: [
+      'El responsable del tratamiento de los datos recopilados a través de la tienda online de Marianela Vieira es Marianela Trajes de Baño S.A.C., con RUC 20604664927, con domicilio fiscal y administrativo en Calle Preciados 145, Santiago de Surco, Lima, Lima, Perú.',
+      'Puedes contactar con la empresa escribiendo a soporte@marianelavieira.com.',
+    ],
+  },
+  {
+    title: 'Art. 2. Fuente de datos personales',
+    paragraphs: [
+      'La recopilación de datos personales se realiza al registrar información proporcionada directamente por la persona interesada durante el contacto inicial, el registro de usuario, el proceso de compra o las comunicaciones posteriores.',
+      'También pueden tratarse datos de terceros comunicados por los usuarios, por ejemplo, cuando se compra un producto para ser entregado a otra persona. En esos casos, quien proporciona la información es responsable de haber obtenido previamente el consentimiento del tercero e informarle sobre esta política.',
+    ],
+  },
+  {
+    title: 'Art. 3. Métodos y propósitos del tratamiento',
+    paragraphs: [
+      'Los datos se tratan mediante medios electrónicos y digitales, aplicando medidas razonables de seguridad y confidencialidad de acuerdo con la normativa vigente. Al aceptar esta política, el usuario autoriza el tratamiento de sus datos para fines logísticos, comerciales y de gestión de compra.',
+    ],
+  },
+  {
+    title: 'Art. 4. Finalidades del tratamiento',
+    bullets: [
+      'Cumplir obligaciones legales y fiscales relacionadas con las relaciones comerciales.',
+      'Gestionar clientes, contratos, pedidos, envíos, devoluciones y comprobantes de pago.',
+      'Prestar los servicios de la tienda online y brindar soporte al cliente.',
+      'Enviar comunicaciones informativas o promocionales cuando exista consentimiento.',
+      'Analizar de forma general el uso de la tienda y mejorar la experiencia de compra.',
+      'Gestionar pagos y prevenir actividades fraudulentas.',
+    ],
+    paragraphs: [
+      'Los datos personales no se comunicarán a terceros para fines ajenos a la ley. Podrán compartirse únicamente cuando sea necesario para ejecutar el contrato, como con empresas de courier o pasarelas de pago, o cuando lo solicite una autoridad competente.',
+    ],
+  },
+  {
+    title: 'Art. 5. Período de conservación',
+    bullets: [
+      'Los datos fiscales y contables se conservarán durante el plazo legal aplicable contado desde la fecha de adquisición.',
+      'Los datos utilizados para fines comerciales y de marketing se conservarán hasta que el usuario solicite su baja o revoque su consentimiento.',
+    ],
+  },
+  {
+    title: 'Art. 6. Derechos de la parte interesada',
+    paragraphs: [
+      'El usuario puede ejercer en cualquier momento sus derechos de acceso, rectificación, actualización, limitación, oposición, cancelación y portabilidad, cuando correspondan conforme a la normativa aplicable.',
+      'Para ejercer estos derechos, debe escribir a soporte@marianelavieira.com indicando su nombre, el derecho que desea ejercer y cualquier información que ayude a identificar su solicitud. Responderemos dentro de los plazos establecidos por la ley.',
+    ],
+  },
+  {
+    title: 'Art. 7. Actualizaciones',
+    paragraphs: [
+      'Esta política puede actualizarse para reflejar cambios legales, operativos o tecnológicos. La versión vigente estará siempre disponible en esta página.',
+    ],
+  },
+];
+
 export default function InfoPage() {
   const { pathname } = useLocation();
   const slug = pathname.split('/').filter(Boolean).pop() || '';
   const content = pageContent[slug];
 
   if (!content) return <div className="mx-auto max-w-3xl px-6 py-20">Página no encontrada.</div>;
+
+  if (slug === 'privacy-policy') {
+    return (
+      <section className="mx-auto max-w-4xl px-6 py-16 lg:px-10 lg:py-24">
+        <p className="mb-4 text-xs uppercase tracking-[0.25em] text-blush-500">Marianela Vieira</p>
+        <h1 className="mb-6 font-serif text-4xl font-light tracking-wide text-ink-900 lg:text-5xl">Política de Privacidad</h1>
+        <p className="mb-12 max-w-3xl text-lg font-light leading-relaxed text-ink-600">Información sobre el tratamiento de datos personales conforme a la normativa de protección de datos aplicable.</p>
+        <div className="space-y-10 border-t border-ink-200 pt-10">
+          {privacyPolicySections.map((section) => (
+            <article key={section.title} className="space-y-4">
+              <h2 className="font-serif text-2xl font-light text-ink-900">{section.title}</h2>
+              {section.paragraphs?.map((paragraph) => <p key={paragraph} className="text-base font-light leading-relaxed text-ink-600">{paragraph}</p>)}
+              {section.bullets && (
+                <ul className="list-disc space-y-2 pl-5 text-base font-light leading-relaxed text-ink-600">
+                  {section.bullets.map((bullet) => <li key={bullet}>{bullet}</li>)}
+                </ul>
+              )}
+            </article>
+          ))}
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="mx-auto max-w-3xl px-6 py-16 lg:px-10 lg:py-24">
