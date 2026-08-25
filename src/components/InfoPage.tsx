@@ -73,9 +73,9 @@ const pageContent: Record<string, { title: string; intro: string; sections: stri
     sections: ['Este sitio y sus contenidos pertenecen a Marianela Vieira. Queda prohibida la reproducción no autorizada de sus textos, imágenes y diseños.'],
   },
   'refund-policy': {
-    title: 'Política de Reembolso',
-    intro: 'Información sobre cambios, devoluciones y reembolsos de compras realizadas en Marianela Vieira.',
-    sections: ['Puedes solicitar un cambio o devolución dentro del plazo aplicable desde la recepción del pedido, siempre que la prenda esté sin uso, en perfecto estado y conserve sus etiquetas originales.', 'Una vez recibida y revisada la pieza, te informaremos la resolución de la solicitud. Cuando corresponda un reembolso, se realizará mediante el mismo método de pago utilizado en la compra, dentro de los plazos de la entidad financiera.', 'Para iniciar una solicitud, escribe a soporte@marianelavieira.com indicando tu número de pedido y el motivo de la solicitud.'],
+    title: 'Política de Reembolsos y Devoluciones',
+    intro: 'Marianela Trajes de Baño S.A.C. garantiza la calidad e higiene de los productos adquiridos en marianelavieira.com. Por motivos de higiene y salud íntima, aplicamos controles estrictos a las devoluciones.',
+    sections: [],
   },
 };
 
@@ -258,6 +258,28 @@ const legalNoticeSections: LegalSection[] = [
   },
 ];
 
+const refundSections: LegalSection[] = [
+  {
+    title: '1. Derecho de desistimiento y plazos',
+    paragraphs: ['Conforme a la normativa de protección al consumidor, el Cliente puede solicitar la devolución o cambio de un producto dentro de un plazo máximo de 14 días calendario contados desde la recepción de la mercancía.'],
+  },
+  {
+    title: '2. Condiciones esenciales de higiene',
+    paragraphs: ['En prendas de baño, como bikinis, enterizos y trikinis, y en ropa interior:'],
+    bullets: ['Los artículos deben probarse utilizando ropa interior propia y sin retirar los protectores higiénicos adhesivos incorporados.', 'Las devoluciones serán rechazadas si presentan indicios de uso, han sido lavadas, muestran manchas o tienen retirados los protectores higiénicos o las etiquetas originales.', 'La mercancía debe devolverse completa, sin uso, en perfecto estado y con su empaque original.'],
+  },
+  {
+    title: '3. Costes y procedimiento de devolución',
+    paragraphs: ['Los gastos de envío derivados de una devolución o cambio corren a cargo del cliente, salvo que el producto presente un defecto de fábrica o no corresponda al artículo adquirido.', 'Para iniciar una solicitud:'],
+    bullets: ['Escribe a soporte@marianelavieira.com indicando tu número de pedido, el artículo y el motivo detallado.', 'Nuestro equipo responderá con las instrucciones y la dirección exacta del almacén o punto autorizado en Lima.', 'Prepara el paquete de forma segura. Recomendamos utilizar un servicio con seguimiento, ya que Marianela Trajes de Baño S.A.C. no se responsabiliza por paquetes extraviados sin trazabilidad.'],
+  },
+  {
+    title: '4. Reembolsos',
+    bullets: ['Una vez recibida la mercancía, se realizará una inspección de calidad en un plazo de 3 a 4 días hábiles para verificar el cumplimiento de las condiciones de higiene y estado.', 'Si la devolución es aprobada, el reembolso del importe pagado por el producto se procesará en un plazo máximo de 14 días calendario desde la recepción de la devolución.', 'El reembolso se realizará mediante el mismo método de pago empleado en la compra, incluyendo la reversión a través de Izipay cuando corresponda.', 'Las Tarjetas de Regalo (E-Gift Cards) no son reembolsables en efectivo. En caso de devolución, se reactivarán por el valor correspondiente.'],
+    paragraphs: ['El derecho de desistimiento y devolución no aplica a productos personalizados o confeccionados a medida.'],
+  },
+];
+
 function LegalDocument({ title, intro, sections }: { title: string; intro: string; sections: LegalSection[] }) {
   return (
     <section className="mx-auto max-w-4xl px-6 py-16 lg:px-10 lg:py-24">
@@ -298,6 +320,10 @@ export default function InfoPage() {
 
   if (slug === 'legal-notice') {
     return <LegalDocument title="Aviso Legal" intro="Información sobre facturación, pagos y condiciones de uso de la tienda online Marianela Vieira." sections={legalNoticeSections} />;
+  }
+
+  if (slug === 'refund-policy') {
+    return <LegalDocument title={content.title} intro={content.intro} sections={refundSections} />;
   }
 
   return (
