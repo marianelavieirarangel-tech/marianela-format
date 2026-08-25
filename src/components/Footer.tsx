@@ -19,15 +19,6 @@ const footerLinkPaths: Record<string, string> = {
   'Aviso Legal': '/policies/legal-notice',
 };
 
-const footerBottomLinks = [
-  ['Política de Reembolso', '/policies/refund-policy'],
-  ['Política de Privacidad', '/policies/privacy-policy'],
-  ['Términos del Servicio', '/policies/terms-of-service'],
-  ['Política de Envíos', '/pages/envios-y-devoluciones'],
-  ['Información de Contacto', '/pages/contacto'],
-  ['Aviso Legal', '/policies/legal-notice'],
-] as const;
-
 export default function Footer() {
   const [email, setEmail] = useState('');
   const [submitted, setSubmitted] = useState(false);
@@ -139,24 +130,16 @@ export default function Footer() {
 
       {/* Bottom bar */}
       <div className="border-t border-ink-700">
-        <div className="mx-auto max-w-7xl px-6 lg:px-10 py-6">
-          <nav className="mb-5 flex flex-wrap justify-center gap-x-5 gap-y-2" aria-label="Enlaces legales">
-            {footerBottomLinks.map(([label, path]) => (
-              <Link key={path} to={path} className="text-xs text-ink-400 transition-colors hover:text-sand-50 link-underline">
-                {label}
-              </Link>
-            ))}
-          </nav>
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-5 px-6 py-6 sm:flex-row lg:px-10">
           <p className="text-ink-400 text-xs tracking-wide">
             © 2026 Marianela Vieira. Todos los derechos reservados.
           </p>
-          <div className="flex items-center gap-5 text-ink-400 text-xs">
-            <span>Visa</span>
-            <span>Mastercard</span>
-            <span>Amex</span>
-            <span>PayPal</span>
-          </div>
+          <div className="flex flex-wrap items-center justify-center gap-2" aria-label="Medios de pago aceptados">
+            <span className="mr-2 text-[10px] uppercase tracking-widest text-ink-400">Pagos seguros con</span>
+            <span className="border border-ink-600 bg-ink-800 px-3 py-1 text-xs font-semibold italic tracking-wide text-sand-50">Izipay</span>
+            <span className="border border-ink-600 bg-ink-800 px-3 py-1 text-xs font-semibold italic tracking-wide text-sand-50">VISA</span>
+            <span className="border border-ink-600 bg-ink-800 px-3 py-1 text-xs font-semibold tracking-wide text-sand-50">mastercard</span>
+            <span className="border border-ink-600 bg-ink-800 px-3 py-1 text-[9px] font-semibold tracking-wide text-sand-50">AMERICAN EXPRESS</span>
           </div>
         </div>
       </div>
