@@ -152,7 +152,7 @@ export const categories = [
 ];
 
 export const navLinks = [
-  { label: 'Novedades', href: '#novedades' },
+  { label: 'Colección 2026', href: '#novedades' },
   { label: 'Mujeres', href: '#categorias' },
   { label: 'Hombres', href: '#categorias' },
   { label: 'Kids', href: '#categorias' },

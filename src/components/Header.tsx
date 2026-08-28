@@ -43,6 +43,10 @@ export default function Header({
     window.scrollTo({ top: 0, behavior: 'smooth' });
     navigate('/');
   };
+  const goToCollection = () => {
+    navigate('/');
+    window.setTimeout(() => document.getElementById('novedades')?.scrollIntoView({ behavior: 'smooth' }), 0);
+  };
 
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -92,16 +96,10 @@ export default function Header({
             {/* Left nav (desktop) */}
             <nav className="hidden lg:flex items-center gap-6 justify-self-start">
               <button
-                onClick={() => goToCategory(navLinks[0].label)}
+                onClick={goToCollection}
                 className="text-[11px] uppercase tracking-widest text-ink-700 hover:text-ink-900 link-underline"
               >
                 {navLinks[0].label}
-              </button>
-              <button
-                onClick={() => navigate('/pages/viajes-grupales')}
-                className="text-[11px] uppercase tracking-widest text-ink-700 hover:text-ink-900 link-underline"
-              >
-                Viajes Grupales
               </button>
               {/* Mujeres dropdown */}
               <div className="relative group">
@@ -134,6 +132,12 @@ export default function Header({
                   </div>
                 )}
               </div>
+              <button
+                onClick={() => navigate('/pages/viajes-grupales')}
+                className="text-[11px] uppercase tracking-widest text-ink-700 hover:text-ink-900 link-underline"
+              >
+                Viajes Grupales
+              </button>
             </nav>
 
             {/* Mobile menu button */}
@@ -294,21 +298,12 @@ export default function Header({
           <nav className="flex flex-col px-6 py-8 gap-1">
             <button
               onClick={() => {
-                goToCategory(navLinks[0].label);
+                goToCollection();
                 setMobileOpen(false);
               }}
               className="py-4 font-serif text-2xl border-b border-ink-100 text-ink-800 hover:text-blush-500 transition-colors"
             >
               {navLinks[0].label}
-            </button>
-            <button
-              onClick={() => {
-                navigate('/pages/viajes-grupales');
-                setMobileOpen(false);
-              }}
-              className="py-4 font-serif text-2xl border-b border-ink-100 text-ink-800 hover:text-blush-500 transition-colors"
-            >
-              Viajes Grupales
             </button>
             {/* Mobile Mujeres dropdown */}
             <button
@@ -335,6 +330,15 @@ export default function Header({
                 ))}
               </div>
             )}
+            <button
+              onClick={() => {
+                navigate('/pages/viajes-grupales');
+                setMobileOpen(false);
+              }}
+              className="py-4 font-serif text-2xl border-b border-ink-100 text-ink-800 hover:text-blush-500 transition-colors"
+            >
+              Viajes Grupales
+            </button>
             {navLinks.slice(2).map((link) => (
               <button
                 key={link.label}
