@@ -87,22 +87,23 @@ export default function Header({
 
       {/* Main header */}
       <header
-        className={`${isHome && !scrolled ? 'absolute left-0 right-0 top-[37px] bg-ink-900/15 text-sand-50' : 'fixed left-0 right-0 top-0 bg-sand-50/95 text-ink-800 shadow-[0_1px_0_0_rgba(26,22,17,0.08)]'} z-40 transition-all duration-500 backdrop-blur-md`}
+        className={`${isHome && !scrolled ? 'absolute left-0 right-0 top-[37px] text-sand-50' : 'fixed left-0 right-0 top-0 bg-sand-50 shadow-[0_1px_0_0_rgba(26,22,17,0.08)] text-ink-800'} z-40 transition-all duration-500`}
       >
-          <div className="grid grid-cols-[1fr_auto_1fr] items-center h-[72px] lg:h-[84px]">
+          <div className="relative flex h-[72px] items-center lg:h-[84px]">
             {/* Left nav (desktop) */}
-            <nav className="hidden lg:flex items-center gap-6 justify-self-start">
+            <nav className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-6 lg:flex">
               <button
                 onClick={goToCollection}
-                className="text-[11px] uppercase tracking-widest text-ink-700 hover:text-ink-900 link-underline"
+                className="text-[11px] uppercase tracking-widest text-current hover:text-blush-300 link-underline"
               >
+                {navLinks[0].label}
               </button>
               {/* Mujeres dropdown */}
               <div className="relative group">
                 <button
                   onMouseEnter={() => setWomenDropdown(true)}
                   onMouseLeave={() => setWomenDropdown(false)}
-                  className="flex items-center gap-2 text-[11px] uppercase tracking-widest text-ink-700 hover:text-ink-900 transition-colors"
+                  className="flex items-center gap-2 text-[11px] uppercase tracking-widest text-current hover:text-blush-300 transition-colors"
                 >
                   Mujeres
                   <ChevronDown size={14} strokeWidth={2} className={`transition-transform ${womenDropdown ? 'rotate-180' : ''}`} />
@@ -130,10 +131,19 @@ export default function Header({
               </div>
               <button
                 onClick={() => navigate('/pages/viajes-grupales')}
-                className="text-[11px] uppercase tracking-widest text-ink-700 hover:text-ink-900 link-underline"
+                className="text-[11px] uppercase tracking-widest text-current hover:text-blush-300 link-underline"
               >
                 Viajes Grupales
               </button>
+              {navLinks.slice(2).map((link) => (
+                <button
+                  key={link.label}
+                  onClick={() => goToCategory(link.label)}
+                  className={`text-[11px] uppercase tracking-widest link-underline ${link.label === 'Sale' ? 'text-blush-300 hover:text-blush-100' : 'text-current hover:text-blush-300'}`}
+                >
+                  {link.label}
+                </button>
+              ))}
             </nav>
 
             {/* Mobile menu button */}
@@ -148,7 +158,7 @@ export default function Header({
             {/* Logo */}
             <button
               onClick={handleLogoClick}
-              className="flex items-center justify-center justify-self-center -translate-y-1 sm:-translate-y-1.5 lg:-translate-y-2"
+              className="absolute left-6 flex items-center justify-center sm:left-8 lg:left-10"
               aria-label="Marianela Vieira inicio"
               type="button"
             >
@@ -160,21 +170,7 @@ export default function Header({
             </button>
 
             {/* Right nav (desktop) */}
-            <div className="hidden lg:flex items-center justify-self-end gap-6">
-              <nav className="flex items-center gap-6">
-                {navLinks.slice(2).map((link) => (
-                  <button
-                    key={link.label}
-                    onClick={() => goToCategory(link.label)}
-                    className={`text-[11px] uppercase tracking-widest link-underline ${
-                      link.label === 'Sale' ? 'text-blush-500 hover:text-blush-700' : 'text-ink-700 hover:text-ink-900'
-                    }`}
-                  >
-                    {link.label}
-                  </button>
-                ))}
-              </nav>
-
+            <div className="ml-auto hidden items-center gap-4 lg:flex lg:gap-5">
               <div className="flex items-center gap-4 lg:gap-5">
                 <label className="relative hidden xl:block">
                   <span className="sr-only">Moneda</span>
@@ -193,28 +189,28 @@ export default function Header({
                 </label>
                 <button
                   onClick={onOpenSearch}
-                  className="text-ink-800 hover:text-blush-500 transition-colors"
+                  className="text-current hover:text-blush-500 transition-colors"
                   aria-label="Buscar"
                 >
                   <Search size={19} strokeWidth={1.5} />
                 </button>
                 <a
                   href={getShopifyAccountLoginUrl()}
-                  className="hidden sm:block text-ink-800 hover:text-blush-500 transition-colors"
+                  className="hidden sm:block text-current hover:text-blush-500 transition-colors"
                   aria-label="Mi cuenta"
                 >
                   <User size={19} strokeWidth={1.5} />
                 </a>
                 <button
                   onClick={onOpenWishlist}
-                  className="hidden sm:block text-ink-800 hover:text-blush-500 transition-colors"
+                  className="hidden sm:block text-current hover:text-blush-500 transition-colors"
                   aria-label="Favoritos"
                 >
                   <Heart size={19} strokeWidth={1.5} />
                 </button>
                 <button
                   onClick={onOpenCart}
-                  className="relative text-ink-800 hover:text-blush-500 transition-colors"
+                  className="relative text-current hover:text-blush-500 transition-colors"
                   aria-label="Bolsa de compras"
                 >
                   <ShoppingBag size={19} strokeWidth={1.5} />
