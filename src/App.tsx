@@ -15,9 +15,10 @@ import SearchOverlay from '@/components/SearchOverlay';
 import WishlistDrawer from '@/components/WishlistDrawer';
 import InfoPage from '@/components/InfoPage';
 import CookiePreferences from '@/components/CookiePreferences';
+import GroupTripsPage from '@/components/GroupTripsPage';
 import type { Product } from '@/data/catalog';
 import { categorySlugs, products, navLinks, womenSubcategories, hiddenCategoryNames } from '@/data/catalog';
-import { currencyOptions, type CurrencyCode } from '@/lib/currency';
+import { type CurrencyCode } from '@/lib/currency';
 import { createShopifyCheckout, fetchShopifyProducts, isShopifyEnabled } from '@/lib/shopify';
 
 const CART_STORAGE_KEY = 'marianela-cart';
@@ -254,6 +255,7 @@ export default function App() {
 
           <Route path="/product/:id" element={<ProductPage />} />
           <Route path="/pages/:slug" element={<InfoPage />} />
+          <Route path="/pages/viajes-grupales" element={<GroupTripsPage />} />
           <Route path="/policies/:slug" element={<InfoPage />} />
         </Routes>
       </main>
