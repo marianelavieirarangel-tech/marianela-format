@@ -2,7 +2,7 @@ import { ArrowRight } from 'lucide-react';
 
 export default function Hero() {
   return (
-    <section id="top" className="relative h-[88vh] min-h-[600px] w-full overflow-hidden bg-ink-900">
+    <section id="top" className="relative h-[100vh] min-h-[680px] w-full overflow-hidden bg-ink-900">
       {/* Background image */}
       <div className="absolute inset-0">
         <img
@@ -30,7 +30,7 @@ export default function Hero() {
             Trajes de baño y piezas esenciales para celebrar la delicadeza de cada gesto.
           </p>
           <div className="mt-10 flex flex-col sm:flex-row gap-4 animate-fade-up" style={{ animationDelay: '0.65s', opacity: 0 }}>
-            <a href="#novedades" className="group inline-flex items-center justify-center gap-3 px-10 py-4 bg-sand-50 text-ink-900 text-xs uppercase tracking-widest transition-all duration-500 hover:bg-blush-200 hover:tracking-ultra">
+            <a href="#coleccion-2026" className="group inline-flex items-center justify-center gap-3 px-10 py-4 bg-sand-50 text-ink-900 text-xs uppercase tracking-widest transition-all duration-500 hover:bg-blush-200 hover:tracking-ultra">
               Descubrir Colección
               <ArrowRight size={15} strokeWidth={1.5} className="transition-transform duration-500 group-hover:translate-x-1" />
             </a>

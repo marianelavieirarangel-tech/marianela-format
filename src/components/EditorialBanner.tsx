@@ -28,7 +28,7 @@ export default function EditorialBanner() {
         <p className="mt-8 text-sand-200 text-sm tracking-widest uppercase">— Marianela Vieira, Lima 2026</p>
 
         <div className="mt-12 flex justify-center">
-          <a href="#novedades" className="btn-outline" style={{ borderColor: 'rgba(243,237,226,0.5)', color: '#f3ede2' }}>
+          <a href="#coleccion-2026" className="btn-outline" style={{ borderColor: 'rgba(243,237,226,0.5)', color: '#f3ede2' }}>
             Ver el Lookbook
           </a>
         </div>

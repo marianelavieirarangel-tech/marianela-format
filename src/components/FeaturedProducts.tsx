@@ -38,12 +38,12 @@ export default function FeaturedProducts({ products, currency, onQuickAdd, onTog
     });
 
   return (
-    <section id="novedades" className="py-24 lg:py-32 bg-sand-100/60">
+    <section id="coleccion-2026" className="py-24 lg:py-32 bg-sand-100/60">
       <div className="mx-auto max-w-7xl px-6 lg:px-10">
         {/* Heading */}
         <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between mb-12 lg:mb-16 gap-6">
           <div>
-            <p className="text-blush-500 text-[11px] tracking-ultra uppercase mb-4">Selección Curada</p>
+            <p className="text-blush-500 text-[11px] tracking-ultra uppercase mb-4">Colección 2026</p>
             <h2 className="font-serif text-4xl lg:text-5xl text-ink-900 font-light tracking-wide">
               Piezas que enamoran
             </h2>
