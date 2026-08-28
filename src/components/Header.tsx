@@ -1,6 +1,6 @@
 import { Search, Heart, ShoppingBag, Menu, X, User, ChevronDown } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { categorySlugs, navLinks, womenMenuSubcategories } from '@/data/catalog';
 import { currencyOptions, type CurrencyCode } from '@/lib/currency';
 import { getShopifyAccountLoginUrl } from '@/lib/shopify';
@@ -26,6 +26,8 @@ export default function Header({
   onSelectCategory,
 }: Props) {
   const navigate = useNavigate();
+  const location = useLocation();
+  const isHome = location.pathname === '/';
   const slugify = (s: string) =>
     s
       .toString()
@@ -85,13 +87,8 @@ export default function Header({
 
       {/* Main header */}
       <header
-        className={`sticky top-0 z-40 transition-all duration-500 ${
-          scrolled
-            ? 'bg-sand-50/95 backdrop-blur-md shadow-[0_1px_0_0_rgba(26,22,17,0.08)]'
-            : 'bg-sand-50/80 backdrop-blur-sm'
-        }`}
+        className={`${isHome && !scrolled ? 'absolute left-0 right-0 top-[37px] bg-ink-900/15 text-sand-50' : 'fixed left-0 right-0 top-0 bg-sand-50/95 text-ink-800 shadow-[0_1px_0_0_rgba(26,22,17,0.08)]'} z-40 transition-all duration-500 backdrop-blur-md`}
       >
-        <div className="mx-auto max-w-7xl px-6 lg:px-10">
           <div className="grid grid-cols-[1fr_auto_1fr] items-center h-[72px] lg:h-[84px]">
             {/* Left nav (desktop) */}
             <nav className="hidden lg:flex items-center gap-6 justify-self-start">
@@ -99,7 +96,6 @@ export default function Header({
                 onClick={goToCollection}
                 className="text-[11px] uppercase tracking-widest text-ink-700 hover:text-ink-900 link-underline"
               >
-                {navLinks[0].label}
               </button>
               {/* Mujeres dropdown */}
               <div className="relative group">
@@ -159,7 +155,7 @@ export default function Header({
               <img
                 src={logo}
                 alt="Marianela Vieira logo"
-                className="h-20 w-auto max-w-[380px] object-contain sm:h-24 lg:h-30"
+                className={`h-20 w-auto max-w-[380px] object-contain sm:h-24 lg:h-30 ${isHome && !scrolled ? 'brightness-0 invert' : ''}`}
               />
             </button>
 
@@ -269,7 +265,6 @@ export default function Header({
               </button>
             </div>
           </div>
-        </div>
       </header>
 
       {/* Mobile drawer */}
