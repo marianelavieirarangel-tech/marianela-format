@@ -42,7 +42,8 @@ export default function Header({
     navigate(`/collections/${slug}`);
   };
   const handleLogoClick = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    setScrolled(false);
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
     navigate('/');
   };
   const goToCollection = () => {
@@ -56,10 +57,11 @@ export default function Header({
   const [mobileWomenOpen, setMobileWomenOpen] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
+    const syncHeaderState = () => setScrolled(window.scrollY > 40);
+    syncHeaderState();
+    window.addEventListener('scroll', syncHeaderState, { passive: true });
+    return () => window.removeEventListener('scroll', syncHeaderState);
+  }, [location.pathname]);
 
   return (
     <>
@@ -99,21 +101,25 @@ export default function Header({
                 {navLinks[0].label}
               </button>
               {/* Mujeres dropdown */}
-              <div className="relative group">
+              <div
+                className="relative group"
+                onMouseEnter={() => setWomenDropdown(true)}
+                onMouseLeave={() => setWomenDropdown(false)}
+              >
                 <button
-                  onMouseEnter={() => setWomenDropdown(true)}
-                  onMouseLeave={() => setWomenDropdown(false)}
                   className="flex items-center gap-2 text-[11px] uppercase tracking-widest text-current hover:text-blush-300 transition-colors"
                 >
                   Mujeres
-                  <ChevronDown size={14} strokeWidth={2} className={`transition-transform ${womenDropdown ? 'rotate-180' : ''}`} />
+                  <ChevronDown size={14} strokeWidth={2} className={`transition-transform duration-300 ${womenDropdown ? 'rotate-180' : ''}`} />
                 </button>
-                {womenDropdown && (
-                  <div
-                    onMouseEnter={() => setWomenDropdown(true)}
-                    onMouseLeave={() => setWomenDropdown(false)}
-                    className="absolute top-full left-0 bg-sand-50 shadow-lg border border-ink-100 py-4 px-6 min-w-max z-50"
-                  >
+                <div
+                  className={`absolute top-full left-0 pt-3 transition-all duration-300 ease-out ${
+                    womenDropdown
+                      ? 'visible translate-y-0 opacity-100'
+                      : 'invisible -translate-y-2 opacity-0'
+                  }`}
+                >
+                  <div className="bg-sand-50 shadow-[0_18px_40px_rgba(22,18,15,0.08)] border border-ink-100 py-4 px-6 min-w-max z-50">
                     {womenMenuSubcategories.map((cat) => (
                       <button
                         key={cat}
@@ -127,7 +133,7 @@ export default function Header({
                       </button>
                     ))}
                   </div>
-                )}
+                </div>
               </div>
               <button
                 onClick={() => navigate('/pages/viajes-grupales')}
