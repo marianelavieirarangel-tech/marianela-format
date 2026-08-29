@@ -92,7 +92,7 @@ export default function Header({
         className={`${
           isHome && !scrolled
             ? 'absolute left-0 right-0 top-[37px] text-sand-50'
-            : 'fixed left-0 right-0 top-[37px] bg-sand-50 shadow-[0_1px_0_0_rgba(26,22,17,0.08)] text-ink-800'
+            : 'sticky top-0 left-0 right-0 bg-sand-50 shadow-[0_1px_0_0_rgba(26,22,17,0.08)] text-ink-800'
         } z-40 transition-all duration-500`}
       >
           <div className="relative flex h-[72px] items-center lg:h-[84px]">
