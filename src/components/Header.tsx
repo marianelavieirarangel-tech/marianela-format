@@ -66,7 +66,7 @@ export default function Header({
   return (
     <>
       {/* Announcement bar */}
-      <div className="bg-ink-900 text-sand-100 overflow-hidden">
+      <div className="relative z-50 bg-ink-900 text-sand-100 overflow-hidden">
         <div className="flex whitespace-nowrap animate-marquee py-2.5 text-[11px] tracking-widest uppercase font-light">
           {[...Array(2)].map((_, i) => (
             <div key={i} className="flex shrink-0">
