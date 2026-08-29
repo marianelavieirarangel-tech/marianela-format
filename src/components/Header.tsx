@@ -167,14 +167,14 @@ export default function Header({
             {/* Logo */}
             <button
               onClick={handleLogoClick}
-              className="absolute left-6 flex items-center justify-center sm:left-8 lg:left-10"
+              className="relative z-10 flex items-center justify-center sm:mr-2 lg:absolute lg:left-6 lg:mr-0"
               aria-label="Marianela Vieira inicio"
               type="button"
             >
               <img
                 src={logo}
                 alt="Marianela Vieira logo"
-                className={`h-24 w-auto max-w-[420px] object-contain sm:h-28 lg:h-32 ${isHome && !scrolled ? 'brightness-0 invert' : ''}`}
+                className={`h-14 w-auto max-w-[180px] object-contain sm:h-18 sm:max-w-[210px] lg:h-24 lg:max-w-[420px] ${isHome && !scrolled ? 'brightness-0 invert' : ''}`}
               />
             </button>
 
@@ -233,7 +233,7 @@ export default function Header({
             </div>
 
             {/* Mobile icons */}
-            <div className="lg:hidden flex items-center gap-3 justify-self-end">
+            <div className="lg:hidden flex items-center gap-3 justify-self-end pr-4 sm:pr-6">
               <label className="relative">
                 <span className="sr-only">Moneda</span>
                 <select
