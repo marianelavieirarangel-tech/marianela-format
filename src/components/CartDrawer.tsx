@@ -40,7 +40,7 @@ export default function CartDrawer({ open, items, currency, onClose, onUpdateQty
       />
 
       <div
-        className={`absolute right-0 top-0 h-full w-full max-w-md bg-sand-50 shadow-2xl transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] flex flex-col ${
+        className={`absolute right-4 top-3 h-[calc(100%-1.5rem)] w-full max-w-[440px] rounded-r-none bg-sand-50 shadow-[0_20px_60px_rgba(18,14,11,0.14)] transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] flex flex-col ${
           open ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
