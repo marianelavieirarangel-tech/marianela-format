@@ -19,7 +19,7 @@ export const products: Product[] = [
     name: 'Conjunto Soirée de Encaje',
     category: 'Fuera del Agua',
     price: 89,
-    image: 'https://images.pexels.com/photos/9356533/pexels-photo-9356533.jpeg?auto=compress&cs=tinysrgb&h=900&w=600',
+    image: 'https://images.pexels.com/photos/9356533/pexels-photo-9356533.jpeg?auto=compress&cs=tinysrgb&w=900&q=80',
     swatches: [
       { name: 'Rose', hex: '#e9b0a3' },
       { name: 'Noir', hex: '#1a1611' },
@@ -33,7 +33,7 @@ export const products: Product[] = [
     name: 'Body Noir Velours',
     category: 'Fuera del Agua',
     price: 74,
-    image: 'https://images.pexels.com/photos/9132317/pexels-photo-9132317.jpeg?auto=compress&cs=tinysrgb&h=900&w=600',
+    image: 'https://images.pexels.com/photos/9132317/pexels-photo-9132317.jpeg?auto=compress&cs=tinysrgb&w=900&q=80',
     swatches: [
       { name: 'Noir', hex: '#1a1611' },
       { name: 'Bordeaux', hex: '#5f2e24' },
@@ -47,7 +47,7 @@ export const products: Product[] = [
     category: 'Fuera del Agua',
     price: 95,
     originalPrice: 120,
-    image: 'https://images.pexels.com/photos/13362549/pexels-photo-13362549.jpeg?auto=compress&cs=tinysrgb&h=900&w=600',
+    image: 'https://images.pexels.com/photos/13362549/pexels-photo-13362549.jpeg?auto=compress&cs=tinysrgb&w=900&q=80',
     swatches: [
       { name: 'Ivoire', hex: '#f3ede2' },
       { name: 'Sage', hex: '#a7b69c' },
@@ -60,7 +60,7 @@ export const products: Product[] = [
     name: 'Pijama Satin Élégance',
     category: 'Fuera del Agua',
     price: 128,
-    image: 'https://images.pexels.com/photos/7162014/pexels-photo-7162014.jpeg?auto=compress&cs=tinysrgb&h=900&w=600',
+    image: 'https://images.pexels.com/photos/7162014/pexels-photo-7162014.jpeg?auto=compress&cs=tinysrgb&w=900&q=80',
     swatches: [
       { name: 'Champagne', hex: '#e7dcc8' },
       { name: 'Noir', hex: '#1a1611' },
@@ -74,7 +74,7 @@ export const products: Product[] = [
     name: 'Camisole Rose Tendre',
     category: 'Fuera del Agua',
     price: 68,
-    image: 'https://images.pexels.com/photos/7162012/pexels-photo-7162012.jpeg?auto=compress&cs=tinysrgb&h=900&w=600',
+    image: 'https://images.pexels.com/photos/7162012/pexels-photo-7162012.jpeg?auto=compress&cs=tinysrgb&w=900&q=80',
     swatches: [
       { name: 'Rose', hex: '#f4d4cc' },
       { name: 'Champagne', hex: '#e7dcc8' },
@@ -87,7 +87,7 @@ export const products: Product[] = [
     name: 'Robe Soie Noir',
     category: 'Fuera del Agua',
     price: 142,
-    image: 'https://images.pexels.com/photos/6976713/pexels-photo-6976713.jpeg?auto=compress&cs=tinysrgb&h=900&w=600',
+    image: 'https://images.pexels.com/photos/6976713/pexels-photo-6976713.jpeg?auto=compress&cs=tinysrgb&w=900&q=80',
     swatches: [
       { name: 'Noir', hex: '#1a1611' },
       { name: 'Sage', hex: '#a7b69c' },
@@ -100,7 +100,7 @@ export const products: Product[] = [
     name: 'Traje de Baño Riviera',
     category: 'Traje de Baño',
     price: 110,
-    image: 'https://images.pexels.com/photos/31277420/pexels-photo-31277420.jpeg?auto=compress&cs=tinysrgb&h=900&w=600',
+    image: 'https://images.pexels.com/photos/31277420/pexels-photo-31277420.jpeg?auto=compress&cs=tinysrgb&w=900&q=80',
     swatches: [
       { name: 'Corail', hex: '#db8775' },
       { name: 'Noir', hex: '#1a1611' },
@@ -115,7 +115,7 @@ export const categories = [
     name: 'Bikini',
     tagline: 'Texturas y cortes que destacan',
     description: 'Bikinis modernos con detalles seductores y un ajuste perfecto.',
-    image: 'https://images.pexels.com/photos/17367636/pexels-photo-17367636.jpeg?auto=compress&cs=tinysrgb&h=1200&w=800',
+    image: 'https://images.pexels.com/photos/17367636/pexels-photo-17367636.jpeg?auto=compress&cs=tinysrgb&w=1200&q=80',
   },
   {
     name: 'Traje de Baño',
@@ -127,26 +127,26 @@ export const categories = [
     name: 'Tankini',
     tagline: 'Equilibrio entre estilo y libertad',
     description: 'Tankinis de corte refinado para una presencia ligera y femenina.',
-    image: 'https://6a8377665cc6de03eb430013.imgix.net/sandbox/W69982s.webp',
+    image: 'https://6a8377665cc6de03eb430013.imgix.net/sandbox/W69982s.webp?auto=format&q=80&w=1200&fit=max',
   },
   {
     name: 'Trikini',
     tagline: 'Un detalle audaz',
     description: 'Trikinis con proporciones exactas y un aire contemporáneo.',
-    image: 'https://6a8377665cc6de03eb430013.imgix.net/sandbox/Trikini_leopardo.webp',
+    image: 'https://6a8377665cc6de03eb430013.imgix.net/sandbox/Trikini_leopardo.webp?auto=format&q=80&w=1200&fit=max',
   },
   {
     name: 'Fuera del Agua',
     tagline: 'Estilo en cada paso',
     description: 'Piezas para llevar la misma esencia de lujo fuera del agua.',
-    image: 'https://6a8377665cc6de03eb430013.imgix.net/sandbox/dff7a81aac6f03af918f5d4b4cc15bda.jpg',
+    image: 'https://6a8377665cc6de03eb430013.imgix.net/sandbox/dff7a81aac6f03af918f5d4b4cc15bda.jpg?auto=format&q=80&w=1200&fit=max',
   },
 
   {
     name: 'Accesorios',
     tagline: 'Los detalles finales',
     description: 'Accesorios para completar y elevar cada look playero.',
-    image: 'https://6a8377665cc6de03eb430013.imgix.net/sandbox/coconut-ave-la-mer-bucket-hat-model_533x.webp',
+    image: 'https://6a8377665cc6de03eb430013.imgix.net/sandbox/coconut-ave-la-mer-bucket-hat-model_533x.webp?auto=format&q=80&w=1200&fit=max',
   },
 
 ];
