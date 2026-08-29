@@ -158,23 +158,23 @@ export default function Header({
             {/* Mobile menu button */}
             <button
               onClick={() => setMobileOpen(true)}
-              className="lg:hidden text-ink-800 hover:text-blush-500 transition-colors justify-self-start"
+              className="lg:hidden absolute left-4 z-20 flex h-10 w-10 items-center justify-center text-sand-50 transition-colors hover:text-blush-300"
               aria-label="Abrir menú"
             >
-              <Menu size={22} strokeWidth={1.5} />
+              <Menu size={22} strokeWidth={1.8} className="text-white" />
             </button>
 
             {/* Logo */}
             <button
               onClick={handleLogoClick}
-              className="relative z-10 flex items-center justify-center sm:mr-2 lg:absolute lg:left-6 lg:mr-0"
+              className="relative z-10 mx-auto flex items-center justify-center lg:absolute lg:left-6 lg:mx-0"
               aria-label="Marianela Vieira inicio"
               type="button"
             >
               <img
                 src={logo}
                 alt="Marianela Vieira logo"
-                className={`h-14 w-auto max-w-[180px] object-contain sm:h-18 sm:max-w-[210px] lg:h-24 lg:max-w-[420px] ${isHome && !scrolled ? 'brightness-0 invert' : ''}`}
+                className={`h-12 w-auto max-w-[150px] object-contain sm:h-14 sm:max-w-[170px] lg:h-24 lg:max-w-[420px] ${isHome && !scrolled ? 'brightness-0 invert' : ''}`}
               />
             </button>
 
@@ -233,32 +233,17 @@ export default function Header({
             </div>
 
             {/* Mobile icons */}
-            <div className="lg:hidden flex items-center gap-3 justify-self-end pr-4 sm:pr-6">
-              <label className="relative">
-                <span className="sr-only">Moneda</span>
-                <select
-                  value={currency}
-                  onChange={(event) => onCurrencyChange(event.target.value as CurrencyCode)}
-                  className="appearance-none rounded-full border border-ink-200 bg-sand-50 px-2.5 py-1 pr-6 text-[10px] uppercase tracking-[0.2em] text-ink-700 outline-none"
-                >
-                  {currencyOptions.map((option) => (
-                    <option key={option} value={option}>
-                      {option}
-                    </option>
-                  ))}
-                </select>
-                <ChevronDown size={10} strokeWidth={2} className="pointer-events-none absolute right-1.5 top-1/2 -translate-y-1/2 text-ink-500" />
-              </label>
+            <div className="lg:hidden absolute right-4 top-1/2 z-20 flex -translate-y-1/2 items-center gap-3">
               <button
                 onClick={onOpenSearch}
-                className="text-ink-800 hover:text-blush-500 transition-colors"
+                className="text-white hover:text-blush-300 transition-colors"
                 aria-label="Buscar"
               >
                 <Search size={19} strokeWidth={1.5} />
               </button>
               <button
                 onClick={onOpenCart}
-                className="relative text-ink-800 hover:text-blush-500 transition-colors"
+                className="relative text-white hover:text-blush-300 transition-colors"
                 aria-label="Bolsa de compras"
               >
                 <ShoppingBag size={19} strokeWidth={1.5} />
