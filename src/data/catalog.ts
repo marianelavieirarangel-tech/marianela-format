@@ -151,12 +151,14 @@ export const categories = [
 
 ];
 
+export const collection2026Slug = 'coleccion-2026';
+
 export const navLinks = [
-  { label: 'Colección 2026', href: '#coleccion-2026' },
+  { label: 'Colección 2026', href: `/collections/${collection2026Slug}` },
   { label: 'Mujeres', href: '#categorias' },
   { label: 'Hombres', href: '#categorias' },
   { label: 'Kids', href: '#categorias' },
-  { label: 'Sale', href: '#coleccion-2026' },
+  { label: 'Sale', href: `/collections/${collection2026Slug}` },
 ];
 
 export const categorySlugs: Record<string, string> = {

@@ -191,7 +191,7 @@ export default function App() {
     // try to match existing category names first
     const candidates = [...womenSubcategories, ...navLinks.map((n) => n.label)];
     const match = candidates.find((c) => (categorySlugs[c] ?? c) === slug);
-    const categoryName = match || deslug(slug);
+    const categoryName = slug === 'coleccion-2026' ? 'Colección 2026' : (match || deslug(slug));
 
     return (
       <CategoryProducts

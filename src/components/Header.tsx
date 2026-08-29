@@ -47,8 +47,7 @@ export default function Header({
     navigate('/');
   };
   const goToCollection = () => {
-    navigate('/');
-    window.setTimeout(() => document.getElementById('coleccion-2026')?.scrollIntoView({ behavior: 'smooth' }), 0);
+    navigate('/collections/coleccion-2026');
   };
 
   const [scrolled, setScrolled] = useState(false);

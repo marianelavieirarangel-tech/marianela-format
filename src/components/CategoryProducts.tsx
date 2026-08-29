@@ -36,6 +36,9 @@ export default function CategoryProducts({
   const filtered = products
     .filter((product) => !hiddenCategoryNames.has(product.category))
     .filter((product) => {
+      if (categoryName === 'Colección 2026') {
+        return true;
+      }
       if (categoryName === 'Sale') {
         return product.tag === 'Sale' && product.category !== 'Bikini';
       }
