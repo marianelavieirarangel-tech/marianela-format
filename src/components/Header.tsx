@@ -63,12 +63,10 @@ export default function Header({
     return () => window.removeEventListener('scroll', syncHeaderState);
   }, [location.pathname]);
 
-  const topBarOffset = isHome && !scrolled ? 'translate-y-0' : '-translate-y-[37px]';
-
   return (
-    <div className="fixed left-0 right-0 top-0 z-40 transition-transform duration-500 ease-out">
+    <>
       {/* Announcement bar */}
-      <div className={`bg-ink-900 text-sand-100 overflow-hidden transition-transform duration-500 ease-out ${topBarOffset}`}>
+      <div className="fixed left-0 right-0 top-0 z-50 bg-ink-900 text-sand-100 overflow-hidden">
         <div className="flex whitespace-nowrap animate-marquee py-2.5 text-[11px] tracking-widest uppercase font-light">
           {[...Array(2)].map((_, i) => (
             <div key={i} className="flex shrink-0">
@@ -93,9 +91,9 @@ export default function Header({
       <header
         className={`${
           isHome && !scrolled
-            ? 'text-sand-50'
-            : 'bg-sand-50 shadow-[0_1px_0_0_rgba(26,22,17,0.08)] text-ink-800'
-        } transition-[background-color,color,box-shadow] duration-500 ease-out`}
+            ? 'fixed left-0 right-0 top-[37px] text-sand-50'
+            : 'fixed left-0 right-0 top-[37px] bg-sand-50 shadow-[0_1px_0_0_rgba(26,22,17,0.08)] text-ink-800'
+        } z-40 transition-[background-color,color,box-shadow] duration-500 ease-out`}
       >
           <div className="relative flex h-[72px] items-center lg:h-[84px]">
             {/* Left nav (desktop) */}
@@ -368,6 +366,6 @@ export default function Header({
           </nav>
         </div>
       </div>
-    </div>
+    </>
   );
 }
