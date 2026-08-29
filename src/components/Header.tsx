@@ -179,7 +179,7 @@ export default function Header({
             </button>
 
             {/* Right nav (desktop) */}
-            <div className="ml-auto hidden items-center gap-4 lg:flex lg:gap-5">
+            <div className="ml-auto hidden items-center gap-4 pr-10 lg:flex lg:gap-5 lg:pr-12 xl:pr-14">
               <div className="flex items-center gap-4 lg:gap-5">
                 <label className="relative hidden xl:block">
                   <span className="sr-only">Moneda</span>
