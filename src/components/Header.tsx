@@ -174,7 +174,7 @@ export default function Header({
               <img
                 src={logo}
                 alt="Marianela Vieira logo"
-                className={`h-[78px] w-auto max-w-[240px] object-contain sm:h-[86px] sm:max-w-[260px] lg:h-24 lg:max-w-[420px] ${isHome && !scrolled ? 'brightness-0 invert' : ''}`}
+                className={`h-[82px] w-auto max-w-[250px] object-contain sm:h-[90px] sm:max-w-[270px] lg:h-24 lg:max-w-[420px] ${isHome && !scrolled ? 'brightness-0 invert' : ''}`}
               />
             </button>
 
