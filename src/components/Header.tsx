@@ -280,26 +280,26 @@ export default function Header({
               <X size={22} strokeWidth={1.5} className="text-ink-800" />
             </button>
           </div>
-          <nav className="flex flex-col px-6 py-8 gap-1">
+          <nav className="flex flex-col items-center px-6 py-8 gap-1">
             <button
               onClick={() => {
                 goToCollection();
                 setMobileOpen(false);
               }}
-              className="py-4 font-serif text-2xl border-b border-ink-100 text-ink-800 hover:text-blush-500 transition-colors"
+              className="w-full py-4 font-serif text-2xl border-b border-ink-100 text-ink-800 hover:text-blush-500 transition-colors text-center"
             >
               {navLinks[0].label}
             </button>
             {/* Mobile Mujeres dropdown */}
             <button
               onClick={() => setMobileWomenOpen(!mobileWomenOpen)}
-              className="flex items-center justify-between py-4 font-serif text-2xl border-b border-ink-100 text-ink-800 hover:text-blush-500 transition-colors w-full"
+              className="flex w-full items-center justify-center gap-2 py-4 font-serif text-2xl border-b border-ink-100 text-ink-800 hover:text-blush-500 transition-colors"
             >
-              Mujeres
+              <span>Mujeres</span>
               <ChevronDown size={20} strokeWidth={2} className={`transition-transform ${mobileWomenOpen ? 'rotate-180' : ''}`} />
             </button>
             {mobileWomenOpen && (
-              <div className="bg-ink-50 flex flex-col gap-0">
+              <div className="w-full bg-ink-50 flex flex-col gap-0">
                 {womenMenuSubcategories.map((cat) => (
                   <button
                     key={cat}
@@ -308,7 +308,7 @@ export default function Header({
                       setMobileOpen(false);
                       setMobileWomenOpen(false);
                     }}
-                    className="w-full text-left py-3 pl-4 text-sm uppercase tracking-widest text-ink-700 hover:text-blush-500 transition-colors border-b border-ink-100"
+                    className="w-full text-center py-3 text-sm uppercase tracking-widest text-ink-700 hover:text-blush-500 transition-colors border-b border-ink-100"
                   >
                     {cat}
                   </button>
@@ -320,7 +320,7 @@ export default function Header({
                 navigate('/pages/viajes-grupales');
                 setMobileOpen(false);
               }}
-              className="py-4 font-serif text-2xl border-b border-ink-100 text-ink-800 hover:text-blush-500 transition-colors"
+              className="w-full py-4 font-serif text-2xl border-b border-ink-100 text-ink-800 hover:text-blush-500 transition-colors text-center"
             >
               Viajes Grupales
             </button>
@@ -331,14 +331,14 @@ export default function Header({
                   goToCategory(link.label);
                   setMobileOpen(false);
                 }}
-                className={`py-4 font-serif text-2xl border-b border-ink-100 transition-colors ${
+                className={`w-full py-4 font-serif text-2xl border-b border-ink-100 transition-colors text-center ${
                   link.label === 'Sale' ? 'text-blush-500' : 'text-ink-800 hover:text-blush-500'
                 }`}
               >
                 {link.label}
               </button>
             ))}
-            <div className="flex items-center gap-6 pt-8 text-ink-600">
+            <div className="flex items-center justify-center gap-6 pt-8 text-ink-600">
               <a
                 href={getShopifyAccountLoginUrl()}
                 onClick={() => setMobileOpen(false)}
