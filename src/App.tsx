@@ -26,6 +26,29 @@ const CART_DURATION_MS = 60 * 60 * 1000;
 const CART_ID_STORAGE_KEY = 'marianela-cart-id';
 const WISHLIST_STORAGE_KEY = 'marianela-wishlist';
 
+const NO_INDEX_PATHS = [
+  '/pages/envios-y-devoluciones',
+  '/pages/guia-de-tallas',
+  '/pages/cuidado-de-prendas',
+  '/pages/preguntas-frecuentes',
+  '/pages/contacto',
+  '/pages/nuestra-historia',
+  '/pages/sostenibilidad',
+  '/pages/boutiques',
+  '/pages/trabaja-con-nosotros',
+  '/pages/terms-of-service',
+  '/pages/privacy-policy',
+  '/pages/cookie-policy',
+  '/pages/legal-notice',
+  '/pages/refund-policy',
+  '/policies/terms-of-service',
+  '/policies/privacy-policy',
+  '/policies/cookie-policy',
+  '/policies/legal-notice',
+  '/policies/refund-policy',
+  '/policies/envios-y-devoluciones',
+];
+
 function readStoredCart(): CartItem[] {
   if (typeof window === 'undefined') return [];
   try {
@@ -71,6 +94,32 @@ export default function App() {
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+  }, [location.pathname]);
+
+  useEffect(() => {
+    const shouldNoIndex = NO_INDEX_PATHS.includes(location.pathname) ||
+      location.pathname.startsWith('/pages/') ||
+      location.pathname.startsWith('/policies/');
+
+    let robotsMeta = document.querySelector('meta[name="robots"]') as HTMLMetaElement | null;
+    if (!robotsMeta) {
+      robotsMeta = document.createElement('meta');
+      robotsMeta.setAttribute('name', 'robots');
+      document.head.appendChild(robotsMeta);
+    }
+    robotsMeta.setAttribute('content', shouldNoIndex ? 'noindex, follow' : 'index, follow');
+
+    let canonicalLink = document.querySelector('link[rel="canonical"]') as HTMLLinkElement | null;
+    if (!canonicalLink) {
+      canonicalLink = document.createElement('link');
+      canonicalLink.setAttribute('rel', 'canonical');
+      document.head.appendChild(canonicalLink);
+    }
+
+    const canonicalUrl = location.pathname === '/'
+      ? 'https://marianelavieira.com/'
+      : `https://marianelavieira.com${location.pathname}`;
+    canonicalLink.setAttribute('href', canonicalUrl);
   }, [location.pathname]);
 
   useEffect(() => {
