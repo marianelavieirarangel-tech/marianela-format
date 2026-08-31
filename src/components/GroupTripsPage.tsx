@@ -49,7 +49,7 @@ export default function GroupTripsPage() {
     <div className="bg-sand-50 text-ink-900">
       <section className="relative min-h-[58vh] overflow-hidden bg-ink-900 sm:min-h-[68vh]">
         <img
-          src="https://images.pexels.com/photos/1450353/pexels-photo-1450353.jpeg?auto=compress&cs=tinysrgb&w=1800"
+          src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1800&q=80"
           alt="Grupo de amigas disfrutando junto al mar"
           className="absolute inset-0 h-full w-full object-cover object-center"
         />
