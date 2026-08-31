@@ -1,4 +1,5 @@
 import { ArrowRight } from 'lucide-react';
+import heroImage from '@/assets/filosofia-lenceria.jpg';
 
 export default function Hero() {
   return (
@@ -6,12 +7,13 @@ export default function Hero() {
       {/* Background image */}
       <div className="absolute inset-0">
         <img
-          src="https://6a8377665cc6de03eb430013.imgix.net/sandbox/fashn-export-1786655423740.png?auto=format&q=80&w=1800&fit=max"
-          alt="Maison Velours — colección de lencería"
-          className="h-full w-full object-cover object-center scale-105"
+          src={heroImage}
+          alt="Marianela Vieira — editorial de playa"
+          className="h-full w-full object-cover object-center scale-[1.08]"
           loading="eager"
           fetchPriority="high"
           decoding="async"
+          style={{ objectPosition: 'center center' }}
         />
         <div className="absolute inset-0 bg-gradient-to-r from-ink-900/70 via-ink-900/30 to-transparent" />
         <div className="absolute inset-0 bg-gradient-to-t from-ink-900/60 via-transparent to-ink-900/20" />
