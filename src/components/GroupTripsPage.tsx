@@ -9,6 +9,24 @@ const gallery = [
   'https://images.pexels.com/photos/1450353/pexels-photo-1450353.jpeg?auto=compress&cs=tinysrgb&w=900',
 ];
 
+const tripMoments = [
+  {
+    image: gallery[0],
+    title: 'Momentos reales',
+    angle: 'rotate-[-2deg]',
+  },
+  {
+    image: gallery[1],
+    title: 'Ritmo relajado',
+    angle: 'rotate-[2deg]',
+  },
+  {
+    image: gallery[3],
+    title: 'Historias compartidas',
+    angle: 'rotate-[-1deg]',
+  },
+];
+
 const steps = [
   {
     title: 'Cuéntanos tu idea',
@@ -35,29 +53,51 @@ export default function GroupTripsPage() {
           alt="Grupo de amigas disfrutando junto al mar"
           className="absolute inset-0 h-full w-full object-cover object-center"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-ink-900/75 via-ink-900/35 to-transparent" />
-        <div className="relative mx-auto flex min-h-[68vh] max-w-7xl items-end px-6 pb-16 lg:px-10 lg:pb-24">
-          <div className="max-w-2xl text-sand-50">
-            <p className="mb-5 text-[11px] uppercase tracking-ultra text-blush-200">Experiencias que se comparten</p>
-            <h1 className="font-serif text-5xl font-light leading-[0.95] tracking-wide sm:text-7xl">Viajes Grupales</h1>
-            <p className="mt-7 max-w-lg text-base font-light leading-relaxed text-sand-100 sm:text-lg">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(255,255,255,0.18),_transparent_35%),linear-gradient(to_right,rgba(17,13,10,0.8),rgba(17,13,10,0.48),rgba(17,13,10,0.18))]" />
+        <div className="relative mx-auto flex min-h-[68vh] max-w-7xl items-end px-6 pb-16 lg:px-10 lg:pb-20">
+          <div className="max-w-[42rem] text-sand-50" style={{ textShadow: '0 2px 18px rgba(0, 0, 0, 0.38)' }}>
+            <div className="mb-5 inline-flex items-center rounded-full border border-white/20 bg-white/8 px-3 py-1.5 text-[10px] uppercase tracking-[0.28em] text-blush-100 backdrop-blur-sm">
+              Experiencias que se comparten
+            </div>
+            <h1 className="font-serif text-5xl font-light leading-[0.92] tracking-[0.02em] sm:text-7xl" style={{ textShadow: '0 2px 18px rgba(0, 0, 0, 0.4)' }}>
+              Viajes Grupales
+            </h1>
+            <p className="mt-7 max-w-xl text-base font-light leading-relaxed text-sand-100 sm:text-lg" style={{ textShadow: '0 2px 14px rgba(0, 0, 0, 0.28)' }}>
               Escapadas diseñadas para celebrar juntas, descubrir nuevos lugares y volver con historias que duran para siempre.
             </p>
-            <a href={whatsappUrl} target="_blank" rel="noreferrer" className="btn-primary mt-9 bg-sand-50 text-ink-900 hover:bg-blush-200">
-              Reserva tu experiencia <ArrowRight size={15} strokeWidth={1.5} className="ml-3" />
-            </a>
+            <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center">
+              <a href={whatsappUrl} target="_blank" rel="noreferrer" className="inline-flex items-center justify-center rounded-full bg-sand-50 px-6 py-3.5 text-[10px] uppercase tracking-[0.22em] text-ink-900 shadow-[0_12px_24px_rgba(17,13,10,0.2)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-blush-200">
+                Reserva tu experiencia <ArrowRight size={15} strokeWidth={1.5} className="ml-3" />
+              </a>
+              <div className="flex items-center gap-3 text-[10px] uppercase tracking-[0.22em] text-sand-200/90">
+                <span className="rounded-full border border-white/20 bg-white/5 px-2.5 py-1.5">Destinos únicos</span>
+                <span className="rounded-full border border-white/20 bg-white/5 px-2.5 py-1.5">Sin estrés</span>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-6 py-20 lg:px-10 lg:py-28">
-        <div className="mb-12 max-w-2xl">
+      <section className="mx-auto max-w-7xl px-6 py-14 lg:px-10 lg:py-20">
+        <div className="mb-10 max-w-2xl">
           <p className="mb-4 text-[11px] uppercase tracking-ultra text-blush-500">Hecho para compartir</p>
           <h2 className="font-serif text-4xl font-light tracking-wide sm:text-5xl">Tu grupo, tu ritmo, tu historia</h2>
           <p className="mt-5 text-base font-light leading-relaxed text-ink-600">
             Nos encargamos de convertir esa idea que tienen en una experiencia especial, cuidando cada detalle para que todas se sientan cómodas.
           </p>
         </div>
+
+        <div className="mb-12 grid gap-4 md:grid-cols-3">
+          {tripMoments.map((item) => (
+            <div key={item.title} className={`overflow-hidden rounded-[22px] border border-ink-200 bg-sand-100 p-3 shadow-[0_12px_30px_rgba(22,18,15,0.06)] ${item.angle}`}>
+              <img src={item.image} alt={item.title} className="h-72 w-full object-cover rounded-[18px]" loading="lazy" />
+              <div className="px-2 pt-4 pb-2 text-center">
+                <p className="text-[10px] uppercase tracking-[0.2em] text-ink-500">{item.title}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+
         <div className="grid gap-px bg-ink-200 md:grid-cols-3">
           {steps.map((step, index) => (
             <article key={step.title} className="bg-sand-100 px-7 py-8 lg:px-9 lg:py-10">
