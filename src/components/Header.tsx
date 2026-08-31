@@ -1,5 +1,5 @@
 import { Search, Heart, ShoppingBag, Menu, X, User, ChevronDown } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { categorySlugs, navLinks, womenMenuSubcategories } from '@/data/catalog';
 import { currencyOptions, type CurrencyCode } from '@/lib/currency';
@@ -54,6 +54,8 @@ export default function Header({
   const [mobileOpen, setMobileOpen] = useState(false);
   const [womenDropdown, setWomenDropdown] = useState(false);
   const [mobileWomenOpen, setMobileWomenOpen] = useState(false);
+  const [currencyMenuOpen, setCurrencyMenuOpen] = useState(false);
+  const currencyMenuRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const syncHeaderState = () => setScrolled(window.scrollY > 40);
@@ -61,6 +63,17 @@ export default function Header({
     window.addEventListener('scroll', syncHeaderState, { passive: true });
     return () => window.removeEventListener('scroll', syncHeaderState);
   }, [location.pathname]);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (currencyMenuRef.current && !currencyMenuRef.current.contains(event.target as Node)) {
+        setCurrencyMenuOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   return (
     <>
@@ -181,21 +194,48 @@ export default function Header({
             {/* Right nav (desktop) */}
             <div className="ml-auto hidden items-center gap-4 pr-10 lg:flex lg:gap-5 lg:pr-12 xl:pr-14">
               <div className="flex items-center gap-4 lg:gap-5">
-                <label className="relative hidden xl:block">
-                  <span className="sr-only">Moneda</span>
-                  <select
-                    value={currency}
-                    onChange={(event) => onCurrencyChange(event.target.value as CurrencyCode)}
-                    className="appearance-none rounded-full border border-ink-200 bg-sand-50 px-3 py-1.5 pr-8 text-[10px] uppercase tracking-[0.2em] text-ink-700 outline-none transition-colors hover:border-ink-400"
+                <div ref={currencyMenuRef} className="relative hidden xl:block">
+                  <button
+                    type="button"
+                    onClick={() => setCurrencyMenuOpen((open) => !open)}
+                    className={`flex items-center gap-2 rounded-full border px-3 py-1.5 pr-2 text-[10px] uppercase tracking-[0.2em] shadow-[0_8px_24px_rgba(17,13,10,0.06)] backdrop-blur-sm transition-all duration-200 ${
+                      isHome && !scrolled
+                        ? 'border-white/35 bg-white/10 text-sand-50 hover:bg-white/15'
+                        : 'border-ink-200 bg-sand-50 text-ink-700 hover:border-ink-300 hover:bg-sand-100'
+                    }`}
+                    aria-label="Seleccionar moneda"
                   >
-                    {currencyOptions.map((option) => (
-                      <option key={option} value={option}>
-                        {option}
-                      </option>
-                    ))}
-                  </select>
-                  <ChevronDown size={12} strokeWidth={2} className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 text-ink-500" />
-                </label>
+                    <span>{currency}</span>
+                    <ChevronDown
+                      size={12}
+                      strokeWidth={2}
+                      className={`transition-transform duration-200 ${currencyMenuOpen ? 'rotate-180' : ''}`}
+                    />
+                  </button>
+
+                  {currencyMenuOpen && (
+                    <div className="absolute right-0 top-[calc(100%+8px)] z-50 min-w-[110px] rounded-2xl border border-ink-100 bg-white/95 p-1.5 shadow-[0_18px_40px_rgba(22,18,15,0.12)] backdrop-blur-md">
+                      {currencyOptions.map((option) => (
+                        <button
+                          key={option}
+                          type="button"
+                          onClick={() => {
+                            onCurrencyChange(option);
+                            setCurrencyMenuOpen(false);
+                          }}
+                          className={`flex w-full items-center justify-between rounded-xl px-3 py-2 text-left text-[10px] uppercase tracking-[0.18em] transition-colors ${
+                            option === currency
+                              ? 'bg-ink-900 text-sand-50'
+                              : 'text-ink-700 hover:bg-ink-50'
+                          }`}
+                        >
+                          <span>{option}</span>
+                          <span className="text-[9px] opacity-70">{option === 'PEN' ? 'S/' : option === 'USD' ? '$' : '€'}</span>
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
                 <button
                   onClick={onOpenSearch}
                   className="text-current hover:text-blush-500 transition-colors"
