@@ -47,29 +47,29 @@ export default function GroupTripsPage() {
 
   return (
     <div className="bg-sand-50 text-ink-900">
-      <section className="relative min-h-[68vh] overflow-hidden bg-ink-900">
+      <section className="relative min-h-[58vh] overflow-hidden bg-ink-900 sm:min-h-[68vh]">
         <img
           src="https://images.pexels.com/photos/1450353/pexels-photo-1450353.jpeg?auto=compress&cs=tinysrgb&w=1800"
           alt="Grupo de amigas disfrutando junto al mar"
           className="absolute inset-0 h-full w-full object-cover object-center"
         />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(255,255,255,0.18),_transparent_35%),linear-gradient(to_right,rgba(17,13,10,0.8),rgba(17,13,10,0.48),rgba(17,13,10,0.18))]" />
-        <div className="relative mx-auto flex min-h-[68vh] max-w-7xl items-end px-6 pb-16 lg:px-10 lg:pb-20">
+        <div className="relative mx-auto flex min-h-[58vh] max-w-7xl items-end px-5 pb-12 sm:px-6 sm:pb-16 lg:min-h-[68vh] lg:px-10 lg:pb-20">
           <div className="max-w-[42rem] text-sand-50" style={{ textShadow: '0 2px 18px rgba(0, 0, 0, 0.38)' }}>
-            <div className="mb-5 inline-flex items-center rounded-full border border-white/20 bg-white/8 px-3 py-1.5 text-[10px] uppercase tracking-[0.28em] text-blush-100 backdrop-blur-sm">
+            <div className="mb-4 inline-flex items-center rounded-full border border-white/20 bg-white/8 px-2.5 py-1 text-[9px] uppercase tracking-[0.28em] text-blush-100 backdrop-blur-sm sm:mb-5 sm:px-3 sm:py-1.5 sm:text-[10px]">
               Experiencias que se comparten
             </div>
-            <h1 className="font-serif text-5xl font-light leading-[0.92] tracking-[0.02em] sm:text-7xl" style={{ textShadow: '0 2px 18px rgba(0, 0, 0, 0.4)' }}>
+            <h1 className="font-serif text-4xl font-light leading-[0.96] tracking-[0.02em] sm:text-5xl lg:text-7xl" style={{ textShadow: '0 2px 18px rgba(0, 0, 0, 0.4)' }}>
               Viajes Grupales
             </h1>
-            <p className="mt-7 max-w-xl text-base font-light leading-relaxed text-sand-100 sm:text-lg" style={{ textShadow: '0 2px 14px rgba(0, 0, 0, 0.28)' }}>
+            <p className="mt-5 max-w-xl text-sm font-light leading-relaxed text-sand-100 sm:mt-7 sm:text-base lg:text-lg" style={{ textShadow: '0 2px 14px rgba(0, 0, 0, 0.28)' }}>
               Escapadas diseñadas para celebrar juntas, descubrir nuevos lugares y volver con historias que duran para siempre.
             </p>
-            <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center">
-              <a href={whatsappUrl} target="_blank" rel="noreferrer" className="inline-flex items-center justify-center rounded-full bg-sand-50 px-6 py-3.5 text-[10px] uppercase tracking-[0.22em] text-ink-900 shadow-[0_12px_24px_rgba(17,13,10,0.2)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-blush-200">
+            <div className="mt-6 flex flex-col gap-3 sm:mt-8 sm:flex-row sm:items-center">
+              <a href={whatsappUrl} target="_blank" rel="noreferrer" className="inline-flex w-full items-center justify-center rounded-full bg-sand-50 px-5 py-3 text-[9px] uppercase tracking-[0.22em] text-ink-900 shadow-[0_12px_24px_rgba(17,13,10,0.2)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-blush-200 sm:w-auto sm:px-6 sm:py-3.5 sm:text-[10px]">
                 Reserva tu experiencia <ArrowRight size={15} strokeWidth={1.5} className="ml-3" />
               </a>
-              <div className="flex items-center gap-3 text-[10px] uppercase tracking-[0.22em] text-sand-200/90">
+              <div className="flex flex-wrap items-center gap-2 text-[8px] uppercase tracking-[0.18em] text-sand-200/90 sm:gap-3 sm:text-[10px] sm:tracking-[0.22em]">
                 <span className="rounded-full border border-white/20 bg-white/5 px-2.5 py-1.5">Destinos únicos</span>
                 <span className="rounded-full border border-white/20 bg-white/5 px-2.5 py-1.5">Sin estrés</span>
               </div>
