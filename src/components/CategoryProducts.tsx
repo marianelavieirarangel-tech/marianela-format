@@ -1,5 +1,6 @@
 import { useReveal } from '@/hooks/useReveal';
 import { Plus, Heart, ArrowLeft } from 'lucide-react';
+import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import type { Product } from '@/data/catalog';
 import { hiddenCategoryNames } from '@/data/catalog';
@@ -33,34 +34,102 @@ export default function CategoryProducts({
   wishlist,
   onBack,
 }: Props) {
-  const filtered = products
-    .filter((product) => !hiddenCategoryNames.has(product.category))
-    .filter((product) => {
-      if (categoryName === 'Colección 2026') {
-        return true;
-      }
-      if (categoryName === 'Sale') {
-        return product.tag === 'Sale' && product.category !== 'Bikini';
-      }
-      if (categoryName === 'Novedades') {
-        return product.tag === 'Novedades';
-      }
-      return product.category === categoryName;
-    });
+  const [sortBy, setSortBy] = useState<'featured' | 'price-asc' | 'price-desc'>('featured');
+  const [activeFilter, setActiveFilter] = useState<'Todos' | 'Novedades' | 'Bestseller' | 'Sale'>('Todos');
+
+  const filtered = useMemo(
+    () =>
+      products
+        .filter((product) => !hiddenCategoryNames.has(product.category))
+        .filter((product) => {
+          if (categoryName === 'Colección 2026') {
+            return true;
+          }
+          if (categoryName === 'Sale') {
+            return product.tag === 'Sale' && product.category !== 'Bikini';
+          }
+          if (categoryName === 'Novedades') {
+            return product.tag === 'Novedades';
+          }
+          return product.category === categoryName;
+        })
+        .filter((product) => {
+          if (activeFilter === 'Todos') return true;
+          return product.tag === activeFilter;
+        })
+        .sort((a, b) => {
+          if (sortBy === 'price-asc') return a.price - b.price;
+          if (sortBy === 'price-desc') return b.price - a.price;
+          return 0;
+        }),
+    [activeFilter, categoryName, products, sortBy],
+  );
 
   return (
     <section className="min-h-screen bg-sand-50">
       {/* Header */}
       <div className="bg-sand-50 pt-8 pb-2 lg:pt-10 lg:pb-4">
         <div className="mx-auto max-w-7xl px-6 lg:px-10">
-          <h1 className="font-serif text-4xl lg:text-5xl text-ink-900 font-light tracking-wide leading-none">
+          <div className="flex items-center gap-4">
+            <button
+              type="button"
+              onClick={onBack}
+              className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-ink-600 hover:text-blush-500 transition-colors"
+            >
+              <ArrowLeft size={16} strokeWidth={1.8} />
+              Volver
+            </button>
+          </div>
+          <h1 className="mt-4 font-serif text-4xl lg:text-5xl text-ink-900 font-light tracking-wide leading-none">
             {categoryName}
           </h1>
         </div>
       </div>
 
+      {/* Controls */}
+      <div className="mx-auto max-w-7xl px-6 lg:px-10 pt-6">
+        <div className="flex flex-col gap-4 border-y border-ink-100 py-4 md:flex-row md:items-center md:justify-between">
+          <div className="flex flex-wrap items-center gap-2">
+            {(['Todos', 'Novedades', 'Bestseller', 'Sale'] as const).map((filter) => (
+              <button
+                key={filter}
+                type="button"
+                onClick={() => setActiveFilter(filter)}
+                className={`rounded-full border px-3 py-1.5 text-[10px] uppercase tracking-[0.22em] transition-all ${
+                  activeFilter === filter
+                    ? 'border-ink-900 bg-ink-900 text-sand-50'
+                    : 'border-ink-200 bg-sand-50 text-ink-700 hover:border-ink-400'
+                }`}
+              >
+                {filter}
+              </button>
+            ))}
+          </div>
+
+          <div className="flex items-center gap-3 self-start md:self-auto">
+            <span className="text-[10px] uppercase tracking-[0.2em] text-ink-500">Ordenar por</span>
+            <label className="relative">
+              <select
+                value={sortBy}
+                onChange={(event) => setSortBy(event.target.value as 'featured' | 'price-asc' | 'price-desc')}
+                className="appearance-none rounded-full border border-ink-200 bg-sand-50 px-4 py-2 pr-9 text-[10px] uppercase tracking-[0.2em] text-ink-700 outline-none transition-colors hover:border-ink-400"
+              >
+                <option value="featured">Destacados</option>
+                <option value="price-desc">Mayor precio</option>
+                <option value="price-asc">Menor precio</option>
+              </select>
+              <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-ink-500">▾</span>
+            </label>
+          </div>
+        </div>
+      </div>
+
       {/* Products Grid */}
       <div className="mx-auto max-w-7xl px-6 lg:px-10 pt-6 pb-16 lg:pt-8 lg:pb-24">
+        <div className="mb-6 flex items-center justify-between text-sm text-ink-600">
+          <p>{filtered.length} productos</p>
+        </div>
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {filtered.map((product, i) => (
             <ProductCard
