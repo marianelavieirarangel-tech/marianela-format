@@ -51,9 +51,9 @@ export default function GroupTripsPage() {
         <img
           src="https://6a8377665cc6de03eb430013.imgix.net/sandbox/imagen2.png"
           alt="Grupo de amigas disfrutando junto al mar"
-          className="absolute inset-0 h-full w-full object-cover object-center"
+          className="absolute inset-0 h-full w-full object-cover object-[center_20%]"
         />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(255,255,255,0.18),_transparent_35%),linear-gradient(to_right,rgba(17,13,10,0.8),rgba(17,13,10,0.48),rgba(17,13,10,0.18))]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(255,255,255,0.18),_transparent_35%),linear-gradient(to_right,rgba(17,13,10,0.82),rgba(17,13,10,0.52),rgba(17,13,10,0.2))]" />
         <div className="relative mx-auto flex min-h-[58vh] max-w-7xl items-end px-5 pb-12 sm:px-6 sm:pb-16 lg:min-h-[68vh] lg:px-10 lg:pb-20">
           <div className="max-w-[42rem] text-sand-50" style={{ textShadow: '0 2px 18px rgba(0, 0, 0, 0.38)' }}>
             <div className="mb-4 inline-flex items-center rounded-full border border-white/20 bg-white/8 px-2.5 py-1 text-[9px] uppercase tracking-[0.28em] text-blush-100 backdrop-blur-sm sm:mb-5 sm:px-3 sm:py-1.5 sm:text-[10px]">
