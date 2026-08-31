@@ -1,5 +1,5 @@
 import { ArrowRight } from 'lucide-react';
-import heroImage from '@/assets/filosofia-lenceria.jpg';
+import heroImage from '@/assets/hero-beach.jpg';
 
 export default function Hero() {
   return (
