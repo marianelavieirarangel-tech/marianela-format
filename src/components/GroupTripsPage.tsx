@@ -51,7 +51,7 @@ export default function GroupTripsPage() {
         <img
           src="https://6a8377665cc6de03eb430013.imgix.net/sandbox/imagen2.png"
           alt="Grupo de amigas disfrutando junto al mar"
-          className="absolute inset-0 h-full w-full object-cover object-[center_20%]"
+          className="absolute inset-0 h-full w-full object-cover object-[center_28%]"
         />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(255,255,255,0.18),_transparent_35%),linear-gradient(to_right,rgba(17,13,10,0.82),rgba(17,13,10,0.52),rgba(17,13,10,0.2))]" />
         <div className="relative mx-auto flex min-h-[58vh] max-w-7xl items-end px-5 pb-12 sm:px-6 sm:pb-16 lg:min-h-[68vh] lg:px-10 lg:pb-20">
