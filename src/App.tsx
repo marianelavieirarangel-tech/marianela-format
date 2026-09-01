@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { Routes, Route, useParams, useNavigate, useLocation } from 'react-router-dom';
 import Header from '@/components/Header';
 import Hero from '@/components/Hero';
@@ -92,11 +92,17 @@ export default function App() {
   const [catalogError, setCatalogError] = useState<string | null>(null);
   const [currency, setCurrency] = useState<CurrencyCode>('PEN');
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const prevPathRef = useRef<string>(location.pathname);
 
   useEffect(() => {
-    setIsTransitioning(true);
-    const timer = setTimeout(() => setIsTransitioning(false), 1200);
-    return () => clearTimeout(timer);
+    // Only trigger transition if this is not the initial load
+    if (prevPathRef.current !== location.pathname) {
+      setIsTransitioning(true);
+      const timer = setTimeout(() => setIsTransitioning(false), 1200);
+      prevPathRef.current = location.pathname;
+      return () => clearTimeout(timer);
+    }
+    prevPathRef.current = location.pathname;
   }, [location.pathname]);
 
   useEffect(() => {
