@@ -91,16 +91,23 @@ export default function App() {
   const [catalogProducts, setCatalogProducts] = useState(products.filter((product) => !hiddenCategoryNames.has(product.category)));
   const [catalogError, setCatalogError] = useState<string | null>(null);
   const [currency, setCurrency] = useState<CurrencyCode>('PEN');
-  const [isTransitioning, setIsTransitioning] = useState(false);
+  const [fadeOut, setFadeOut] = useState(false);
+  const [fadeIn, setFadeIn] = useState(true);
   const prevPathRef = useRef<string>(location.pathname);
 
   useEffect(() => {
     // Only trigger transition if this is not the initial load
     if (prevPathRef.current !== location.pathname) {
-      setIsTransitioning(true);
-      const timer = setTimeout(() => setIsTransitioning(false), 1200);
-      prevPathRef.current = location.pathname;
-      return () => clearTimeout(timer);
+      setFadeOut(true);
+      setFadeIn(false);
+      
+      const fadeOutTimer = setTimeout(() => {
+        prevPathRef.current = location.pathname;
+        setFadeOut(false);
+        setFadeIn(true);
+      }, 600);
+
+      return () => clearTimeout(fadeOutTimer);
     }
     prevPathRef.current = location.pathname;
   }, [location.pathname]);
@@ -293,7 +300,7 @@ export default function App() {
         onOpenWishlist={() => setWishlistOpen(true)}
       />
 
-      <main className={`${location.pathname === '/' ? 'pt-0' : 'pt-[128px] lg:pt-[140px]'} transition-opacity duration-[1200ms] ease-in-out ${isTransitioning ? 'opacity-0' : 'opacity-100'}`}>
+      <main className={`${location.pathname === '/' ? 'pt-0' : 'pt-[128px] lg:pt-[140px]'} transition-opacity duration-600 ease-in-out ${fadeOut ? 'opacity-0' : fadeIn ? 'opacity-100' : 'opacity-0'}`}>
         <Routes>
           <Route
             path="/"
