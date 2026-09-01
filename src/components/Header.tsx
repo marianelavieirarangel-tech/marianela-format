@@ -78,7 +78,7 @@ export default function Header({
   return (
     <>
       {/* Announcement bar */}
-      <div className="fixed left-0 right-0 top-0 z-50 bg-ink-900 text-sand-100 overflow-hidden">
+      <div className="fixed left-0 right-0 top-0 z-[1100] bg-ink-900 text-sand-100 overflow-hidden">
         <div className="flex whitespace-nowrap animate-marquee py-2.5 text-[11px] tracking-widest uppercase font-light">
           {[...Array(2)].map((_, i) => (
             <div key={i} className="flex shrink-0">
@@ -105,7 +105,7 @@ export default function Header({
           isHome && !scrolled
             ? 'fixed left-0 right-0 top-[37px] text-sand-50'
             : 'fixed left-0 right-0 top-[37px] bg-sand-50 shadow-[0_1px_0_0_rgba(26,22,17,0.08)] text-ink-800'
-        } z-40 transition-[background-color,color,box-shadow] duration-500 ease-out`}
+        } z-[1000] transition-[background-color,color,box-shadow] duration-500 ease-out`}
       >
           <div className="relative flex h-[72px] items-center lg:h-[84px]">
             {/* Left nav (desktop) */}

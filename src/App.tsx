@@ -280,7 +280,7 @@ export default function App() {
         onOpenWishlist={() => setWishlistOpen(true)}
       />
 
-      <main>
+      <main className="pt-[128px] lg:pt-[140px]">
         <Routes>
           <Route
             path="/"
