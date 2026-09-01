@@ -60,7 +60,7 @@ function CategoryCard({
       className={`reveal ${inView ? 'in-view' : ''} group relative overflow-hidden bg-ink-100 rounded-2xl shadow-sm hover:shadow-xl cursor-pointer transition-shadow duration-500`}
       style={{ animationDelay: `${index * 0.15}s` }}
     >
-      <div className="aspect-[5/6] overflow-hidden">
+      <div className="aspect-[4/5] overflow-hidden">
         <img
           src={category.image}
           alt={category.name}
@@ -73,20 +73,20 @@ function CategoryCard({
       <div className="absolute inset-0 bg-gradient-to-t from-ink-900/80 via-ink-900/20 to-transparent transition-all duration-500 group-hover:from-ink-900/90 group-hover:via-ink-900/30" />
 
       {/* Content */}
-      <div className="absolute inset-0 flex flex-col justify-end p-6 lg:p-7">
-        <p className="text-blush-200 text-[9px] tracking-ultra uppercase mb-1.5 opacity-80 font-light">
+      <div className="absolute inset-0 flex flex-col justify-end p-5 lg:p-6">
+        <p className="text-blush-200 text-[8px] tracking-ultra uppercase mb-1 opacity-80 font-light">
           {category.tagline}
         </p>
-        <h3 className="font-serif text-2xl lg:text-3xl text-sand-50 font-light tracking-wide mb-2 leading-tight">
+        <h3 className="font-serif text-xl lg:text-2xl text-sand-50 font-light tracking-wide mb-1.5 leading-tight">
           {category.name}
         </h3>
-        <p className="text-sand-100 text-xs font-light leading-relaxed max-w-xs opacity-0 max-h-0 group-hover:opacity-100 group-hover:max-h-16 transition-all duration-500 overflow-hidden">
+        <p className="text-sand-100 text-xs font-light leading-relaxed max-w-xs opacity-0 max-h-0 group-hover:opacity-100 group-hover:max-h-14 transition-all duration-500 overflow-hidden">
           {category.description}
         </p>
-        <div className="mt-4 flex items-center gap-2 text-sand-50 text-[10px] uppercase tracking-widest opacity-80 group-hover:opacity-100 transition-opacity duration-500">
+        <div className="mt-3 flex items-center gap-1.5 text-sand-50 text-[9px] uppercase tracking-widest opacity-80 group-hover:opacity-100 transition-opacity duration-500">
           <span className="link-underline">Ver Colección</span>
           <ArrowRight
-            size={13}
+            size={12}
             strokeWidth={1.5}
             className="transition-transform duration-500 group-hover:translate-x-1"
           />
