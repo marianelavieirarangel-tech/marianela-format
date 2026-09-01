@@ -80,7 +80,6 @@ const pageContent: Record<string, { title: string; intro: string; sections: stri
 };
 
 const historyImageUrl = 'https://6a97517ab0ce9b07e370fab9.imgix.net/sandbox/b138c4371eef7e0fbe381c3a38d8cffb.jpg';
-const faqImageUrl = 'https://6a97517ab0ce9b07e370fab9.imgix.net/sandbox/405324a0023cf899bfa130f319f6d192.jpg';
 const faqDetailImageUrl = 'https://6a97517ab0ce9b07e370fab9.imgix.net/sandbox/218cdb70e2dbe7a67716d1c1b33470ee.jpg';
 const contactImageUrl = 'https://6a97517ab0ce9b07e370fab9.imgix.net/sandbox/d12b2582dbe41a3c550ec7497f3fed14.jpg';
 const boutiqueImageUrl = 'https://6a97517ab0ce9b07e370fab9.imgix.net/sandbox/20260819_190147.jpg';
@@ -399,8 +398,8 @@ export default function InfoPage() {
         <div className="grid items-start gap-12 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:gap-20">
           <div className="relative overflow-hidden bg-ink-50 shadow-[0_24px_60px_rgba(27,23,20,0.12)]">
             <img
-              src={faqImageUrl}
-              alt="Detalles de la colección Marianela Vieira"
+              src={faqDetailImageUrl}
+              alt="Atención y asesoría de Marianela Vieira"
               className="aspect-[4/5] w-full object-cover transition-transform duration-700 hover:scale-[1.02]"
               loading="eager"
             />
@@ -415,14 +414,6 @@ export default function InfoPage() {
               ))}
             </div>
           </div>
-        </div>
-        <div className="mt-16 overflow-hidden rounded-[24px] bg-ink-50 shadow-[0_24px_60px_rgba(27,23,20,0.12)] lg:mt-24">
-          <img
-            src={faqDetailImageUrl}
-            alt="Diseño y confección de prendas Marianela Vieira"
-            className="h-[280px] w-full object-cover transition-transform duration-700 hover:scale-[1.02] sm:h-[380px] lg:h-[480px]"
-            loading="lazy"
-          />
         </div>
         <div className="mx-auto mt-16 max-w-4xl lg:mt-24">
           <div className="mb-8 text-center">
