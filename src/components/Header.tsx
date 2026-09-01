@@ -1,15 +1,18 @@
-import { Search, Heart, ShoppingBag, Menu, X, User, ChevronDown } from 'lucide-react';
+import { Search, Heart, ShoppingBag, Menu, X, User, ChevronDown, Globe } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { categorySlugs, navLinks, womenMenuSubcategories } from '@/data/catalog';
 import { currencyOptions, type CurrencyCode } from '@/lib/currency';
+import { languageOptions, languageNames, languageShortCodes, type LanguageCode } from '@/lib/language';
 import { getShopifyAccountLoginUrl } from '@/lib/shopify';
 import logo from '@/assets/marianela-logo.png';
 
 type Props = {
   cartCount: number;
   currency: CurrencyCode;
+  language: LanguageCode;
   onCurrencyChange: (currency: CurrencyCode) => void;
+  onLanguageChange: (language: LanguageCode) => void;
   onOpenCart: () => void;
   onOpenSearch: () => void;
   onOpenWishlist: () => void;
@@ -19,7 +22,9 @@ type Props = {
 export default function Header({
   cartCount,
   currency,
+  language,
   onCurrencyChange,
+  onLanguageChange,
   onOpenCart,
   onOpenSearch,
   onOpenWishlist,
@@ -54,9 +59,11 @@ export default function Header({
   const [mobileOpen, setMobileOpen] = useState(false);
   const [womenDropdown, setWomenDropdown] = useState(false);
   const [mobileWomenOpen, setMobileWomenOpen] = useState(false);
+  const [languageMenuOpen, setLanguageMenuOpen] = useState(false);
   const [currencyMenuOpen, setCurrencyMenuOpen] = useState(false);
   const [currentMessageIndex, setCurrentMessageIndex] = useState(0);
   const [isVisible, setIsVisible] = useState(true);
+  const languageMenuRef = useRef<HTMLDivElement | null>(null);
   const currencyMenuRef = useRef<HTMLDivElement | null>(null);
 
   const announcementMessages = [
@@ -74,7 +81,11 @@ export default function Header({
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (currencyMenuRef.current && !currencyMenuRef.current.contains(event.target as Node)) {
+      const target = event.target as Node;
+      if (languageMenuRef.current && !languageMenuRef.current.contains(target)) {
+        setLanguageMenuOpen(false);
+      }
+      if (currencyMenuRef.current && !currencyMenuRef.current.contains(target)) {
         setCurrencyMenuOpen(false);
       }
     };
@@ -201,6 +212,49 @@ export default function Header({
             {/* Right nav (desktop) */}
             <div className="ml-auto hidden items-center gap-4 pr-10 lg:flex lg:gap-5 lg:pr-12 xl:pr-14">
               <div className="flex items-center gap-4 lg:gap-5">
+                <div ref={languageMenuRef} className="relative hidden xl:block">
+                  <button
+                    type="button"
+                    onClick={() => setLanguageMenuOpen((open) => !open)}
+                    className={`flex items-center gap-2 rounded-full border px-3 py-1.5 pr-2 text-[10px] uppercase tracking-[0.18em] shadow-[0_8px_24px_rgba(17,13,10,0.06)] backdrop-blur-sm transition-all duration-200 ${
+                      isHome && !scrolled
+                        ? 'border-white/35 bg-white/10 text-sand-50 hover:bg-white/15'
+                        : 'border-ink-200 bg-sand-50 text-ink-700 hover:border-ink-300 hover:bg-sand-100'
+                    }`}
+                    aria-label="Seleccionar idioma"
+                  >
+                    <Globe size={12} strokeWidth={2} />
+                    <span>{languageShortCodes[language]}</span>
+                    <ChevronDown
+                      size={12}
+                      strokeWidth={2}
+                      className={`transition-transform duration-200 ${languageMenuOpen ? 'rotate-180' : ''}`}
+                    />
+                  </button>
+
+                  {languageMenuOpen && (
+                    <div className="absolute right-0 top-[calc(100%+8px)] z-50 min-w-[180px] rounded-2xl border border-ink-100 bg-white/95 p-1.5 shadow-[0_18px_40px_rgba(22,18,15,0.12)] backdrop-blur-md">
+                      {languageOptions.map((option) => (
+                        <button
+                          key={option}
+                          type="button"
+                          onClick={() => {
+                            onLanguageChange(option);
+                            setLanguageMenuOpen(false);
+                          }}
+                          className={`flex w-full items-center justify-between rounded-xl px-3 py-2 text-left text-[10px] uppercase tracking-[0.18em] transition-colors ${
+                            option === language
+                              ? 'bg-ink-900 text-sand-50'
+                              : 'text-ink-700 hover:bg-ink-50'
+                          }`}
+                        >
+                          <span>{languageNames[option]}</span>
+                          <span className="text-[9px] opacity-70">{languageShortCodes[option]}</span>
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
                 <div ref={currencyMenuRef} className="relative hidden xl:block">
                   <button
                     type="button"
@@ -282,6 +336,14 @@ export default function Header({
             {/* Mobile icons */}
             <div className="lg:hidden absolute right-4 top-1/2 z-20 flex -translate-y-1/2 items-center gap-3">
               <button
+                type="button"
+                onClick={() => setLanguageMenuOpen((open) => !open)}
+                className="text-white hover:text-blush-300 transition-colors"
+                aria-label="Seleccionar idioma"
+              >
+                <Globe size={18} strokeWidth={1.7} />
+              </button>
+              <button
                 onClick={onOpenSearch}
                 className="text-white hover:text-blush-300 transition-colors"
                 aria-label="Buscar"
@@ -301,6 +363,26 @@ export default function Header({
                 )}
               </button>
             </div>
+            {languageMenuOpen && (
+              <div className="lg:hidden absolute right-4 top-[calc(100%+8px)] z-50 w-[180px] rounded-2xl border border-ink-100 bg-white/95 p-1.5 shadow-[0_18px_40px_rgba(22,18,15,0.12)] backdrop-blur-md">
+                {languageOptions.map((option) => (
+                  <button
+                    key={option}
+                    type="button"
+                    onClick={() => {
+                      onLanguageChange(option);
+                      setLanguageMenuOpen(false);
+                    }}
+                    className={`flex w-full items-center justify-between rounded-xl px-3 py-2 text-left text-[10px] uppercase tracking-[0.18em] transition-colors ${
+                      option === language ? 'bg-ink-900 text-sand-50' : 'text-ink-700 hover:bg-ink-50'
+                    }`}
+                  >
+                    <span>{languageNames[option]}</span>
+                    <span className="text-[9px] opacity-70">{languageShortCodes[option]}</span>
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
       </header>
 

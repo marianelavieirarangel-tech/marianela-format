@@ -19,12 +19,14 @@ import GroupTripsPage from '@/components/GroupTripsPage';
 import type { Product } from '@/data/catalog';
 import { categorySlugs, products, navLinks, womenSubcategories, hiddenCategoryNames } from '@/data/catalog';
 import { type CurrencyCode } from '@/lib/currency';
+import { type LanguageCode, languageOptions } from '@/lib/language';
 import { createShopifyCheckout, fetchShopifyProducts, isShopifyEnabled } from '@/lib/shopify';
 
 const CART_STORAGE_KEY = 'marianela-cart';
 const CART_DURATION_MS = 60 * 60 * 1000;
 const CART_ID_STORAGE_KEY = 'marianela-cart-id';
 const WISHLIST_STORAGE_KEY = 'marianela-wishlist';
+const LANGUAGE_STORAGE_KEY = 'marianela-language';
 
 const NO_INDEX_PATHS = [
   '/pages/envios-y-devoluciones',
@@ -77,6 +79,12 @@ function readStoredWishlist(): Set<string> {
   }
 }
 
+function readStoredLanguage(): LanguageCode {
+  if (typeof window === 'undefined') return 'es';
+  const stored = window.localStorage.getItem(LANGUAGE_STORAGE_KEY) as LanguageCode | null;
+  return stored && languageOptions.includes(stored) ? stored : 'es';
+}
+
 export default function App() {
   const location = useLocation();
   const [quickAddProduct, setQuickAddProduct] = useState<Product | null>(null);
@@ -91,6 +99,7 @@ export default function App() {
   const [catalogProducts, setCatalogProducts] = useState(products.filter((product) => !hiddenCategoryNames.has(product.category)));
   const [catalogError, setCatalogError] = useState<string | null>(null);
   const [currency, setCurrency] = useState<CurrencyCode>('PEN');
+  const [language, setLanguage] = useState<LanguageCode>(readStoredLanguage);
   const prevPathRef = useRef<string>(location.pathname);
 
   useEffect(() => {
@@ -143,6 +152,11 @@ export default function App() {
   useEffect(() => {
     window.localStorage.setItem(WISHLIST_STORAGE_KEY, JSON.stringify([...wishlist]));
   }, [wishlist]);
+
+  useEffect(() => {
+    window.localStorage.setItem(LANGUAGE_STORAGE_KEY, language);
+    document.documentElement.lang = language;
+  }, [language]);
 
   useEffect(() => {
     if (!isShopifyEnabled()) return;
@@ -279,7 +293,9 @@ export default function App() {
       <Header
         cartCount={cartCount}
         currency={currency}
+        language={language}
         onCurrencyChange={setCurrency}
+        onLanguageChange={setLanguage}
         onOpenCart={() => setCartOpen(true)}
         onOpenSearch={() => setSearchOpen(true)}
         onOpenWishlist={() => setWishlistOpen(true)}

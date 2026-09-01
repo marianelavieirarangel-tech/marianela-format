@@ -14,7 +14,7 @@ type Props = {
   wishlist: Set<string>;
 };
 
-const filters = Array.from(new Set(['Todos', 'Novedades', ...womenSubcategories, 'Sale'])) as const;
+const filters = ['Todos', 'Novedades', ...womenSubcategories, 'Sale'] as const;
 
 function getProductBadge(product: Product) {
   if (product.originalPrice && product.originalPrice > product.price) {
