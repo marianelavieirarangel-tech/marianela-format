@@ -36,6 +36,7 @@ export default function CategoryProducts({
 }: Props) {
   const [sortBy, setSortBy] = useState<'featured' | 'price-asc' | 'price-desc'>('featured');
   const [activeFilter, setActiveFilter] = useState<'Todos' | 'Novedades' | 'Bestseller' | 'Sale'>('Todos');
+  const isSaleSection = categoryName === 'Sale';
 
   const filtered = useMemo(
     () =>
@@ -79,7 +80,11 @@ export default function CategoryProducts({
               <span>Volver</span>
             </button>
 
-            <h1 className="mt-8 font-serif text-4xl lg:text-[2.8rem] text-ink-900 font-light tracking-wide leading-tight">
+            <h1 className={`mt-8 font-serif font-light tracking-wide leading-tight ${
+              isSaleSection
+                ? 'text-[2.6rem] text-[#c62828] lg:text-[3.3rem]'
+                : 'text-4xl text-ink-900 lg:text-[2.8rem]'
+            }`}>
               {categoryName}
             </h1>
 
@@ -107,20 +112,29 @@ export default function CategoryProducts({
               <div>
                 <p className="mb-4 text-[9px] uppercase tracking-[0.28em] font-medium text-ink-500">Filtrar por</p>
                 <div className="space-y-2.5">
-                  {(['Todos', 'Novedades', 'Bestseller', 'Sale'] as const).map((filter) => (
-                    <button
-                      key={filter}
-                      type="button"
-                      onClick={() => setActiveFilter(filter)}
-                      className={`w-full px-3.5 py-2.5 text-left text-[10px] font-medium uppercase tracking-[0.18em] border transition-all duration-200 rounded-sm ${
-                        activeFilter === filter
-                          ? 'bg-ink-900 text-sand-50 border-ink-900 shadow-[0_6px_16px_rgba(27,23,20,0.12)]'
-                          : 'bg-sand-50 text-ink-700 border-ink-200 hover:border-ink-400 hover:bg-ink-50'
-                      }`}
-                    >
-                      {filter}
-                    </button>
-                  ))}
+                  {(['Todos', 'Novedades', 'Bestseller', 'Sale'] as const).map((filter) => {
+                    const isSaleFilter = filter === 'Sale';
+                    const isSelected = activeFilter === filter;
+
+                    return (
+                      <button
+                        key={filter}
+                        type="button"
+                        onClick={() => setActiveFilter(filter)}
+                        className={`w-full px-3.5 py-2.5 text-left text-[10px] font-medium uppercase tracking-[0.18em] border transition-all duration-200 rounded-sm ${
+                          isSelected
+                            ? isSaleFilter
+                              ? 'bg-[#c62828] text-sand-50 border-[#c62828] shadow-[0_6px_16px_rgba(198,40,40,0.2)]'
+                              : 'bg-ink-900 text-sand-50 border-ink-900 shadow-[0_6px_16px_rgba(27,23,20,0.12)]'
+                            : isSaleFilter
+                              ? 'bg-sand-50 text-[#c62828] border-[#e7b4b4] hover:border-[#d38383] hover:bg-[#fff5f5]'
+                              : 'bg-sand-50 text-ink-700 border-ink-200 hover:border-ink-400 hover:bg-ink-50'
+                        }`}
+                      >
+                        {filter}
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
             </div>
