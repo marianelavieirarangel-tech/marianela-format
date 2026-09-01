@@ -80,6 +80,7 @@ const pageContent: Record<string, { title: string; intro: string; sections: stri
 };
 
 const historyImageUrl = 'https://6a97517ab0ce9b07e370fab9.imgix.net/sandbox/b138c4371eef7e0fbe381c3a38d8cffb.jpg';
+const faqImageUrl = 'https://6a97517ab0ce9b07e370fab9.imgix.net/sandbox/405324a0023cf899bfa130f319f6d192.jpg';
 
 const privacyPolicySections: LegalSection[] = [
   {
@@ -375,6 +376,33 @@ export default function InfoPage() {
                 className="aspect-[4/5] w-full object-cover transition-transform duration-700 hover:scale-[1.02]"
                 loading="eager"
               />
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  if (slug === 'preguntas-frecuentes') {
+    return (
+      <section className="mx-auto max-w-6xl px-6 py-16 lg:px-10 lg:py-24">
+        <div className="grid items-start gap-12 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:gap-20">
+          <div className="relative overflow-hidden bg-ink-50 shadow-[0_24px_60px_rgba(27,23,20,0.12)]">
+            <img
+              src={faqImageUrl}
+              alt="Detalles de la colección Marianela Vieira"
+              className="aspect-[4/5] w-full object-cover transition-transform duration-700 hover:scale-[1.02]"
+              loading="eager"
+            />
+          </div>
+          <div className="lg:pt-4">
+            <p className="mb-4 text-xs uppercase tracking-[0.25em] text-blush-500">Marianela Vieira</p>
+            <h1 className="mb-6 font-serif text-4xl font-light tracking-wide text-ink-900 lg:text-6xl">{content.title}</h1>
+            <p className="mb-10 max-w-xl text-lg font-light leading-relaxed text-ink-600">{content.intro}</p>
+            <div className="space-y-6 border-t border-ink-200 pt-8">
+              {content.sections.map((section) => (
+                <p key={section} className="max-w-xl text-base font-light leading-relaxed text-ink-600">{section}</p>
+              ))}
             </div>
           </div>
         </div>
