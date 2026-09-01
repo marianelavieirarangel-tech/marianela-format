@@ -11,17 +11,17 @@ const gallery = [
 
 const tripMoments = [
   {
-    image: gallery[0],
+    image: 'https://6a8377665cc6de03eb430013.imgix.net/sandbox/pexels-cristian-rojas-10039313.jpg',
     title: 'Momentos reales',
     angle: 'rotate-[-2deg]',
   },
   {
-    image: gallery[1],
+    image: 'https://6a8377665cc6de03eb430013.imgix.net/sandbox/pexels-yuliia-auer-3541449-5303407.jpg',
     title: 'Ritmo relajado',
     angle: 'rotate-[2deg]',
   },
   {
-    image: gallery[3],
+    image: 'https://6a8377665cc6de03eb430013.imgix.net/sandbox/pexels-yuliia-auer-3541449-5303408.jpg',
     title: 'Historias compartidas',
     angle: 'rotate-[-1deg]',
   },
