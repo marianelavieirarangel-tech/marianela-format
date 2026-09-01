@@ -85,4 +85,15 @@
       opacity: 0;
     }
   }
+  .sale-pulse {
+    animation: saleColorPulse 3s ease-in-out infinite;
+  }
+  @keyframes saleColorPulse {
+    0%, 100% {
+      color: rgb(220, 38, 38);
+    }
+    50% {
+      color: rgb(255, 255, 255);
+    }
+  }
 }

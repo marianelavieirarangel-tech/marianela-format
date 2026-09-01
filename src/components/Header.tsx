@@ -168,7 +168,7 @@ export default function Header({
                 <button
                   key={link.label}
                   onClick={() => goToCategory(link.label)}
-                  className={`text-[11px] uppercase tracking-widest link-underline ${link.label === 'Sale' ? 'text-blush-300 hover:text-blush-100' : 'text-current hover:text-blush-300'}`}
+                  className={`text-[11px] uppercase tracking-widest link-underline ${link.label === 'Sale' ? 'sale-pulse' : 'text-current hover:text-blush-300'}`}
                 >
                   {link.label}
                 </button>
