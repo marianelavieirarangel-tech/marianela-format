@@ -91,6 +91,13 @@ export default function App() {
   const [catalogProducts, setCatalogProducts] = useState(products.filter((product) => !hiddenCategoryNames.has(product.category)));
   const [catalogError, setCatalogError] = useState<string | null>(null);
   const [currency, setCurrency] = useState<CurrencyCode>('PEN');
+  const [isTransitioning, setIsTransitioning] = useState(false);
+
+  useEffect(() => {
+    setIsTransitioning(true);
+    const timer = setTimeout(() => setIsTransitioning(false), 800);
+    return () => clearTimeout(timer);
+  }, [location.pathname]);
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
@@ -280,8 +287,8 @@ export default function App() {
         onOpenWishlist={() => setWishlistOpen(true)}
       />
 
-      <main className={`${location.pathname === '/' ? 'pt-0' : 'pt-[128px] lg:pt-[140px]'} page-fade-in`}>
-        <Routes key={location.pathname}>
+      <main className={`${location.pathname === '/' ? 'pt-0' : 'pt-[128px] lg:pt-[140px]'} transition-opacity duration-800 ${isTransitioning ? 'opacity-0' : 'opacity-100'}`}>
+        <Routes>
           <Route
             path="/"
             element={checkoutOpen ? (
