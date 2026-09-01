@@ -1,5 +1,4 @@
 import { categories, categorySlugs } from '@/data/catalog';
-import { useReveal } from '@/hooks/useReveal';
 import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
@@ -45,7 +44,6 @@ function CategoryCard({
   index: number;
   onSelect?: (categoryName: string) => void;
 }) {
-  const { ref, inView } = useReveal<HTMLAnchorElement>();
   const slug = categorySlugs[category.name] ?? category.name.toLowerCase();
 
   const handleClick = () => {
@@ -55,10 +53,8 @@ function CategoryCard({
   return (
     <Link
       to={`/collections/${slug}`}
-      ref={ref}
       onClick={handleClick}
-      className={`reveal ${inView ? 'in-view' : ''} group relative overflow-hidden bg-ink-100 rounded-2xl shadow-sm hover:shadow-xl cursor-pointer transition-shadow duration-500`}
-      style={{ animationDelay: `${index * 0.15}s` }}
+      className={`group relative overflow-hidden bg-ink-100 rounded-2xl shadow-sm hover:shadow-xl cursor-pointer transition-shadow duration-500`}
     >
       <div className="aspect-[4/5] overflow-hidden">
         <img
