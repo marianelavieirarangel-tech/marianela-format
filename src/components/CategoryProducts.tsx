@@ -73,7 +73,7 @@ export default function CategoryProducts({
             <button
               type="button"
               onClick={onBack}
-              className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-ink-600 hover:text-blush-500 transition-colors"
+              className="inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.24em] text-ink-600 hover:text-blush-500 transition-colors"
             >
               <ArrowLeft size={16} strokeWidth={1.8} />
               Volver
@@ -90,7 +90,7 @@ export default function CategoryProducts({
                   <select
                     value={sortBy}
                     onChange={(event) => setSortBy(event.target.value as 'featured' | 'price-asc' | 'price-desc')}
-                    className="w-full appearance-none rounded-none border border-ink-200 bg-sand-50 px-4 py-3 pr-9 text-[10px] uppercase tracking-[0.2em] text-ink-700 outline-none transition-colors hover:border-ink-400"
+                    className="w-full appearance-none rounded-none border border-ink-200 bg-sand-50 px-4 py-3 pr-9 text-[10px] uppercase tracking-[0.2em] text-ink-700 outline-none transition-colors hover:border-ink-400 focus:border-ink-900"
                   >
                     <option value="featured">Destacados</option>
                     <option value="price-desc">Mayor precio</option>
@@ -108,10 +108,10 @@ export default function CategoryProducts({
                       key={filter}
                       type="button"
                       onClick={() => setActiveFilter(filter)}
-                      className={`w-full border px-3 py-2 text-left text-[10px] uppercase tracking-[0.22em] transition-all ${
+                      className={`w-full border px-3 py-2.5 text-left text-[10px] uppercase tracking-[0.22em] transition-all duration-200 ${
                         activeFilter === filter
-                          ? 'border-ink-900 bg-ink-900 text-sand-50'
-                          : 'border-ink-200 bg-sand-50 text-ink-700 hover:border-ink-400'
+                          ? 'border-ink-900 bg-ink-900 text-sand-50 shadow-[0_10px_20px_rgba(17,13,10,0.08)]'
+                          : 'border-ink-200 bg-sand-50 text-ink-700 hover:border-ink-400 hover:bg-sand-100'
                       }`}
                     >
                       {filter}
@@ -175,12 +175,12 @@ function ProductCard({
   return (
     <div
       ref={ref}
-      className={`reveal ${inView ? 'in-view' : ''} group flex flex-col`}
+      className={`reveal ${inView ? 'in-view' : ''} group flex flex-col rounded-[18px] border border-[#f0e9e1] bg-white p-3 shadow-[0_14px_30px_rgba(24,18,15,0.04)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_38px_rgba(24,18,15,0.08)]`}
       style={{ animationDelay: `${index * 0.1}s` }}
     >
       {/* Image */}
       <div 
-        className="relative mb-4 bg-ink-50 aspect-[2/3] overflow-hidden cursor-pointer group"
+        className="relative mb-4 aspect-[2/3] overflow-hidden cursor-pointer bg-[#f7f3ee]"
         onClick={() => navigate(`/product/${product.id}`)}
       >
         <img
@@ -241,18 +241,18 @@ function ProductCard({
       {/* Info */}
       <div className="flex-1">
         <h3 
-          className="font-serif text-lg text-ink-900 mb-2 line-clamp-2 hover:text-blush-500 transition-colors cursor-pointer"
+          className="font-serif text-[1.6rem] leading-none text-ink-900 mb-2 line-clamp-2 hover:text-blush-500 transition-colors cursor-pointer"
           onClick={() => navigate(`/product/${product.id}`)}
         >
           {product.name}
         </h3>
-        <p className="text-ink-500 text-sm font-light leading-relaxed mb-3 line-clamp-2">
+        <p className="text-ink-500 text-sm font-light leading-relaxed mb-3 line-clamp-2 min-h-[2.5rem]">
           {product.description}
         </p>
 
         {/* Price */}
         <div className="flex items-center gap-2">
-          <span className="font-numeric text-ink-900 font-medium">{formatPrice(product.price, currency)}</span>
+          <span className="font-numeric text-ink-900 text-[1.02rem] font-medium">{formatPrice(product.price, currency)}</span>
           {product.originalPrice && (
             <span className="font-numeric text-ink-400 text-sm line-through">{formatPrice(product.originalPrice, currency)}</span>
           )}
