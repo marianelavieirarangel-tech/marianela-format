@@ -81,6 +81,7 @@ const pageContent: Record<string, { title: string; intro: string; sections: stri
 
 const historyImageUrl = 'https://6a97517ab0ce9b07e370fab9.imgix.net/sandbox/b138c4371eef7e0fbe381c3a38d8cffb.jpg';
 const faqImageUrl = 'https://6a97517ab0ce9b07e370fab9.imgix.net/sandbox/405324a0023cf899bfa130f319f6d192.jpg';
+const faqDetailImageUrl = 'https://6a97517ab0ce9b07e370fab9.imgix.net/sandbox/218cdb70e2dbe7a67716d1c1b33470ee.jpg';
 const contactImageUrl = 'https://6a97517ab0ce9b07e370fab9.imgix.net/sandbox/d12b2582dbe41a3c550ec7497f3fed14.jpg';
 const boutiqueImageUrl = 'https://6a97517ab0ce9b07e370fab9.imgix.net/sandbox/20260819_190147.jpg';
 
@@ -386,6 +387,13 @@ export default function InfoPage() {
   }
 
   if (slug === 'preguntas-frecuentes') {
+    const faqItems = [
+      ['¿De dónde es la marca?', 'Marianela Vieira es una marca peruana.'],
+      ['¿Con qué tipo de lycra confeccionamos nuestras prendas?', 'En su mayoría utilizamos lycra brasilera importada, seleccionada por su calidad, comodidad y durabilidad.'],
+      ['¿Hacemos envíos a todo el Perú?', 'Sí, realizamos envíos a todo el Perú.'],
+      ['¿Cuántos años tenemos en el mercado?', 'Tenemos más de 10 años acompañando a nuestras clientas.'],
+    ];
+
     return (
       <section className="mx-auto max-w-6xl px-6 py-16 lg:px-10 lg:py-24">
         <div className="grid items-start gap-12 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:gap-20">
@@ -406,6 +414,31 @@ export default function InfoPage() {
                 <p key={section} className="max-w-xl text-base font-light leading-relaxed text-ink-600">{section}</p>
               ))}
             </div>
+          </div>
+        </div>
+        <div className="mt-16 overflow-hidden rounded-[24px] bg-ink-50 shadow-[0_24px_60px_rgba(27,23,20,0.12)] lg:mt-24">
+          <img
+            src={faqDetailImageUrl}
+            alt="Diseño y confección de prendas Marianela Vieira"
+            className="h-[280px] w-full object-cover transition-transform duration-700 hover:scale-[1.02] sm:h-[380px] lg:h-[480px]"
+            loading="lazy"
+          />
+        </div>
+        <div className="mx-auto mt-16 max-w-4xl lg:mt-24">
+          <div className="mb-8 text-center">
+            <p className="mb-3 text-xs uppercase tracking-[0.25em] text-blush-500">Resolvemos tus dudas</p>
+            <h2 className="font-serif text-3xl font-light tracking-wide text-ink-900 lg:text-4xl">Preguntas frecuentes</h2>
+          </div>
+          <div className="divide-y divide-ink-200 border-y border-ink-200">
+            {faqItems.map(([question, answer]) => (
+              <details key={question} className="group">
+                <summary className="flex cursor-pointer list-none items-center justify-between gap-6 py-6 text-sm font-medium tracking-wide text-ink-800 [&::-webkit-details-marker]:hidden">
+                  {question}
+                  <span className="font-serif text-2xl font-light text-blush-500 transition-transform duration-300 group-open:rotate-45">+</span>
+                </summary>
+                <p className="max-w-3xl pb-6 pr-10 text-base font-light leading-relaxed text-ink-600">{answer}</p>
+              </details>
+            ))}
           </div>
         </div>
       </section>
