@@ -55,7 +55,15 @@ export default function Header({
   const [womenDropdown, setWomenDropdown] = useState(false);
   const [mobileWomenOpen, setMobileWomenOpen] = useState(false);
   const [currencyMenuOpen, setCurrencyMenuOpen] = useState(false);
+  const [currentMessageIndex, setCurrentMessageIndex] = useState(0);
+  const [isVisible, setIsVisible] = useState(true);
   const currencyMenuRef = useRef<HTMLDivElement | null>(null);
+
+  const announcementMessages = [
+    'Envío gratis por compras superiores a $120',
+    'Devoluciones gratuitas en 30 días',
+    'Nueva colección — Primavera 2026',
+  ];
 
   useEffect(() => {
     const syncHeaderState = () => setScrolled(window.scrollY > 40);
@@ -75,27 +83,26 @@ export default function Header({
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setIsVisible(false);
+      setTimeout(() => {
+        setCurrentMessageIndex((prev) => (prev + 1) % announcementMessages.length);
+        setIsVisible(true);
+      }, 1200);
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <>
       {/* Announcement bar */}
       <div className="fixed left-0 right-0 top-0 z-[1100] bg-ink-900 text-sand-100 overflow-hidden">
-        <div className="flex whitespace-nowrap animate-marquee py-2.5 text-[11px] tracking-widest uppercase font-light">
-          {[...Array(2)].map((_, i) => (
-            <div key={i} className="flex shrink-0">
-              <span className="px-8">Envío gratis por compras superiores a $120</span>
-              <span className="px-8 text-blush-300">·</span>
-              <span className="px-8">Devoluciones gratuitas en 30 días</span>
-              <span className="px-8 text-blush-300">·</span>
-              <span className="px-8">Nueva colección — Primavera 2026</span>
-              <span className="px-8 text-blush-300">·</span>
-              <span className="px-8">Envío gratis por compras superiores a $120</span>
-              <span className="px-8 text-blush-300">·</span>
-              <span className="px-8">Devoluciones gratuitas en 30 días</span>
-              <span className="px-8 text-blush-300">·</span>
-              <span className="px-8">Nueva colección — Primavera 2026</span>
-              <span className="px-8 text-blush-300">·</span>
-            </div>
-          ))}
+        <div className={`py-2.5 text-[11px] tracking-widest uppercase font-light text-center ${
+          isVisible ? 'fade-in' : 'fade-out'
+        }`}>
+          {announcementMessages[currentMessageIndex]}
         </div>
       </div>
 

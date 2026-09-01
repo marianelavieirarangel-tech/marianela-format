@@ -63,4 +63,26 @@
   .text-balance {
     text-wrap: balance;
   }
+  .fade-in {
+    animation: fadeInMessage 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+  }
+  .fade-out {
+    animation: fadeOutMessage 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+  }
+  @keyframes fadeInMessage {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  @keyframes fadeOutMessage {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  }
 }
