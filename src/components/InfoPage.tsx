@@ -464,6 +464,27 @@ export default function InfoPage() {
             </div>
           </div>
         </div>
+        <div className="mt-16 border-t border-ink-200 pt-10 lg:mt-24 lg:pt-12">
+          <div className="mb-6 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <p className="mb-2 text-xs uppercase tracking-[0.25em] text-blush-500">Encuéntranos</p>
+              <h2 className="font-serif text-3xl font-light tracking-wide text-ink-900 lg:text-4xl">Visita nuestra boutique</h2>
+            </div>
+            <p className="max-w-sm text-sm font-light leading-relaxed text-ink-600">Jirón Preciados 145, 15038, Lima, Perú</p>
+          </div>
+          <div className="overflow-hidden rounded-[24px] bg-ink-50 shadow-[0_24px_60px_rgba(27,23,20,0.12)] ring-1 ring-ink-900/5">
+            <iframe
+              title="Ubicación de la boutique Marianela Vieira"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3900.7642944094314!2d-77.0026843249376!3d-12.12827328811492!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9105c763f323dfa9%3A0x3433d63a6d24e403!2sMarianela%20Vieira!5e0!3m2!1ses!2spe!4v1788306091930!5m2!1ses!2spe"
+              width="600"
+              height="450"
+              loading="lazy"
+              referrerPolicy="strict-origin-when-cross-origin"
+              allowFullScreen
+              className="block h-[320px] w-full border-0 sm:h-[420px] lg:h-[480px]"
+            />
+          </div>
+        </div>
       </section>
     );
   }
