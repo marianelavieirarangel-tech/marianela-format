@@ -38,13 +38,13 @@ export default function FeaturedProducts({ products, currency, onQuickAdd, onTog
     });
 
   return (
-    <section id="coleccion-2026" className="py-24 lg:py-32 bg-sand-100/60">
+    <section id="coleccion-2026" className="py-24 lg:py-32 bg-[#f5f1ec]">
       <div className="mx-auto max-w-7xl px-6 lg:px-10">
         {/* Heading */}
-        <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between mb-12 lg:mb-16 gap-6">
+        <div className="mb-12 flex flex-col gap-6 lg:mb-16 lg:flex-row lg:items-end lg:justify-between">
           <div>
-            <p className="text-blush-500 text-[11px] tracking-ultra uppercase mb-4">Colección 2026</p>
-            <h2 className="font-serif text-4xl lg:text-5xl text-ink-900 font-light tracking-wide">
+            <p className="mb-4 text-[11px] uppercase tracking-[0.28em] text-[#bb8a7d]">Colección 2026</p>
+            <h2 className="font-serif text-4xl font-light tracking-wide text-[#1b1714] lg:text-5xl">
               Piezas que enamoran
             </h2>
           </div>
@@ -54,10 +54,10 @@ export default function FeaturedProducts({ products, currency, onQuickAdd, onTog
               <button
                 key={f}
                 onClick={() => setActive(f)}
-                className={`px-4 py-2 text-[10px] uppercase tracking-[0.22em] transition-all duration-300 border leading-none ${
+                className={`rounded-full border px-4 py-2 text-[10px] uppercase tracking-[0.22em] leading-none transition-all duration-300 ${
                   active === f
-                    ? 'bg-ink-900 text-sand-50 border-ink-900 shadow-sm'
-                    : 'border-ink-200 text-ink-600 hover:border-ink-400 hover:bg-ink-50 hover:text-ink-800'
+                    ? 'border-[#1b1714] bg-[#1b1714] text-[#f8f3ef] shadow-[0_10px_24px_rgba(27,23,20,0.12)]'
+                    : 'border-[#e8dfd6] bg-[#f8f5f2] text-[#5b4f49] hover:border-[#d8c7ba] hover:bg-[#f1e9e3] hover:text-[#1b1714]'
                 }`}
               >
                 {f}
@@ -67,7 +67,7 @@ export default function FeaturedProducts({ products, currency, onQuickAdd, onTog
         </div>
 
         {/* Product grid */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-12 lg:gap-x-6 lg:gap-y-16">
+        <div className="grid grid-cols-2 gap-x-4 gap-y-12 lg:grid-cols-4 lg:gap-x-6 lg:gap-y-16">
           {filtered.map((product, i) => (
             <ProductCard
               key={product.id}
@@ -147,12 +147,12 @@ function ProductCard({
   return (
     <div
       ref={ref}
-      className={`reveal ${inView ? 'in-view' : ''} group`}
+      className={`reveal ${inView ? 'in-view' : ''} group rounded-[28px] border border-[#eadfce] bg-[#fffdfb] p-3 shadow-[0_18px_40px_rgba(56,35,26,0.05)] transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_22px_48px_rgba(56,35,26,0.08)]`}
       style={{ animationDelay: `${(index % 4) * 0.1}s` }}
     >
       {/* Image */}
       <div 
-        className="relative aspect-[3/4] overflow-hidden bg-ink-100 mb-4 cursor-pointer"
+        className="relative mb-4 aspect-[3/4] cursor-pointer overflow-hidden rounded-[22px] bg-[#f3eee9]"
         onClick={() => onQuickAdd(product)}
       >
         <img
@@ -165,12 +165,12 @@ function ProductCard({
         {/* Tag */}
         {badgeText && (
           <span
-            className={`absolute top-3 left-3 px-2.5 py-1.5 text-[8px] font-medium uppercase tracking-[0.18em] rounded-full shadow-sm border border-white/30 ${
+            className={`absolute left-3 top-3 rounded-full border border-white/30 px-2.5 py-1.5 text-[8px] font-medium uppercase tracking-[0.18em] shadow-sm ${
               product.originalPrice && product.originalPrice > product.price
-                ? 'bg-blush-500 text-sand-50'
+                ? 'bg-[#ba826b] text-[#fffaf7]'
                 : product.tag === 'Bestseller'
-                ? 'bg-ink-900 text-sand-50'
-                : 'bg-sand-50/90 text-ink-800'
+                ? 'bg-[#1b1714] text-[#f8f1eb]'
+                : 'bg-[#f9f4f1]/90 text-[#2d241f]'
             }`}
           >
             {badgeText}
@@ -180,21 +180,21 @@ function ProductCard({
         {/* Wishlist */}
         <button
           onClick={() => onToggleWishlist(product.id)}
-          className="absolute top-3 right-3 w-9 h-9 flex items-center justify-center bg-sand-50/80 backdrop-blur-sm hover:bg-sand-50 transition-colors"
+          className="absolute right-3 top-3 flex h-9 w-9 items-center justify-center rounded-full border border-[#f0e5dd] bg-[#fffdfb]/80 backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#fffaf7]"
           aria-label="Añadir a favoritos"
         >
           <Heart
             size={16}
             strokeWidth={1.5}
-            className={isWishlisted ? 'fill-blush-500 text-blush-500' : 'text-ink-700'}
+            className={isWishlisted ? 'fill-[#ba826b] text-[#ba826b]' : 'text-[#4a403d]'}
           />
         </button>
 
         {/* Quick add */}
-        <div className="absolute bottom-0 left-0 right-0 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]">
+        <div className="absolute bottom-0 left-0 right-0 translate-y-full transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-y-0">
           <button
             onClick={() => onQuickAdd(product)}
-            className="w-full py-4 bg-ink-900/95 backdrop-blur-sm text-sand-50 text-[11px] uppercase tracking-widest flex items-center justify-center gap-2 hover:bg-ink-900 transition-colors"
+            className="flex w-full items-center justify-center gap-2 bg-[#1b1714]/95 py-4 text-[11px] uppercase tracking-[0.22em] text-[#f9f3ee] backdrop-blur-sm transition-colors hover:bg-[#2a2220]"
           >
             <Plus size={14} strokeWidth={1.5} />
             Añadir Rápido
@@ -204,22 +204,22 @@ function ProductCard({
 
       {/* Info */}
       <div className="px-1">
-        <p className="text-[10px] uppercase tracking-widest text-ink-400 mb-1.5">{product.category}</p>
+        <p className="mb-1.5 text-[10px] uppercase tracking-[0.22em] text-[#8f7e76]">{product.category}</p>
         <h3 
-          className="font-serif text-xl text-ink-900 font-normal leading-tight mb-2 cursor-pointer hover:text-blush-500 transition-colors"
+          className="mb-2 cursor-pointer font-serif text-xl font-normal leading-tight text-[#1b1714] transition-colors hover:text-[#ba826b]"
           onClick={() => navigate(`/product/${product.id}`)}
         >
           {product.name}
         </h3>
 
         {/* Swatches */}
-        <div className="flex items-center gap-2 mb-3">
+        <div className="mb-3 flex items-center gap-2">
           {product.swatches.map((sw, i) => (
             <button
               key={sw.name}
               onClick={() => setActiveSwatch(i)}
-              className={`w-4 h-4 rounded-full border transition-all duration-300 ${
-                activeSwatch === i ? 'ring-1 ring-offset-2 ring-offset-sand-100 ring-ink-700 border-sand-50' : 'border-ink-200'
+              className={`h-4 w-4 rounded-full border transition-all duration-300 ${
+                activeSwatch === i ? 'border-[#f5f0ea] ring-2 ring-[#d9bca9] ring-offset-1 ring-offset-[#fffdfb]' : 'border-[#d9c9be]'
               }`}
               style={{ backgroundColor: sw.hex }}
               aria-label={sw.name}
@@ -230,20 +230,20 @@ function ProductCard({
 
         {/* Price */}
         <div className="flex items-baseline gap-2">
-          <span className="font-numeric text-ink-900 text-base font-medium">{formatPrice(product.price, currency)}</span>
+          <span className="font-numeric text-base font-medium text-[#1b1714]">{formatPrice(product.price, currency)}</span>
           {product.originalPrice && (
-            <span className="font-numeric text-ink-400 text-sm line-through font-medium">{formatPrice(product.originalPrice, currency)}</span>
+            <span className="font-numeric text-sm font-medium text-[#8f7e76] line-through">{formatPrice(product.originalPrice, currency)}</span>
           )}
         </div>
 
         {/* Inventory status */}
         <div className="mt-2">
           {stock === null ? (
-            <span className="text-ink-400 text-sm">—</span>
+            <span className="text-sm text-[#8f7e76]">—</span>
           ) : stock > 0 ? (
-            <span className="text-green-600 text-sm">En stock ({stock})</span>
+            <span className="text-sm text-[#2f725d]">En stock ({stock})</span>
           ) : (
-            <span className="text-red-600 text-sm">Agotado</span>
+            <span className="text-sm text-[#b46b5d]">Agotado</span>
           )}
         </div>
 
@@ -263,7 +263,7 @@ function ProductCard({
                 alert('Error al crear checkout: ' + (err instanceof Error ? err.message : String(err)));
               }
             }}
-            className="mt-2 w-full py-2 text-sm uppercase tracking-widest bg-blush-500 text-sand-50 hover:bg-blush-600 transition-colors"
+            className="mt-2 w-full rounded-full bg-[#c88f7a] py-2.5 text-sm uppercase tracking-[0.2em] text-[#fffaf7] transition-all duration-300 hover:bg-[#b17864] hover:shadow-[0_12px_24px_rgba(200,143,122,0.25)]"
           >
             Comprar
           </button>

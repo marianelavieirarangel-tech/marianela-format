@@ -67,51 +67,51 @@ export default function CategoryProducts({
 
   return (
     <section className="min-h-screen bg-sand-50">
-      <div className="mx-auto max-w-7xl px-6 pt-8 pb-16 lg:px-10 lg:pt-10">
-        <div className="grid gap-8 xl:grid-cols-[260px_minmax(0,1fr)]">
-          <aside className="xl:pt-8">
+      <div className="mx-auto max-w-7xl px-6 pt-6 pb-20 lg:px-10 lg:pt-8">
+        <div className="grid gap-10 lg:grid-cols-[280px_minmax(0,1fr)]">
+          <aside className="lg:sticky lg:top-24 lg:h-fit">
             <button
               type="button"
               onClick={onBack}
-              className="inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.24em] text-ink-600 hover:text-blush-500 transition-colors"
+              className="group inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.28em] text-ink-600 hover:text-blush-400 transition-colors duration-200"
             >
-              <ArrowLeft size={16} strokeWidth={1.8} />
-              Volver
+              <ArrowLeft size={14} strokeWidth={1.8} className="group-hover:-translate-x-1 transition-transform" />
+              <span>Volver</span>
             </button>
 
-            <h1 className="mt-6 font-serif text-4xl lg:text-5xl text-ink-900 font-light tracking-wide leading-none">
+            <h1 className="mt-8 font-serif text-4xl lg:text-[2.8rem] text-ink-900 font-light tracking-wide leading-tight">
               {categoryName}
             </h1>
 
-            <div className="mt-8 space-y-6">
+            <div className="mt-10 space-y-8">
               <div>
-                <p className="mb-3 text-[10px] uppercase tracking-[0.26em] text-ink-500">Ordenar por</p>
-                <label className="relative block">
+                <label className="block">
+                  <span className="mb-3.5 block text-[9px] uppercase tracking-[0.28em] font-medium text-ink-500">Ordenar por</span>
                   <select
                     value={sortBy}
                     onChange={(event) => setSortBy(event.target.value as 'featured' | 'price-asc' | 'price-desc')}
-                    className="w-full appearance-none rounded-none border border-ink-200 bg-sand-50 px-4 py-3 pr-9 text-[10px] uppercase tracking-[0.2em] text-ink-700 outline-none transition-colors hover:border-ink-400 focus:border-ink-900"
+                    className="w-full appearance-none rounded-sm border border-ink-200 bg-sand-50 px-4 py-3 pr-9 text-[11px] font-medium uppercase tracking-[0.18em] text-ink-800 outline-none transition-all duration-200 hover:border-ink-400 focus:border-ink-900 focus:ring-1 focus:ring-ink-900/10"
                   >
                     <option value="featured">Destacados</option>
-                    <option value="price-desc">Mayor precio</option>
                     <option value="price-asc">Menor precio</option>
+                    <option value="price-desc">Mayor precio</option>
                   </select>
-                  <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-ink-500">▾</span>
+                  <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-ink-400 text-[10px]">▾</span>
                 </label>
               </div>
 
               <div>
-                <p className="mb-3 text-[10px] uppercase tracking-[0.26em] text-ink-500">Filtrar por</p>
-                <div className="space-y-2">
+                <p className="mb-4 text-[9px] uppercase tracking-[0.28em] font-medium text-ink-500">Filtrar por</p>
+                <div className="space-y-2.5">
                   {(['Todos', 'Novedades', 'Bestseller', 'Sale'] as const).map((filter) => (
                     <button
                       key={filter}
                       type="button"
                       onClick={() => setActiveFilter(filter)}
-                      className={`w-full border px-3 py-2.5 text-left text-[10px] uppercase tracking-[0.22em] transition-all duration-200 ${
+                      className={`w-full px-3.5 py-2.5 text-left text-[10px] font-medium uppercase tracking-[0.18em] border transition-all duration-200 rounded-sm ${
                         activeFilter === filter
-                          ? 'border-ink-900 bg-ink-900 text-sand-50 shadow-[0_10px_20px_rgba(17,13,10,0.08)]'
-                          : 'border-ink-200 bg-sand-50 text-ink-700 hover:border-ink-400 hover:bg-sand-100'
+                          ? 'bg-ink-900 text-sand-50 border-ink-900 shadow-[0_6px_16px_rgba(27,23,20,0.12)]'
+                          : 'bg-sand-50 text-ink-700 border-ink-200 hover:border-ink-400 hover:bg-ink-50'
                       }`}
                     >
                       {filter}
@@ -123,11 +123,11 @@ export default function CategoryProducts({
           </aside>
 
           <div>
-            <div className="mb-6 flex items-center justify-between text-sm text-ink-600">
-              <p>{filtered.length} productos</p>
+            <div className="mb-8 flex items-center justify-between border-b border-ink-100 pb-4">
+              <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-ink-500">{filtered.length} {filtered.length === 1 ? 'Producto' : 'Productos'}</p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
               {filtered.map((product, i) => (
                 <ProductCard
                   key={product.id}
@@ -142,8 +142,9 @@ export default function CategoryProducts({
             </div>
 
             {filtered.length === 0 && (
-              <div className="text-center py-16">
-                <p className="text-ink-400 text-lg">No hay productos en esta categoría.</p>
+              <div className="col-span-full text-center py-20">
+                <div className="mb-3 text-4xl text-ink-200">∘</div>
+                <p className="text-ink-400 text-sm tracking-wide">No hay productos disponibles con estos filtros.</p>
               </div>
             )}
           </div>
@@ -177,12 +178,12 @@ function ProductCard({
   return (
     <div
       ref={ref}
-      className={`reveal ${inView ? 'in-view' : ''} group flex flex-col rounded-[18px] border border-[#f0e9e1] bg-white p-3 shadow-[0_14px_30px_rgba(24,18,15,0.04)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_38px_rgba(24,18,15,0.08)]`}
+      className={`reveal ${inView ? 'in-view' : ''} group flex flex-col rounded-[26px] border border-[#eadfce] bg-[#fffdfb] p-3 shadow-[0_18px_40px_rgba(56,35,26,0.05)] transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_22px_48px_rgba(56,35,26,0.08)]`}
       style={{ animationDelay: `${index * 0.1}s` }}
     >
       {/* Image */}
       <div 
-        className="relative mb-4 aspect-[2/3] overflow-hidden cursor-pointer bg-[#f7f3ee]"
+        className="relative mb-4 aspect-[2/3] cursor-pointer overflow-hidden rounded-[22px] bg-[#f4efe9]"
         onClick={() => navigate(`/product/${product.id}`)}
         onMouseEnter={() => setIsHovering(true)}
         onMouseLeave={() => setIsHovering(false)}
@@ -195,8 +196,8 @@ function ProductCard({
 
         {/* Tags */}
         {badgeText && (
-          <div className="absolute top-4 left-4">
-            <span className="inline-block bg-blush-500 text-sand-50 text-[10px] font-medium px-3 py-1.5 tracking-widest uppercase rounded-full">
+          <div className="absolute left-4 top-4">
+            <span className="inline-block rounded-full bg-[#c88f7a] px-3 py-1.5 text-[10px] font-medium uppercase tracking-[0.18em] text-[#fffaf7] shadow-sm">
               {badgeText}
             </span>
           </div>
@@ -205,13 +206,13 @@ function ProductCard({
         {/* Wishlist button */}
         <button
           onClick={() => onToggleWishlist(product.id)}
-          className="absolute bottom-4 right-4 w-10 h-10 bg-sand-50 rounded-full flex items-center justify-center transition-all hover:bg-blush-200 shadow-md"
+          className="absolute bottom-4 right-4 flex h-10 w-10 items-center justify-center rounded-full border border-[#f0e5dd] bg-[#fffdfb]/80 shadow-sm transition-all hover:-translate-y-0.5 hover:bg-[#fffaf7]"
           aria-label="Agregar a favoritos"
         >
           <Heart
             size={18}
             strokeWidth={1.5}
-            className={isWishlisted ? 'fill-blush-500 stroke-blush-500' : 'stroke-ink-700'}
+            className={isWishlisted ? 'fill-[#ba826b] stroke-[#ba826b]' : 'stroke-[#3b312e]'}
           />
         </button>
 
@@ -221,7 +222,7 @@ function ProductCard({
             event.stopPropagation();
             onQuickAdd(product);
           }}
-          className="absolute bottom-4 left-4 w-10 h-10 bg-ink-900 text-sand-50 rounded-full flex items-center justify-center transition-all hover:bg-blush-500 opacity-0 group-hover:opacity-100"
+          className="absolute bottom-4 left-4 flex h-10 w-10 items-center justify-center rounded-full bg-[#1b1714] text-[#f9f3ee] opacity-0 transition-all duration-300 hover:bg-[#2a2220] group-hover:opacity-100"
           aria-label="Agregar al carrito"
         >
           <Plus size={18} strokeWidth={2} />
@@ -229,11 +230,11 @@ function ProductCard({
 
         {/* Swatches */}
         {product.swatches.length > 0 && (
-          <div className="absolute top-4 right-4 flex gap-2">
+          <div className="absolute right-4 top-4 flex gap-2">
             {product.swatches.map((swatch) => (
               <div
                 key={swatch.name}
-                className="w-6 h-6 rounded-full border-2 border-sand-50 shadow-md cursor-pointer hover:scale-110 transition-transform"
+                className="h-6 w-6 rounded-full border-2 border-[#fffdfb] shadow-md transition-transform hover:scale-110"
                 style={{ backgroundColor: swatch.hex }}
                 title={swatch.name}
               />
@@ -245,20 +246,20 @@ function ProductCard({
       {/* Info */}
       <div className="flex-1">
         <h3 
-          className="font-serif text-[1.6rem] leading-none text-ink-900 mb-2 line-clamp-2 hover:text-blush-500 transition-colors cursor-pointer"
+          className="mb-2 cursor-pointer font-serif text-[1.6rem] leading-none text-[#1b1714] transition-colors hover:text-[#ba826b]"
           onClick={() => navigate(`/product/${product.id}`)}
         >
           {product.name}
         </h3>
-        <p className="text-ink-500 text-sm font-light leading-relaxed mb-3 line-clamp-2 min-h-[2.5rem]">
+        <p className="mb-3 min-h-[2.5rem] text-sm font-light leading-relaxed text-[#6c5f59] line-clamp-2">
           {product.description}
         </p>
 
         {/* Price */}
         <div className="flex items-center gap-2">
-          <span className="font-numeric text-ink-900 text-[1.02rem] font-medium">{formatPrice(product.price, currency)}</span>
+          <span className="font-numeric text-[1.02rem] font-medium text-[#1b1714]">{formatPrice(product.price, currency)}</span>
           {product.originalPrice && (
-            <span className="font-numeric text-ink-400 text-sm line-through">{formatPrice(product.originalPrice, currency)}</span>
+            <span className="font-numeric text-sm font-medium text-[#8f7e76] line-through">{formatPrice(product.originalPrice, currency)}</span>
           )}
         </div>
       </div>
