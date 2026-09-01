@@ -21,11 +21,35 @@ export default function CategoryGrid({ onSelectCategory }: Props) {
 
   const scroll = (direction: 'left' | 'right') => {
     if (!scrollRef.current) return;
-    const scrollAmount = scrollRef.current.clientWidth * 0.85;
-    scrollRef.current.scrollBy({
-      left: direction === 'left' ? -scrollAmount : scrollAmount,
-      behavior: 'smooth',
-    });
+    
+    // Calculate scroll amount based on one card width + gap
+    const isDesktop = window.innerWidth >= 1024;
+    const cardWidth = isDesktop ? 320 : 288; // w-80 or w-72
+    const gapWidth = isDesktop ? 24 : 20; // gap-6 or gap-5
+    const scrollAmount = cardWidth + gapWidth;
+
+    const startScroll = scrollRef.current.scrollLeft;
+    const endScroll = startScroll + (direction === 'left' ? -scrollAmount : scrollAmount);
+    const duration = 600; // 600ms for smooth transition
+    const startTime = Date.now();
+
+    const animate = () => {
+      const elapsed = Date.now() - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      
+      // Easing function for smooth animation
+      const easeInOutCubic = progress < 0.5
+        ? 4 * progress * progress * progress
+        : 1 - Math.pow(-2 * progress + 2, 3) / 2;
+
+      scrollRef.current!.scrollLeft = startScroll + (endScroll - startScroll) * easeInOutCubic;
+
+      if (progress < 1) {
+        requestAnimationFrame(animate);
+      }
+    };
+
+    requestAnimationFrame(animate);
   };
 
   return (
@@ -57,8 +81,7 @@ export default function CategoryGrid({ onSelectCategory }: Props) {
           <div
             ref={scrollRef}
             onScroll={handleScroll}
-            className="flex gap-5 lg:gap-6 overflow-x-auto scroll-smooth no-scrollbar pb-2"
-            style={{ scrollBehavior: 'smooth' }}
+            className="flex gap-5 lg:gap-6 overflow-x-auto no-scrollbar pb-2"
           >
             {categories.map((cat, i) => (
               <CategoryCard
