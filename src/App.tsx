@@ -95,7 +95,7 @@ export default function App() {
 
   useEffect(() => {
     setIsTransitioning(true);
-    const timer = setTimeout(() => setIsTransitioning(false), 800);
+    const timer = setTimeout(() => setIsTransitioning(false), 1200);
     return () => clearTimeout(timer);
   }, [location.pathname]);
 
@@ -287,7 +287,7 @@ export default function App() {
         onOpenWishlist={() => setWishlistOpen(true)}
       />
 
-      <main className={`${location.pathname === '/' ? 'pt-0' : 'pt-[128px] lg:pt-[140px]'} transition-opacity duration-800 ${isTransitioning ? 'opacity-0' : 'opacity-100'}`}>
+      <main className={`${location.pathname === '/' ? 'pt-0' : 'pt-[128px] lg:pt-[140px]'} transition-opacity duration-[1200ms] ease-in-out ${isTransitioning ? 'opacity-0' : 'opacity-100'}`}>
         <Routes>
           <Route
             path="/"
