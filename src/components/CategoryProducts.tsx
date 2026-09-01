@@ -171,6 +171,8 @@ function ProductCard({
   const { ref, inView } = useReveal<HTMLDivElement>();
   const navigate = useNavigate();
   const badgeText = getProductBadge(product);
+  const [isHovering, setIsHovering] = useState(false);
+  const previewImage = product.images && product.images.length > 1 ? product.images[1] : product.image;
 
   return (
     <div
@@ -182,9 +184,11 @@ function ProductCard({
       <div 
         className="relative mb-4 aspect-[2/3] overflow-hidden cursor-pointer bg-[#f7f3ee]"
         onClick={() => navigate(`/product/${product.id}`)}
+        onMouseEnter={() => setIsHovering(true)}
+        onMouseLeave={() => setIsHovering(false)}
       >
         <img
-          src={product.image}
+          src={isHovering && previewImage ? previewImage : product.image}
           alt={product.name}
           className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
         />
