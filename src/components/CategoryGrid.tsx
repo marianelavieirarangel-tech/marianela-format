@@ -41,7 +41,7 @@ export default function CategoryGrid({ onSelectCategory }: Props) {
         </div>
 
         {/* Carousel Container */}
-        <div className="relative group">
+        <div className="relative group max-w-[928px] lg:max-w-[1008px] mx-auto">
           {/* Left Arrow */}
           {showLeftArrow && (
             <button
