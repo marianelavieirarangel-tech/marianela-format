@@ -1,12 +1,33 @@
 import { categories, categorySlugs } from '@/data/catalog';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useRef, useState } from 'react';
 
 type Props = {
   onSelectCategory?: (categoryName: string) => void;
 };
 
 export default function CategoryGrid({ onSelectCategory }: Props) {
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [showLeftArrow, setShowLeftArrow] = useState(false);
+  const [showRightArrow, setShowRightArrow] = useState(true);
+
+  const handleScroll = () => {
+    if (!scrollRef.current) return;
+    const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
+    setShowLeftArrow(scrollLeft > 0);
+    setShowRightArrow(scrollLeft + clientWidth < scrollWidth - 10);
+  };
+
+  const scroll = (direction: 'left' | 'right') => {
+    if (!scrollRef.current) return;
+    const scrollAmount = scrollRef.current.clientWidth * 0.85;
+    scrollRef.current.scrollBy({
+      left: direction === 'left' ? -scrollAmount : scrollAmount,
+      behavior: 'smooth',
+    });
+  };
+
   return (
     <section id="categorias" className="py-24 lg:py-32 bg-sand-50">
       <div className="mx-auto max-w-7xl px-6 lg:px-10">
@@ -19,16 +40,46 @@ export default function CategoryGrid({ onSelectCategory }: Props) {
           <div className="w-12 h-px bg-blush-400 mx-auto mt-8" />
         </div>
 
-        {/* Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5 lg:gap-6">
-          {categories.map((cat, i) => (
-            <CategoryCard
-              key={cat.name}
-              category={cat}
-              index={i}
-              onSelect={onSelectCategory}
-            />
-          ))}
+        {/* Carousel Container */}
+        <div className="relative group">
+          {/* Left Arrow */}
+          {showLeftArrow && (
+            <button
+              onClick={() => scroll('left')}
+              className="absolute left-0 top-1/2 -translate-y-1/2 z-10 p-3 rounded-full bg-sand-50 shadow-lg text-ink-800 hover:bg-ink-900 hover:text-sand-50 transition-all duration-300 -ml-6 lg:-ml-10"
+              aria-label="Ver categorías anteriores"
+            >
+              <ChevronLeft size={24} strokeWidth={1.5} />
+            </button>
+          )}
+
+          {/* Carousel */}
+          <div
+            ref={scrollRef}
+            onScroll={handleScroll}
+            className="flex gap-5 lg:gap-6 overflow-x-auto scroll-smooth no-scrollbar pb-2"
+            style={{ scrollBehavior: 'smooth' }}
+          >
+            {categories.map((cat, i) => (
+              <CategoryCard
+                key={cat.name}
+                category={cat}
+                index={i}
+                onSelect={onSelectCategory}
+              />
+            ))}
+          </div>
+
+          {/* Right Arrow */}
+          {showRightArrow && (
+            <button
+              onClick={() => scroll('right')}
+              className="absolute right-0 top-1/2 -translate-y-1/2 z-10 p-3 rounded-full bg-sand-50 shadow-lg text-ink-800 hover:bg-ink-900 hover:text-sand-50 transition-all duration-300 -mr-6 lg:-mr-10"
+              aria-label="Ver más categorías"
+            >
+              <ChevronRight size={24} strokeWidth={1.5} />
+            </button>
+          )}
         </div>
       </div>
     </section>
@@ -54,7 +105,7 @@ function CategoryCard({
     <Link
       to={`/collections/${slug}`}
       onClick={handleClick}
-      className={`group relative overflow-hidden bg-ink-100 rounded-2xl shadow-sm hover:shadow-xl cursor-pointer transition-shadow duration-500`}
+      className="group relative flex-shrink-0 w-72 lg:w-80 overflow-hidden bg-ink-100 rounded-2xl shadow-sm hover:shadow-xl cursor-pointer transition-shadow duration-500"
     >
       <div className="aspect-[4/5] overflow-hidden">
         <img
