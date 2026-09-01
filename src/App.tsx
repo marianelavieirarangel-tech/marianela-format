@@ -16,6 +16,7 @@ import WishlistDrawer from '@/components/WishlistDrawer';
 import InfoPage from '@/components/InfoPage';
 import CookiePreferences from '@/components/CookiePreferences';
 import GroupTripsPage from '@/components/GroupTripsPage';
+import SoundCloudPlayer from '@/components/SoundCloudPlayer';
 import type { Product } from '@/data/catalog';
 import { categorySlugs, products, navLinks, womenSubcategories, hiddenCategoryNames } from '@/data/catalog';
 import { type CurrencyCode } from '@/lib/currency';
@@ -369,6 +370,7 @@ export default function App() {
           setQuickAddProduct(p);
         }}
       />
+      <SoundCloudPlayer />
       {!checkoutOpen && location.pathname === '/' && <CookiePreferences />}
     </div>
   );
