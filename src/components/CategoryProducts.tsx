@@ -83,6 +83,10 @@ export default function CategoryProducts({
               {categoryName}
             </h1>
 
+            <p className="mt-4 text-[11px] font-medium uppercase tracking-[0.2em] text-ink-500">
+              {filtered.length} {filtered.length === 1 ? 'Producto' : 'Productos'}
+            </p>
+
             <div className="mt-10 space-y-8">
               <div>
                 <label className="block">
@@ -123,10 +127,6 @@ export default function CategoryProducts({
           </aside>
 
           <div>
-            <div className="mb-8 flex items-center justify-between border-b border-ink-100 pb-4">
-              <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-ink-500">{filtered.length} {filtered.length === 1 ? 'Producto' : 'Productos'}</p>
-            </div>
-
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
               {filtered.map((product, i) => (
                 <ProductCard
