@@ -31,7 +31,7 @@ export default function CartDrawer({ open, items, currency, onClose, onUpdateQty
   const progress = Math.min(100, (subtotal / shippingThreshold) * 100);
 
   return (
-    <div className={`fixed inset-0 z-50 ${open ? 'visible' : 'invisible'}`}>
+    <div className={`fixed inset-0 z-[1200] ${open ? 'visible' : 'invisible'}`}>
       <div
         className={`absolute inset-0 bg-ink-900/50 backdrop-blur-sm transition-opacity duration-500 ${
           open ? 'opacity-100' : 'opacity-0'
