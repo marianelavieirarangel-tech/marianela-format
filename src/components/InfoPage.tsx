@@ -369,6 +369,15 @@ export default function InfoPage() {
                 <p key={section} className="max-w-xl text-base font-light leading-relaxed text-ink-600">{section}</p>
               ))}
             </div>
+            <div className="mt-10 border-t border-ink-200 pt-6">
+              <p className="mb-2 text-xs uppercase tracking-[0.25em] text-blush-500">Correo corporativo</p>
+              <a
+                href="mailto:contacto@marianelavieira.com"
+                className="text-base font-light text-ink-800 transition-colors hover:text-blush-500"
+              >
+                contacto@marianelavieira.com
+              </a>
+            </div>
           </div>
           <div className="order-1 lg:order-2">
             <div className="relative overflow-hidden bg-ink-50 shadow-[0_24px_60px_rgba(27,23,20,0.12)]">
