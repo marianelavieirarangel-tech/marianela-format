@@ -277,7 +277,7 @@ export default function ProductDetail({
             <div className="mb-8 grid gap-3 rounded-[22px] border border-[#eadfce] bg-white/70 p-4 sm:grid-cols-2">
               <div>
                 <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-[#1b1714]">Envío cuidado</p>
-                <p className="mt-1 text-sm font-light text-[#8f7e76]">Gratis en compras desde $120</p>
+                <p className="mt-1 text-sm font-light text-[#8f7e76]">Gratis en compras desde S/ 159</p>
               </div>
               <div>
                 <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-[#1b1714]">Cambios</p>

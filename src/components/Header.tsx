@@ -8,7 +8,7 @@ import { getShopifyAccountLoginUrl } from '@/lib/shopify';
 import logo from '@/assets/marianela-logo.png';
 
 const ANNOUNCEMENT_MESSAGES = [
-  'Envío gratis por compras superiores a $120',
+  'Envío gratis por compras superiores a S/ 159',
   'Devoluciones gratuitas en 30 días',
   'Nueva colección — Primavera 2026',
 ] as const;

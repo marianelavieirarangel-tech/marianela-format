@@ -27,7 +27,7 @@ export default function CheckoutPage({ items, currency, onClose, onUpdateQty, on
 
   const isLimaLocal = city.toLowerCase() === 'lima' && country.toLowerCase() === 'perú';
   const subtotal = items.reduce((sum, item) => sum + item.product.price * item.quantity, 0);
-  const shipping = deliveryMethod === 'pickup' ? 0 : subtotal > 120 ? 0 : 25;
+  const shipping = deliveryMethod === 'pickup' ? 0 : subtotal > 159 ? 0 : 25;
   const total = subtotal - discount + shipping;
 
   const handleApplyPromo = () => {

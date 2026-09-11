@@ -26,7 +26,7 @@ export default function CartDrawer({ open, items, currency, onClose, onUpdateQty
   }, [open]);
 
   const subtotal = items.reduce((sum, i) => sum + i.product.price * i.quantity, 0);
-  const shippingThreshold = 120;
+  const shippingThreshold = 159;
   const remaining = Math.max(0, shippingThreshold - subtotal);
   const progress = Math.min(100, (subtotal / shippingThreshold) * 100);
 
