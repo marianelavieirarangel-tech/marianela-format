@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { type Product, womenSubcategories, hiddenCategoryNames } from '@/data/catalog';
-import { useReveal } from '@/hooks/useReveal';
 import { Plus, Heart } from 'lucide-react';
 import { formatPrice, type CurrencyCode } from '@/lib/currency';
 import { createShopifyCheckout, isShopifyEnabled, findVariantGidByTitle } from '@/lib/shopify';
@@ -68,12 +67,11 @@ export default function FeaturedProducts({ products, currency, onQuickAdd, onTog
 
         {/* Product grid */}
         <div className="grid grid-cols-2 gap-x-4 gap-y-12 lg:grid-cols-4 lg:gap-x-6 lg:gap-y-16">
-          {filtered.map((product, i) => (
+          {filtered.map((product) => (
             <ProductCard
               key={product.id}
               product={product}
               currency={currency}
-              index={i}
               onQuickAdd={onQuickAdd}
               onToggleWishlist={onToggleWishlist}
               isWishlisted={wishlist.has(product.id)}
@@ -88,19 +86,16 @@ export default function FeaturedProducts({ products, currency, onQuickAdd, onTog
 function ProductCard({
   product,
   currency,
-  index,
   onQuickAdd,
   onToggleWishlist,
   isWishlisted,
 }: {
   product: Product;
   currency: CurrencyCode;
-  index: number;
   onQuickAdd: (p: Product) => void;
   onToggleWishlist: (id: string) => void;
   isWishlisted: boolean;
 }) {
-  const { ref, inView } = useReveal<HTMLDivElement>();
   const navigate = useNavigate();
   const [activeSwatch, setActiveSwatch] = useState(0);
   const [stock, setStock] = useState<number | null>(null);
@@ -146,9 +141,7 @@ function ProductCard({
 
   return (
     <div
-      ref={ref}
-      className={`reveal ${inView ? 'in-view' : ''} group rounded-[28px] border border-[#eadfce] bg-[#fffdfb] p-3 shadow-[0_18px_40px_rgba(56,35,26,0.05)] transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_22px_48px_rgba(56,35,26,0.08)]`}
-      style={{ animationDelay: `${(index % 4) * 0.1}s` }}
+      className="group rounded-[28px] border border-[#eadfce] bg-[#fffdfb] p-3 shadow-[0_18px_40px_rgba(56,35,26,0.05)] transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_22px_48px_rgba(56,35,26,0.08)]"
     >
       {/* Image */}
       <div 
@@ -159,7 +152,8 @@ function ProductCard({
           src={product.image}
           alt={product.name}
           className="h-full w-full object-cover transition-transform duration-[1.2s] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105"
-          loading="lazy"
+          loading="eager"
+          decoding="async"
         />
 
         {/* Tag */}
@@ -236,16 +230,16 @@ function ProductCard({
           )}
         </div>
 
-        {/* Inventory status */}
-        <div className="mt-2">
-          {stock === null ? (
-            <span className="text-sm text-[#8f7e76]">—</span>
-          ) : stock > 0 ? (
-            <span className="text-sm text-[#2f725d]">En stock ({stock})</span>
-          ) : (
-            <span className="text-sm text-[#b46b5d]">Agotado</span>
-          )}
-        </div>
+        {/* Inventory status: hide while unknown */}
+        {stock !== null && (
+          <div className="mt-2">
+            {stock > 0 ? (
+              <span className="text-sm text-[#2f725d]">En stock ({stock})</span>
+            ) : (
+              <span className="text-sm text-[#b46b5d]">Agotado</span>
+            )}
+          </div>
+        )}
 
         {/* Buy on Shopify button */}
         <div className="mt-3">
