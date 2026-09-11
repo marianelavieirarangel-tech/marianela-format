@@ -99,16 +99,23 @@ function ProductCard({
   const navigate = useNavigate();
   const [activeSwatch, setActiveSwatch] = useState(0);
   const badgeText = getProductBadge(product);
+  const goToProduct = () => navigate(`/product/${product.id}`);
 
   return (
     <div
-      className="group rounded-[28px] border border-[#eadfce] bg-[#fffdfb] p-3 shadow-[0_18px_40px_rgba(56,35,26,0.05)] transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_22px_48px_rgba(56,35,26,0.08)]"
+      role="link"
+      tabIndex={0}
+      onClick={goToProduct}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          goToProduct();
+        }
+      }}
+      className="group cursor-pointer rounded-[28px] border border-[#eadfce] bg-[#fffdfb] p-3 shadow-[0_18px_40px_rgba(56,35,26,0.05)] transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_22px_48px_rgba(56,35,26,0.08)]"
     >
       {/* Image */}
-      <div 
-        className="relative mb-4 aspect-[3/4] cursor-pointer overflow-hidden rounded-[22px] bg-[#f3eee9]"
-        onClick={() => onQuickAdd(product)}
-      >
+      <div className="relative mb-4 aspect-[3/4] overflow-hidden rounded-[22px] bg-[#f3eee9]">
         <img
           src={product.image}
           alt={product.name}
@@ -134,7 +141,10 @@ function ProductCard({
 
         {/* Wishlist */}
         <button
-          onClick={() => onToggleWishlist(product.id)}
+          onClick={(e) => {
+            e.stopPropagation();
+            onToggleWishlist(product.id);
+          }}
           className="absolute right-3 top-3 flex h-9 w-9 items-center justify-center rounded-full border border-[#f0e5dd] bg-[#fffdfb]/80 backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#fffaf7]"
           aria-label="Añadir a favoritos"
         >
@@ -148,7 +158,10 @@ function ProductCard({
         {/* Quick add */}
         <div className="absolute bottom-0 left-0 right-0 translate-y-full transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-y-0">
           <button
-            onClick={() => onQuickAdd(product)}
+            onClick={(e) => {
+              e.stopPropagation();
+              onQuickAdd(product);
+            }}
             className="flex w-full items-center justify-center gap-2 bg-[#1b1714]/95 py-4 text-[11px] uppercase tracking-[0.22em] text-[#f9f3ee] backdrop-blur-sm transition-colors hover:bg-[#2a2220]"
           >
             <Plus size={14} strokeWidth={1.5} />
@@ -160,28 +173,29 @@ function ProductCard({
       {/* Info */}
       <div className="px-1">
         <p className="mb-1.5 text-[10px] uppercase tracking-[0.22em] text-[#8f7e76]">{product.category}</p>
-        <h3 
-          className="mb-2 cursor-pointer font-serif text-xl font-normal leading-tight text-[#1b1714] transition-colors hover:text-[#ba826b]"
-          onClick={() => navigate(`/product/${product.id}`)}
-        >
+        <h3 className="mb-2 font-serif text-xl font-normal leading-tight text-[#1b1714] transition-colors group-hover:text-[#ba826b]">
           {product.name}
         </h3>
 
-        {/* Swatches */}
-        <div className="mb-3 flex items-center gap-2">
-          {product.swatches.map((sw, i) => (
-            <button
-              key={sw.name}
-              onClick={() => setActiveSwatch(i)}
-              className={`h-4 w-4 rounded-full border transition-all duration-300 ${
-                activeSwatch === i ? 'border-[#f5f0ea] ring-2 ring-[#d9bca9] ring-offset-1 ring-offset-[#fffdfb]' : 'border-[#d9c9be]'
-              }`}
-              style={{ backgroundColor: sw.hex }}
-              aria-label={sw.name}
-              title={sw.name}
-            />
-          ))}
-        </div>
+        {product.swatches.length > 0 && (
+          <div className="mb-3 flex items-center gap-2">
+            {product.swatches.map((sw, i) => (
+              <button
+                key={sw.name}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setActiveSwatch(i);
+                }}
+                className={`h-4 w-4 rounded-full border transition-all duration-300 ${
+                  activeSwatch === i ? 'border-[#f5f0ea] ring-2 ring-[#d9bca9] ring-offset-1 ring-offset-[#fffdfb]' : 'border-[#d9c9be]'
+                }`}
+                style={{ backgroundColor: sw.hex }}
+                aria-label={sw.name}
+                title={sw.name}
+              />
+            ))}
+          </div>
+        )}
 
         {/* Price */}
         <div className="flex items-baseline gap-2">
@@ -195,7 +209,8 @@ function ProductCard({
         {/* Buy on Shopify button */}
         <div className="mt-3">
           <button
-            onClick={async () => {
+            onClick={async (e) => {
+              e.stopPropagation();
               if (!isShopifyEnabled()) {
                 alert('Integración Shopify no configurada. Define VITE_SHOPIFY_STORE_DOMAIN y VITE_SHOPIFY_STOREFRONT_TOKEN en .env');
                 return;
