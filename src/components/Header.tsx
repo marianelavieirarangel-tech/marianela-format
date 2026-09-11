@@ -189,10 +189,14 @@ export default function Header({
             {/* Mobile menu button */}
             <button
               onClick={() => setMobileOpen(true)}
-              className="lg:hidden absolute left-4 z-20 flex h-10 w-10 items-center justify-center text-sand-50 transition-colors hover:text-blush-300"
+              className={`lg:hidden absolute left-4 z-20 flex h-10 w-10 items-center justify-center transition-colors ${
+                isHome && !scrolled
+                  ? 'text-sand-50 hover:text-blush-300'
+                  : 'text-ink-800 hover:text-blush-500'
+              }`}
               aria-label="Abrir menú"
             >
-              <Menu size={22} strokeWidth={1.8} className="text-white" />
+              <Menu size={22} strokeWidth={1.8} />
             </button>
 
             {/* Logo */}
@@ -338,21 +342,33 @@ export default function Header({
               <button
                 type="button"
                 onClick={() => setLanguageMenuOpen((open) => !open)}
-                className="text-white hover:text-blush-300 transition-colors"
+                className={`transition-colors ${
+                  isHome && !scrolled
+                    ? 'text-sand-50 hover:text-blush-300'
+                    : 'text-ink-800 hover:text-blush-500'
+                }`}
                 aria-label="Seleccionar idioma"
               >
                 <Globe size={18} strokeWidth={1.7} />
               </button>
               <button
                 onClick={onOpenSearch}
-                className="text-white hover:text-blush-300 transition-colors"
+                className={`transition-colors ${
+                  isHome && !scrolled
+                    ? 'text-sand-50 hover:text-blush-300'
+                    : 'text-ink-800 hover:text-blush-500'
+                }`}
                 aria-label="Buscar"
               >
                 <Search size={19} strokeWidth={1.5} />
               </button>
               <button
                 onClick={onOpenCart}
-                className="relative text-white hover:text-blush-300 transition-colors"
+                className={`relative transition-colors ${
+                  isHome && !scrolled
+                    ? 'text-sand-50 hover:text-blush-300'
+                    : 'text-ink-800 hover:text-blush-500'
+                }`}
                 aria-label="Bolsa de compras"
               >
                 <ShoppingBag size={19} strokeWidth={1.5} />

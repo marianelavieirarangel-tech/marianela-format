@@ -13,7 +13,7 @@ type Props = {
   wishlist: Set<string>;
 };
 
-const filters = ['Todos', 'Novedades', ...womenSubcategories, 'Sale'] as const;
+const filters = ['Todos', ...womenSubcategories] as const;
 
 function getProductBadge(product: Product) {
   if (product.originalPrice && product.originalPrice > product.price) {
@@ -66,18 +66,24 @@ export default function FeaturedProducts({ products, currency, onQuickAdd, onTog
         </div>
 
         {/* Product grid */}
-        <div className="grid grid-cols-2 gap-x-4 gap-y-12 lg:grid-cols-4 lg:gap-x-6 lg:gap-y-16">
-          {filtered.map((product) => (
-            <ProductCard
-              key={product.id}
-              product={product}
-              currency={currency}
-              onQuickAdd={onQuickAdd}
-              onToggleWishlist={onToggleWishlist}
-              isWishlisted={wishlist.has(product.id)}
-            />
-          ))}
-        </div>
+        {filtered.length === 0 ? (
+          <p className="py-16 text-center text-sm font-light tracking-wide text-[#8f7e76]">
+            No hay piezas en esta categoría por ahora.
+          </p>
+        ) : (
+          <div className="grid grid-cols-2 gap-x-4 gap-y-12 lg:grid-cols-4 lg:gap-x-6 lg:gap-y-16">
+            {filtered.map((product) => (
+              <ProductCard
+                key={product.id}
+                product={product}
+                currency={currency}
+                onQuickAdd={onQuickAdd}
+                onToggleWishlist={onToggleWishlist}
+                isWishlisted={wishlist.has(product.id)}
+              />
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );
