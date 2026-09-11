@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { type Product, womenSubcategories, hiddenCategoryNames, formatProductName } from '@/data/catalog';
 import { Plus, Heart } from 'lucide-react';
 import { formatPrice, type CurrencyCode } from '@/lib/currency';
-import { createShopifyCheckout, isShopifyEnabled } from '@/lib/shopify';
 
 type Props = {
   products: Product[];
@@ -108,7 +107,6 @@ function ProductCard({
   const goToProduct = () => navigate(`/product/${product.id}`);
   const activeColor = product.swatches[activeSwatch];
   const displayImage = activeColor?.image || product.images?.[activeSwatch] || product.image;
-  const checkoutVariantId = activeColor?.variantId || product.shopifyVariantId;
 
   return (
     <div
@@ -174,7 +172,7 @@ function ProductCard({
             className="flex w-full items-center justify-center gap-2 bg-[#1b1714]/95 py-4 text-[11px] uppercase tracking-[0.22em] text-[#f9f3ee] backdrop-blur-sm transition-colors hover:bg-[#2a2220]"
           >
             <Plus size={14} strokeWidth={1.5} />
-            Añadir Rápido
+            Elegir talla
           </button>
         </div>
       </div>
@@ -215,32 +213,6 @@ function ProductCard({
         </div>
 
 
-        {/* Buy on Shopify button */}
-        <div className="mt-3">
-          <button
-            onClick={async (e) => {
-              e.stopPropagation();
-              if (!isShopifyEnabled()) {
-                alert('Integración Shopify no configurada. Define VITE_SHOPIFY_STORE_DOMAIN y VITE_SHOPIFY_STOREFRONT_TOKEN en .env');
-                return;
-              }
-              if (!checkoutVariantId) {
-                goToProduct();
-                return;
-              }
-              try {
-                const { checkoutUrl } = await createShopifyCheckout([{ variantId: checkoutVariantId, quantity: 1 }]);
-                window.location.href = checkoutUrl;
-              } catch (err) {
-                console.error(err);
-                alert('Error al crear checkout: ' + (err instanceof Error ? err.message : String(err)));
-              }
-            }}
-            className="mt-2 w-full rounded-full bg-[#c88f7a] py-2.5 text-sm uppercase tracking-[0.2em] text-[#fffaf7] transition-all duration-300 hover:bg-[#b17864] hover:shadow-[0_12px_24px_rgba(200,143,122,0.25)]"
-          >
-            Comprar
-          </button>
-        </div>
       </div>
     </div>
   );
