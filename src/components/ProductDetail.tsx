@@ -77,7 +77,7 @@ export default function ProductDetail({
 
   return (
     <div className="min-h-screen bg-[#f8f4ef]">
-      <div className="sticky top-[72px] z-20 border-b border-[#eadfce]/70 bg-[#f8f4ef]/95 backdrop-blur-md lg:top-[84px]">
+      <div className="sticky top-[128px] z-20 border-b border-[#eadfce]/70 bg-[#f8f4ef]/95 backdrop-blur-md lg:top-[140px]">
         <div className="mx-auto max-w-7xl px-6 py-3 lg:px-10">
           <button
             onClick={onBack}
