@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { type Product, womenSubcategories, hiddenCategoryNames } from '@/data/catalog';
+import { type Product, womenSubcategories, hiddenCategoryNames, formatProductName } from '@/data/catalog';
 import { Plus, Heart } from 'lucide-react';
 import { formatPrice, type CurrencyCode } from '@/lib/currency';
 import { createShopifyCheckout, isShopifyEnabled } from '@/lib/shopify';
@@ -106,6 +106,9 @@ function ProductCard({
   const [activeSwatch, setActiveSwatch] = useState(0);
   const badgeText = getProductBadge(product);
   const goToProduct = () => navigate(`/product/${product.id}`);
+  const activeColor = product.swatches[activeSwatch];
+  const displayImage = activeColor?.image || product.images?.[activeSwatch] || product.image;
+  const checkoutVariantId = activeColor?.variantId || product.shopifyVariantId;
 
   return (
     <div
@@ -123,8 +126,8 @@ function ProductCard({
       {/* Image */}
       <div className="relative mb-4 aspect-[3/4] overflow-hidden rounded-[22px] bg-[#f3eee9]">
         <img
-          src={product.image}
-          alt={product.name}
+          src={displayImage}
+          alt={formatProductName(product.name)}
           className="h-full w-full object-cover transition-transform duration-[1.2s] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105"
           loading="eager"
           decoding="async"
@@ -180,7 +183,7 @@ function ProductCard({
       <div className="px-1">
         <p className="mb-1.5 text-[10px] uppercase tracking-[0.22em] text-[#8f7e76]">{product.category}</p>
         <h3 className="mb-2 font-serif text-xl font-normal leading-tight text-[#1b1714] transition-colors group-hover:text-[#ba826b]">
-          {product.name}
+          {formatProductName(product.name)}
         </h3>
 
         {product.swatches.length > 0 && (
@@ -221,8 +224,12 @@ function ProductCard({
                 alert('Integración Shopify no configurada. Define VITE_SHOPIFY_STORE_DOMAIN y VITE_SHOPIFY_STOREFRONT_TOKEN en .env');
                 return;
               }
+              if (!checkoutVariantId) {
+                goToProduct();
+                return;
+              }
               try {
-                const { checkoutUrl } = await createShopifyCheckout([{ variantId: product.shopifyVariantId, quantity: 1 }]);
+                const { checkoutUrl } = await createShopifyCheckout([{ variantId: checkoutVariantId, quantity: 1 }]);
                 window.location.href = checkoutUrl;
               } catch (err) {
                 console.error(err);

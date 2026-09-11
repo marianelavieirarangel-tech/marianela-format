@@ -6,7 +6,7 @@ export type Product = {
   originalPrice?: number;
   image: string;
   images?: string[];
-  swatches: { name: string; hex: string }[];
+  swatches: { name: string; hex: string; image?: string; variantId?: string }[];
   tag?: 'Novedades' | 'Sale' | 'Bestseller';
   description: string;
   // Optional: map this product to a Shopify variant GID (gid://...)
@@ -210,3 +210,7 @@ export const footerLinks = {
     'Aviso Legal',
   ],
 };
+
+export function formatProductName(name: string) {
+  return name.replace(/\bTriangulo\b/gi, 'Triángulo');
+}

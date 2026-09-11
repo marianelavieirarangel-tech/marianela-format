@@ -83,11 +83,10 @@ export default function CategoryGrid({ onSelectCategory }: Props) {
             onScroll={handleScroll}
             className="flex gap-5 lg:gap-6 overflow-x-auto no-scrollbar pb-2"
           >
-            {categories.map((cat, i) => (
+            {categories.map((cat) => (
               <CategoryCard
                 key={cat.name}
                 category={cat}
-                index={i}
                 onSelect={onSelectCategory}
               />
             ))}
@@ -111,11 +110,9 @@ export default function CategoryGrid({ onSelectCategory }: Props) {
 
 function CategoryCard({
   category,
-  index,
   onSelect,
 }: {
   category: (typeof categories)[number];
-  index: number;
   onSelect?: (categoryName: string) => void;
 }) {
   const slug = categorySlugs[category.name] ?? category.name.toLowerCase();

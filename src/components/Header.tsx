@@ -7,6 +7,12 @@ import { languageOptions, languageNames, languageShortCodes, type LanguageCode }
 import { getShopifyAccountLoginUrl } from '@/lib/shopify';
 import logo from '@/assets/marianela-logo.png';
 
+const ANNOUNCEMENT_MESSAGES = [
+  'Envío gratis por compras superiores a $120',
+  'Devoluciones gratuitas en 30 días',
+  'Nueva colección — Primavera 2026',
+] as const;
+
 type Props = {
   cartCount: number;
   currency: CurrencyCode;
@@ -66,12 +72,6 @@ export default function Header({
   const languageMenuRef = useRef<HTMLDivElement | null>(null);
   const currencyMenuRef = useRef<HTMLDivElement | null>(null);
 
-  const announcementMessages = [
-    'Envío gratis por compras superiores a $120',
-    'Devoluciones gratuitas en 30 días',
-    'Nueva colección — Primavera 2026',
-  ];
-
   useEffect(() => {
     const syncHeaderState = () => setScrolled(window.scrollY > 40);
     syncHeaderState();
@@ -98,7 +98,7 @@ export default function Header({
     const interval = setInterval(() => {
       setIsVisible(false);
       setTimeout(() => {
-        setCurrentMessageIndex((prev) => (prev + 1) % announcementMessages.length);
+        setCurrentMessageIndex((prev) => (prev + 1) % ANNOUNCEMENT_MESSAGES.length);
         setIsVisible(true);
       }, 1200);
     }, 5000);
@@ -113,7 +113,7 @@ export default function Header({
         <div className={`py-2.5 text-[11px] tracking-widest uppercase font-light text-center ${
           isVisible ? 'fade-in' : 'fade-out'
         }`}>
-          {announcementMessages[currentMessageIndex]}
+          {ANNOUNCEMENT_MESSAGES[currentMessageIndex]}
         </div>
       </div>
 

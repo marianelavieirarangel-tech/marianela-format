@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Heart, Share2, ArrowLeft, Minus, Plus, MessageCircle } from 'lucide-react';
-import type { Product } from '@/data/catalog';
+import { formatProductName, type Product } from '@/data/catalog';
 import type { CartItem } from '@/components/QuickAddModal';
 import { formatPrice, type CurrencyCode } from '@/lib/currency';
 
@@ -30,8 +30,11 @@ export default function ProductDetail({
   const waLink = `https://wa.me/51949217304?text=${encodeURIComponent(waMessage)}`;
 
   useEffect(() => {
-    setSelectedImage(gallery[0]);
-  }, [product.id]);
+    setSelectedImage(product.images?.length ? product.images[0] : product.image);
+    setSelectedColor(product.swatches[0]?.name || '');
+    setSelectedSize('');
+    setQuantity(1);
+  }, [product]);
 
   const handleAddToCart = () => {
     if (!selectedSize) {
@@ -69,7 +72,7 @@ export default function ProductDetail({
             <div className="flex items-center justify-center bg-ink-50 aspect-[3/4] overflow-hidden">
               <img
                 src={selectedImage}
-                alt={product.name}
+                alt={formatProductName(product.name)}
                 className="h-full w-full object-cover"
               />
             </div>
@@ -105,7 +108,7 @@ export default function ProductDetail({
 
             {/* Title */}
             <h1 className="font-serif text-4xl lg:text-5xl text-ink-900 font-light tracking-wide mb-4">
-              {product.name}
+              {formatProductName(product.name)}
             </h1>
 
             {/* Price */}
