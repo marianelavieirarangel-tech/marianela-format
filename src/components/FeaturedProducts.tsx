@@ -1,9 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { type Product, womenSubcategories, hiddenCategoryNames } from '@/data/catalog';
 import { Plus, Heart } from 'lucide-react';
 import { formatPrice, type CurrencyCode } from '@/lib/currency';
-import { createShopifyCheckout, isShopifyEnabled, findVariantGidByTitle } from '@/lib/shopify';
+import { createShopifyCheckout, isShopifyEnabled } from '@/lib/shopify';
 
 type Props = {
   products: Product[];
@@ -98,46 +98,7 @@ function ProductCard({
 }) {
   const navigate = useNavigate();
   const [activeSwatch, setActiveSwatch] = useState(0);
-  const [stock, setStock] = useState<number | null>(null);
   const badgeText = getProductBadge(product);
-
-  useEffect(() => {
-    let mounted = true;
-    async function loadInventory() {
-      if (!isShopifyEnabled()) return;
-      try {
-        let variantGid = product.shopifyVariantId || null;
-        if (!variantGid) {
-          variantGid = await findVariantGidByTitle(product.name);
-        }
-        if (!variantGid) {
-          // Could not map to Shopify variant
-          if (mounted) setStock(null);
-          return;
-        }
-        const resp = await fetch(`/api/shopify/inventory?variantGid=${encodeURIComponent(variantGid)}`);
-        if (!resp.ok) {
-          if (mounted) setStock(null);
-          return;
-        }
-        const data = await resp.json();
-        if (data?.ok && Array.isArray(data.inventory_levels)) {
-          const total = data.inventory_levels.reduce(
-            (sum: number, item: { available?: number }) => sum + (item.available || 0),
-            0,
-          );
-          if (mounted) setStock(total);
-        } else {
-          if (mounted) setStock(null);
-        }
-      } catch (err) {
-        console.error('Error loading inventory', err);
-        if (mounted) setStock(null);
-      }
-    }
-    loadInventory();
-    return () => { mounted = false };
-  }, [product.id]);
 
   return (
     <div
@@ -230,16 +191,6 @@ function ProductCard({
           )}
         </div>
 
-        {/* Inventory status: hide while unknown */}
-        {stock !== null && (
-          <div className="mt-2">
-            {stock > 0 ? (
-              <span className="text-sm text-[#2f725d]">En stock ({stock})</span>
-            ) : (
-              <span className="text-sm text-[#b46b5d]">Agotado</span>
-            )}
-          </div>
-        )}
 
         {/* Buy on Shopify button */}
         <div className="mt-3">
