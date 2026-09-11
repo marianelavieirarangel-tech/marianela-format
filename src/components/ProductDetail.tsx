@@ -77,19 +77,15 @@ export default function ProductDetail({
 
   return (
     <div className="min-h-screen bg-[#f8f4ef]">
-      <div className="sticky top-[128px] z-20 border-b border-[#eadfce]/70 bg-[#f8f4ef]/95 backdrop-blur-md lg:top-[140px]">
-        <div className="mx-auto max-w-7xl px-6 py-3 lg:px-10">
-          <button
-            onClick={onBack}
-            className="flex items-center gap-2 text-[#5b4f49] transition-colors hover:text-[#ba826b]"
-          >
-            <ArrowLeft size={18} strokeWidth={1.5} />
-            <span className="text-[11px] uppercase tracking-[0.22em]">Volver</span>
-          </button>
-        </div>
-      </div>
-
-      <div className="mx-auto max-w-7xl px-6 py-10 lg:px-10 lg:py-16">
+      <div className="mx-auto max-w-7xl px-6 pt-6 pb-10 lg:px-10 lg:pt-8 lg:pb-16">
+        <button
+          type="button"
+          onClick={onBack}
+          className="mb-8 flex items-center gap-2 text-[#5b4f49] transition-colors hover:text-[#ba826b]"
+        >
+          <ArrowLeft size={18} strokeWidth={1.5} />
+          <span className="text-[11px] uppercase tracking-[0.22em]">Volver</span>
+        </button>
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-2 lg:gap-16">
           {/* Gallery */}
           <div className="space-y-4">
