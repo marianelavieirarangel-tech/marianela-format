@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { type Product, womenSubcategories, hiddenCategoryNames, formatProductName } from '@/data/catalog';
+import { type Product, hiddenCategoryNames, formatProductName } from '@/data/catalog';
 import { Plus, Heart } from 'lucide-react';
 import { formatPrice, type CurrencyCode } from '@/lib/currency';
 
@@ -12,7 +12,7 @@ type Props = {
   wishlist: Set<string>;
 };
 
-const filters = ['Todos', ...womenSubcategories] as const;
+const filters = ['Todos', 'Novedades', 'Bikini', 'Traje de Baño', 'Fuera del Agua', 'Sale'] as const;
 
 function getProductBadge(product: Product) {
   if (product.originalPrice && product.originalPrice > product.price) {
