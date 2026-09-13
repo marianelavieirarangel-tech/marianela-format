@@ -1,7 +1,8 @@
 import { useReveal } from '@/hooks/useReveal';
 import filosofiaLenceria from '@/assets/filosofia-lenceria.jpg';
+import { translate, type LanguageCode } from '@/lib/language';
 
-export default function EditorialBanner() {
+export default function EditorialBanner({ language = 'es' }: { language?: LanguageCode }) {
   const { ref, inView } = useReveal<HTMLDivElement>();
 
   return (
@@ -21,15 +22,15 @@ export default function EditorialBanner() {
         ref={ref}
         className={`relative mx-auto max-w-3xl px-6 text-center reveal ${inView ? 'in-view' : ''}`}
       >
-        <p className="text-blush-300 text-[11px] tracking-ultra uppercase mb-6">Nuestra Filosofía</p>
+        <p className="text-blush-300 text-[11px] tracking-ultra uppercase mb-6">{translate(language, 'philosophy')}</p>
         <blockquote className="font-serif text-3xl sm:text-4xl lg:text-5xl text-sand-50 font-light leading-[1.3] tracking-wide text-balance">
-          "Verano Swimwear — colección dedicada al sol, la playa y la libertad de movimiento."
+          {translate(language, 'philosophyQuote')}
         </blockquote>
-        <p className="mt-8 text-sand-200 text-sm tracking-widest uppercase">— Marianela Vieira, Lima 2026</p>
+        <p className="mt-8 text-sand-200 text-sm tracking-widest uppercase">— {translate(language, 'lima')}</p>
 
         <div className="mt-12 flex justify-center">
           <a href="/collections/coleccion-2026" className="btn-outline" style={{ borderColor: 'rgba(243,237,226,0.5)', color: '#f3ede2' }}>
-            Ver el Lookbook
+            {translate(language, 'lookbook')}
           </a>
         </div>
       </div>

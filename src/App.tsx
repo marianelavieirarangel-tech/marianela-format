@@ -284,7 +284,7 @@ export default function App() {
       <Hero language={language} />
       <CategoryGrid language={language} />
       <FeaturedProducts language={language} products={catalogProducts} currency={currency} onQuickAdd={openQuickAdd} onToggleWishlist={toggleWishlist} wishlist={wishlist} />
-      <EditorialBanner />
+      <EditorialBanner language={language} />
     </>
   );
 

@@ -2,7 +2,7 @@ import { categories, categorySlugs } from '@/data/catalog';
 import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useRef, useState } from 'react';
-import { translate, type LanguageCode } from '@/lib/language';
+import { translate, translateLabel, type LanguageCode } from '@/lib/language';
 
 type Props = {
   language?: LanguageCode;
@@ -89,6 +89,7 @@ export default function CategoryGrid({ language = 'es', onSelectCategory }: Prop
               <CategoryCard
                 key={cat.name}
                 category={cat}
+                language={language}
                 onSelect={onSelectCategory}
               />
             ))}
@@ -112,9 +113,11 @@ export default function CategoryGrid({ language = 'es', onSelectCategory }: Prop
 
 function CategoryCard({
   category,
+  language,
   onSelect,
 }: {
   category: (typeof categories)[number];
+  language: LanguageCode;
   onSelect?: (categoryName: string) => void;
 }) {
   const slug = categorySlugs[category.name] ?? category.name.toLowerCase();
@@ -144,16 +147,16 @@ function CategoryCard({
       {/* Content */}
       <div className="absolute inset-0 flex flex-col justify-end p-5 lg:p-6">
         <p className="text-blush-200 text-[8px] tracking-ultra uppercase mb-1 opacity-80 font-light">
-          {category.tagline}
+          {translateLabel(language, category.tagline)}
         </p>
         <h3 className="font-serif text-xl lg:text-2xl text-sand-50 font-light tracking-wide mb-1.5 leading-tight">
-          {category.name}
+          {translateLabel(language, category.name)}
         </h3>
         <p className="text-sand-100 text-xs font-light leading-relaxed max-w-xs opacity-0 max-h-0 group-hover:opacity-100 group-hover:max-h-14 transition-all duration-500 overflow-hidden">
-          {category.description}
+          {translateLabel(language, category.description)}
         </p>
         <div className="mt-3 flex items-center gap-1.5 text-sand-50 text-[9px] uppercase tracking-widest opacity-80 group-hover:opacity-100 transition-opacity duration-500">
-          <span className="link-underline">Ver Colección</span>
+          <span className="link-underline">{translateLabel(language, 'Ver Colección')}</span>
           <ArrowRight
             size={12}
             strokeWidth={1.5}

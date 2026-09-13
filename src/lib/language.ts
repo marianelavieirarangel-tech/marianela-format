@@ -43,7 +43,11 @@ type TranslationKey =
   | 'newProducts'
   | 'swimwear'
   | 'outOfWater'
-  | 'noPieces';
+  | 'noPieces'
+  | 'philosophy'
+  | 'philosophyQuote'
+  | 'lookbook'
+  | 'lima';
 
 const translations: Record<LanguageCode, Record<TranslationKey, string>> = {
   es: {
@@ -54,6 +58,7 @@ const translations: Record<LanguageCode, Record<TranslationKey, string>> = {
     whatsappSupport: 'Soporte por WhatsApp', allRightsReserved: 'Todos los derechos reservados',
     collectionsLabel: 'Nuestras Colecciones', discoverCategories: 'Descubre nuestras categorías', piecesTitle: 'Piezas que enamoran',
     allProducts: 'Todos', newProducts: 'Novedades', swimwear: 'Traje de Baño', outOfWater: 'Fuera del Agua', noPieces: 'No hay piezas en esta categoría por ahora.',
+    philosophy: 'Nuestra Filosofía', philosophyQuote: '"Verano Swimwear — colección dedicada al sol, la playa y la libertad de movimiento."', lookbook: 'Ver el Lookbook', lima: 'Marianela Vieira, Lima 2026',
   },
   en: {
     collection: 'Collection 2026', women: 'Women', groupTrips: 'Group Trips', sale: 'Sale',
@@ -63,6 +68,7 @@ const translations: Record<LanguageCode, Record<TranslationKey, string>> = {
     whatsappSupport: 'WhatsApp Support', allRightsReserved: 'All rights reserved',
     collectionsLabel: 'Our Collections', discoverCategories: 'Discover our categories', piecesTitle: 'Pieces to fall in love with',
     allProducts: 'All', newProducts: 'New Arrivals', swimwear: 'Swimwear', outOfWater: 'Out of Water', noPieces: 'There are no pieces in this category yet.',
+    philosophy: 'Our Philosophy', philosophyQuote: '"Verano Swimwear — a collection devoted to the sun, the beach, and freedom of movement."', lookbook: 'View Lookbook', lima: 'Marianela Vieira, Lima 2026',
   },
   pt: {
     collection: 'Coleção 2026', women: 'Mulheres', groupTrips: 'Viagens em Grupo', sale: 'Sale',
@@ -72,6 +78,7 @@ const translations: Record<LanguageCode, Record<TranslationKey, string>> = {
     whatsappSupport: 'Suporte pelo WhatsApp', allRightsReserved: 'Todos os direitos reservados',
     collectionsLabel: 'Nossas Coleções', discoverCategories: 'Descubra nossas categorias', piecesTitle: 'Peças para se apaixonar',
     allProducts: 'Todas', newProducts: 'Novidades', swimwear: 'Moda Praia', outOfWater: 'Fora d’Água', noPieces: 'Ainda não há peças nesta categoria.',
+    philosophy: 'Nossa Filosofia', philosophyQuote: '"Verano Swimwear — coleção dedicada ao sol, à praia e à liberdade de movimento."', lookbook: 'Ver Lookbook', lima: 'Marianela Vieira, Lima 2026',
   },
   fr: {
     collection: 'Collection 2026', women: 'Femmes', groupTrips: 'Voyages en groupe', sale: 'Sale',
@@ -81,6 +88,7 @@ const translations: Record<LanguageCode, Record<TranslationKey, string>> = {
     whatsappSupport: 'Assistance WhatsApp', allRightsReserved: 'Tous droits réservés',
     collectionsLabel: 'Nos collections', discoverCategories: 'Découvrez nos catégories', piecesTitle: 'Des pièces à aimer',
     allProducts: 'Toutes', newProducts: 'Nouveautés', swimwear: 'Maillots de bain', outOfWater: 'Hors de l’eau', noPieces: 'Aucune pièce dans cette catégorie pour le moment.',
+    philosophy: 'Notre philosophie', philosophyQuote: '"Verano Swimwear — une collection dédiée au soleil, à la plage et à la liberté de mouvement."', lookbook: 'Voir le lookbook', lima: 'Marianela Vieira, Lima 2026',
   },
   it: {
     collection: 'Collezione 2026', women: 'Donne', groupTrips: 'Viaggi di gruppo', sale: 'Sale',
@@ -90,6 +98,7 @@ const translations: Record<LanguageCode, Record<TranslationKey, string>> = {
     whatsappSupport: 'Supporto WhatsApp', allRightsReserved: 'Tutti i diritti riservati',
     collectionsLabel: 'Le nostre collezioni', discoverCategories: 'Scopri le nostre categorie', piecesTitle: 'Capi da amare',
     allProducts: 'Tutti', newProducts: 'Novità', swimwear: 'Costumi da bagno', outOfWater: 'Fuori dall’acqua', noPieces: 'Non ci sono ancora capi in questa categoria.',
+    philosophy: 'La nostra filosofia', philosophyQuote: '"Verano Swimwear — una collezione dedicata al sole, alla spiaggia e alla libertà di movimento."', lookbook: 'Guarda il lookbook', lima: 'Marianela Vieira, Lima 2026',
   },
   de: {
     collection: 'Kollektion 2026', women: 'Damen', groupTrips: 'Gruppenreisen', sale: 'Sale',
@@ -99,6 +108,7 @@ const translations: Record<LanguageCode, Record<TranslationKey, string>> = {
     whatsappSupport: 'WhatsApp-Support', allRightsReserved: 'Alle Rechte vorbehalten',
     collectionsLabel: 'Unsere Kollektionen', discoverCategories: 'Entdecke unsere Kategorien', piecesTitle: 'Stücke zum Verlieben',
     allProducts: 'Alle', newProducts: 'Neuheiten', swimwear: 'Bademode', outOfWater: 'Außerhalb des Wassers', noPieces: 'In dieser Kategorie gibt es noch keine Stücke.',
+    philosophy: 'Unsere Philosophie', philosophyQuote: '"Verano Swimwear — eine Kollektion für Sonne, Strand und Bewegungsfreiheit."', lookbook: 'Lookbook ansehen', lima: 'Marianela Vieira, Lima 2026',
   },
   nl: {
     collection: 'Collectie 2026', women: 'Dames', groupTrips: 'Groepsreizen', sale: 'Sale',
@@ -108,9 +118,81 @@ const translations: Record<LanguageCode, Record<TranslationKey, string>> = {
     whatsappSupport: 'WhatsApp-support', allRightsReserved: 'Alle rechten voorbehouden',
     collectionsLabel: 'Onze collecties', discoverCategories: 'Ontdek onze categorieën', piecesTitle: 'Stukken om van te houden',
     allProducts: 'Alle', newProducts: 'Nieuw', swimwear: 'Badmode', outOfWater: 'Buiten het water', noPieces: 'Er zijn nog geen items in deze categorie.',
+    philosophy: 'Onze filosofie', philosophyQuote: '"Verano Swimwear — een collectie gewijd aan de zon, het strand en bewegingsvrijheid."', lookbook: 'Bekijk lookbook', lima: 'Marianela Vieira, Lima 2026',
   },
 };
 
 export function translate(language: LanguageCode, key: TranslationKey): string {
   return translations[language][key];
+}
+
+const labelTranslations: Record<LanguageCode, Record<string, string>> = {
+  es: {},
+  en: {
+    'Nuestras Colecciones': 'Our Collections', 'Descubre nuestras categorías': 'Discover our categories',
+    'Texturas y cortes que destacan': 'Textures and cuts that stand out', 'Línea sofisticada': 'Sophisticated line',
+    'Equilibrio entre estilo y libertad': 'Balance between style and freedom', 'Ver Colección': 'View Collection',
+    'Nuestra Filosofía': 'Our Philosophy', 'Ver el Lookbook': 'View Lookbook',
+    'Atención al Cliente': 'Customer Care', 'La Maison': 'La Maison', 'Envíos y Devoluciones': 'Shipping & Returns',
+    'Guía de Tallas': 'Size Guide', 'Cuidado de Prendas': 'Garment Care', 'Preguntas Frecuentes': 'Frequently Asked Questions',
+    'Contáctanos': 'Contact Us', 'Nuestra Historia': 'Our Story', 'Sostenibilidad': 'Sustainability',
+    'Boutiques': 'Boutiques', 'Trabaja con Nosotros': 'Work With Us', 'Política de Reembolso': 'Refund Policy',
+    'Política de Privacidad': 'Privacy Policy', 'Términos del Servicio': 'Terms of Service',
+    'Política de Envíos': 'Shipping Policy', 'Información de Contacto': 'Contact Information', 'Aviso Legal': 'Legal Notice',
+    'Mi Cuenta': 'My Account', 'Ver categorías anteriores': 'Previous categories', 'Ver más categorías': 'More categories',
+  },
+  pt: {
+    'Nuestras Colecciones': 'Nossas Coleções', 'Descubre nuestras categorías': 'Descubra nossas categorias',
+    'Texturas y cortes que destacan': 'Texturas e cortes marcantes', 'Línea sofisticada': 'Linha sofisticada',
+    'Equilibrio entre estilo y libertad': 'Equilíbrio entre estilo e liberdade', 'Ver Colección': 'Ver Coleção',
+    'Nuestra Filosofía': 'Nossa Filosofia', 'Ver el Lookbook': 'Ver Lookbook', 'Atención al Cliente': 'Atendimento',
+    'La Maison': 'La Maison', 'Envíos y Devoluciones': 'Envios e Devoluções', 'Guía de Tallas': 'Guia de Tamanhos',
+    'Cuidado de Prendas': 'Cuidados das Peças', 'Preguntas Frecuentes': 'Perguntas Frequentes', 'Contáctanos': 'Fale Conosco',
+    'Nuestra Historia': 'Nossa História', 'Sostenibilidad': 'Sustentabilidade', 'Boutiques': 'Boutiques',
+    'Trabaja con Nosotros': 'Trabalhe Conosco', 'Mi Cuenta': 'Minha Conta',
+  },
+  fr: {
+    'Nuestras Colecciones': 'Nos collections', 'Descubre nuestras categorías': 'Découvrez nos catégories',
+    'Texturas y cortes que destacan': 'Textures et coupes remarquables', 'Línea sofisticada': 'Ligne sophistiquée',
+    'Equilibrio entre estilo y libertad': 'Équilibre entre style et liberté', 'Ver Colección': 'Voir la collection',
+    'Nuestra Filosofía': 'Notre philosophie', 'Ver el Lookbook': 'Voir le lookbook', 'Atención al Cliente': 'Service client',
+    'La Maison': 'La Maison', 'Envíos y Devoluciones': 'Livraisons et retours', 'Guía de Tallas': 'Guide des tailles',
+    'Cuidado de Prendas': 'Entretien des pièces', 'Preguntas Frecuentes': 'Questions fréquentes', 'Contáctanos': 'Contactez-nous',
+    'Nuestra Historia': 'Notre histoire', 'Sostenibilidad': 'Durabilité', 'Boutiques': 'Boutiques',
+    'Trabaja con Nosotros': 'Travailler avec nous', 'Mi Cuenta': 'Mon compte',
+  },
+  it: {
+    'Nuestras Colecciones': 'Le nostre collezioni', 'Descubre nuestras categorías': 'Scopri le nostre categorie',
+    'Texturas y cortes que destacan': 'Texture e tagli distintivi', 'Línea sofisticada': 'Linea sofisticata',
+    'Equilibrio entre estilo y libertad': 'Equilibrio tra stile e libertà', 'Ver Colección': 'Scopri la collezione',
+    'Nuestra Filosofía': 'La nostra filosofia', 'Ver el Lookbook': 'Guarda il lookbook', 'Atención al Cliente': 'Servizio clienti',
+    'La Maison': 'La Maison', 'Envíos y Devoluciones': 'Spedizioni e resi', 'Guía de Tallas': 'Guida alle taglie',
+    'Cuidado de Prendas': 'Cura dei capi', 'Preguntas Frecuentes': 'Domande frequenti', 'Contáctanos': 'Contattaci',
+    'Nuestra Historia': 'La nostra storia', 'Sostenibilidad': 'Sostenibilità', 'Boutiques': 'Boutique',
+    'Trabaja con Nosotros': 'Lavora con noi', 'Mi Cuenta': 'Il mio account',
+  },
+  de: {
+    'Nuestras Colecciones': 'Unsere Kollektionen', 'Descubre nuestras categorías': 'Entdecke unsere Kategorien',
+    'Texturas y cortes que destacan': 'Markante Texturen und Schnitte', 'Línea sofisticada': 'Sofisticated line',
+    'Equilibrio entre estilo y libertad': 'Balance zwischen Stil und Freiheit', 'Ver Colección': 'Kollektion ansehen',
+    'Nuestra Filosofía': 'Unsere Philosophie', 'Ver el Lookbook': 'Lookbook ansehen', 'Atención al Cliente': 'Kundenservice',
+    'La Maison': 'La Maison', 'Envíos y Devoluciones': 'Versand und Rückgabe', 'Guía de Tallas': 'Größenberatung',
+    'Cuidado de Prendas': 'Pflegehinweise', 'Preguntas Frecuentes': 'Häufige Fragen', 'Contáctanos': 'Kontakt',
+    'Nuestra Historia': 'Unsere Geschichte', 'Sostenibilidad': 'Nachhaltigkeit', 'Boutiques': 'Boutiquen',
+    'Trabaja con Nosotros': 'Arbeite mit uns', 'Mi Cuenta': 'Mein Konto',
+  },
+  nl: {
+    'Nuestras Colecciones': 'Onze collecties', 'Descubre nuestras categorías': 'Ontdek onze categorieën',
+    'Texturas y cortes que destacan': 'Opvallende texturen en pasvormen', 'Línea sofisticada': 'Verfijnde lijn',
+    'Equilibrio entre estilo y libertad': 'Balans tussen stijl en vrijheid', 'Ver Colección': 'Bekijk collectie',
+    'Nuestra Filosofía': 'Onze filosofie', 'Ver el Lookbook': 'Bekijk lookbook', 'Atención al Cliente': 'Klantenservice',
+    'La Maison': 'La Maison', 'Envíos y Devoluciones': 'Verzending en retouren', 'Guía de Tallas': 'Maattabel',
+    'Cuidado de Prendas': 'Kledingverzorging', 'Preguntas Frecuentes': 'Veelgestelde vragen', 'Contáctanos': 'Contact',
+    'Nuestra Historia': 'Ons verhaal', 'Sostenibilidad': 'Duurzaamheid', 'Boutiques': 'Boutiques',
+    'Trabaja con Nosotros': 'Werken bij ons', 'Mi Cuenta': 'Mijn account',
+  },
+};
+
+export function translateLabel(language: LanguageCode, label: string): string {
+  return labelTranslations[language][label] || label;
 }
