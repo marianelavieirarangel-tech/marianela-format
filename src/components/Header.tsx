@@ -7,12 +7,6 @@ import { languageOptions, languageNames, languageShortCodes, translate, type Lan
 import { getShopifyAccountLoginUrl } from '@/lib/shopify';
 import logo from '@/assets/marianela-logo.png';
 
-const ANNOUNCEMENT_MESSAGES = [
-  'Envío gratis por compras superiores a S/ 159',
-  'Devoluciones gratuitas en 30 días',
-  'Nueva colección — Primavera 2026',
-] as const;
-
 type Props = {
   cartCount: number;
   currency: CurrencyCode;
@@ -103,13 +97,13 @@ export default function Header({
     const interval = setInterval(() => {
       setIsVisible(false);
       setTimeout(() => {
-        setCurrentMessageIndex((prev) => (prev + 1) % ANNOUNCEMENT_MESSAGES.length);
+        setCurrentMessageIndex((prev) => (prev + 1) % announcementMessages.length);
         setIsVisible(true);
       }, 1200);
     }, 5000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [language, announcementMessages.length]);
 
   return (
     <>
@@ -118,7 +112,7 @@ export default function Header({
         <div className={`py-2.5 text-[11px] tracking-widest uppercase font-light text-center ${
           isVisible ? 'fade-in' : 'fade-out'
         }`}>
-          {ANNOUNCEMENT_MESSAGES[currentMessageIndex]}
+          {announcementMessages[currentMessageIndex]}
         </div>
       </div>
 
