@@ -3,8 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import { type Product, hiddenCategoryNames, formatProductName } from '@/data/catalog';
 import { Plus, Heart } from 'lucide-react';
 import { formatPrice, type CurrencyCode } from '@/lib/currency';
+import { translate, type LanguageCode } from '@/lib/language';
 
 type Props = {
+  language?: LanguageCode;
   products: Product[];
   currency: CurrencyCode;
   onQuickAdd: (product: Product) => void;
@@ -23,7 +25,7 @@ function getProductBadge(product: Product) {
   return product.tag ?? '';
 }
 
-export default function FeaturedProducts({ products, currency, onQuickAdd, onToggleWishlist, wishlist }: Props) {
+export default function FeaturedProducts({ products, currency, language = 'es', onQuickAdd, onToggleWishlist, wishlist }: Props) {
   const [active, setActive] = useState<(typeof filters)[number]>('Todos');
 
   const filtered = products
@@ -41,9 +43,9 @@ export default function FeaturedProducts({ products, currency, onQuickAdd, onTog
         {/* Heading */}
         <div className="mb-12 flex flex-col gap-6 lg:mb-16 lg:flex-row lg:items-end lg:justify-between">
           <div>
-            <p className="mb-4 text-[11px] uppercase tracking-[0.28em] text-[#bb8a7d]">Colección 2026</p>
+            <p className="mb-4 text-[11px] uppercase tracking-[0.28em] text-[#bb8a7d]">{translate(language, 'collection')}</p>
             <h2 className="font-serif text-4xl font-light tracking-wide text-[#1b1714] lg:text-5xl">
-              Piezas que enamoran
+              {translate(language, 'piecesTitle')}
             </h2>
           </div>
           {/* Filters */}
@@ -58,7 +60,11 @@ export default function FeaturedProducts({ products, currency, onQuickAdd, onTog
                     : 'border-[#e8dfd6] bg-[#f8f5f2] text-[#5b4f49] hover:border-[#d8c7ba] hover:bg-[#f1e9e3] hover:text-[#1b1714]'
                 }`}
               >
-                {f}
+                {f === 'Todos' ? translate(language, 'allProducts')
+                  : f === 'Novedades' ? translate(language, 'newProducts')
+                    : f === 'Traje de Baño' ? translate(language, 'swimwear')
+                      : f === 'Fuera del Agua' ? translate(language, 'outOfWater')
+                        : f === 'Sale' ? translate(language, 'sale') : f}
               </button>
             ))}
           </div>
@@ -67,7 +73,7 @@ export default function FeaturedProducts({ products, currency, onQuickAdd, onTog
         {/* Product grid */}
         {filtered.length === 0 ? (
           <p className="py-16 text-center text-sm font-light tracking-wide text-[#8f7e76]">
-            No hay piezas en esta categoría por ahora.
+            {translate(language, 'noPieces')}
           </p>
         ) : (
           <div className="grid grid-cols-2 gap-x-4 gap-y-12 lg:grid-cols-4 lg:gap-x-6 lg:gap-y-16">

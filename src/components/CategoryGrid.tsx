@@ -2,12 +2,14 @@ import { categories, categorySlugs } from '@/data/catalog';
 import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useRef, useState } from 'react';
+import { translate, type LanguageCode } from '@/lib/language';
 
 type Props = {
+  language?: LanguageCode;
   onSelectCategory?: (categoryName: string) => void;
 };
 
-export default function CategoryGrid({ onSelectCategory }: Props) {
+export default function CategoryGrid({ language = 'es', onSelectCategory }: Props) {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [showLeftArrow, setShowLeftArrow] = useState(false);
   const [showRightArrow, setShowRightArrow] = useState(true);
@@ -57,9 +59,9 @@ export default function CategoryGrid({ onSelectCategory }: Props) {
       <div className="mx-auto max-w-7xl px-6 lg:px-10">
         {/* Section heading */}
         <div className="text-center mb-16 lg:mb-20">
-          <p className="text-blush-500 text-[11px] tracking-ultra uppercase mb-4">Nuestras Colecciones</p>
+          <p className="text-blush-500 text-[11px] tracking-ultra uppercase mb-4">{translate(language, 'collectionsLabel')}</p>
           <h2 className="font-serif text-4xl lg:text-5xl text-ink-900 font-light tracking-wide">
-            Descubre nuestras categorías
+            {translate(language, 'discoverCategories')}
           </h2>
           <div className="w-12 h-px bg-blush-400 mx-auto mt-8" />
         </div>
