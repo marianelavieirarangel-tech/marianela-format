@@ -281,7 +281,7 @@ export default function App() {
           No se pudo cargar Shopify: {catalogError}. Mostrando catálogo de respaldo.
         </div>
       )}
-      <Hero />
+      <Hero language={language} />
       <CategoryGrid />
       <FeaturedProducts products={catalogProducts} currency={currency} onQuickAdd={openQuickAdd} onToggleWishlist={toggleWishlist} wishlist={wishlist} />
       <EditorialBanner />
@@ -330,7 +330,7 @@ export default function App() {
         </Routes>
       </main>
 
-      <Footer />
+      <Footer language={language} />
 
       {/* Overlays */}
       <QuickAddModal

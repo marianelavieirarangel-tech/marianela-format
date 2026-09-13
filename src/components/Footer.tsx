@@ -1,6 +1,7 @@
 import { footerLinks } from '@/data/catalog';
 import { Instagram, Music2, MessageCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { translate, type LanguageCode } from '@/lib/language';
 
 const footerLinkPaths: Record<string, string> = {
   'Envíos y Devoluciones': '/pages/envios-y-devoluciones',
@@ -27,7 +28,7 @@ const footerBottomLinks = [
   ['Aviso Legal', '/policies/legal-notice'],
 ] as const;
 
-export default function Footer() {
+export default function Footer({ language = 'es' }: { language?: LanguageCode }) {
   return (
     <footer className="bg-ink-900 text-sand-100">
       {/* Links */}
@@ -37,7 +38,7 @@ export default function Footer() {
           <div className="col-span-2 lg:col-span-2">
             <h4 className="font-serif text-2xl tracking-[0.15em] text-sand-50 mb-4">MARIANELA VIEIRA</h4>
             <p className="text-sand-200 text-sm font-light leading-relaxed max-w-xs mb-6">
-              Innovación, diseño y sofisticación en cada pieza de ropa de baño. Celebramos la autenticidad de cada silueta.
+              {translate(language, 'footerDescription')}
             </p>
             <div className="flex items-center gap-4">
               <a
@@ -66,7 +67,7 @@ export default function Footer() {
               className="mt-5 inline-flex items-center gap-2 text-sm text-sand-200 transition-colors hover:text-sand-50"
             >
               <MessageCircle size={16} strokeWidth={1.5} className="text-[#25D366]" />
-              Soporte por WhatsApp
+              {translate(language, 'whatsappSupport')}
             </a>
           </div>
 
@@ -103,7 +104,7 @@ export default function Footer() {
           </div>
           <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
             <p className="text-center text-xs tracking-wide text-ink-400 sm:text-left">
-              © 2026 Marianela Vieira. Todos los derechos reservados.
+              © 2026 Marianela Vieira. {translate(language, 'allRightsReserved')}
             </p>
             <div className="flex shrink-0 flex-wrap items-center justify-center gap-2" aria-label="Medios de pago aceptados">
             <span className="border border-ink-600 px-3 py-1 text-xs font-semibold italic tracking-wide text-sand-100">Izipay</span>

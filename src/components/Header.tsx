@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { categorySlugs, navLinks, womenMenuSubcategories } from '@/data/catalog';
 import { currencyOptions, type CurrencyCode } from '@/lib/currency';
-import { languageOptions, languageNames, languageShortCodes, type LanguageCode } from '@/lib/language';
+import { languageOptions, languageNames, languageShortCodes, translate, type LanguageCode } from '@/lib/language';
 import { getShopifyAccountLoginUrl } from '@/lib/shopify';
 import logo from '@/assets/marianela-logo.png';
 
@@ -72,6 +72,11 @@ export default function Header({
   const languageMenuRef = useRef<HTMLDivElement | null>(null);
   const currencyMenuRef = useRef<HTMLDivElement | null>(null);
 
+  const announcementMessages = [
+    translate(language, 'freeShipping'),
+    translate(language, 'freeReturns'),
+    translate(language, 'newCollection'),
+  ];
   useEffect(() => {
     const syncHeaderState = () => setScrolled(window.scrollY > 40);
     syncHeaderState();
@@ -132,7 +137,7 @@ export default function Header({
                 onClick={goToCollection}
                 className="text-[11px] uppercase tracking-widest text-current hover:text-blush-300 link-underline"
               >
-                {navLinks[0].label}
+                {translate(language, 'collection')}
               </button>
               {/* Mujeres dropdown */}
               <div
@@ -143,7 +148,7 @@ export default function Header({
                 <button
                   className="flex items-center gap-2 text-[11px] uppercase tracking-widest text-current hover:text-blush-300 transition-colors"
                 >
-                  Mujeres
+                  {translate(language, 'women')}
                   <ChevronDown size={14} strokeWidth={2} className={`transition-transform duration-300 ${womenDropdown ? 'rotate-180' : ''}`} />
                 </button>
                 <div
@@ -173,7 +178,7 @@ export default function Header({
                 onClick={() => navigate('/pages/viajes-grupales')}
                 className="text-[11px] uppercase tracking-widest text-current hover:text-blush-300 link-underline"
               >
-                Viajes Grupales
+                {translate(language, 'groupTrips')}
               </button>
               {navLinks.slice(2).map((link) => (
                 <button
@@ -181,7 +186,7 @@ export default function Header({
                   onClick={() => goToCategory(link.label)}
                   className={`text-[11px] uppercase tracking-widest link-underline ${link.label === 'Sale' ? 'sale-pulse' : 'text-current hover:text-blush-300'}`}
                 >
-                  {link.label}
+                  {link.label === 'Sale' ? translate(language, 'sale') : link.label}
                 </button>
               ))}
             </nav>
@@ -433,14 +438,14 @@ export default function Header({
               }}
               className="w-full py-4 font-serif text-2xl border-b border-ink-100 text-ink-800 hover:text-blush-500 transition-colors text-center"
             >
-              {navLinks[0].label}
+              {translate(language, 'collection')}
             </button>
             {/* Mobile Mujeres dropdown */}
             <button
               onClick={() => setMobileWomenOpen(!mobileWomenOpen)}
               className="flex w-full items-center justify-center gap-2 py-4 font-serif text-2xl border-b border-ink-100 text-ink-800 hover:text-blush-500 transition-colors"
             >
-              <span>Mujeres</span>
+              <span>{translate(language, 'women')}</span>
               <ChevronDown size={20} strokeWidth={2} className={`transition-transform ${mobileWomenOpen ? 'rotate-180' : ''}`} />
             </button>
             {mobileWomenOpen && (
@@ -467,7 +472,7 @@ export default function Header({
               }}
               className="w-full py-4 font-serif text-2xl border-b border-ink-100 text-ink-800 hover:text-blush-500 transition-colors text-center"
             >
-              Viajes Grupales
+              {translate(language, 'groupTrips')}
             </button>
             {navLinks.slice(2).map((link) => (
               <button
@@ -480,7 +485,7 @@ export default function Header({
                   link.label === 'Sale' ? 'text-blush-500' : 'text-ink-800 hover:text-blush-500'
                 }`}
               >
-                {link.label}
+                {link.label === 'Sale' ? translate(language, 'sale') : link.label}
               </button>
             ))}
             <div className="flex items-center justify-center gap-6 pt-8 text-ink-600">
@@ -489,7 +494,7 @@ export default function Header({
                 onClick={() => setMobileOpen(false)}
                 className="flex items-center gap-2 text-sm tracking-wide hover:text-blush-500"
               >
-                <User size={18} strokeWidth={1.5} /> Mi Cuenta
+                <User size={18} strokeWidth={1.5} /> {language === 'es' ? 'Mi Cuenta' : 'Account'}
               </a>
             </div>
           </nav>
