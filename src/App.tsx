@@ -17,7 +17,7 @@ import InfoPage from '@/components/InfoPage';
 import CookiePreferences from '@/components/CookiePreferences';
 import GroupTripsPage from '@/components/GroupTripsPage';
 import type { Product } from '@/data/catalog';
-import { categorySlugs, products, navLinks, womenSubcategories, hiddenCategoryNames } from '@/data/catalog';
+import { categorySlugs, navLinks, womenSubcategories, hiddenCategoryNames } from '@/data/catalog';
 import { type CurrencyCode } from '@/lib/currency';
 import { type LanguageCode, languageOptions } from '@/lib/language';
 import { createShopifyCheckout, fetchShopifyProducts, isShopifyEnabled } from '@/lib/shopify';
@@ -96,7 +96,7 @@ export default function App() {
   const [cart, setCart] = useState<CartItem[]>(readStoredCart);
   const [cartId, setCartId] = useState<string | null>(readStoredCartId);
   const [wishlist, setWishlist] = useState<Set<string>>(readStoredWishlist);
-  const [catalogProducts, setCatalogProducts] = useState(products.filter((product) => !hiddenCategoryNames.has(product.category)));
+  const [catalogProducts, setCatalogProducts] = useState<Product[]>([]);
   const [catalogError, setCatalogError] = useState<string | null>(null);
   const [currency, setCurrency] = useState<CurrencyCode>('PEN');
   const [language, setLanguage] = useState<LanguageCode>(readStoredLanguage);
@@ -159,7 +159,10 @@ export default function App() {
   }, [language]);
 
   useEffect(() => {
-    if (!isShopifyEnabled()) return;
+    if (!isShopifyEnabled()) {
+      setCatalogError('El catálogo de Shopify no está configurado.');
+      return;
+    }
     fetchShopifyProducts()
       .then((shopifyProducts) => {
         const filteredShopifyProducts = shopifyProducts.filter((product) => !hiddenCategoryNames.has(product.category));
