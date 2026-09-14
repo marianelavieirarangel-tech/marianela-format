@@ -152,7 +152,13 @@ export default function Header({
                       : 'invisible -translate-y-2 opacity-0'
                   }`}
                 >
-                  <div className="bg-sand-50 shadow-[0_18px_40px_rgba(22,18,15,0.08)] border border-ink-100 py-4 px-6 min-w-max z-50">
+                  <div
+                    className={`min-w-max rounded-sm border py-4 px-6 shadow-[0_18px_40px_rgba(17,13,10,0.16)] backdrop-blur-md transition-colors ${
+                      isHome && !scrolled
+                        ? 'border-white/20 bg-ink-900/80 text-sand-100'
+                        : 'border-ink-100 bg-sand-50/95 text-ink-700'
+                    }`}
+                  >
                     {womenMenuSubcategories.map((cat) => (
                       <button
                         key={cat}
@@ -160,7 +166,11 @@ export default function Header({
                           goToCategory(cat);
                           setWomenDropdown(false);
                         }}
-                        className="block w-full text-left py-2 text-[10px] uppercase tracking-widest text-ink-700 hover:text-blush-500 transition-colors whitespace-nowrap"
+                        className={`block w-full text-left py-2 text-[10px] uppercase tracking-widest transition-colors whitespace-nowrap ${
+                          isHome && !scrolled
+                            ? 'text-sand-200 hover:text-blush-200'
+                            : 'text-ink-700 hover:text-blush-500'
+                        }`}
                       >
                         {cat}
                       </button>
