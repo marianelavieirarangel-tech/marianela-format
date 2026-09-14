@@ -54,6 +54,10 @@ export default function Header({
   const goToCollection = () => {
     navigate('/collections/coleccion-2026');
   };
+  const handleLanguageChange = (option: LanguageCode) => {
+    onLanguageChange(option);
+    setLanguageMenuOpen(false);
+  };
 
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -252,8 +256,7 @@ export default function Header({
                           key={option}
                           type="button"
                           onClick={() => {
-                            onLanguageChange(option);
-                            setLanguageMenuOpen(false);
+                            handleLanguageChange(option);
                           }}
                           className={`flex w-full items-center justify-between rounded-xl px-3 py-2 text-left text-[10px] uppercase tracking-[0.18em] transition-colors ${
                             option === language
@@ -395,8 +398,7 @@ export default function Header({
                     key={option}
                     type="button"
                     onClick={() => {
-                      onLanguageChange(option);
-                      setLanguageMenuOpen(false);
+                      handleLanguageChange(option);
                     }}
                     className={`flex w-full items-center justify-between rounded-xl px-3 py-2 text-left text-[10px] uppercase tracking-[0.18em] transition-colors ${
                       option === language ? 'bg-ink-900 text-sand-50' : 'text-ink-700 hover:bg-ink-50'
@@ -435,6 +437,26 @@ export default function Header({
             </button>
           </div>
           <nav className="flex flex-col items-center px-6 py-8 gap-1">
+            <div className="w-full border-b border-ink-100 pb-5 mb-2">
+              <p className="mb-3 text-center text-[10px] uppercase tracking-[0.25em] text-ink-400">Idioma</p>
+              <div className="grid grid-cols-2 gap-2">
+                {languageOptions.map((option) => (
+                  <button
+                    key={option}
+                    type="button"
+                    onClick={() => handleLanguageChange(option)}
+                    className={`flex items-center justify-between rounded-sm border px-3 py-2.5 text-[10px] uppercase tracking-[0.16em] transition-colors ${
+                      option === language
+                        ? 'border-ink-900 bg-ink-900 text-sand-50'
+                        : 'border-ink-200 text-ink-700 hover:border-ink-400'
+                    }`}
+                  >
+                    <span>{languageShortCodes[option]}</span>
+                    <span className="normal-case tracking-normal opacity-75">{languageNames[option]}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
             <button
               onClick={() => {
                 goToCollection();
