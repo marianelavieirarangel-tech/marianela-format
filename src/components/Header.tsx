@@ -155,7 +155,7 @@ export default function Header({
                   <div
                     className={`min-w-max rounded-sm border py-4 px-6 shadow-[0_18px_40px_rgba(17,13,10,0.16)] backdrop-blur-md transition-colors ${
                       isHome && !scrolled
-                        ? 'border-white/20 bg-ink-900/80 text-sand-100'
+                        ? 'border-white/25 bg-ink-900/50 text-sand-100'
                         : 'border-ink-100 bg-sand-50/95 text-ink-700'
                     }`}
                   >
