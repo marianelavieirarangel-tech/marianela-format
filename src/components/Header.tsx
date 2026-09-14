@@ -55,6 +55,8 @@ export default function Header({
     navigate('/collections/coleccion-2026');
   };
   const handleLanguageChange = (option: LanguageCode) => {
+    window.localStorage.setItem('marianela-language', option);
+    document.documentElement.lang = option;
     onLanguageChange(option);
     setLanguageMenuOpen(false);
   };
@@ -68,6 +70,7 @@ export default function Header({
   const [currentMessageIndex, setCurrentMessageIndex] = useState(0);
   const [isVisible, setIsVisible] = useState(true);
   const languageMenuRef = useRef<HTMLDivElement | null>(null);
+  const mobileLanguageMenuRef = useRef<HTMLDivElement | null>(null);
   const currencyMenuRef = useRef<HTMLDivElement | null>(null);
 
   const announcementMessages = [
@@ -85,7 +88,8 @@ export default function Header({
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       const target = event.target as Node;
-      if (languageMenuRef.current && !languageMenuRef.current.contains(target)) {
+      const clickedLanguageMenu = languageMenuRef.current?.contains(target) || mobileLanguageMenuRef.current?.contains(target);
+      if (!clickedLanguageMenu) {
         setLanguageMenuOpen(false);
       }
       if (currencyMenuRef.current && !currencyMenuRef.current.contains(target)) {
@@ -255,7 +259,9 @@ export default function Header({
                         <button
                           key={option}
                           type="button"
-                          onClick={() => {
+                          onClick={(event) => {
+                            event.preventDefault();
+                            event.stopPropagation();
                             handleLanguageChange(option);
                           }}
                           className={`flex w-full items-center justify-between rounded-xl px-3 py-2 text-left text-[10px] uppercase tracking-[0.18em] transition-colors ${
@@ -392,7 +398,7 @@ export default function Header({
               </button>
             </div>
             {languageMenuOpen && (
-              <div className="lg:hidden absolute right-4 top-[calc(100%+8px)] z-50 w-[180px] rounded-2xl border border-ink-100 bg-white/95 p-1.5 shadow-[0_18px_40px_rgba(22,18,15,0.12)] backdrop-blur-md">
+              <div ref={mobileLanguageMenuRef} className="lg:hidden absolute right-4 top-[calc(100%+8px)] z-50 w-[180px] rounded-2xl border border-ink-100 bg-white/95 p-1.5 shadow-[0_18px_40px_rgba(22,18,15,0.12)] backdrop-blur-md">
                 {languageOptions.map((option) => (
                   <button
                     key={option}
@@ -444,7 +450,11 @@ export default function Header({
                   <button
                     key={option}
                     type="button"
-                    onClick={() => handleLanguageChange(option)}
+                    onClick={(event) => {
+                      event.preventDefault();
+                      event.stopPropagation();
+                      handleLanguageChange(option);
+                    }}
                     className={`flex items-center justify-between rounded-sm border px-3 py-2.5 text-[10px] uppercase tracking-[0.16em] transition-colors ${
                       option === language
                         ? 'border-ink-900 bg-ink-900 text-sand-50'
