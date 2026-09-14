@@ -1,4 +1,5 @@
 import { ArrowRight, Check, Instagram, MessageCircle } from 'lucide-react';
+import type { LanguageCode } from '@/lib/language';
 
 const gallery = [
   'https://images.pexels.com/photos/1268855/pexels-photo-1268855.jpeg?auto=compress&cs=tinysrgb&w=900',
@@ -42,7 +43,27 @@ const steps = [
   },
 ];
 
-export default function GroupTripsPage() {
+type Props = { language: LanguageCode };
+
+export default function GroupTripsPage({ language }: Props) {
+  const isEnglish = language === 'en';
+  const text = (spanish: string, english: string) => isEnglish ? english : spanish;
+  const localizedMoments = tripMoments.map((item, index) => ({
+    ...item,
+    title: text(item.title, ['Real moments', 'A relaxed pace', 'Shared stories'][index]),
+  }));
+  const localizedSteps = steps.map((step, index) => ({
+    ...step,
+    title: text(step.title, ['Tell us your idea', 'We design the experience', 'Live the journey'][index]),
+    text: text(step.text, [
+      'Write to us on WhatsApp or Instagram and tell us when you are traveling, how many people are coming and what you have in mind.',
+      'We create a proposal tailored to your group, with activities, destinations and details designed for everyone to enjoy.',
+      'We accompany you before and during the adventure so you can focus on creating unforgettable memories.',
+    ][index]),
+  }));
+  const includedItems = isEnglish
+    ? ['Personalized advice for your group', 'Proposals adapted to your budget', 'Close support at every stage']
+    : ['Asesoría personalizada para tu grupo', 'Propuestas adaptadas a tu presupuesto', 'Acompañamiento cercano en cada etapa'];
   const whatsappUrl = 'https://wa.me/51949217304?text=Hola%2C%20quiero%20informaci%C3%B3n%20sobre%20Viajes%20Grupales.';
 
   return (
@@ -57,21 +78,21 @@ export default function GroupTripsPage() {
         <div className="relative mx-auto flex min-h-[58vh] max-w-7xl items-end px-5 pb-12 sm:px-6 sm:pb-16 lg:min-h-[68vh] lg:px-10 lg:pb-20">
           <div className="max-w-[42rem] text-sand-50" style={{ textShadow: '0 2px 18px rgba(0, 0, 0, 0.38)' }}>
             <div className="mb-4 inline-flex items-center rounded-full border border-white/20 bg-white/8 px-2.5 py-1 text-[9px] uppercase tracking-[0.28em] text-blush-100 backdrop-blur-sm sm:mb-5 sm:px-3 sm:py-1.5 sm:text-[10px]">
-              Experiencias que se comparten
+              {text('Experiencias que se comparten', 'Shared experiences')}
             </div>
             <h1 className="font-serif text-4xl font-light leading-[0.96] tracking-[0.02em] sm:text-5xl lg:text-7xl" style={{ textShadow: '0 2px 18px rgba(0, 0, 0, 0.4)' }}>
-              Viajes Grupales
+              {text('Viajes Grupales', 'Group Trips')}
             </h1>
             <p className="mt-5 max-w-xl text-sm font-light leading-relaxed text-sand-100 sm:mt-7 sm:text-base lg:text-lg" style={{ textShadow: '0 2px 14px rgba(0, 0, 0, 0.28)' }}>
-              Escapadas diseñadas para celebrar juntas, descubrir nuevos lugares y volver con historias que duran para siempre.
+              {text('Escapadas diseñadas para celebrar juntas, descubrir nuevos lugares y volver con historias que duran para siempre.', 'Getaways designed to celebrate together, discover new places and return with stories that last forever.')}
             </p>
             <div className="mt-6 flex flex-col gap-3 sm:mt-8 sm:flex-row sm:items-center">
               <a href={whatsappUrl} target="_blank" rel="noreferrer" className="inline-flex w-full items-center justify-center rounded-full bg-sand-50 px-5 py-3 text-[9px] uppercase tracking-[0.22em] text-ink-900 shadow-[0_12px_24px_rgba(17,13,10,0.2)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-blush-200 sm:w-auto sm:px-6 sm:py-3.5 sm:text-[10px]">
-                Reserva tu experiencia <ArrowRight size={15} strokeWidth={1.5} className="ml-3" />
+                {text('Reserva tu experiencia', 'Reserve your experience')} <ArrowRight size={15} strokeWidth={1.5} className="ml-3" />
               </a>
               <div className="flex flex-wrap items-center gap-2 text-[8px] uppercase tracking-[0.18em] text-sand-200/90 sm:gap-3 sm:text-[10px] sm:tracking-[0.22em]">
-                <span className="rounded-full border border-white/20 bg-white/5 px-2.5 py-1.5">Destinos únicos</span>
-                <span className="rounded-full border border-white/20 bg-white/5 px-2.5 py-1.5">Sin estrés</span>
+                <span className="rounded-full border border-white/20 bg-white/5 px-2.5 py-1.5">{text('Destinos únicos', 'Unique destinations')}</span>
+                <span className="rounded-full border border-white/20 bg-white/5 px-2.5 py-1.5">{text('Sin estrés', 'Stress-free')}</span>
               </div>
             </div>
           </div>
@@ -80,15 +101,15 @@ export default function GroupTripsPage() {
 
       <section className="mx-auto max-w-7xl px-6 py-14 lg:px-10 lg:py-20">
         <div className="mb-10 max-w-2xl">
-          <p className="mb-4 text-[11px] uppercase tracking-ultra text-blush-500">Hecho para compartir</p>
-          <h2 className="font-serif text-4xl font-light tracking-wide sm:text-5xl">Tu grupo, tu ritmo, tu historia</h2>
+          <p className="mb-4 text-[11px] uppercase tracking-ultra text-blush-500">{text('Hecho para compartir', 'Made to share')}</p>
+          <h2 className="font-serif text-4xl font-light tracking-wide sm:text-5xl">{text('Tu grupo, tu ritmo, tu historia', 'Your group, your pace, your story')}</h2>
           <p className="mt-5 text-base font-light leading-relaxed text-ink-600">
-            Nos encargamos de convertir esa idea que tienen en una experiencia especial, cuidando cada detalle para que todas se sientan cómodas.
+            {text('Nos encargamos de convertir esa idea que tienen en una experiencia especial, cuidando cada detalle para que todas se sientan cómodas.', 'We turn your idea into a special experience, taking care of every detail so everyone feels comfortable.')}
           </p>
         </div>
 
         <div className="mb-12 grid gap-4 md:grid-cols-3">
-          {tripMoments.map((item) => (
+          {localizedMoments.map((item) => (
             <div key={item.title} className={`overflow-hidden rounded-[22px] border border-ink-200 bg-sand-100 p-3 shadow-[0_12px_30px_rgba(22,18,15,0.06)] ${item.angle}`}>
               <img src={item.image} alt={item.title} className="h-72 w-full object-cover rounded-[18px]" loading="lazy" />
               <div className="px-2 pt-4 pb-2 text-center">
@@ -99,7 +120,7 @@ export default function GroupTripsPage() {
         </div>
 
         <div className="grid gap-px bg-ink-200 md:grid-cols-3">
-          {steps.map((step, index) => (
+          {localizedSteps.map((step, index) => (
             <article key={step.title} className="bg-sand-100 px-7 py-8 lg:px-9 lg:py-10">
               <span className="font-numeric text-sm text-blush-500">0{index + 1}</span>
               <h3 className="mt-8 font-serif text-2xl font-light">{step.title}</h3>
@@ -112,10 +133,10 @@ export default function GroupTripsPage() {
       <section className="bg-blush-100 py-20 lg:py-24">
         <div className="mx-auto grid max-w-7xl items-center gap-10 px-6 lg:grid-cols-[0.8fr_1.2fr] lg:px-10">
           <div>
-            <p className="mb-4 text-[11px] uppercase tracking-ultra text-blush-600">Lo que incluye</p>
-            <h2 className="font-serif text-4xl font-light tracking-wide sm:text-5xl">Pensado para disfrutar sin complicaciones</h2>
+            <p className="mb-4 text-[11px] uppercase tracking-ultra text-blush-600">{text('Lo que incluye', 'What is included')}</p>
+            <h2 className="font-serif text-4xl font-light tracking-wide sm:text-5xl">{text('Pensado para disfrutar sin complicaciones', 'Designed for effortless enjoyment')}</h2>
             <ul className="mt-8 space-y-4 text-sm font-light text-ink-700">
-              {['Asesoría personalizada para tu grupo', 'Propuestas adaptadas a tu presupuesto', 'Acompañamiento cercano en cada etapa'].map((item) => (
+              {includedItems.map((item) => (
                 <li key={item} className="flex items-center gap-3"><Check size={16} className="text-blush-600" />{item}</li>
               ))}
             </ul>
@@ -128,8 +149,8 @@ export default function GroupTripsPage() {
         <div className="mx-auto max-w-7xl px-6 lg:px-10">
           <div className="mb-10 flex items-end justify-between gap-6">
             <div>
-              <p className="mb-4 text-[11px] uppercase tracking-ultra text-blush-500">Momentos compartidos</p>
-              <h2 className="font-serif text-4xl font-light tracking-wide sm:text-5xl">Inspírate para tu próxima escapada</h2>
+              <p className="mb-4 text-[11px] uppercase tracking-ultra text-blush-500">{text('Momentos compartidos', 'Shared moments')}</p>
+              <h2 className="font-serif text-4xl font-light tracking-wide sm:text-5xl">{text('Inspírate para tu próxima escapada', 'Find inspiration for your next getaway')}</h2>
             </div>
             <Instagram className="hidden text-blush-500 sm:block" size={25} strokeWidth={1.25} />
           </div>
@@ -140,11 +161,11 @@ export default function GroupTripsPage() {
       </section>
 
       <section className="bg-ink-900 px-6 py-20 text-center text-sand-50 lg:py-24">
-        <p className="mb-4 text-[11px] uppercase tracking-ultra text-blush-300">¿Listas para empezar?</p>
-        <h2 className="font-serif text-4xl font-light tracking-wide sm:text-5xl">Hagamos ese viaje realidad</h2>
-        <p className="mx-auto mt-5 max-w-md text-sm font-light leading-relaxed text-sand-200">Cuéntanos qué están imaginando y preparemos juntas una propuesta inolvidable.</p>
+        <p className="mb-4 text-[11px] uppercase tracking-ultra text-blush-300">{text('¿Listas para empezar?', 'Ready to get started?')}</p>
+        <h2 className="font-serif text-4xl font-light tracking-wide sm:text-5xl">{text('Hagamos ese viaje realidad', 'Let’s make that trip a reality')}</h2>
+        <p className="mx-auto mt-5 max-w-md text-sm font-light leading-relaxed text-sand-200">{text('Cuéntanos qué están imaginando y preparemos juntas una propuesta inolvidable.', 'Tell us what you are imagining and let’s prepare an unforgettable proposal together.')}</p>
         <a href={whatsappUrl} target="_blank" rel="noreferrer" className="mt-8 inline-flex items-center border border-sand-200/60 px-8 py-4 text-xs uppercase tracking-widest transition-colors hover:bg-sand-50 hover:text-ink-900">
-          <MessageCircle size={16} className="mr-3" /> Escríbenos por WhatsApp
+          <MessageCircle size={16} className="mr-3" /> {text('Escríbenos por WhatsApp', 'Write to us on WhatsApp')}
         </a>
       </section>
     </div>

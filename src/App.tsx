@@ -243,6 +243,7 @@ export default function App() {
         onAddToCart={handleAddToCart}
         isWishlisted={wishlist.has(product.id)}
         onToggleWishlist={toggleWishlist}
+        language={language}
       />
     );
   }
@@ -270,6 +271,7 @@ export default function App() {
         onToggleWishlist={toggleWishlist}
         wishlist={wishlist}
         onBack={() => navigate(-1)}
+        language={language}
       />
     );
   }
@@ -324,8 +326,8 @@ export default function App() {
           <Route path="/:slug" element={<CategoryRoute />} />
 
           <Route path="/product/:id" element={<ProductPage />} />
+          <Route path="/pages/viajes-grupales" element={<GroupTripsPage language={language} />} />
           <Route path="/pages/:slug" element={<InfoPage />} />
-          <Route path="/pages/viajes-grupales" element={<GroupTripsPage />} />
           <Route path="/policies/:slug" element={<InfoPage />} />
         </Routes>
       </main>

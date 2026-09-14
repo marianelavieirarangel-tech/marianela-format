@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { categorySlugs, navLinks, womenMenuSubcategories } from '@/data/catalog';
 import { currencyOptions, type CurrencyCode } from '@/lib/currency';
-import { languageOptions, languageNames, languageShortCodes, translate, type LanguageCode } from '@/lib/language';
+import { languageOptions, languageNames, languageShortCodes, translate, translateLabel, type LanguageCode } from '@/lib/language';
 import { getShopifyAccountLoginUrl } from '@/lib/shopify';
 import logo from '@/assets/marianela-logo.png';
 
@@ -180,7 +180,7 @@ export default function Header({
                   onClick={() => goToCategory(link.label)}
                   className={`text-[11px] uppercase tracking-widest link-underline ${link.label === 'Sale' ? 'sale-pulse' : 'text-current hover:text-blush-300'}`}
                 >
-                  {link.label === 'Sale' ? translate(language, 'sale') : link.label}
+                  {link.label === 'Sale' ? translate(language, 'sale') : translateLabel(language, link.label)}
                 </button>
               ))}
             </nav>
@@ -479,7 +479,7 @@ export default function Header({
                   link.label === 'Sale' ? 'text-blush-500' : 'text-ink-800 hover:text-blush-500'
                 }`}
               >
-                {link.label === 'Sale' ? translate(language, 'sale') : link.label}
+                {link.label === 'Sale' ? translate(language, 'sale') : translateLabel(language, link.label)}
               </button>
             ))}
             <div className="flex items-center justify-center gap-6 pt-8 text-ink-600">

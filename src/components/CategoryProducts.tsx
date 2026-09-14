@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import type { Product } from '@/data/catalog';
 import { hiddenCategoryNames } from '@/data/catalog';
 import { formatPrice, type CurrencyCode } from '@/lib/currency';
+import { translateLabel, type LanguageCode } from '@/lib/language';
 
 type Props = {
   products: Product[];
@@ -14,6 +15,7 @@ type Props = {
   onToggleWishlist: (productId: string) => void;
   wishlist: Set<string>;
   onBack: () => void;
+  language: LanguageCode;
 };
 
 function getProductBadge(product: Product) {
@@ -33,6 +35,7 @@ export default function CategoryProducts({
   onToggleWishlist,
   wishlist,
   onBack,
+  language,
 }: Props) {
   const [sortBy, setSortBy] = useState<'featured' | 'price-asc' | 'price-desc'>('featured');
   const [activeFilter, setActiveFilter] = useState<'Todos' | 'Novedades' | 'Bestseller' | 'Sale'>('Todos');
@@ -77,7 +80,7 @@ export default function CategoryProducts({
               className="group inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.28em] text-ink-600 hover:text-blush-400 transition-colors duration-200"
             >
               <ArrowLeft size={14} strokeWidth={1.8} className="group-hover:-translate-x-1 transition-transform" />
-              <span>Volver</span>
+              <span>{translateLabel(language, 'Volver')}</span>
             </button>
 
             <h1 className={`mt-8 font-serif font-light tracking-wide leading-tight ${
@@ -89,28 +92,28 @@ export default function CategoryProducts({
             </h1>
 
             <p className="mt-4 text-[11px] font-medium uppercase tracking-[0.2em] text-ink-500">
-              {filtered.length} {filtered.length === 1 ? 'Producto' : 'Productos'}
+              {filtered.length} {translateLabel(language, filtered.length === 1 ? 'Producto' : 'Productos')}
             </p>
 
             <div className="mt-10 space-y-8">
               <div>
                 <label className="block">
-                  <span className="mb-3.5 block text-[9px] uppercase tracking-[0.28em] font-medium text-ink-500">Ordenar por</span>
+                  <span className="mb-3.5 block text-[9px] uppercase tracking-[0.28em] font-medium text-ink-500">{translateLabel(language, 'Ordenar por')}</span>
                   <select
                     value={sortBy}
                     onChange={(event) => setSortBy(event.target.value as 'featured' | 'price-asc' | 'price-desc')}
                     className="w-full appearance-none rounded-sm border border-ink-200 bg-sand-50 px-4 py-3 pr-9 text-[11px] font-medium uppercase tracking-[0.18em] text-ink-800 outline-none transition-all duration-200 hover:border-ink-400 focus:border-ink-900 focus:ring-1 focus:ring-ink-900/10"
                   >
-                    <option value="featured">Destacados</option>
-                    <option value="price-asc">Menor precio</option>
-                    <option value="price-desc">Mayor precio</option>
+                    <option value="featured">{translateLabel(language, 'Destacados')}</option>
+                    <option value="price-asc">{translateLabel(language, 'Menor precio')}</option>
+                    <option value="price-desc">{translateLabel(language, 'Mayor precio')}</option>
                   </select>
                   <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-ink-400 text-[10px]">▾</span>
                 </label>
               </div>
 
               <div>
-                <p className="mb-4 text-[9px] uppercase tracking-[0.28em] font-medium text-ink-500">Filtrar por</p>
+                <p className="mb-4 text-[9px] uppercase tracking-[0.28em] font-medium text-ink-500">{translateLabel(language, 'Filtrar por')}</p>
                 <div className="space-y-2.5">
                   {(['Todos', 'Novedades', 'Bestseller', 'Sale'] as const).map((filter) => {
                     const isSaleFilter = filter === 'Sale';
@@ -131,7 +134,7 @@ export default function CategoryProducts({
                               : 'bg-sand-50 text-ink-700 border-ink-200 hover:border-ink-400 hover:bg-ink-50'
                         }`}
                       >
-                        {filter}
+                        {translateLabel(language, filter)}
                       </button>
                     );
                   })}
@@ -158,7 +161,7 @@ export default function CategoryProducts({
             {filtered.length === 0 && (
               <div className="col-span-full text-center py-20">
                 <div className="mb-3 text-4xl text-ink-200">∘</div>
-                <p className="text-ink-400 text-sm tracking-wide">No hay productos disponibles con estos filtros.</p>
+                <p className="text-ink-400 text-sm tracking-wide">{translateLabel(language, 'No hay productos disponibles con estos filtros.')}</p>
               </div>
             )}
           </div>

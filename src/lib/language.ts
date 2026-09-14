@@ -129,6 +129,12 @@ export function translate(language: LanguageCode, key: TranslationKey): string {
 const labelTranslations: Record<LanguageCode, Record<string, string>> = {
   es: {},
   en: {
+    'Hombres': 'Men', 'Kids': 'Kids', 'Volver': 'Back', 'Producto': 'Product', 'Productos': 'Products',
+    'Ordenar por': 'Sort by', 'Destacados': 'Featured', 'Menor precio': 'Lowest price', 'Mayor precio': 'Highest price',
+    'Filtrar por': 'Filter by', 'Todos': 'All', 'Novedades': 'New arrivals', 'Bestseller': 'Bestseller',
+    'No hay productos disponibles con estos filtros.': 'No products available with these filters.',
+    'Color': 'Color', 'Talla': 'Size', 'Cantidad': 'Quantity', 'Agregar al carrito': 'Add to cart',
+    'Favoritos': 'Favorites', 'Compartir': 'Share', 'Guía de tallas': 'Size guide',
     'Nuestras Colecciones': 'Our Collections', 'Descubre nuestras categorías': 'Discover our categories',
     'Texturas y cortes que destacan': 'Textures and cuts that stand out', 'Línea sofisticada': 'Sophisticated line',
     'Equilibrio entre estilo y libertad': 'Balance between style and freedom', 'Ver Colección': 'View Collection',
@@ -142,6 +148,9 @@ const labelTranslations: Record<LanguageCode, Record<string, string>> = {
     'Mi Cuenta': 'My Account', 'Ver categorías anteriores': 'Previous categories', 'Ver más categorías': 'More categories',
   },
   pt: {
+    'Hombres': 'Homens', 'Kids': 'Kids', 'Volver': 'Voltar', 'Producto': 'Produto', 'Productos': 'Produtos',
+    'Ordenar por': 'Ordenar por', 'Destacados': 'Destaques', 'Menor precio': 'Menor preço', 'Mayor precio': 'Maior preço',
+    'Filtrar por': 'Filtrar por', 'Todos': 'Todos', 'Novedades': 'Novidades',
     'Nuestras Colecciones': 'Nossas Coleções', 'Descubre nuestras categorías': 'Descubra nossas categorias',
     'Texturas y cortes que destacan': 'Texturas e cortes marcantes', 'Línea sofisticada': 'Linha sofisticada',
     'Equilibrio entre estilo y libertad': 'Equilíbrio entre estilo e liberdade', 'Ver Colección': 'Ver Coleção',
@@ -152,6 +161,9 @@ const labelTranslations: Record<LanguageCode, Record<string, string>> = {
     'Trabaja con Nosotros': 'Trabalhe Conosco', 'Mi Cuenta': 'Minha Conta',
   },
   fr: {
+    'Hombres': 'Hommes', 'Kids': 'Enfants', 'Volver': 'Retour', 'Producto': 'Produit', 'Productos': 'Produits',
+    'Ordenar por': 'Trier par', 'Destacados': 'En vedette', 'Menor precio': 'Prix croissant', 'Mayor precio': 'Prix décroissant',
+    'Filtrar por': 'Filtrer par', 'Todos': 'Tous', 'Novedades': 'Nouveautés',
     'Nuestras Colecciones': 'Nos collections', 'Descubre nuestras categorías': 'Découvrez nos catégories',
     'Texturas y cortes que destacan': 'Textures et coupes remarquables', 'Línea sofisticada': 'Ligne sophistiquée',
     'Equilibrio entre estilo y libertad': 'Équilibre entre style et liberté', 'Ver Colección': 'Voir la collection',
@@ -162,6 +174,9 @@ const labelTranslations: Record<LanguageCode, Record<string, string>> = {
     'Trabaja con Nosotros': 'Travailler avec nous', 'Mi Cuenta': 'Mon compte',
   },
   it: {
+    'Hombres': 'Uomini', 'Kids': 'Bambini', 'Volver': 'Indietro', 'Producto': 'Prodotto', 'Productos': 'Prodotti',
+    'Ordenar por': 'Ordina per', 'Destacados': 'In evidenza', 'Menor precio': 'Prezzo più basso', 'Mayor precio': 'Prezzo più alto',
+    'Filtrar por': 'Filtra per', 'Todos': 'Tutti', 'Novedades': 'Novità',
     'Nuestras Colecciones': 'Le nostre collezioni', 'Descubre nuestras categorías': 'Scopri le nostre categorie',
     'Texturas y cortes que destacan': 'Texture e tagli distintivi', 'Línea sofisticada': 'Linea sofisticata',
     'Equilibrio entre estilo y libertad': 'Equilibrio tra stile e libertà', 'Ver Colección': 'Scopri la collezione',
@@ -172,6 +187,9 @@ const labelTranslations: Record<LanguageCode, Record<string, string>> = {
     'Trabaja con Nosotros': 'Lavora con noi', 'Mi Cuenta': 'Il mio account',
   },
   de: {
+    'Hombres': 'Herren', 'Kids': 'Kinder', 'Volver': 'Zurück', 'Producto': 'Produkt', 'Productos': 'Produkte',
+    'Ordenar por': 'Sortieren nach', 'Destacados': 'Empfohlen', 'Menor precio': 'Niedrigster Preis', 'Mayor precio': 'Höchster Preis',
+    'Filtrar por': 'Filtern nach', 'Todos': 'Alle', 'Novedades': 'Neuheiten',
     'Nuestras Colecciones': 'Unsere Kollektionen', 'Descubre nuestras categorías': 'Entdecke unsere Kategorien',
     'Texturas y cortes que destacan': 'Markante Texturen und Schnitte', 'Línea sofisticada': 'Sofisticated line',
     'Equilibrio entre estilo y libertad': 'Balance zwischen Stil und Freiheit', 'Ver Colección': 'Kollektion ansehen',
@@ -182,6 +200,9 @@ const labelTranslations: Record<LanguageCode, Record<string, string>> = {
     'Trabaja con Nosotros': 'Arbeite mit uns', 'Mi Cuenta': 'Mein Konto',
   },
   nl: {
+    'Hombres': 'Heren', 'Kids': 'Kids', 'Volver': 'Terug', 'Producto': 'Product', 'Productos': 'Producten',
+    'Ordenar por': 'Sorteren op', 'Destacados': 'Uitgelicht', 'Menor precio': 'Laagste prijs', 'Mayor precio': 'Hoogste prijs',
+    'Filtrar por': 'Filteren op', 'Todos': 'Alle', 'Novedades': 'Nieuw',
     'Nuestras Colecciones': 'Onze collecties', 'Descubre nuestras categorías': 'Ontdek onze categorieën',
     'Texturas y cortes que destacan': 'Opvallende texturen en pasvormen', 'Línea sofisticada': 'Verfijnde lijn',
     'Equilibrio entre estilo y libertad': 'Balans tussen stijl en vrijheid', 'Ver Colección': 'Bekijk collectie',

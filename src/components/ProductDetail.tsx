@@ -4,6 +4,7 @@ import { Heart, Share2, ArrowLeft, Minus, Plus, MessageCircle } from 'lucide-rea
 import { formatProductName, type Product } from '@/data/catalog';
 import type { CartItem } from '@/components/QuickAddModal';
 import { formatPrice, type CurrencyCode } from '@/lib/currency';
+import { translateLabel, type LanguageCode } from '@/lib/language';
 
 type Props = {
   product: Product;
@@ -12,6 +13,7 @@ type Props = {
   onAddToCart: (item: CartItem) => void;
   isWishlisted: boolean;
   onToggleWishlist: (productId: string) => void;
+  language: LanguageCode;
 };
 
 const sizes = ['XS', 'S', 'M', 'L', 'XL'] as const;
@@ -23,6 +25,7 @@ export default function ProductDetail({
   onAddToCart,
   isWishlisted,
   onToggleWishlist,
+  language,
 }: Props) {
   const [quantity, setQuantity] = useState(1);
   const [selectedSize, setSelectedSize] = useState<string>('');
@@ -84,7 +87,7 @@ export default function ProductDetail({
           className="mb-8 flex items-center gap-2 text-[#5b4f49] transition-colors hover:text-[#ba826b]"
         >
           <ArrowLeft size={18} strokeWidth={1.5} />
-          <span className="text-[11px] uppercase tracking-[0.22em]">Volver</span>
+          <span className="text-[11px] uppercase tracking-[0.22em]">{translateLabel(language, 'Volver')}</span>
         </button>
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-2 lg:gap-16">
           {/* Gallery */}
@@ -153,7 +156,7 @@ export default function ProductDetail({
             {product.swatches.length > 0 && (
               <div className="mb-8">
                 <div className="mb-4 flex items-baseline justify-between">
-                  <p className="text-[11px] font-medium uppercase tracking-[0.22em] text-[#1b1714]">Color</p>
+                  <p className="text-[11px] font-medium uppercase tracking-[0.22em] text-[#1b1714]">{translateLabel(language, 'Color')}</p>
                   <p className="text-sm font-light text-[#8f7e76]">{selectedColor}</p>
                 </div>
                 <div className="flex flex-wrap gap-3">
@@ -178,12 +181,12 @@ export default function ProductDetail({
 
             <div className="mb-8">
               <div className="mb-4 flex items-baseline justify-between gap-4">
-                <p className="text-[11px] font-medium uppercase tracking-[0.22em] text-[#1b1714]">Talla</p>
+                <p className="text-[11px] font-medium uppercase tracking-[0.22em] text-[#1b1714]">{translateLabel(language, 'Talla')}</p>
                 <Link
                   to="/pages/guia-de-tallas"
                   className="text-[11px] uppercase tracking-[0.18em] text-[#bb8a7d] underline-offset-4 transition-colors hover:text-[#1b1714] hover:underline"
                 >
-                  Guía de tallas
+                  {translateLabel(language, 'Guía de tallas')}
                 </Link>
               </div>
               <div className="flex flex-wrap gap-2">
@@ -211,7 +214,7 @@ export default function ProductDetail({
             </div>
 
             <div className="mb-8">
-              <p className="mb-4 text-[11px] font-medium uppercase tracking-[0.22em] text-[#1b1714]">Cantidad</p>
+              <p className="mb-4 text-[11px] font-medium uppercase tracking-[0.22em] text-[#1b1714]">{translateLabel(language, 'Cantidad')}</p>
               <div className="flex w-fit items-center gap-3 rounded-full border border-[#e0d4c8] bg-white/70 px-2 py-1.5">
                 <button
                   type="button"
@@ -239,7 +242,7 @@ export default function ProductDetail({
                 onClick={handleAddToCart}
                 className="w-full rounded-full bg-[#1b1714] py-4 text-sm font-medium uppercase tracking-[0.22em] text-[#f8f3ef] transition-all hover:bg-[#ba826b] hover:shadow-[0_14px_28px_rgba(186,130,107,0.28)]"
               >
-                Agregar al carrito
+                {translateLabel(language, 'Agregar al carrito')}
               </button>
               <div className="flex gap-3">
                 <button
@@ -256,7 +259,7 @@ export default function ProductDetail({
                     strokeWidth={1.7}
                     className={isWishlisted ? 'fill-[#ba826b] text-[#ba826b]' : ''}
                   />
-                  Favoritos
+                  {translateLabel(language, 'Favoritos')}
                 </button>
                 <button
                   type="button"
@@ -264,7 +267,7 @@ export default function ProductDetail({
                   className="flex flex-1 items-center justify-center gap-2 rounded-full border border-[#e0d4c8] py-3.5 text-[11px] font-medium uppercase tracking-[0.18em] text-[#1b1714] transition-colors hover:border-[#1b1714]"
                 >
                   <Share2 size={16} strokeWidth={1.7} />
-                  Compartir
+                  {translateLabel(language, 'Compartir')}
                 </button>
               </div>
             </div>
