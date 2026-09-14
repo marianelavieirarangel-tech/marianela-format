@@ -53,7 +53,7 @@ const translations: Record<LanguageCode, Record<TranslationKey, string>> = {
   es: {
     collection: 'Colección 2026', women: 'Mujeres', groupTrips: 'Viajes Grupales', sale: 'Sale',
     discoverCollection: 'Descubrir Colección', exploreCategories: 'Explorar Categorías', scroll: 'Scroll',
-    freeShipping: 'Envío gratis por compras superiores a $120', freeReturns: 'Devoluciones gratuitas en 30 días',
+    freeShipping: 'Envío gratis por compras superiores a S/ 120', freeReturns: 'Devoluciones gratuitas en 30 días',
     newCollection: 'Nueva colección — Primavera 2026', footerDescription: 'Innovación, diseño y sofisticación en cada pieza de ropa de baño. Celebramos la autenticidad de cada silueta.',
     whatsappSupport: 'Soporte por WhatsApp', allRightsReserved: 'Todos los derechos reservados',
     collectionsLabel: 'Nuestras Colecciones', discoverCategories: 'Descubre nuestras categorías', piecesTitle: 'Piezas que enamoran',
