@@ -18,7 +18,7 @@ export const categories = [
     name: 'Bikini',
     tagline: 'Texturas y cortes que destacan',
     description: 'Bikinis modernos con detalles seductores y un ajuste perfecto.',
-    image: 'https://images.pexels.com/photos/17367636/pexels-photo-17367636.jpeg?auto=compress&cs=tinysrgb&w=1200&q=80',
+    image: 'https://6aa88bf09422e77b387f33c6.imgix.net/sandbox/624891291_18132350635501972_9192086767551926491_n.jpg',
   },
   {
     name: 'Traje de Baño',
