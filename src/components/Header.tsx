@@ -421,7 +421,7 @@ export default function Header({
 
       {/* Mobile drawer */}
       <div
-        className={`fixed inset-0 z-50 lg:hidden transition-all duration-500 ${
+        className={`fixed inset-0 z-[1200] lg:hidden transition-all duration-500 ${
           mobileOpen ? 'visible' : 'invisible'
         }`}
       >
