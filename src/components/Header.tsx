@@ -443,30 +443,6 @@ export default function Header({
             </button>
           </div>
           <nav className="flex flex-col items-center px-6 py-8 gap-1">
-            <div className="w-full border-b border-ink-100 pb-5 mb-2">
-              <p className="mb-3 text-center text-[10px] uppercase tracking-[0.25em] text-ink-400">Idioma</p>
-              <div className="grid grid-cols-2 gap-2">
-                {languageOptions.map((option) => (
-                  <button
-                    key={option}
-                    type="button"
-                    onClick={(event) => {
-                      event.preventDefault();
-                      event.stopPropagation();
-                      handleLanguageChange(option);
-                    }}
-                    className={`flex items-center justify-between rounded-sm border px-3 py-2.5 text-[10px] uppercase tracking-[0.16em] transition-colors ${
-                      option === language
-                        ? 'border-ink-900 bg-ink-900 text-sand-50'
-                        : 'border-ink-200 text-ink-700 hover:border-ink-400'
-                    }`}
-                  >
-                    <span>{languageShortCodes[option]}</span>
-                    <span className="normal-case tracking-normal opacity-75">{languageNames[option]}</span>
-                  </button>
-                ))}
-              </div>
-            </div>
             <button
               onClick={() => {
                 goToCollection();

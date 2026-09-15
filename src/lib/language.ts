@@ -47,7 +47,9 @@ type TranslationKey =
   | 'philosophy'
   | 'philosophyQuote'
   | 'lookbook'
-  | 'lima';
+  | 'lima'
+  | 'heroTitle'
+  | 'heroBody';
 
 const translations: Record<LanguageCode, Record<TranslationKey, string>> = {
   es: {
@@ -59,6 +61,7 @@ const translations: Record<LanguageCode, Record<TranslationKey, string>> = {
     collectionsLabel: 'Nuestras Colecciones', discoverCategories: 'Descubre nuestras categorías', piecesTitle: 'Piezas que enamoran',
     allProducts: 'Todos', newProducts: 'Novedades', swimwear: 'Traje de Baño', outOfWater: 'Fuera del Agua', noPieces: 'No hay piezas en esta categoría por ahora.',
     philosophy: 'Nuestra Filosofía', philosophyQuote: '"Verano Swimwear — colección dedicada al sol, la playa y la libertad de movimiento."', lookbook: 'Ver el Lookbook', lima: 'Marianela Vieira, Lima 2026',
+    heroTitle: 'Tu estilo,|tu cuerpo', heroBody: 'Trajes de baño y piezas esenciales para celebrar la delicadeza de cada gesto.',
   },
   en: {
     collection: 'Collection 2026', women: 'Women', groupTrips: 'Group Trips', sale: 'Sale',
@@ -69,6 +72,7 @@ const translations: Record<LanguageCode, Record<TranslationKey, string>> = {
     collectionsLabel: 'Our Collections', discoverCategories: 'Discover our categories', piecesTitle: 'Pieces to fall in love with',
     allProducts: 'All', newProducts: 'New Arrivals', swimwear: 'Swimwear', outOfWater: 'Out of Water', noPieces: 'There are no pieces in this category yet.',
     philosophy: 'Our Philosophy', philosophyQuote: '"Verano Swimwear — a collection devoted to the sun, the beach, and freedom of movement."', lookbook: 'View Lookbook', lima: 'Marianela Vieira, Lima 2026',
+    heroTitle: 'Your style,|your body', heroBody: 'Swimwear and essential pieces celebrating the delicacy of every gesture.',
   },
   pt: {
     collection: 'Coleção 2026', women: 'Mulheres', groupTrips: 'Viagens em Grupo', sale: 'Sale',
@@ -79,6 +83,7 @@ const translations: Record<LanguageCode, Record<TranslationKey, string>> = {
     collectionsLabel: 'Nossas Coleções', discoverCategories: 'Descubra nossas categorias', piecesTitle: 'Peças para se apaixonar',
     allProducts: 'Todas', newProducts: 'Novidades', swimwear: 'Moda Praia', outOfWater: 'Fora d’Água', noPieces: 'Ainda não há peças nesta categoria.',
     philosophy: 'Nossa Filosofia', philosophyQuote: '"Verano Swimwear — coleção dedicada ao sol, à praia e à liberdade de movimento."', lookbook: 'Ver Lookbook', lima: 'Marianela Vieira, Lima 2026',
+    heroTitle: 'Seu estilo,|seu corpo', heroBody: 'Moda praia e peças essenciais para celebrar a delicadeza de cada gesto.',
   },
   fr: {
     collection: 'Collection 2026', women: 'Femmes', groupTrips: 'Voyages en groupe', sale: 'Sale',
@@ -89,6 +94,7 @@ const translations: Record<LanguageCode, Record<TranslationKey, string>> = {
     collectionsLabel: 'Nos collections', discoverCategories: 'Découvrez nos catégories', piecesTitle: 'Des pièces à aimer',
     allProducts: 'Toutes', newProducts: 'Nouveautés', swimwear: 'Maillots de bain', outOfWater: 'Hors de l’eau', noPieces: 'Aucune pièce dans cette catégorie pour le moment.',
     philosophy: 'Notre philosophie', philosophyQuote: '"Verano Swimwear — une collection dédiée au soleil, à la plage et à la liberté de mouvement."', lookbook: 'Voir le lookbook', lima: 'Marianela Vieira, Lima 2026',
+    heroTitle: 'Votre style,|votre corps', heroBody: 'Maillots de bain et pièces essentielles pour célébrer la délicatesse de chaque geste.',
   },
   it: {
     collection: 'Collezione 2026', women: 'Donne', groupTrips: 'Viaggi di gruppo', sale: 'Sale',
@@ -99,6 +105,7 @@ const translations: Record<LanguageCode, Record<TranslationKey, string>> = {
     collectionsLabel: 'Le nostre collezioni', discoverCategories: 'Scopri le nostre categorie', piecesTitle: 'Capi da amare',
     allProducts: 'Tutti', newProducts: 'Novità', swimwear: 'Costumi da bagno', outOfWater: 'Fuori dall’acqua', noPieces: 'Non ci sono ancora capi in questa categoria.',
     philosophy: 'La nostra filosofia', philosophyQuote: '"Verano Swimwear — una collezione dedicata al sole, alla spiaggia e alla libertà di movimento."', lookbook: 'Guarda il lookbook', lima: 'Marianela Vieira, Lima 2026',
+    heroTitle: 'Il tuo stile,|il tuo corpo', heroBody: 'Costumi da bagno e capi essenziali per celebrare la delicatezza di ogni gesto.',
   },
   de: {
     collection: 'Kollektion 2026', women: 'Damen', groupTrips: 'Gruppenreisen', sale: 'Sale',
@@ -109,6 +116,7 @@ const translations: Record<LanguageCode, Record<TranslationKey, string>> = {
     collectionsLabel: 'Unsere Kollektionen', discoverCategories: 'Entdecke unsere Kategorien', piecesTitle: 'Stücke zum Verlieben',
     allProducts: 'Alle', newProducts: 'Neuheiten', swimwear: 'Bademode', outOfWater: 'Außerhalb des Wassers', noPieces: 'In dieser Kategorie gibt es noch keine Stücke.',
     philosophy: 'Unsere Philosophie', philosophyQuote: '"Verano Swimwear — eine Kollektion für Sonne, Strand und Bewegungsfreiheit."', lookbook: 'Lookbook ansehen', lima: 'Marianela Vieira, Lima 2026',
+    heroTitle: 'Dein Stil,|dein Körper', heroBody: 'Bademode und unverzichtbare Stücke, die die Zartheit jeder Bewegung feiern.',
   },
   nl: {
     collection: 'Collectie 2026', women: 'Dames', groupTrips: 'Groepsreizen', sale: 'Sale',
@@ -119,6 +127,7 @@ const translations: Record<LanguageCode, Record<TranslationKey, string>> = {
     collectionsLabel: 'Onze collecties', discoverCategories: 'Ontdek onze categorieën', piecesTitle: 'Stukken om van te houden',
     allProducts: 'Alle', newProducts: 'Nieuw', swimwear: 'Badmode', outOfWater: 'Buiten het water', noPieces: 'Er zijn nog geen items in deze categorie.',
     philosophy: 'Onze filosofie', philosophyQuote: '"Verano Swimwear — een collectie gewijd aan de zon, het strand en bewegingsvrijheid."', lookbook: 'Bekijk lookbook', lima: 'Marianela Vieira, Lima 2026',
+    heroTitle: 'Jouw stijl,|jouw lichaam', heroBody: 'Badmode en essentiële items die de zachtheid van elk gebaar vieren.',
   },
 };
 
