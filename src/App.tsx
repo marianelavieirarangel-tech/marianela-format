@@ -306,7 +306,7 @@ export default function App() {
         onOpenWishlist={() => setWishlistOpen(true)}
       />
 
-      <main className={`${location.pathname === '/' ? 'pt-0' : 'pt-[128px] lg:pt-[140px]'}`}>
+      <main className={`${location.pathname === '/' || location.pathname === '/pages/viajes-grupales' ? 'pt-0' : 'pt-[128px] lg:pt-[140px]'}`}>
         <Routes>
           <Route
             path="/"
