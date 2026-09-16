@@ -24,7 +24,7 @@ export const categories = [
     name: 'Traje de Baño',
     tagline: 'Línea sofisticada',
     description: 'Trajes de baño de una pieza con silueta elegante y comodidad total.',
-    image: 'https://images.pexels.com/photos/31277420/pexels-photo-31277420.jpeg?auto=compress&cs=tinysrgb&h=1200&w=800',
+    image: 'https://6aa88bf09422e77b387f33c6.imgix.net/sandbox/thenewblack-9a060b15-fcb1-4c73-9f7d-291158a5d4ce.jpg',
   },
   {
     name: 'Tankini',
