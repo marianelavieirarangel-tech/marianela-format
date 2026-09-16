@@ -38,7 +38,7 @@ export default function FeaturedProducts({ products, currency, language = 'es', 
     });
 
   return (
-    <section id="coleccion-2026" className="py-24 lg:py-32 bg-[#f5f1ec]">
+    <section id="coleccion-2026" className="pt-24 pb-10 lg:pt-32 lg:pb-16 bg-[#f5f1ec]">
       <div className="mx-auto max-w-7xl px-6 lg:px-10">
         {/* Heading */}
         <div className="mb-12 flex flex-col gap-6 lg:mb-16 lg:flex-row lg:items-end lg:justify-between">
