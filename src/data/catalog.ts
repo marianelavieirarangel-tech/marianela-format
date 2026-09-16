@@ -42,7 +42,7 @@ export const categories = [
     name: 'Fuera del Agua',
     tagline: 'Estilo en cada paso',
     description: 'Piezas para llevar la misma esencia de lujo fuera del agua.',
-    image: 'https://6a8377665cc6de03eb430013.imgix.net/sandbox/dff7a81aac6f03af918f5d4b4cc15bda.jpg?auto=format&q=80&w=1200&fit=max',
+    image: 'https://6aa88bf09422e77b387f33c6.imgix.net/sandbox/thenewblack-52def637-91cd-4ca5-b9d0-2a39795b68db.jpg',
   },
 
   {
