@@ -99,6 +99,20 @@
   .page-fade-in {
     animation: pageContentFadeIn 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
   }
+  .page-route-enter {
+    animation: pageRouteEnter 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+    will-change: opacity, transform;
+  }
+  @keyframes pageRouteEnter {
+    from {
+      opacity: 0;
+      transform: translate3d(0, 10px, 0);
+    }
+    to {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
+  }
   @keyframes pageContentFadeIn {
     from {
       opacity: 0;

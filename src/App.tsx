@@ -307,6 +307,7 @@ export default function App() {
       />
 
       <main className={`${location.pathname === '/' || location.pathname === '/pages/viajes-grupales' ? 'pt-0' : 'pt-[128px] lg:pt-[140px]'}`}>
+        <div key={location.pathname} className="page-route-enter">
         <Routes>
           <Route
             path="/"
@@ -333,6 +334,7 @@ export default function App() {
           <Route path="/pages/:slug" element={<InfoPage />} />
           <Route path="/policies/:slug" element={<InfoPage />} />
         </Routes>
+        </div>
       </main>
 
       <Footer language={language} />
