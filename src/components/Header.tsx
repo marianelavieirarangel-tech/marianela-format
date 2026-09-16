@@ -130,7 +130,7 @@ export default function Header({
           isHome && !scrolled
             ? 'fixed left-0 right-0 top-[37px] bg-transparent text-sand-50 shadow-none'
             : 'fixed left-0 right-0 top-[37px] bg-sand-50 shadow-[0_1px_0_0_rgba(26,22,17,0.08)] text-ink-800'
-        } z-[1000] transition-[background-color,color,box-shadow] duration-500 ease-out`}
+        } z-[1000] transition-[background-color,color,box-shadow,backdrop-filter] duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] will-change-[background-color,box-shadow,backdrop-filter]`}
       >
           <div className="relative flex h-[72px] items-center lg:h-[84px]">
             {/* Left nav (desktop) */}
