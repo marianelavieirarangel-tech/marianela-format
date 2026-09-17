@@ -1,4 +1,4 @@
-import { categories, categorySlugs } from '@/data/catalog';
+import { categories, categorySlugs, hiddenCategoryNames } from '@/data/catalog';
 import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useRef, useState } from 'react';
@@ -85,7 +85,7 @@ export default function CategoryGrid({ language = 'es', onSelectCategory }: Prop
             onScroll={handleScroll}
             className="flex gap-5 lg:gap-6 overflow-x-auto no-scrollbar pb-2"
           >
-            {categories.map((cat) => (
+            {categories.filter((cat) => !hiddenCategoryNames.has(cat.name)).map((cat) => (
               <CategoryCard
                 key={cat.name}
                 category={cat}

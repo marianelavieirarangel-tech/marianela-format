@@ -73,7 +73,7 @@ export const categorySlugs: Record<string, string> = {
   Sale: 'sale',
 };
 
-export const hiddenCategoryNames = new Set(['Lencería', 'Loungewear']);
+export const hiddenCategoryNames = new Set(['Lencería', 'Loungewear', 'Trikini']);
 
 export const womenSubcategories = [
   'Novedades',
