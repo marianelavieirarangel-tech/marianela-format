@@ -233,7 +233,12 @@ export default function Header({
             {/* Right nav (desktop) */}
             <div className="ml-auto hidden items-center gap-4 pr-10 lg:flex lg:gap-5 lg:pr-12 xl:pr-14">
               <div className="flex items-center gap-4 lg:gap-5">
-                <div ref={languageMenuRef} className="relative hidden xl:block">
+                <div
+                  ref={languageMenuRef}
+                  className="relative hidden xl:block"
+                  onMouseEnter={() => setLanguageMenuOpen(true)}
+                  onMouseLeave={() => setLanguageMenuOpen(false)}
+                >
                   <button
                     type="button"
                     onClick={() => setLanguageMenuOpen((open) => !open)}
@@ -254,7 +259,7 @@ export default function Header({
                   </button>
 
                   {languageMenuOpen && (
-                    <div className="absolute right-0 top-[calc(100%+8px)] z-50 min-w-[180px] rounded-2xl border border-ink-100 bg-white/95 p-1.5 shadow-[0_18px_40px_rgba(22,18,15,0.12)] backdrop-blur-md">
+                    <div className="absolute right-0 top-full z-50 min-w-[180px] rounded-2xl border border-ink-100 bg-white/95 p-1.5 pt-2 shadow-[0_18px_40px_rgba(22,18,15,0.12)] backdrop-blur-md">
                       {languageOptions.map((option) => (
                         <button
                           key={option}
@@ -277,7 +282,12 @@ export default function Header({
                     </div>
                   )}
                 </div>
-                <div ref={currencyMenuRef} className="relative hidden xl:block">
+                <div
+                  ref={currencyMenuRef}
+                  className="relative hidden xl:block"
+                  onMouseEnter={() => setCurrencyMenuOpen(true)}
+                  onMouseLeave={() => setCurrencyMenuOpen(false)}
+                >
                   <button
                     type="button"
                     onClick={() => setCurrencyMenuOpen((open) => !open)}
@@ -297,7 +307,7 @@ export default function Header({
                   </button>
 
                   {currencyMenuOpen && (
-                    <div className="absolute right-0 top-[calc(100%+8px)] z-50 min-w-[110px] rounded-2xl border border-ink-100 bg-white/95 p-1.5 shadow-[0_18px_40px_rgba(22,18,15,0.12)] backdrop-blur-md">
+                    <div className="absolute right-0 top-full z-50 min-w-[110px] rounded-2xl border border-ink-100 bg-white/95 p-1.5 pt-2 shadow-[0_18px_40px_rgba(22,18,15,0.12)] backdrop-blur-md">
                       {currencyOptions.map((option) => (
                         <button
                           key={option}
