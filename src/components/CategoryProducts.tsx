@@ -68,12 +68,13 @@ export default function CategoryProducts({
         }),
     [activeFilter, categoryName, products, sortBy],
   );
+  const isEmptyCollection = categoryName === 'Colección 2026' && filtered.length === 0;
 
   return (
     <section className="min-h-screen bg-sand-50">
       <div className="mx-auto max-w-7xl px-6 pt-6 pb-20 lg:px-10 lg:pt-8">
-        <div className="grid gap-10 lg:grid-cols-[280px_minmax(0,1fr)]">
-          <aside className="lg:sticky lg:top-24 lg:h-fit">
+        <div className={`grid gap-10 ${isEmptyCollection ? '' : 'lg:grid-cols-[280px_minmax(0,1fr)]'}`}>
+          {!isEmptyCollection && <aside className="lg:sticky lg:top-24 lg:h-fit">
             <button
               type="button"
               onClick={onBack}
@@ -141,9 +142,9 @@ export default function CategoryProducts({
                 </div>
               </div>
             </div>
-          </aside>
+          </aside>}
 
-          <div>
+          <div className={isEmptyCollection ? 'min-w-0' : ''}>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
               {filtered.map((product, i) => (
                 <ProductCard
@@ -160,12 +161,16 @@ export default function CategoryProducts({
 
             {filtered.length === 0 && (
               categoryName === 'Colección 2026' ? (
-                <div className="col-span-full overflow-hidden rounded-[26px] border border-[#eadfce] bg-[#fffdfb] shadow-[0_18px_40px_rgba(56,35,26,0.05)]">
+                <div className="relative col-span-full -mx-6 -mt-6 min-h-[calc(100svh-140px)] overflow-hidden bg-[#f4efe9] lg:-mx-10 lg:-mt-8">
                   <img
                     src="https://6aa88bf09422e77b387f33c6.imgix.net/sandbox/cdfbaaad86442c3e76f09f6a55b4e391.jpg"
                     alt="Colección 2026"
-                    className="h-[28rem] w-full object-cover object-center sm:h-[36rem]"
+                    className="absolute inset-0 h-full w-full object-cover object-center"
                   />
+                  <div className="absolute inset-0 bg-gradient-to-t from-ink-900/45 via-transparent to-transparent" />
+                  <h1 className="absolute bottom-8 left-6 font-serif text-4xl font-light tracking-wide text-sand-50 sm:bottom-12 sm:left-10 sm:text-6xl">
+                    Colección 2026
+                  </h1>
                 </div>
               ) : (
                 <div className="col-span-full py-20 text-center">
