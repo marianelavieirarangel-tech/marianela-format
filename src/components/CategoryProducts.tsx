@@ -47,7 +47,7 @@ export default function CategoryProducts({
         .filter((product) => !hiddenCategoryNames.has(product.category))
         .filter((product) => {
           if (categoryName === 'Colección 2026') {
-            return true;
+            return product.collectionHandles?.includes('coleccion-2026') ?? false;
           }
           if (categoryName === 'Sale') {
             return product.tag === 'Sale' && product.category !== 'Bikini';

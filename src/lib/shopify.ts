@@ -155,6 +155,7 @@ export async function fetchShopifyProducts() {
         id: product.id.split('/').pop() ?? product.id,
         name: product.title,
         category,
+        collectionHandles: product.collections.nodes.map((collection) => collection.handle),
         price,
         originalPrice: compareAtPrice > price ? compareAtPrice : undefined,
         image: product.featuredImage?.url ?? product.images.nodes[0].url,

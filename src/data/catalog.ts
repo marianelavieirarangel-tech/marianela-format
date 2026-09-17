@@ -9,6 +9,7 @@ export type Product = {
   swatches: { name: string; hex: string; image?: string; variantId?: string }[];
   tag?: 'Novedades' | 'Sale' | 'Bestseller';
   description: string;
+  collectionHandles?: string[];
   // Optional: map this product to a Shopify variant GID (gid://...)
   shopifyVariantId?: string;
 };
@@ -59,7 +60,7 @@ export const collection2026Slug = 'coleccion-2026';
 export const navLinks = [
   { label: 'Colección 2026', href: `/collections/${collection2026Slug}` },
   { label: 'Mujeres', href: '#categorias' },
-  { label: 'Sale', href: `/collections/${collection2026Slug}` },
+  { label: 'Sale', href: '/collections/sale' },
 ];
 
 export const categorySlugs: Record<string, string> = {
