@@ -159,10 +159,20 @@ export default function CategoryProducts({
             </div>
 
             {filtered.length === 0 && (
-              <div className="col-span-full text-center py-20">
-                <div className="mb-3 text-4xl text-ink-200">∘</div>
-                <p className="text-ink-400 text-sm tracking-wide">{translateLabel(language, 'No hay productos disponibles con estos filtros.')}</p>
-              </div>
+              categoryName === 'Colección 2026' ? (
+                <div className="col-span-full overflow-hidden rounded-[26px] border border-[#eadfce] bg-[#fffdfb] shadow-[0_18px_40px_rgba(56,35,26,0.05)]">
+                  <img
+                    src="https://6aa88bf09422e77b387f33c6.imgix.net/sandbox/cdfbaaad86442c3e76f09f6a55b4e391.jpg"
+                    alt="Colección 2026"
+                    className="h-[28rem] w-full object-cover object-center sm:h-[36rem]"
+                  />
+                </div>
+              ) : (
+                <div className="col-span-full py-20 text-center">
+                  <div className="mb-3 text-4xl text-ink-200">∘</div>
+                  <p className="text-ink-400 text-sm tracking-wide">{translateLabel(language, 'No hay productos disponibles con estos filtros.')}</p>
+                </div>
+              )
             )}
           </div>
         </div>
