@@ -40,24 +40,32 @@ export default function CartDrawer({ open, items, currency, onClose, onUpdateQty
       />
 
       <div
-        className={`absolute right-4 top-3 h-[calc(100%-1.5rem)] w-full max-w-[440px] rounded-r-none bg-sand-50 shadow-[0_20px_60px_rgba(18,14,11,0.14)] transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] flex flex-col ${
+        className={`absolute right-2 top-2 h-[calc(100%-1rem)] w-[calc(100%-1rem)] max-w-[460px] overflow-hidden rounded-[28px] border border-white/70 bg-[#fbf8f4] shadow-[0_24px_80px_rgba(18,14,11,0.24)] transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] flex flex-col sm:right-4 sm:top-3 sm:h-[calc(100%-1.5rem)] sm:w-full ${
           open ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
         {/* Header */}
-        <div className="flex items-center justify-between px-6 h-20 border-b border-ink-100">
-          <h2 className="font-serif text-xl tracking-widest text-ink-900">
-            Tu Bolsa <span className="text-ink-400 text-base">({items.length})</span>
-          </h2>
+        <div className="flex items-center justify-between border-b border-[#e9e0d6] bg-[#fffdfb]/85 px-6 py-5 backdrop-blur-md sm:px-8">
+          <div>
+            <p className="mb-1 text-[9px] font-medium uppercase tracking-[0.3em] text-blush-500">Marianela Vieira</p>
+            <h2 className="font-serif text-[1.65rem] tracking-[0.08em] text-ink-900">
+              Tu Bolsa <span className="text-base text-ink-400">({items.length})</span>
+            </h2>
+          </div>
           <button onClick={onClose} aria-label="Cerrar">
-            <X size={22} strokeWidth={1.5} className="text-ink-700 hover:text-blush-500 transition-colors" />
+            <span className="flex h-9 w-9 items-center justify-center rounded-full border border-ink-200 text-ink-700 transition-all hover:border-blush-300 hover:bg-blush-50 hover:text-blush-500">
+              <X size={17} strokeWidth={1.5} />
+            </span>
           </button>
         </div>
 
         {/* Free shipping progress */}
         {items.length > 0 && (
-          <div className="px-6 py-5 bg-sand-100/70 border-b border-ink-100">
-            <p className="mb-3 text-xs font-medium text-ink-800">¡Hola! Tu carrito te espera por 1 hora!</p>
+          <div className="border-b border-[#e9e0d6] bg-[#f3ece4] px-6 py-5 sm:px-8">
+            <div className="mb-3 flex items-center justify-between gap-4">
+              <p className="text-xs font-medium text-ink-800">Tu selección te espera</p>
+              <span className="text-[9px] uppercase tracking-[0.2em] text-blush-500">Envío gratis</span>
+            </div>
             <p className="text-xs text-ink-600 font-light mb-2">
               {remaining > 0 ? (
                 <>Te faltan <span className="text-ink-900 font-medium">{formatPrice(remaining, currency)}</span> para envío gratis</>
@@ -65,9 +73,9 @@ export default function CartDrawer({ open, items, currency, onClose, onUpdateQty
                 <span className="text-sage-600">¡Felicidades! Tu envío es gratis</span>
               )}
             </p>
-            <div className="h-1 bg-ink-200 overflow-hidden">
+            <div className="h-1.5 overflow-hidden rounded-full bg-ink-200/70">
               <div
-                className="h-full bg-blush-400 transition-all duration-700 ease-out"
+                className="h-full rounded-full bg-gradient-to-r from-blush-400 to-blush-300 transition-all duration-700 ease-out"
                 style={{ width: `${progress}%` }}
               />
             </div>
@@ -77,19 +85,23 @@ export default function CartDrawer({ open, items, currency, onClose, onUpdateQty
         {/* Items */}
         <div className="flex-1 overflow-y-auto">
           {items.length === 0 ? (
-            <div className="flex flex-col items-center justify-center h-full px-6 text-center">
-              <ShoppingBag size={48} strokeWidth={1} className="text-ink-300 mb-4" />
-              <p className="font-serif text-2xl text-ink-700 mb-2">Tu bolsa está vacía</p>
-              <p className="text-sm text-ink-400 font-light mb-6">Descubre nuestras colecciones y encuentra tu próxima pieza favorita.</p>
-              <button onClick={onClose} className="btn-outline">
+            <div className="relative flex h-full flex-col items-center justify-center overflow-hidden px-8 text-center">
+              <div className="pointer-events-none absolute -right-20 -top-16 h-52 w-52 rounded-full bg-blush-200/25 blur-3xl" />
+              <div className="pointer-events-none absolute -bottom-20 -left-20 h-56 w-56 rounded-full bg-[#d8c7b4]/25 blur-3xl" />
+              <div className="relative mb-6 flex h-20 w-20 items-center justify-center rounded-full border border-[#dfd1c3] bg-[#fffdfb] shadow-[0_12px_30px_rgba(56,35,26,0.08)]">
+                <ShoppingBag size={29} strokeWidth={1.15} className="text-blush-400" />
+              </div>
+              <p className="relative mb-2 font-serif text-[1.7rem] text-ink-800">Tu bolsa está vacía</p>
+              <p className="relative mb-7 max-w-[270px] text-xs font-light leading-relaxed text-ink-400">Descubre nuestras colecciones y encuentra tu próxima pieza favorita.</p>
+              <button onClick={onClose} className="relative rounded-full border border-ink-700 px-7 py-3 text-[10px] uppercase tracking-[0.25em] text-ink-700 transition-all duration-300 hover:border-blush-400 hover:bg-ink-900 hover:text-sand-50">
                 Continuar Comprando
               </button>
             </div>
           ) : (
-            <div className="divide-y divide-ink-100">
+            <div className="space-y-3 p-4 sm:p-5">
               {items.map((item, i) => (
-                <div key={`${item.product.id}-${item.size}-${item.color}-${i}`} className="flex gap-4 p-6">
-                  <div className="w-20 h-28 bg-ink-100 overflow-hidden shrink-0">
+                <div key={`${item.product.id}-${item.size}-${item.color}-${i}`} className="flex gap-4 rounded-2xl border border-[#ebe1d7] bg-[#fffdfb] p-3 shadow-[0_8px_24px_rgba(56,35,26,0.04)]">
+                  <div className="h-28 w-20 shrink-0 overflow-hidden rounded-xl bg-ink-100">
                     <img src={item.product.image} alt={item.product.name} className="h-full w-full object-cover" />
                   </div>
                   <div className="flex-1 flex flex-col">
@@ -100,18 +112,18 @@ export default function CartDrawer({ open, items, currency, onClose, onUpdateQty
                     <p className="font-numeric text-ink-900 text-sm mt-1">{formatPrice(item.product.price, currency)}</p>
 
                     <div className="mt-auto flex items-center justify-between">
-                      <div className="inline-flex items-center border border-ink-200">
+                      <div className="inline-flex items-center rounded-full border border-ink-200 bg-sand-50">
                         <button
                           onClick={() => onUpdateQty(i, Math.max(1, item.quantity - 1))}
-                          className="w-8 h-8 flex items-center justify-center hover:bg-ink-100 transition-colors"
+                          className="flex h-8 w-8 items-center justify-center rounded-full hover:bg-ink-100 transition-colors"
                           aria-label="Disminuir"
                         >
                           <Minus size={12} strokeWidth={1.5} />
                         </button>
-                        <span className="w-8 text-center text-xs">{item.quantity}</span>
+                        <span className="w-8 text-center text-xs font-medium">{item.quantity}</span>
                         <button
                           onClick={() => onUpdateQty(i, item.quantity + 1)}
-                          className="w-8 h-8 flex items-center justify-center hover:bg-ink-100 transition-colors"
+                          className="flex h-8 w-8 items-center justify-center rounded-full hover:bg-ink-100 transition-colors"
                           aria-label="Aumentar"
                         >
                           <Plus size={12} strokeWidth={1.5} />
@@ -119,7 +131,7 @@ export default function CartDrawer({ open, items, currency, onClose, onUpdateQty
                       </div>
                       <button
                         onClick={() => onRemove(i)}
-                        className="text-ink-400 hover:text-blush-500 transition-colors"
+                        className="flex h-8 w-8 items-center justify-center rounded-full text-ink-400 transition-colors hover:bg-blush-50 hover:text-blush-500"
                         aria-label="Eliminar"
                       >
                         <Trash2 size={16} strokeWidth={1.5} />
@@ -134,7 +146,7 @@ export default function CartDrawer({ open, items, currency, onClose, onUpdateQty
 
         {/* Footer */}
         {items.length > 0 && (
-          <div className="border-t border-ink-100 p-6 bg-sand-50">
+          <div className="border-t border-[#e9e0d6] bg-[#fffdfb]/90 p-6 shadow-[0_-12px_30px_rgba(56,35,26,0.04)] backdrop-blur-md sm:p-7">
             <div className="flex items-baseline justify-between mb-1">
               <span className="text-sm text-ink-600">Subtotal</span>
               <span className="font-numeric text-2xl text-ink-900 font-medium">{formatPrice(subtotal, currency)}</span>
@@ -156,7 +168,7 @@ export default function CartDrawer({ open, items, currency, onClose, onUpdateQty
                   setCheckoutLoading(false);
                 }
               }}
-              className="btn-primary w-full disabled:cursor-wait disabled:opacity-60"
+              className="w-full rounded-full bg-ink-900 px-5 py-4 text-[10px] font-medium uppercase tracking-[0.28em] text-sand-50 shadow-[0_12px_24px_rgba(27,23,20,0.16)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-blush-500 hover:shadow-[0_16px_30px_rgba(187,138,125,0.24)] disabled:cursor-wait disabled:opacity-60"
             >
               {checkoutLoading ? 'Conectando con Shopify...' : 'Finalizar Compra'}
             </button>
