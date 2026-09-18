@@ -71,7 +71,7 @@ export default function CategoryProducts({
 
   return (
     <section className="min-h-screen bg-sand-50">
-      <div className="mx-auto max-w-7xl px-6 pt-6 pb-20 lg:px-10 lg:pt-8">
+      <div className={isEmptyCollection ? 'w-full px-0 pb-0' : 'mx-auto max-w-7xl px-6 pt-6 pb-20 lg:px-10 lg:pt-8'}>
         <div className={`grid gap-10 ${isEmptyCollection ? '' : 'lg:grid-cols-[280px_minmax(0,1fr)]'}`}>
           {!isEmptyCollection && <aside className="lg:sticky lg:top-24 lg:h-fit">
             <button
@@ -159,9 +159,9 @@ export default function CategoryProducts({
 
             {filtered.length === 0 && (
               categoryName === 'Colección 2026' ? (
-                <div className="relative col-span-full -mx-6 -mt-6 min-h-[calc(100svh-140px)] overflow-hidden bg-[#f4efe9] lg:-mx-10 lg:-mt-8">
+                <div className="relative col-span-full min-h-[calc(100svh-128px)] overflow-hidden bg-[#f4efe9]">
                   <img
-                    src="https://6aa88bf09422e77b387f33c6.imgix.net/sandbox/cdfbaaad86442c3e76f09f6a55b4e391.jpg"
+                    src="https://6aa88bf09422e77b387f33c6.imgix.net/sandbox/fashn-export-1789762027223.png"
                     alt="Colección 2026"
                     className="absolute inset-0 h-full w-full object-cover object-center"
                   />
