@@ -1,4 +1,3 @@
-import { useReveal } from '@/hooks/useReveal';
 import { Plus, Heart, ArrowLeft } from 'lucide-react';
 import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -146,12 +145,11 @@ export default function CategoryProducts({
 
           <div className={isEmptyCollection ? 'min-w-0' : ''}>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
-              {filtered.map((product, i) => (
+              {filtered.map((product) => (
                 <ProductCard
                   key={product.id}
                   product={product}
                   currency={currency}
-                  index={i}
                   onQuickAdd={onQuickAdd}
                   onToggleWishlist={onToggleWishlist}
                   isWishlisted={wishlist.has(product.id)}
@@ -189,19 +187,16 @@ export default function CategoryProducts({
 function ProductCard({
   product,
   currency,
-  index,
   onQuickAdd,
   onToggleWishlist,
   isWishlisted,
 }: {
   product: Product;
   currency: CurrencyCode;
-  index: number;
   onQuickAdd: (product: Product) => void;
   onToggleWishlist: (productId: string) => void;
   isWishlisted: boolean;
 }) {
-  const { ref, inView } = useReveal<HTMLDivElement>();
   const navigate = useNavigate();
   const badgeText = getProductBadge(product);
   const [isHovering, setIsHovering] = useState(false);
@@ -209,9 +204,7 @@ function ProductCard({
 
   return (
     <div
-      ref={ref}
-      className={`reveal ${inView ? 'in-view' : ''} group flex flex-col rounded-[26px] border border-[#eadfce] bg-[#fffdfb] p-3 shadow-[0_18px_40px_rgba(56,35,26,0.05)] transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_22px_48px_rgba(56,35,26,0.08)]`}
-      style={{ animationDelay: `${index * 0.1}s` }}
+      className="group flex flex-col rounded-[26px] border border-[#eadfce] bg-[#fffdfb] p-3 shadow-[0_18px_40px_rgba(56,35,26,0.05)] transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_22px_48px_rgba(56,35,26,0.08)]"
     >
       {/* Image */}
       <div 
