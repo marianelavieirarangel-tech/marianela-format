@@ -70,7 +70,7 @@ export default function CategoryProducts({
   const isEmptyCollection = categoryName === 'Colección 2026' && filtered.length === 0;
 
   return (
-    <section className="min-h-screen bg-sand-50">
+    <section className={`min-h-screen ${isEmptyCollection ? 'bg-ink-900' : 'bg-sand-50'}`}>
       <div className={isEmptyCollection ? 'w-full px-0 pb-0' : 'mx-auto max-w-7xl px-6 pt-6 pb-20 lg:px-10 lg:pt-8'}>
         <div className={`grid gap-10 ${isEmptyCollection ? '' : 'lg:grid-cols-[280px_minmax(0,1fr)]'}`}>
           {!isEmptyCollection && <aside className="lg:sticky lg:top-24 lg:h-fit">
@@ -159,11 +159,14 @@ export default function CategoryProducts({
 
             {filtered.length === 0 && (
               categoryName === 'Colección 2026' ? (
-                <div className="relative left-1/2 col-span-full min-h-[100svh] w-screen -translate-x-1/2 overflow-hidden bg-[#f4efe9]">
+                <div className="relative left-1/2 col-span-full min-h-[100svh] w-screen -translate-x-1/2 overflow-hidden bg-ink-900">
                   <img
                     src="https://6aa88bf09422e77b387f33c6.imgix.net/sandbox/fashn-export-1789762027223.png"
                     alt="Colección 2026"
                     className="absolute inset-0 h-full w-full object-cover object-[center_top]"
+                    loading="eager"
+                    fetchPriority="high"
+                    decoding="async"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-ink-900/45 via-transparent to-transparent" />
                 </div>
