@@ -100,9 +100,8 @@
   .page-fade-in {
     animation: pageContentFadeIn 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
   }
-  .page-route-enter {
-    animation: pageRouteEnter 1s cubic-bezier(0.22, 1, 0.36, 1) both;
-    will-change: transform;
+    .page-route-enter {
+      animation: none;
   }
   .page-route-immersive {
     background: #1b1714;
