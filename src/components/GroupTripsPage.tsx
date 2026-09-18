@@ -240,14 +240,31 @@ export default function GroupTripsPage({ language }: Props) {
           </p>
         </div>
 
-        <div className="mb-12 grid gap-4 md:grid-cols-3">
-          {localizedMoments.map((item) => (
-            <div key={item.title} className={`overflow-hidden rounded-[22px] border border-ink-200 bg-sand-100 p-3 shadow-[0_12px_30px_rgba(22,18,15,0.06)] ${item.angle}`}>
-              <img src={item.image} alt={item.title} className="h-72 w-full object-cover rounded-[18px]" loading="lazy" />
-              <div className="px-2 pt-4 pb-2 text-center">
-                <p className="text-[10px] uppercase tracking-[0.2em] text-ink-500">{item.title}</p>
+        <div className="mb-16 grid gap-x-6 gap-y-10 md:grid-cols-12 md:grid-rows-[auto_auto_auto] md:gap-x-8 md:gap-y-0">
+          {localizedMoments.map((item, index) => (
+            <figure
+              key={item.title}
+              className={`group ${
+                index === 0
+                  ? 'md:col-span-7 md:col-start-1 md:row-start-1'
+                  : index === 1
+                    ? 'md:col-span-6 md:col-start-7 md:row-start-2 md:mt-[-3rem]'
+                    : 'md:col-span-7 md:col-start-2 md:row-start-3 md:mt-[-1rem]'
+              }`}
+            >
+              <div className="overflow-hidden rounded-[28px] bg-ink-100 shadow-[0_24px_55px_rgba(22,18,15,0.12)]">
+                <img
+                  src={item.image}
+                  alt={item.title}
+                  className="aspect-[4/5] w-full object-cover transition-transform duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.04]"
+                  loading="lazy"
+                />
               </div>
-            </div>
+              <figcaption className="mt-4 flex items-center gap-3 pl-1">
+                <span className="h-px w-8 bg-blush-400" />
+                <p className="text-[10px] uppercase tracking-[0.24em] text-ink-500">{item.title}</p>
+              </figcaption>
+            </figure>
           ))}
         </div>
 
