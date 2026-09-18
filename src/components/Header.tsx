@@ -32,7 +32,7 @@ export default function Header({
 }: Props) {
   const navigate = useNavigate();
   const location = useLocation();
-  const isHome = location.pathname === '/' || location.pathname === '/pages/viajes-grupales';
+  const isHome = location.pathname === '/' || location.pathname === '/pages/viajes-grupales' || location.pathname === '/collections/coleccion-2026';
   const slugify = (s: string) =>
     s
       .toString()

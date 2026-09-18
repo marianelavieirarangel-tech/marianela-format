@@ -159,7 +159,7 @@ export default function CategoryProducts({
 
             {filtered.length === 0 && (
               categoryName === 'Colección 2026' ? (
-                <div className="relative left-1/2 col-span-full min-h-[calc(100svh-128px)] w-screen -translate-x-1/2 overflow-hidden bg-[#f4efe9]">
+                <div className="relative left-1/2 col-span-full min-h-[100svh] w-screen -translate-x-1/2 overflow-hidden bg-[#f4efe9]">
                   <img
                     src="https://6aa88bf09422e77b387f33c6.imgix.net/sandbox/fashn-export-1789762027223.png"
                     alt="Colección 2026"
