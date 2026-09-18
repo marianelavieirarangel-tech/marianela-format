@@ -38,7 +38,6 @@ export default function CategoryProducts({
 }: Props) {
   const [sortBy, setSortBy] = useState<'featured' | 'price-asc' | 'price-desc'>('featured');
   const [activeFilter, setActiveFilter] = useState<'Todos' | 'Novedades' | 'Bestseller' | 'Sale'>('Todos');
-  const [collectionHeroLoaded, setCollectionHeroLoaded] = useState(false);
   const isSaleSection = categoryName === 'Sale';
 
   const filtered = useMemo(
@@ -164,10 +163,7 @@ export default function CategoryProducts({
                   <img
                     src="https://6aa88bf09422e77b387f33c6.imgix.net/sandbox/fashn-export-1789762027223.png?auto=format,compress&q=82&w=2400"
                     alt="Colección 2026"
-                    onLoad={() => setCollectionHeroLoaded(true)}
-                    className={`absolute inset-0 h-full w-full object-cover object-[center_top] transition-[opacity,transform] duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] ${
-                      collectionHeroLoaded ? 'scale-100 opacity-100' : 'scale-[1.015] opacity-0'
-                    }`}
+                    className="absolute inset-0 h-full w-full object-cover object-[center_top]"
                     loading="eager"
                     fetchPriority="high"
                     decoding="async"
