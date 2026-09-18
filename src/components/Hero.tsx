@@ -4,7 +4,7 @@ import { translate, type LanguageCode } from '@/lib/language';
 
 export default function Hero({ language = 'es' }: { language?: LanguageCode }) {
   return (
-    <section id="top" className="relative h-[100vh] min-h-[680px] w-full overflow-hidden bg-ink-900">
+    <section id="home-hero" className="relative h-[100vh] min-h-[680px] w-full overflow-hidden bg-ink-900">
       {/* Background image */}
       <div className="absolute inset-0">
         <img

@@ -200,7 +200,7 @@ export default function GroupTripsPage({ language }: Props) {
 
   return (
     <div className="bg-sand-50 text-ink-900">
-      <section className="relative min-h-[100svh] overflow-hidden bg-ink-900">
+      <section id="group-trips-hero" className="relative min-h-[100svh] overflow-hidden bg-ink-900">
         <img
           src="https://6a8377665cc6de03eb430013.imgix.net/sandbox/imagen2.png"
           alt="Grupo de amigas disfrutando junto al mar"

@@ -79,11 +79,23 @@ export default function Header({
     translate(language, 'newCollection'),
   ];
   useEffect(() => {
-    const syncHeaderState = () => setScrolled(window.scrollY > 40);
+    const syncHeaderState = () => {
+      if (!isHome) {
+        setScrolled(window.scrollY > 40);
+        return;
+      }
+      const hero = document.getElementById(location.pathname === '/' ? 'home-hero' : 'group-trips-hero');
+      const heroBottom = hero?.getBoundingClientRect().bottom ?? 0;
+      setScrolled(heroBottom <= 37);
+    };
     syncHeaderState();
     window.addEventListener('scroll', syncHeaderState, { passive: true });
-    return () => window.removeEventListener('scroll', syncHeaderState);
-  }, [location.pathname]);
+    window.addEventListener('resize', syncHeaderState);
+    return () => {
+      window.removeEventListener('scroll', syncHeaderState);
+      window.removeEventListener('resize', syncHeaderState);
+    };
+  }, [isHome, location.pathname]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
