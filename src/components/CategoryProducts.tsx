@@ -238,13 +238,13 @@ function ProductCard({
         {/* Wishlist button */}
         <button
           onClick={() => onToggleWishlist(product.id)}
-          className="absolute bottom-4 right-4 flex h-10 w-10 items-center justify-center rounded-full border border-[#f0e5dd] bg-[#fffdfb]/80 shadow-sm transition-all hover:-translate-y-0.5 hover:bg-[#fffaf7]"
+          className="absolute bottom-4 right-4 flex h-10 w-10 items-center justify-center rounded-full border border-[#f0e5dd] bg-[#fffdfb]/95 shadow-sm transition-colors duration-200 hover:bg-[#fffaf7]"
           aria-label="Agregar a favoritos"
         >
           <Heart
             size={18}
             strokeWidth={1.5}
-            className={isWishlisted ? 'fill-[#ba826b] stroke-[#ba826b]' : 'stroke-[#3b312e]'}
+            className={`transition-colors duration-200 ${isWishlisted ? 'fill-[#ba826b] stroke-[#ba826b]' : 'stroke-[#3b312e]'}`}
           />
         </button>
 

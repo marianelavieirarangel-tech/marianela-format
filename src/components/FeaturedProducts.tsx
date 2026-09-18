@@ -158,13 +158,13 @@ function ProductCard({
             e.stopPropagation();
             onToggleWishlist(product.id);
           }}
-          className="absolute right-3 top-3 flex h-9 w-9 items-center justify-center rounded-full border border-[#f0e5dd] bg-[#fffdfb]/80 backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#fffaf7]"
+          className="absolute right-3 top-3 flex h-9 w-9 items-center justify-center rounded-full border border-[#f0e5dd] bg-[#fffdfb]/95 transition-colors duration-200 hover:bg-[#fffaf7]"
           aria-label="Añadir a favoritos"
         >
           <Heart
             size={16}
             strokeWidth={1.5}
-            className={isWishlisted ? 'fill-[#ba826b] text-[#ba826b]' : 'text-[#4a403d]'}
+            className={`transition-colors duration-200 ${isWishlisted ? 'fill-[#ba826b] text-[#ba826b]' : 'text-[#4a403d]'}`}
           />
         </button>
 
