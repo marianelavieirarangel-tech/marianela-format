@@ -116,3 +116,15 @@ export const footerLinks = {
 export function formatProductName(name: string) {
   return name.replace(/\bTriangulo\b/gi, 'Triángulo');
 }
+
+export function localizedProductName(name: string, language: 'pt' | 'en' | 'es' | 'fr' | 'it' | 'de' | 'nl') {
+  const formattedName = formatProductName(name);
+  if (language !== 'en') return formattedName;
+
+  const englishNames: Record<string, string> = {
+    'Vestido Hilo Algodon 100%': '100% Cotton Knit Dress',
+    'Vestido Hilo Algodón 100%': '100% Cotton Knit Dress',
+  };
+
+  return englishNames[formattedName] ?? formattedName;
+}

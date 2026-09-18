@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { X, Plus, Minus, Trash2, ShoppingBag } from 'lucide-react';
 import type { CartItem } from './QuickAddModal';
+import { localizedProductName } from '@/data/catalog';
 import { formatPrice, type CurrencyCode } from '@/lib/currency';
 import type { LanguageCode } from '@/lib/language';
 
@@ -113,10 +114,10 @@ export default function CartDrawer({ open, items, currency, onClose, onUpdateQty
               {items.map((item, i) => (
                 <div key={`${item.product.id}-${item.size}-${item.color}-${i}`} className="flex gap-4 rounded-2xl border border-[#ebe1d7] bg-[#fffdfb] p-3 shadow-[0_8px_24px_rgba(56,35,26,0.04)]">
                   <div className="h-28 w-20 shrink-0 overflow-hidden rounded-xl bg-ink-100">
-                    <img src={item.product.image} alt={item.product.name} className="h-full w-full object-cover" />
+                    <img src={item.product.image} alt={localizedProductName(item.product.name, language)} className="h-full w-full object-cover" />
                   </div>
                   <div className="flex-1 flex flex-col">
-                    <h3 className="font-serif text-lg text-ink-900 leading-tight">{item.product.name}</h3>
+                    <h3 className="font-serif text-lg text-ink-900 leading-tight">{localizedProductName(item.product.name, language)}</h3>
                     <p className="text-[10px] uppercase tracking-wide text-ink-400 mt-1">
                       {item.color} · {labels[14]} {item.size}
                     </p>

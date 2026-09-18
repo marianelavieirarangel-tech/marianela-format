@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Heart, Share2, ArrowLeft, Minus, Plus, MessageCircle } from 'lucide-react';
-import { formatProductName, type Product } from '@/data/catalog';
+import { formatProductName, localizedProductName, type Product } from '@/data/catalog';
 import type { CartItem } from '@/components/QuickAddModal';
 import { formatPrice, type CurrencyCode } from '@/lib/currency';
 import { translateLabel, type LanguageCode } from '@/lib/language';
@@ -33,7 +33,8 @@ export default function ProductDetail({
   const [selectedColor, setSelectedColor] = useState<string>(product.swatches[0]?.name || '');
   const gallery = product.images?.length ? product.images : [product.image];
   const [selectedImage, setSelectedImage] = useState(gallery[0]);
-  const waMessage = `Hola, me gustaría consultar el producto *${formatProductName(product.name)}* y quisiera más información.`;
+  const displayName = localizedProductName(product.name, language);
+  const waMessage = `Hola, me gustaría consultar el producto *${displayName}* y quisiera más información.`;
   const waLink = `https://wa.me/51949217304?text=${encodeURIComponent(waMessage)}`;
 
   useEffect(() => {
@@ -96,7 +97,7 @@ export default function ProductDetail({
               <div className="aspect-[3/4]">
                 <img
                   src={selectedImage}
-                  alt={formatProductName(product.name)}
+                  alt={displayName}
                   className="h-full w-full object-contain"
                 />
               </div>
@@ -135,7 +136,7 @@ export default function ProductDetail({
             )}
 
             <h1 className="mb-5 font-serif text-4xl font-light tracking-wide text-[#1b1714] lg:text-5xl">
-              {formatProductName(product.name)}
+              {displayName}
             </h1>
 
             <div className="mb-8 flex items-baseline gap-3 border-b border-[#eadfce] pb-8">
