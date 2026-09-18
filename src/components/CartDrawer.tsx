@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { X, Plus, Minus, Trash2, ShoppingBag } from 'lucide-react';
 import type { CartItem } from './QuickAddModal';
 import { formatPrice, type CurrencyCode } from '@/lib/currency';
+import type { LanguageCode } from '@/lib/language';
 
 type Props = {
   open: boolean;
@@ -11,9 +12,10 @@ type Props = {
   onUpdateQty: (index: number, qty: number) => void;
   onRemove: (index: number) => void;
   onCheckout?: () => Promise<void>;
+  language: LanguageCode;
 };
 
-export default function CartDrawer({ open, items, currency, onClose, onUpdateQty, onRemove, onCheckout }: Props) {
+export default function CartDrawer({ open, items, currency, onClose, onUpdateQty, onRemove, onCheckout, language }: Props) {
   const [checkoutLoading, setCheckoutLoading] = useState(false);
   const [checkoutError, setCheckoutError] = useState('');
   useEffect(() => {
@@ -29,6 +31,15 @@ export default function CartDrawer({ open, items, currency, onClose, onUpdateQty
   const shippingThreshold = 159;
   const remaining = Math.max(0, shippingThreshold - subtotal);
   const progress = Math.min(100, (subtotal / shippingThreshold) * 100);
+  const labels = {
+    es: ['Tu Bolsa', 'Tu bolsa está vacía', 'Descubre nuestras colecciones y encuentra tu próxima pieza favorita.', 'Continuar Comprando', 'Subtotal', 'Impuestos y envío calculados al finalizar la compra', 'Finalizar Compra', 'Seguir Explorando', 'Conectando con Shopify...'],
+    en: ['Your Bag', 'Your bag is empty', 'Discover our collections and find your next favorite piece.', 'Continue Shopping', 'Subtotal', 'Taxes and shipping calculated at checkout', 'Complete Purchase', 'Keep Exploring', 'Connecting to Shopify...'],
+    pt: ['Sua Bolsa', 'Sua bolsa está vazia', 'Descubra nossas coleções e encontre sua próxima peça favorita.', 'Continuar Comprando', 'Subtotal', 'Impostos e frete calculados no checkout', 'Finalizar Compra', 'Continuar Explorando', 'Conectando ao Shopify...'],
+    fr: ['Votre sac', 'Votre sac est vide', 'Découvrez nos collections et trouvez votre prochaine pièce préférée.', 'Continuer vos achats', 'Sous-total', 'Taxes et livraison calculées au paiement', 'Finaliser la commande', 'Continuer à explorer', 'Connexion à Shopify...'],
+    it: ['La tua borsa', 'La tua borsa è vuota', 'Scopri le nostre collezioni e trova il tuo prossimo capo preferito.', 'Continua lo shopping', 'Subtotale', 'Imposte e spedizione calcolate al checkout', 'Concludi acquisto', 'Continua a esplorare', 'Connessione a Shopify...'],
+    de: ['Deine Tasche', 'Deine Tasche ist leer', 'Entdecke unsere Kollektionen und finde dein nächstes Lieblingsstück.', 'Weiter einkaufen', 'Zwischensumme', 'Steuern und Versand werden an der Kasse berechnet', 'Kauf abschließen', 'Weiter entdecken', 'Verbindung mit Shopify...'],
+    nl: ['Jouw tas', 'Je tas is leeg', 'Ontdek onze collecties en vind je volgende favoriete item.', 'Verder winkelen', 'Subtotaal', 'Belastingen en verzending worden bij het afrekenen berekend', 'Aankoop afronden', 'Verder ontdekken', 'Verbinden met Shopify...'],
+  }[language];
 
   return (
     <div className={`fixed inset-0 z-[1200] ${open ? 'visible' : 'invisible'}`}>
@@ -49,7 +60,7 @@ export default function CartDrawer({ open, items, currency, onClose, onUpdateQty
           <div>
             <p className="mb-1 text-[9px] font-medium uppercase tracking-[0.3em] text-blush-500">Marianela Vieira</p>
             <h2 className="font-serif text-[1.65rem] tracking-[0.08em] text-ink-900">
-              Tu Bolsa <span className="text-base text-ink-400">({items.length})</span>
+              {labels[0]} <span className="text-base text-ink-400">({items.length})</span>
             </h2>
           </div>
           <button onClick={onClose} aria-label="Cerrar">
@@ -91,10 +102,10 @@ export default function CartDrawer({ open, items, currency, onClose, onUpdateQty
               <div className="relative mb-6 flex h-20 w-20 items-center justify-center rounded-full border border-[#dfd1c3] bg-[#fffdfb] shadow-[0_12px_30px_rgba(56,35,26,0.08)]">
                 <ShoppingBag size={29} strokeWidth={1.15} className="text-blush-400" />
               </div>
-              <p className="relative mb-2 font-serif text-[1.7rem] text-ink-800">Tu bolsa está vacía</p>
-              <p className="relative mb-7 max-w-[270px] text-xs font-light leading-relaxed text-ink-400">Descubre nuestras colecciones y encuentra tu próxima pieza favorita.</p>
+              <p className="relative mb-2 font-serif text-[1.7rem] text-ink-800">{labels[1]}</p>
+              <p className="relative mb-7 max-w-[270px] text-xs font-light leading-relaxed text-ink-400">{labels[2]}</p>
               <button onClick={onClose} className="relative rounded-full border border-ink-700 px-7 py-3 text-[10px] uppercase tracking-[0.25em] text-ink-700 transition-all duration-300 hover:border-blush-400 hover:bg-ink-900 hover:text-sand-50">
-                Continuar Comprando
+                {labels[3]}
               </button>
             </div>
           ) : (
@@ -148,10 +159,10 @@ export default function CartDrawer({ open, items, currency, onClose, onUpdateQty
         {items.length > 0 && (
           <div className="border-t border-[#e9e0d6] bg-[#fffdfb]/90 p-6 shadow-[0_-12px_30px_rgba(56,35,26,0.04)] backdrop-blur-md sm:p-7">
             <div className="flex items-baseline justify-between mb-1">
-              <span className="text-sm text-ink-600">Subtotal</span>
+              <span className="text-sm text-ink-600">{labels[4]}</span>
               <span className="font-numeric text-2xl text-ink-900 font-medium">{formatPrice(subtotal, currency)}</span>
             </div>
-            <p className="text-xs text-ink-400 mb-5">Impuestos y envío calculados al finalizar la compra</p>
+            <p className="text-xs text-ink-400 mb-5">{labels[5]}</p>
             {checkoutError && (
               <p className="mb-4 text-sm text-red-600" role="alert">{checkoutError}</p>
             )}
@@ -170,10 +181,10 @@ export default function CartDrawer({ open, items, currency, onClose, onUpdateQty
               }}
               className="w-full rounded-full bg-ink-900 px-5 py-4 text-[10px] font-medium uppercase tracking-[0.28em] text-sand-50 shadow-[0_12px_24px_rgba(27,23,20,0.16)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-blush-500 hover:shadow-[0_16px_30px_rgba(187,138,125,0.24)] disabled:cursor-wait disabled:opacity-60"
             >
-              {checkoutLoading ? 'Conectando con Shopify...' : 'Finalizar Compra'}
+              {checkoutLoading ? labels[8] : labels[6]}
             </button>
             <button onClick={onClose} className="w-full mt-3 text-xs uppercase tracking-widest text-ink-500 hover:text-ink-800 link-underline mx-auto">
-              Seguir Explorando
+              {labels[7]}
             </button>
           </div>
         )}

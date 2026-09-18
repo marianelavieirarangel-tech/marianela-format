@@ -357,6 +357,7 @@ export default function App() {
         onUpdateQty={handleUpdateQty}
         onRemove={handleRemove}
         onCheckout={handleDirectCheckout}
+        language={language}
       />
       <SearchOverlay
         products={catalogProducts}
@@ -374,6 +375,7 @@ export default function App() {
         wishlist={wishlist}
         currency={currency}
         onClose={() => setWishlistOpen(false)}
+        language={language}
         onSelect={(p) => {
           setWishlistOpen(false);
           setQuickAddProduct(p);
