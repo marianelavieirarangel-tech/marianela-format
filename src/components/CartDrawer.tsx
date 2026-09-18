@@ -61,7 +61,7 @@ export default function CartDrawer({ open, items, currency, onClose, onUpdateQty
           <div>
             <p className="mb-1 text-[9px] font-medium uppercase tracking-[0.3em] text-blush-500">Marianela Vieira</p>
             <h2 className="font-serif text-[1.65rem] tracking-[0.08em] text-ink-900">
-              {labels[0]} <span className="text-base text-ink-400">({items.length})</span>
+              {labels[0]} <span className="ml-1 inline-flex min-w-6 items-center justify-center rounded-full border border-ink-200 bg-sand-50 px-1.5 py-0.5 font-sans text-[10px] font-medium tracking-normal text-ink-500">({items.length})</span>
             </h2>
           </div>
           <button onClick={onClose} aria-label="Cerrar">
