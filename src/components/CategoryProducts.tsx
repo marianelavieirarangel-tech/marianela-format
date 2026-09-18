@@ -163,7 +163,7 @@ export default function CategoryProducts({
                   <img
                     src="https://6aa88bf09422e77b387f33c6.imgix.net/sandbox/fashn-export-1789762027223.png"
                     alt="Colección 2026"
-                    className="absolute inset-0 h-full w-full object-cover object-center"
+                    className="absolute inset-0 h-full w-full object-cover object-[center_20%]"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-ink-900/45 via-transparent to-transparent" />
                   <h1 className="absolute bottom-8 left-6 font-serif text-4xl font-light tracking-wide text-sand-50 sm:bottom-12 sm:left-10 sm:text-6xl">
