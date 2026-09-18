@@ -9,6 +9,7 @@
 
   html {
     scroll-behavior: smooth;
+    scrollbar-gutter: stable;
   }
   body {
     @apply bg-sand-50 text-ink-800 font-sans antialiased;
