@@ -97,7 +97,7 @@ export default function ProductDetail({
                 <img
                   src={selectedImage}
                   alt={formatProductName(product.name)}
-                  className="h-full w-full object-cover"
+                  className="h-full w-full object-contain"
                 />
               </div>
             </div>
