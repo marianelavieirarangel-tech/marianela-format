@@ -32,13 +32,13 @@ export default function CartDrawer({ open, items, currency, onClose, onUpdateQty
   const remaining = Math.max(0, shippingThreshold - subtotal);
   const progress = Math.min(100, (subtotal / shippingThreshold) * 100);
   const labels = {
-    es: ['Tu Bolsa', 'Tu bolsa está vacía', 'Descubre nuestras colecciones y encuentra tu próxima pieza favorita.', 'Continuar Comprando', 'Subtotal', 'Impuestos y envío calculados al finalizar la compra', 'Finalizar Compra', 'Seguir Explorando', 'Conectando con Shopify...'],
-    en: ['Your Bag', 'Your bag is empty', 'Discover our collections and find your next favorite piece.', 'Continue Shopping', 'Subtotal', 'Taxes and shipping calculated at checkout', 'Complete Purchase', 'Keep Exploring', 'Connecting to Shopify...'],
-    pt: ['Sua Bolsa', 'Sua bolsa está vazia', 'Descubra nossas coleções e encontre sua próxima peça favorita.', 'Continuar Comprando', 'Subtotal', 'Impostos e frete calculados no checkout', 'Finalizar Compra', 'Continuar Explorando', 'Conectando ao Shopify...'],
-    fr: ['Votre sac', 'Votre sac est vide', 'Découvrez nos collections et trouvez votre prochaine pièce préférée.', 'Continuer vos achats', 'Sous-total', 'Taxes et livraison calculées au paiement', 'Finaliser la commande', 'Continuer à explorer', 'Connexion à Shopify...'],
-    it: ['La tua borsa', 'La tua borsa è vuota', 'Scopri le nostre collezioni e trova il tuo prossimo capo preferito.', 'Continua lo shopping', 'Subtotale', 'Imposte e spedizione calcolate al checkout', 'Concludi acquisto', 'Continua a esplorare', 'Connessione a Shopify...'],
-    de: ['Deine Tasche', 'Deine Tasche ist leer', 'Entdecke unsere Kollektionen und finde dein nächstes Lieblingsstück.', 'Weiter einkaufen', 'Zwischensumme', 'Steuern und Versand werden an der Kasse berechnet', 'Kauf abschließen', 'Weiter entdecken', 'Verbindung mit Shopify...'],
-    nl: ['Jouw tas', 'Je tas is leeg', 'Ontdek onze collecties en vind je volgende favoriete item.', 'Verder winkelen', 'Subtotaal', 'Belastingen en verzending worden bij het afrekenen berekend', 'Aankoop afronden', 'Verder ontdekken', 'Verbinden met Shopify...'],
+    es: ['Tu Bolsa', 'Tu bolsa está vacía', 'Descubre nuestras colecciones y encuentra tu próxima pieza favorita.', 'Continuar Comprando', 'Subtotal', 'Impuestos y envío calculados al finalizar la compra', 'Finalizar Compra', 'Seguir Explorando', 'Conectando con Shopify...', 'Tu selección te espera', 'Envío gratis', 'Te faltan', 'para envío gratis', '¡Felicidades! Tu envío es gratis', 'Talla'],
+    en: ['Your Bag', 'Your bag is empty', 'Discover our collections and find your next favorite piece.', 'Continue Shopping', 'Subtotal', 'Taxes and shipping calculated at checkout', 'Complete Purchase', 'Keep Exploring', 'Connecting to Shopify...', 'Your selection is waiting', 'Free shipping', 'You are', 'away from free shipping', 'Congratulations! Your shipping is free', 'Size'],
+    pt: ['Sua Bolsa', 'Sua bolsa está vazia', 'Descubra nossas coleções e encontre sua próxima peça favorita.', 'Continuar Comprando', 'Subtotal', 'Impostos e frete calculados no checkout', 'Finalizar Compra', 'Continuar Explorando', 'Conectando ao Shopify...', 'Sua seleção espera por você', 'Frete grátis', 'Faltam', 'para frete grátis', 'Parabéns! Seu frete é grátis', 'Tamanho'],
+    fr: ['Votre sac', 'Votre sac est vide', 'Découvrez nos collections et trouvez votre prochaine pièce préférée.', 'Continuer vos achats', 'Sous-total', 'Taxes et livraison calculées au paiement', 'Finaliser la commande', 'Continuer à explorer', 'Connexion à Shopify...', 'Votre sélection vous attend', 'Livraison offerte', 'Il vous manque', 'pour la livraison offerte', 'Félicitations ! Votre livraison est offerte', 'Taille'],
+    it: ['La tua borsa', 'La tua borsa è vuota', 'Scopri le nostre collezioni e trova il tuo prossimo capo preferito.', 'Continua lo shopping', 'Subtotale', 'Imposte e spedizione calcolate al checkout', 'Concludi acquisto', 'Continua a esplorare', 'Connessione a Shopify...', 'La tua selezione ti aspetta', 'Spedizione gratuita', 'Ti mancano', 'per la spedizione gratuita', 'Congratulazioni! La spedizione è gratuita', 'Taglia'],
+    de: ['Deine Tasche', 'Deine Tasche ist leer', 'Entdecke unsere Kollektionen und finde dein nächstes Lieblingsstück.', 'Weiter einkaufen', 'Zwischensumme', 'Steuern und Versand werden an der Kasse berechnet', 'Kauf abschließen', 'Weiter entdecken', 'Verbindung mit Shopify...', 'Deine Auswahl wartet', 'Kostenloser Versand', 'Dir fehlen noch', 'für kostenlosen Versand', 'Herzlichen Glückwunsch! Der Versand ist kostenlos', 'Größe'],
+    nl: ['Jouw tas', 'Je tas is leeg', 'Ontdek onze collecties en vind je volgende favoriete item.', 'Verder winkelen', 'Subtotaal', 'Belastingen en verzending worden bij het afrekenen berekend', 'Aankoop afronden', 'Verder ontdekken', 'Verbinden met Shopify...', 'Je selectie wacht op je', 'Gratis verzending', 'Je hebt nog', 'nodig voor gratis verzending', 'Gefeliciteerd! Je verzending is gratis', 'Maat'],
   }[language];
 
   return (
@@ -74,14 +74,14 @@ export default function CartDrawer({ open, items, currency, onClose, onUpdateQty
         {items.length > 0 && (
           <div className="border-b border-[#e9e0d6] bg-[#f3ece4] px-6 py-5 sm:px-8">
             <div className="mb-3 flex items-center justify-between gap-4">
-              <p className="text-xs font-medium text-ink-800">Tu selección te espera</p>
-              <span className="text-[9px] uppercase tracking-[0.2em] text-blush-500">Envío gratis</span>
+              <p className="text-xs font-medium text-ink-800">{labels[9]}</p>
+              <span className="text-[9px] uppercase tracking-[0.2em] text-blush-500">{labels[10]}</span>
             </div>
             <p className="text-xs text-ink-600 font-light mb-2">
               {remaining > 0 ? (
-                <>Te faltan <span className="text-ink-900 font-medium">{formatPrice(remaining, currency)}</span> para envío gratis</>
+              <>{labels[11]} <span className="text-ink-900 font-medium">{formatPrice(remaining, currency)}</span> {labels[12]}</>
               ) : (
-                <span className="text-sage-600">¡Felicidades! Tu envío es gratis</span>
+              <span className="text-sage-600">{labels[13]}</span>
               )}
             </p>
             <div className="h-1.5 overflow-hidden rounded-full bg-ink-200/70">
@@ -118,7 +118,7 @@ export default function CartDrawer({ open, items, currency, onClose, onUpdateQty
                   <div className="flex-1 flex flex-col">
                     <h3 className="font-serif text-lg text-ink-900 leading-tight">{item.product.name}</h3>
                     <p className="text-[10px] uppercase tracking-wide text-ink-400 mt-1">
-                      {item.color} · Talla {item.size}
+                      {item.color} · {labels[14]} {item.size}
                     </p>
                     <p className="font-numeric text-ink-900 text-sm mt-1">{formatPrice(item.product.price, currency)}</p>
 
