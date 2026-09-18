@@ -89,7 +89,7 @@ export default function CategoryProducts({
                 ? 'text-[2.6rem] text-[#c62828] lg:text-[3.3rem]'
                 : 'text-4xl text-ink-900 lg:text-[2.8rem]'
             }`}>
-              {categoryName}
+              {translateLabel(language, categoryName)}
             </h1>
 
             <p className="mt-4 text-[11px] font-medium uppercase tracking-[0.2em] text-ink-500">
