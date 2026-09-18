@@ -214,10 +214,20 @@ function ProductCard({
         onMouseLeave={() => setIsHovering(false)}
       >
         <img
-          src={isHovering && previewImage ? previewImage : product.image}
+          src={product.image}
           alt={product.name}
-          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+          className="absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ease-in-out group-hover:scale-105"
         />
+        {previewImage !== product.image && (
+          <img
+            src={previewImage}
+            alt=""
+            aria-hidden="true"
+            className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ease-in-out group-hover:scale-105 ${
+              isHovering ? 'opacity-100' : 'opacity-0'
+            }`}
+          />
+        )}
 
         {/* Tags */}
         {badgeText && (
