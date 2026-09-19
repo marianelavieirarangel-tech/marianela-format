@@ -1,7 +1,7 @@
 import { footerLinks } from '@/data/catalog';
 import { Instagram, Music2, MessageCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { translate, type LanguageCode } from '@/lib/language';
+import { translate, translateLabel, type LanguageCode } from '@/lib/language';
 
 const footerLinkPaths: Record<string, string> = {
   'Envíos y Devoluciones': '/pages/envios-y-devoluciones',
@@ -74,7 +74,7 @@ export default function Footer({ language = 'es' }: { language?: LanguageCode })
           {/* Link columns */}
           {Object.entries(footerLinks).filter(([title]) => title !== 'Legal').map(([title, links]) => (
             <div key={title}>
-              <h5 className="text-[11px] uppercase tracking-widest text-sand-50 mb-5">{title}</h5>
+              <h5 className="text-[11px] uppercase tracking-widest text-sand-50 mb-5">{translateLabel(language, title)}</h5>
               <ul className="space-y-3">
                 {links.map((link) => (
                   <li key={link}>
@@ -82,7 +82,7 @@ export default function Footer({ language = 'es' }: { language?: LanguageCode })
                       to={footerLinkPaths[link] || '/pages/contacto'}
                       className="text-sm font-light text-sand-200 transition-colors duration-300 hover:text-sand-50 link-underline"
                     >
-                      {link}
+                      {translateLabel(language, link)}
                     </Link>
                   </li>
                 ))}
@@ -98,7 +98,7 @@ export default function Footer({ language = 'es' }: { language?: LanguageCode })
           <div className="mb-5 flex flex-wrap items-center justify-center gap-x-4 gap-y-2">
             {footerBottomLinks.map(([label, path]) => (
               <Link key={path} to={path} className="text-xs text-ink-400 transition-colors hover:text-sand-50 link-underline">
-                {label}
+              {translateLabel(language, label)}
               </Link>
             ))}
           </div>

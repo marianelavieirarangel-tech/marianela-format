@@ -17,7 +17,7 @@ import InfoPage from '@/components/InfoPage';
 import CookiePreferences from '@/components/CookiePreferences';
 import GroupTripsPage from '@/components/GroupTripsPage';
 import type { Product } from '@/data/catalog';
-import { categorySlugs, products, navLinks, womenSubcategories, hiddenCategoryNames } from '@/data/catalog';
+import { categorySlugs, navLinks, womenSubcategories, hiddenCategoryNames } from '@/data/catalog';
 import { type CurrencyCode } from '@/lib/currency';
 import { type LanguageCode, languageOptions } from '@/lib/language';
 import { createShopifyCheckout, fetchShopifyProducts, isShopifyEnabled } from '@/lib/shopify';
@@ -96,7 +96,7 @@ export default function App() {
   const [cart, setCart] = useState<CartItem[]>(readStoredCart);
   const [cartId, setCartId] = useState<string | null>(readStoredCartId);
   const [wishlist, setWishlist] = useState<Set<string>>(readStoredWishlist);
-  const [catalogProducts, setCatalogProducts] = useState(products.filter((product) => !hiddenCategoryNames.has(product.category)));
+  const [catalogProducts, setCatalogProducts] = useState<Product[]>([]);
   const [catalogError, setCatalogError] = useState<string | null>(null);
   const [currency, setCurrency] = useState<CurrencyCode>('PEN');
   const [language, setLanguage] = useState<LanguageCode>(readStoredLanguage);
@@ -159,7 +159,10 @@ export default function App() {
   }, [language]);
 
   useEffect(() => {
-    if (!isShopifyEnabled()) return;
+    if (!isShopifyEnabled()) {
+      setCatalogError('El catálogo de Shopify no está configurado.');
+      return;
+    }
     fetchShopifyProducts()
       .then((shopifyProducts) => {
         const filteredShopifyProducts = shopifyProducts.filter((product) => !hiddenCategoryNames.has(product.category));
@@ -243,6 +246,7 @@ export default function App() {
         onAddToCart={handleAddToCart}
         isWishlisted={wishlist.has(product.id)}
         onToggleWishlist={toggleWishlist}
+        language={language}
       />
     );
   }
@@ -270,6 +274,7 @@ export default function App() {
         onToggleWishlist={toggleWishlist}
         wishlist={wishlist}
         onBack={() => navigate(-1)}
+        language={language}
       />
     );
   }
@@ -282,9 +287,9 @@ export default function App() {
         </div>
       )}
       <Hero language={language} />
-      <CategoryGrid />
-      <FeaturedProducts products={catalogProducts} currency={currency} onQuickAdd={openQuickAdd} onToggleWishlist={toggleWishlist} wishlist={wishlist} />
-      <EditorialBanner />
+      <CategoryGrid language={language} />
+      <FeaturedProducts language={language} products={catalogProducts} currency={currency} onQuickAdd={openQuickAdd} onToggleWishlist={toggleWishlist} wishlist={wishlist} />
+      <EditorialBanner language={language} />
     </>
   );
 
@@ -301,7 +306,11 @@ export default function App() {
         onOpenWishlist={() => setWishlistOpen(true)}
       />
 
-      <main className={`${location.pathname === '/' ? 'pt-0' : 'pt-[128px] lg:pt-[140px]'}`}>
+      <main className={`${location.pathname === '/' || location.pathname === '/pages/viajes-grupales' || location.pathname === '/collections/coleccion-2026' ? 'pt-0' : 'pt-[128px] lg:pt-[140px]'}`}>
+        <div
+          key={location.pathname}
+          className={`page-route-enter ${location.pathname === '/pages/viajes-grupales' ? 'page-route-immersive' : ''}`}
+        >
         <Routes>
           <Route
             path="/"
@@ -324,10 +333,11 @@ export default function App() {
           <Route path="/:slug" element={<CategoryRoute />} />
 
           <Route path="/product/:id" element={<ProductPage />} />
+          <Route path="/pages/viajes-grupales" element={<GroupTripsPage language={language} />} />
           <Route path="/pages/:slug" element={<InfoPage />} />
-          <Route path="/pages/viajes-grupales" element={<GroupTripsPage />} />
           <Route path="/policies/:slug" element={<InfoPage />} />
         </Routes>
+        </div>
       </main>
 
       <Footer language={language} />
@@ -347,6 +357,7 @@ export default function App() {
         onUpdateQty={handleUpdateQty}
         onRemove={handleRemove}
         onCheckout={handleDirectCheckout}
+        language={language}
       />
       <SearchOverlay
         products={catalogProducts}
@@ -364,6 +375,7 @@ export default function App() {
         wishlist={wishlist}
         currency={currency}
         onClose={() => setWishlistOpen(false)}
+        language={language}
         onSelect={(p) => {
           setWishlistOpen(false);
           setQuickAddProduct(p);

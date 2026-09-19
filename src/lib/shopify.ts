@@ -80,6 +80,27 @@ async function shopifyRequest<T>(query: string, variables: Record<string, unknow
 
 const knownCategories = ['Bikini', 'Traje de Baño', 'Tankini', 'Trikini', 'Fuera del Agua', 'Accesorios'] as const;
 
+const colorHexByName: Record<string, string> = {
+  negro: '#1a1611',
+  black: '#1a1611',
+  blanco: '#f5f0ea',
+  white: '#f5f0ea',
+  beige: '#e8dfd6',
+  rosa: '#e9b0a3',
+  rose: '#e9b0a3',
+  rojo: '#a33b2b',
+  red: '#a33b2b',
+  azul: '#2f4a6d',
+  blue: '#2f4a6d',
+  verde: '#2f725d',
+  green: '#2f725d',
+};
+
+function swatchHex(colorName: string) {
+  return colorHexByName[colorName.trim().toLowerCase()] ?? '#d9b2a7';
+}
+
+
 function getCategory(productType: string, tags: string[], collections: Array<{ handle: string; title: string }>): Product['category'] {
   const values = [productType, ...tags, ...collections.flatMap((collection) => [collection.handle, collection.title])]
     .map((value) => value.toLowerCase());
@@ -110,23 +131,36 @@ export async function fetchShopifyProducts() {
       const variant = product.variants.nodes[0];
       const price = Number(product.priceRange.minVariantPrice.amount);
       const compareAtPrice = Number(product.compareAtPriceRange.minVariantPrice.amount);
-      const colors = variant?.selectedOptions.filter((option) => option.name.toLowerCase() === 'color') ?? [];
-
       const category = getCategory(product.productType, product.tags, product.collections.nodes);
       const images = Array.from(new Set([
         product.featuredImage?.url,
         ...product.images.nodes.map((image) => image.url),
         ...product.variants.nodes.map((productVariant) => productVariant.image?.url).filter(Boolean),
       ].filter(Boolean))) as string[];
+
+      const swatchesByColor = new Map<string, { name: string; hex: string; image?: string; variantId?: string }>();
+      for (const productVariant of product.variants.nodes) {
+        const colorOption = productVariant.selectedOptions.find((option) => option.name.toLowerCase() === 'color');
+        if (!colorOption) continue;
+        if (swatchesByColor.has(colorOption.value)) continue;
+        swatchesByColor.set(colorOption.value, {
+          name: colorOption.value,
+          hex: swatchHex(colorOption.value),
+          image: productVariant.image?.url ?? undefined,
+          variantId: productVariant.id,
+        });
+      }
+
       return {
         id: product.id.split('/').pop() ?? product.id,
         name: product.title,
         category,
+        collectionHandles: product.collections.nodes.map((collection) => collection.handle),
         price,
         originalPrice: compareAtPrice > price ? compareAtPrice : undefined,
         image: product.featuredImage?.url ?? product.images.nodes[0].url,
         images,
-        swatches: colors.map((color) => ({ name: color.value, hex: '#d9b2a7' })),
+        swatches: Array.from(swatchesByColor.values()),
         tag: getTag(category, product.tags, compareAtPrice > price),
         description: product.description || 'Una pieza de Marianela Vieira.',
         shopifyVariantId: variant?.id,

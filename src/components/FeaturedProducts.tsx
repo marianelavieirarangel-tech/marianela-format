@@ -1,12 +1,12 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { type Product, womenSubcategories, hiddenCategoryNames } from '@/data/catalog';
-import { useReveal } from '@/hooks/useReveal';
+import { type Product, hiddenCategoryNames, formatProductName } from '@/data/catalog';
 import { Plus, Heart } from 'lucide-react';
 import { formatPrice, type CurrencyCode } from '@/lib/currency';
-import { createShopifyCheckout, isShopifyEnabled, findVariantGidByTitle } from '@/lib/shopify';
+import { translate, type LanguageCode } from '@/lib/language';
 
 type Props = {
+  language?: LanguageCode;
   products: Product[];
   currency: CurrencyCode;
   onQuickAdd: (product: Product) => void;
@@ -14,7 +14,7 @@ type Props = {
   wishlist: Set<string>;
 };
 
-const filters = ['Todos', 'Novedades', ...womenSubcategories, 'Sale'] as const;
+const filters = ['Todos', 'Novedades', 'Bikini', 'Traje de Baño', 'Fuera del Agua', 'Sale'] as const;
 
 function getProductBadge(product: Product) {
   if (product.originalPrice && product.originalPrice > product.price) {
@@ -25,7 +25,7 @@ function getProductBadge(product: Product) {
   return product.tag ?? '';
 }
 
-export default function FeaturedProducts({ products, currency, onQuickAdd, onToggleWishlist, wishlist }: Props) {
+export default function FeaturedProducts({ products, currency, language = 'es', onQuickAdd, onToggleWishlist, wishlist }: Props) {
   const [active, setActive] = useState<(typeof filters)[number]>('Todos');
 
   const filtered = products
@@ -38,14 +38,14 @@ export default function FeaturedProducts({ products, currency, onQuickAdd, onTog
     });
 
   return (
-    <section id="coleccion-2026" className="py-24 lg:py-32 bg-[#f5f1ec]">
+    <section id="coleccion-2026" className="pt-24 pb-10 lg:pt-32 lg:pb-16 bg-[#f5f1ec]">
       <div className="mx-auto max-w-7xl px-6 lg:px-10">
         {/* Heading */}
         <div className="mb-12 flex flex-col gap-6 lg:mb-16 lg:flex-row lg:items-end lg:justify-between">
           <div>
-            <p className="mb-4 text-[11px] uppercase tracking-[0.28em] text-[#bb8a7d]">Colección 2026</p>
+            <p className="mb-4 text-[11px] uppercase tracking-[0.28em] text-[#bb8a7d]">{translate(language, 'collection')}</p>
             <h2 className="font-serif text-4xl font-light tracking-wide text-[#1b1714] lg:text-5xl">
-              Piezas que enamoran
+              {translate(language, 'piecesTitle')}
             </h2>
           </div>
           {/* Filters */}
@@ -60,26 +60,35 @@ export default function FeaturedProducts({ products, currency, onQuickAdd, onTog
                     : 'border-[#e8dfd6] bg-[#f8f5f2] text-[#5b4f49] hover:border-[#d8c7ba] hover:bg-[#f1e9e3] hover:text-[#1b1714]'
                 }`}
               >
-                {f}
+                {f === 'Todos' ? translate(language, 'allProducts')
+                  : f === 'Novedades' ? translate(language, 'newProducts')
+                    : f === 'Traje de Baño' ? translate(language, 'swimwear')
+                      : f === 'Fuera del Agua' ? translate(language, 'outOfWater')
+                        : f === 'Sale' ? translate(language, 'sale') : f}
               </button>
             ))}
           </div>
         </div>
 
         {/* Product grid */}
-        <div className="grid grid-cols-2 gap-x-4 gap-y-12 lg:grid-cols-4 lg:gap-x-6 lg:gap-y-16">
-          {filtered.map((product, i) => (
-            <ProductCard
-              key={product.id}
-              product={product}
-              currency={currency}
-              index={i}
-              onQuickAdd={onQuickAdd}
-              onToggleWishlist={onToggleWishlist}
-              isWishlisted={wishlist.has(product.id)}
-            />
-          ))}
-        </div>
+        {filtered.length === 0 ? (
+          <p className="py-16 text-center text-sm font-light tracking-wide text-[#8f7e76]">
+            {translate(language, 'noPieces')}
+          </p>
+        ) : (
+          <div className="grid grid-cols-2 gap-x-4 gap-y-12 lg:grid-cols-4 lg:gap-x-6 lg:gap-y-16">
+            {filtered.map((product) => (
+              <ProductCard
+                key={product.id}
+                product={product}
+                currency={currency}
+                onQuickAdd={onQuickAdd}
+                onToggleWishlist={onToggleWishlist}
+                isWishlisted={wishlist.has(product.id)}
+              />
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );
@@ -88,78 +97,44 @@ export default function FeaturedProducts({ products, currency, onQuickAdd, onTog
 function ProductCard({
   product,
   currency,
-  index,
   onQuickAdd,
   onToggleWishlist,
   isWishlisted,
 }: {
   product: Product;
   currency: CurrencyCode;
-  index: number;
   onQuickAdd: (p: Product) => void;
   onToggleWishlist: (id: string) => void;
   isWishlisted: boolean;
 }) {
-  const { ref, inView } = useReveal<HTMLDivElement>();
   const navigate = useNavigate();
   const [activeSwatch, setActiveSwatch] = useState(0);
-  const [stock, setStock] = useState<number | null>(null);
   const badgeText = getProductBadge(product);
-
-  useEffect(() => {
-    let mounted = true;
-    async function loadInventory() {
-      if (!isShopifyEnabled()) return;
-      try {
-        let variantGid = product.shopifyVariantId || null;
-        if (!variantGid) {
-          variantGid = await findVariantGidByTitle(product.name);
-        }
-        if (!variantGid) {
-          // Could not map to Shopify variant
-          if (mounted) setStock(null);
-          return;
-        }
-        const resp = await fetch(`/api/shopify/inventory?variantGid=${encodeURIComponent(variantGid)}`);
-        if (!resp.ok) {
-          if (mounted) setStock(null);
-          return;
-        }
-        const data = await resp.json();
-        if (data?.ok && Array.isArray(data.inventory_levels)) {
-          const total = data.inventory_levels.reduce(
-            (sum: number, item: { available?: number }) => sum + (item.available || 0),
-            0,
-          );
-          if (mounted) setStock(total);
-        } else {
-          if (mounted) setStock(null);
-        }
-      } catch (err) {
-        console.error('Error loading inventory', err);
-        if (mounted) setStock(null);
-      }
-    }
-    loadInventory();
-    return () => { mounted = false };
-  }, [product.id]);
+  const goToProduct = () => navigate(`/product/${product.id}`);
+  const activeColor = product.swatches[activeSwatch];
+  const displayImage = activeColor?.image || product.images?.[activeSwatch] || product.image;
 
   return (
     <div
-      ref={ref}
-      className={`reveal ${inView ? 'in-view' : ''} group rounded-[28px] border border-[#eadfce] bg-[#fffdfb] p-3 shadow-[0_18px_40px_rgba(56,35,26,0.05)] transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_22px_48px_rgba(56,35,26,0.08)]`}
-      style={{ animationDelay: `${(index % 4) * 0.1}s` }}
+      role="link"
+      tabIndex={0}
+      onClick={goToProduct}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          goToProduct();
+        }
+      }}
+      className="group cursor-pointer rounded-[28px] border border-[#eadfce] bg-[#fffdfb] p-3 shadow-[0_18px_40px_rgba(56,35,26,0.05)] transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_22px_48px_rgba(56,35,26,0.08)]"
     >
       {/* Image */}
-      <div 
-        className="relative mb-4 aspect-[3/4] cursor-pointer overflow-hidden rounded-[22px] bg-[#f3eee9]"
-        onClick={() => onQuickAdd(product)}
-      >
+      <div className="relative mb-4 aspect-[3/4] overflow-hidden rounded-[22px] bg-[#f3eee9]">
         <img
-          src={product.image}
-          alt={product.name}
+          src={displayImage}
+          alt={formatProductName(product.name)}
           className="h-full w-full object-cover transition-transform duration-[1.2s] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105"
-          loading="lazy"
+          loading="eager"
+          decoding="async"
         />
 
         {/* Tag */}
@@ -179,25 +154,31 @@ function ProductCard({
 
         {/* Wishlist */}
         <button
-          onClick={() => onToggleWishlist(product.id)}
-          className="absolute right-3 top-3 flex h-9 w-9 items-center justify-center rounded-full border border-[#f0e5dd] bg-[#fffdfb]/80 backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#fffaf7]"
+          onClick={(e) => {
+            e.stopPropagation();
+            onToggleWishlist(product.id);
+          }}
+          className="absolute right-3 top-3 flex h-9 w-9 items-center justify-center rounded-full border border-[#f0e5dd] bg-[#fffdfb]/95 transition-colors duration-200 hover:bg-[#fffaf7]"
           aria-label="Añadir a favoritos"
         >
           <Heart
             size={16}
             strokeWidth={1.5}
-            className={isWishlisted ? 'fill-[#ba826b] text-[#ba826b]' : 'text-[#4a403d]'}
+            className={`transition-colors duration-200 ${isWishlisted ? 'fill-[#ba826b] text-[#ba826b]' : 'text-[#4a403d]'}`}
           />
         </button>
 
         {/* Quick add */}
         <div className="absolute bottom-0 left-0 right-0 translate-y-full transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-y-0">
           <button
-            onClick={() => onQuickAdd(product)}
+            onClick={(e) => {
+              e.stopPropagation();
+              onQuickAdd(product);
+            }}
             className="flex w-full items-center justify-center gap-2 bg-[#1b1714]/95 py-4 text-[11px] uppercase tracking-[0.22em] text-[#f9f3ee] backdrop-blur-sm transition-colors hover:bg-[#2a2220]"
           >
             <Plus size={14} strokeWidth={1.5} />
-            Añadir Rápido
+            Elegir talla
           </button>
         </div>
       </div>
@@ -205,28 +186,29 @@ function ProductCard({
       {/* Info */}
       <div className="px-1">
         <p className="mb-1.5 text-[10px] uppercase tracking-[0.22em] text-[#8f7e76]">{product.category}</p>
-        <h3 
-          className="mb-2 cursor-pointer font-serif text-xl font-normal leading-tight text-[#1b1714] transition-colors hover:text-[#ba826b]"
-          onClick={() => navigate(`/product/${product.id}`)}
-        >
-          {product.name}
+        <h3 className="mb-2 font-serif text-xl font-normal leading-tight text-[#1b1714] transition-colors group-hover:text-[#ba826b]">
+          {formatProductName(product.name)}
         </h3>
 
-        {/* Swatches */}
-        <div className="mb-3 flex items-center gap-2">
-          {product.swatches.map((sw, i) => (
-            <button
-              key={sw.name}
-              onClick={() => setActiveSwatch(i)}
-              className={`h-4 w-4 rounded-full border transition-all duration-300 ${
-                activeSwatch === i ? 'border-[#f5f0ea] ring-2 ring-[#d9bca9] ring-offset-1 ring-offset-[#fffdfb]' : 'border-[#d9c9be]'
-              }`}
-              style={{ backgroundColor: sw.hex }}
-              aria-label={sw.name}
-              title={sw.name}
-            />
-          ))}
-        </div>
+        {product.swatches.length > 0 && (
+          <div className="mb-3 flex items-center gap-2">
+            {product.swatches.map((sw, i) => (
+              <button
+                key={sw.name}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setActiveSwatch(i);
+                }}
+                className={`h-4 w-4 rounded-full border transition-all duration-300 ${
+                  activeSwatch === i ? 'border-[#f5f0ea] ring-2 ring-[#d9bca9] ring-offset-1 ring-offset-[#fffdfb]' : 'border-[#d9c9be]'
+                }`}
+                style={{ backgroundColor: sw.hex }}
+                aria-label={sw.name}
+                title={sw.name}
+              />
+            ))}
+          </div>
+        )}
 
         {/* Price */}
         <div className="flex items-baseline gap-2">
@@ -236,38 +218,7 @@ function ProductCard({
           )}
         </div>
 
-        {/* Inventory status */}
-        <div className="mt-2">
-          {stock === null ? (
-            <span className="text-sm text-[#8f7e76]">—</span>
-          ) : stock > 0 ? (
-            <span className="text-sm text-[#2f725d]">En stock ({stock})</span>
-          ) : (
-            <span className="text-sm text-[#b46b5d]">Agotado</span>
-          )}
-        </div>
 
-        {/* Buy on Shopify button */}
-        <div className="mt-3">
-          <button
-            onClick={async () => {
-              if (!isShopifyEnabled()) {
-                alert('Integración Shopify no configurada. Define VITE_SHOPIFY_STORE_DOMAIN y VITE_SHOPIFY_STOREFRONT_TOKEN en .env');
-                return;
-              }
-              try {
-                const { checkoutUrl } = await createShopifyCheckout([{ variantId: product.shopifyVariantId, quantity: 1 }]);
-                window.location.href = checkoutUrl;
-              } catch (err) {
-                console.error(err);
-                alert('Error al crear checkout: ' + (err instanceof Error ? err.message : String(err)));
-              }
-            }}
-            className="mt-2 w-full rounded-full bg-[#c88f7a] py-2.5 text-sm uppercase tracking-[0.2em] text-[#fffaf7] transition-all duration-300 hover:bg-[#b17864] hover:shadow-[0_12px_24px_rgba(200,143,122,0.25)]"
-          >
-            Comprar
-          </button>
-        </div>
       </div>
     </div>
   );

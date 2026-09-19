@@ -1,10 +1,10 @@
-import { useReveal } from '@/hooks/useReveal';
 import { Plus, Heart, ArrowLeft } from 'lucide-react';
 import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import type { Product } from '@/data/catalog';
 import { hiddenCategoryNames } from '@/data/catalog';
 import { formatPrice, type CurrencyCode } from '@/lib/currency';
+import { translateLabel, type LanguageCode } from '@/lib/language';
 
 type Props = {
   products: Product[];
@@ -14,6 +14,7 @@ type Props = {
   onToggleWishlist: (productId: string) => void;
   wishlist: Set<string>;
   onBack: () => void;
+  language: LanguageCode;
 };
 
 function getProductBadge(product: Product) {
@@ -33,6 +34,7 @@ export default function CategoryProducts({
   onToggleWishlist,
   wishlist,
   onBack,
+  language,
 }: Props) {
   const [sortBy, setSortBy] = useState<'featured' | 'price-asc' | 'price-desc'>('featured');
   const [activeFilter, setActiveFilter] = useState<'Todos' | 'Novedades' | 'Bestseller' | 'Sale'>('Todos');
@@ -44,7 +46,7 @@ export default function CategoryProducts({
         .filter((product) => !hiddenCategoryNames.has(product.category))
         .filter((product) => {
           if (categoryName === 'Colección 2026') {
-            return true;
+            return product.collectionHandles?.includes('coleccion-2026') ?? false;
           }
           if (categoryName === 'Sale') {
             return product.tag === 'Sale' && product.category !== 'Bikini';
@@ -65,19 +67,20 @@ export default function CategoryProducts({
         }),
     [activeFilter, categoryName, products, sortBy],
   );
+  const isEmptyCollection = categoryName === 'Colección 2026' && filtered.length === 0;
 
   return (
-    <section className="min-h-screen bg-sand-50">
-      <div className="mx-auto max-w-7xl px-6 pt-6 pb-20 lg:px-10 lg:pt-8">
-        <div className="grid gap-10 lg:grid-cols-[280px_minmax(0,1fr)]">
-          <aside className="lg:sticky lg:top-24 lg:h-fit">
+    <section className={`min-h-screen ${isEmptyCollection ? 'bg-ink-900' : 'bg-sand-50'}`}>
+      <div className={isEmptyCollection ? 'w-full px-0 pb-0' : 'mx-auto max-w-7xl px-6 pt-6 pb-20 lg:px-10 lg:pt-8'}>
+        <div className={`grid gap-10 ${isEmptyCollection ? '' : 'lg:grid-cols-[280px_minmax(0,1fr)]'}`}>
+          {!isEmptyCollection && <aside className="lg:sticky lg:top-24 lg:h-fit">
             <button
               type="button"
               onClick={onBack}
               className="group inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.28em] text-ink-600 hover:text-blush-400 transition-colors duration-200"
             >
               <ArrowLeft size={14} strokeWidth={1.8} className="group-hover:-translate-x-1 transition-transform" />
-              <span>Volver</span>
+              <span>{translateLabel(language, 'Volver')}</span>
             </button>
 
             <h1 className={`mt-8 font-serif font-light tracking-wide leading-tight ${
@@ -85,32 +88,32 @@ export default function CategoryProducts({
                 ? 'text-[2.6rem] text-[#c62828] lg:text-[3.3rem]'
                 : 'text-4xl text-ink-900 lg:text-[2.8rem]'
             }`}>
-              {categoryName}
+              {translateLabel(language, categoryName)}
             </h1>
 
             <p className="mt-4 text-[11px] font-medium uppercase tracking-[0.2em] text-ink-500">
-              {filtered.length} {filtered.length === 1 ? 'Producto' : 'Productos'}
+              {filtered.length} {translateLabel(language, filtered.length === 1 ? 'Producto' : 'Productos')}
             </p>
 
             <div className="mt-10 space-y-8">
               <div>
                 <label className="block">
-                  <span className="mb-3.5 block text-[9px] uppercase tracking-[0.28em] font-medium text-ink-500">Ordenar por</span>
+                  <span className="mb-3.5 block text-[9px] uppercase tracking-[0.28em] font-medium text-ink-500">{translateLabel(language, 'Ordenar por')}</span>
                   <select
                     value={sortBy}
                     onChange={(event) => setSortBy(event.target.value as 'featured' | 'price-asc' | 'price-desc')}
                     className="w-full appearance-none rounded-sm border border-ink-200 bg-sand-50 px-4 py-3 pr-9 text-[11px] font-medium uppercase tracking-[0.18em] text-ink-800 outline-none transition-all duration-200 hover:border-ink-400 focus:border-ink-900 focus:ring-1 focus:ring-ink-900/10"
                   >
-                    <option value="featured">Destacados</option>
-                    <option value="price-asc">Menor precio</option>
-                    <option value="price-desc">Mayor precio</option>
+                    <option value="featured">{translateLabel(language, 'Destacados')}</option>
+                    <option value="price-asc">{translateLabel(language, 'Menor precio')}</option>
+                    <option value="price-desc">{translateLabel(language, 'Mayor precio')}</option>
                   </select>
                   <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-ink-400 text-[10px]">▾</span>
                 </label>
               </div>
 
               <div>
-                <p className="mb-4 text-[9px] uppercase tracking-[0.28em] font-medium text-ink-500">Filtrar por</p>
+                <p className="mb-4 text-[9px] uppercase tracking-[0.28em] font-medium text-ink-500">{translateLabel(language, 'Filtrar por')}</p>
                 <div className="space-y-2.5">
                   {(['Todos', 'Novedades', 'Bestseller', 'Sale'] as const).map((filter) => {
                     const isSaleFilter = filter === 'Sale';
@@ -131,23 +134,22 @@ export default function CategoryProducts({
                               : 'bg-sand-50 text-ink-700 border-ink-200 hover:border-ink-400 hover:bg-ink-50'
                         }`}
                       >
-                        {filter}
+                        {translateLabel(language, filter)}
                       </button>
                     );
                   })}
                 </div>
               </div>
             </div>
-          </aside>
+          </aside>}
 
-          <div>
+          <div className={isEmptyCollection ? 'min-w-0' : ''}>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
-              {filtered.map((product, i) => (
+              {filtered.map((product) => (
                 <ProductCard
                   key={product.id}
                   product={product}
                   currency={currency}
-                  index={i}
                   onQuickAdd={onQuickAdd}
                   onToggleWishlist={onToggleWishlist}
                   isWishlisted={wishlist.has(product.id)}
@@ -156,10 +158,24 @@ export default function CategoryProducts({
             </div>
 
             {filtered.length === 0 && (
-              <div className="col-span-full text-center py-20">
-                <div className="mb-3 text-4xl text-ink-200">∘</div>
-                <p className="text-ink-400 text-sm tracking-wide">No hay productos disponibles con estos filtros.</p>
-              </div>
+              categoryName === 'Colección 2026' ? (
+                <div className="relative left-1/2 col-span-full min-h-[100svh] w-screen -translate-x-1/2 overflow-hidden bg-ink-900">
+                  <img
+                    src="https://6aa88bf09422e77b387f33c6.imgix.net/sandbox/fashn-export-1789762027223.png?auto=format,compress&q=82&w=2400"
+                    alt="Colección 2026"
+                    className="absolute inset-0 h-full w-full object-cover object-[center_top]"
+                    loading="eager"
+                    fetchPriority="high"
+                    decoding="async"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-ink-900/45 via-transparent to-transparent" />
+                </div>
+              ) : (
+                <div className="col-span-full py-20 text-center">
+                  <div className="mb-3 text-4xl text-ink-200">∘</div>
+                  <p className="text-ink-400 text-sm tracking-wide">{translateLabel(language, 'No hay productos disponibles con estos filtros.')}</p>
+                </div>
+              )
             )}
           </div>
         </div>
@@ -171,19 +187,16 @@ export default function CategoryProducts({
 function ProductCard({
   product,
   currency,
-  index,
   onQuickAdd,
   onToggleWishlist,
   isWishlisted,
 }: {
   product: Product;
   currency: CurrencyCode;
-  index: number;
   onQuickAdd: (product: Product) => void;
   onToggleWishlist: (productId: string) => void;
   isWishlisted: boolean;
 }) {
-  const { ref, inView } = useReveal<HTMLDivElement>();
   const navigate = useNavigate();
   const badgeText = getProductBadge(product);
   const [isHovering, setIsHovering] = useState(false);
@@ -191,9 +204,7 @@ function ProductCard({
 
   return (
     <div
-      ref={ref}
-      className={`reveal ${inView ? 'in-view' : ''} group flex flex-col rounded-[26px] border border-[#eadfce] bg-[#fffdfb] p-3 shadow-[0_18px_40px_rgba(56,35,26,0.05)] transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_22px_48px_rgba(56,35,26,0.08)]`}
-      style={{ animationDelay: `${index * 0.1}s` }}
+      className="group flex flex-col rounded-[26px] border border-[#eadfce] bg-[#fffdfb] p-3 shadow-[0_18px_40px_rgba(56,35,26,0.05)] transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_22px_48px_rgba(56,35,26,0.08)]"
     >
       {/* Image */}
       <div 
@@ -203,10 +214,20 @@ function ProductCard({
         onMouseLeave={() => setIsHovering(false)}
       >
         <img
-          src={isHovering && previewImage ? previewImage : product.image}
+          src={product.image}
           alt={product.name}
-          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+          className="absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ease-in-out group-hover:scale-105"
         />
+        {previewImage !== product.image && (
+          <img
+            src={previewImage}
+            alt=""
+            aria-hidden="true"
+            className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ease-in-out group-hover:scale-105 ${
+              isHovering ? 'opacity-100' : 'opacity-0'
+            }`}
+          />
+        )}
 
         {/* Tags */}
         {badgeText && (
@@ -220,13 +241,13 @@ function ProductCard({
         {/* Wishlist button */}
         <button
           onClick={() => onToggleWishlist(product.id)}
-          className="absolute bottom-4 right-4 flex h-10 w-10 items-center justify-center rounded-full border border-[#f0e5dd] bg-[#fffdfb]/80 shadow-sm transition-all hover:-translate-y-0.5 hover:bg-[#fffaf7]"
+          className="absolute bottom-4 right-4 flex h-10 w-10 items-center justify-center rounded-full border border-[#f0e5dd] bg-[#fffdfb]/95 shadow-sm transition-colors duration-200 hover:bg-[#fffaf7]"
           aria-label="Agregar a favoritos"
         >
           <Heart
             size={18}
             strokeWidth={1.5}
-            className={isWishlisted ? 'fill-[#ba826b] stroke-[#ba826b]' : 'stroke-[#3b312e]'}
+            className={`transition-colors duration-200 ${isWishlisted ? 'fill-[#ba826b] stroke-[#ba826b]' : 'stroke-[#3b312e]'}`}
           />
         </button>
 

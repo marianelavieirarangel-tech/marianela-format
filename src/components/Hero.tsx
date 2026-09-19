@@ -54,12 +54,12 @@ export default function Hero({ language = 'es' }: { language?: LanguageCode }) {
             {translate(language, 'newCollection')}
           </p>
           <h1 className="font-serif text-sand-50 text-5xl sm:text-6xl lg:text-7xl leading-[1.05] tracking-wide font-light animate-fade-up" style={{ animationDelay: '0.25s', opacity: 0 }}>
-            Tu estilo,
+            {translate(language, 'heroTitle').split('|')[0]}
             <br />
-            <em className="text-blush-200">tu cuerpo</em>
+            <em className="text-blush-200">{translate(language, 'heroTitle').split('|')[1]}</em>
           </h1>
           <p className="mt-7 text-sand-100 text-base lg:text-lg font-light leading-relaxed max-w-md animate-fade-up" style={{ animationDelay: '0.45s', opacity: 0 }}>
-            {language === 'es' ? 'Trajes de baño y piezas esenciales para celebrar la delicadeza de cada gesto.' : language === 'en' ? 'Swimwear and essential pieces celebrating the delicacy of every gesture.' : 'Piezas esenciales para celebrar la delicadeza de cada gesto.'}
+            {translate(language, 'heroBody')}
           </p>
           <div className="mt-10 flex flex-col sm:flex-row gap-4 animate-fade-up" style={{ animationDelay: '0.65s', opacity: 0 }}>
             <a href="/collections/coleccion-2026" className="group inline-flex items-center justify-center gap-3 px-10 py-4 bg-sand-50 text-ink-900 text-xs uppercase tracking-widest transition-all duration-500 hover:bg-blush-200 hover:tracking-ultra">

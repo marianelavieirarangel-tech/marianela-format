@@ -1,13 +1,15 @@
-import { categories, categorySlugs } from '@/data/catalog';
+import { categories, categorySlugs, hiddenCategoryNames } from '@/data/catalog';
 import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useRef, useState } from 'react';
+import { translate, translateLabel, type LanguageCode } from '@/lib/language';
 
 type Props = {
+  language?: LanguageCode;
   onSelectCategory?: (categoryName: string) => void;
 };
 
-export default function CategoryGrid({ onSelectCategory }: Props) {
+export default function CategoryGrid({ language = 'es', onSelectCategory }: Props) {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [showLeftArrow, setShowLeftArrow] = useState(false);
   const [showRightArrow, setShowRightArrow] = useState(true);
@@ -57,9 +59,9 @@ export default function CategoryGrid({ onSelectCategory }: Props) {
       <div className="mx-auto max-w-7xl px-6 lg:px-10">
         {/* Section heading */}
         <div className="text-center mb-16 lg:mb-20">
-          <p className="text-blush-500 text-[11px] tracking-ultra uppercase mb-4">Nuestras Colecciones</p>
+          <p className="text-blush-500 text-[11px] tracking-ultra uppercase mb-4">{translate(language, 'collectionsLabel')}</p>
           <h2 className="font-serif text-4xl lg:text-5xl text-ink-900 font-light tracking-wide">
-            Descubre nuestras categorías
+            {translate(language, 'discoverCategories')}
           </h2>
           <div className="w-12 h-px bg-blush-400 mx-auto mt-8" />
         </div>
@@ -83,11 +85,11 @@ export default function CategoryGrid({ onSelectCategory }: Props) {
             onScroll={handleScroll}
             className="flex gap-5 lg:gap-6 overflow-x-auto no-scrollbar pb-2"
           >
-            {categories.map((cat, i) => (
+            {categories.filter((cat) => !hiddenCategoryNames.has(cat.name)).map((cat) => (
               <CategoryCard
                 key={cat.name}
                 category={cat}
-                index={i}
+                language={language}
                 onSelect={onSelectCategory}
               />
             ))}
@@ -111,11 +113,11 @@ export default function CategoryGrid({ onSelectCategory }: Props) {
 
 function CategoryCard({
   category,
-  index,
+  language,
   onSelect,
 }: {
   category: (typeof categories)[number];
-  index: number;
+  language: LanguageCode;
   onSelect?: (categoryName: string) => void;
 }) {
   const slug = categorySlugs[category.name] ?? category.name.toLowerCase();
@@ -145,16 +147,16 @@ function CategoryCard({
       {/* Content */}
       <div className="absolute inset-0 flex flex-col justify-end p-5 lg:p-6">
         <p className="text-blush-200 text-[8px] tracking-ultra uppercase mb-1 opacity-80 font-light">
-          {category.tagline}
+          {translateLabel(language, category.tagline)}
         </p>
         <h3 className="font-serif text-xl lg:text-2xl text-sand-50 font-light tracking-wide mb-1.5 leading-tight">
-          {category.name}
+          {translateLabel(language, category.name)}
         </h3>
         <p className="text-sand-100 text-xs font-light leading-relaxed max-w-xs opacity-0 max-h-0 group-hover:opacity-100 group-hover:max-h-14 transition-all duration-500 overflow-hidden">
-          {category.description}
+          {translateLabel(language, category.description)}
         </p>
         <div className="mt-3 flex items-center gap-1.5 text-sand-50 text-[9px] uppercase tracking-widest opacity-80 group-hover:opacity-100 transition-opacity duration-500">
-          <span className="link-underline">Ver Colección</span>
+          <span className="link-underline">{translateLabel(language, 'Ver Colección')}</span>
           <ArrowRight
             size={12}
             strokeWidth={1.5}

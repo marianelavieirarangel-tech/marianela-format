@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { categorySlugs, navLinks, womenMenuSubcategories } from '@/data/catalog';
 import { currencyOptions, type CurrencyCode } from '@/lib/currency';
-import { languageOptions, languageNames, languageShortCodes, translate, type LanguageCode } from '@/lib/language';
+import { languageOptions, languageNames, languageShortCodes, translate, translateLabel, type LanguageCode } from '@/lib/language';
 import { getShopifyAccountLoginUrl } from '@/lib/shopify';
 import logo from '@/assets/marianela-logo.png';
 
@@ -32,7 +32,7 @@ export default function Header({
 }: Props) {
   const navigate = useNavigate();
   const location = useLocation();
-  const isHome = location.pathname === '/';
+  const isHome = location.pathname === '/' || location.pathname === '/pages/viajes-grupales' || location.pathname === '/collections/coleccion-2026';
   const slugify = (s: string) =>
     s
       .toString()
@@ -54,6 +54,12 @@ export default function Header({
   const goToCollection = () => {
     navigate('/collections/coleccion-2026');
   };
+  const handleLanguageChange = (option: LanguageCode) => {
+    window.localStorage.setItem('marianela-language', option);
+    document.documentElement.lang = option;
+    onLanguageChange(option);
+    setLanguageMenuOpen(false);
+  };
 
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -64,6 +70,7 @@ export default function Header({
   const [currentMessageIndex, setCurrentMessageIndex] = useState(0);
   const [isVisible, setIsVisible] = useState(true);
   const languageMenuRef = useRef<HTMLDivElement | null>(null);
+  const mobileLanguageMenuRef = useRef<HTMLDivElement | null>(null);
   const currencyMenuRef = useRef<HTMLDivElement | null>(null);
 
   const announcementMessages = [
@@ -71,7 +78,6 @@ export default function Header({
     translate(language, 'freeReturns'),
     translate(language, 'newCollection'),
   ];
-
   useEffect(() => {
     const syncHeaderState = () => setScrolled(window.scrollY > 40);
     syncHeaderState();
@@ -82,7 +88,8 @@ export default function Header({
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       const target = event.target as Node;
-      if (languageMenuRef.current && !languageMenuRef.current.contains(target)) {
+      const clickedLanguageMenu = languageMenuRef.current?.contains(target) || mobileLanguageMenuRef.current?.contains(target);
+      if (!clickedLanguageMenu) {
         setLanguageMenuOpen(false);
       }
       if (currencyMenuRef.current && !currencyMenuRef.current.contains(target)) {
@@ -104,7 +111,7 @@ export default function Header({
     }, 5000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [language, announcementMessages.length]);
 
   return (
     <>
@@ -123,7 +130,7 @@ export default function Header({
           isHome && !scrolled
             ? 'fixed left-0 right-0 top-[37px] bg-transparent text-sand-50 shadow-none'
             : 'fixed left-0 right-0 top-[37px] bg-sand-50 shadow-[0_1px_0_0_rgba(26,22,17,0.08)] text-ink-800'
-        } z-[1000] transition-[background-color,color,box-shadow] duration-500 ease-out`}
+        } z-[1000] transition-[background-color,color,box-shadow,backdrop-filter] duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] will-change-[background-color,box-shadow,backdrop-filter]`}
       >
           <div className="relative flex h-[72px] items-center lg:h-[84px]">
             {/* Left nav (desktop) */}
@@ -153,7 +160,13 @@ export default function Header({
                       : 'invisible -translate-y-2 opacity-0'
                   }`}
                 >
-                  <div className="bg-sand-50 shadow-[0_18px_40px_rgba(22,18,15,0.08)] border border-ink-100 py-4 px-6 min-w-max z-50">
+                  <div
+                    className={`min-w-max rounded-sm border py-4 px-6 shadow-[0_18px_40px_rgba(17,13,10,0.16)] backdrop-blur-md transition-colors ${
+                      isHome && !scrolled
+                        ? 'border-white/25 bg-ink-900/50 text-sand-100'
+                        : 'border-ink-100 bg-sand-50/95 text-ink-700'
+                    }`}
+                  >
                     {womenMenuSubcategories.map((cat) => (
                       <button
                         key={cat}
@@ -161,7 +174,11 @@ export default function Header({
                           goToCategory(cat);
                           setWomenDropdown(false);
                         }}
-                        className="block w-full text-left py-2 text-[10px] uppercase tracking-widest text-ink-700 hover:text-blush-500 transition-colors whitespace-nowrap"
+                        className={`block w-full text-left py-2 text-[10px] uppercase tracking-widest transition-colors whitespace-nowrap ${
+                          isHome && !scrolled
+                            ? 'text-sand-200 hover:text-blush-200'
+                            : 'text-ink-700 hover:text-blush-500'
+                        }`}
                       >
                         {cat}
                       </button>
@@ -181,7 +198,7 @@ export default function Header({
                   onClick={() => goToCategory(link.label)}
                   className={`text-[11px] uppercase tracking-widest link-underline ${link.label === 'Sale' ? 'sale-pulse' : 'text-current hover:text-blush-300'}`}
                 >
-                  {link.label === 'Sale' ? translate(language, 'sale') : link.label}
+                  {link.label === 'Sale' ? translate(language, 'sale') : translateLabel(language, link.label)}
                 </button>
               ))}
             </nav>
@@ -189,10 +206,14 @@ export default function Header({
             {/* Mobile menu button */}
             <button
               onClick={() => setMobileOpen(true)}
-              className="lg:hidden absolute left-4 z-20 flex h-10 w-10 items-center justify-center text-sand-50 transition-colors hover:text-blush-300"
+              className={`lg:hidden absolute left-4 z-20 flex h-10 w-10 items-center justify-center transition-colors ${
+                isHome && !scrolled
+                  ? 'text-sand-50 hover:text-blush-300'
+                  : 'text-ink-800 hover:text-blush-500'
+              }`}
               aria-label="Abrir menú"
             >
-              <Menu size={22} strokeWidth={1.8} className="text-white" />
+              <Menu size={22} strokeWidth={1.8} />
             </button>
 
             {/* Logo */}
@@ -212,7 +233,12 @@ export default function Header({
             {/* Right nav (desktop) */}
             <div className="ml-auto hidden items-center gap-4 pr-10 lg:flex lg:gap-5 lg:pr-12 xl:pr-14">
               <div className="flex items-center gap-4 lg:gap-5">
-                <div ref={languageMenuRef} className="relative hidden xl:block">
+                <div
+                  ref={languageMenuRef}
+                  className="relative hidden xl:block"
+                  onMouseEnter={() => setLanguageMenuOpen(true)}
+                  onMouseLeave={() => setLanguageMenuOpen(false)}
+                >
                   <button
                     type="button"
                     onClick={() => setLanguageMenuOpen((open) => !open)}
@@ -233,14 +259,15 @@ export default function Header({
                   </button>
 
                   {languageMenuOpen && (
-                    <div className="absolute right-0 top-[calc(100%+8px)] z-50 min-w-[180px] rounded-2xl border border-ink-100 bg-white/95 p-1.5 shadow-[0_18px_40px_rgba(22,18,15,0.12)] backdrop-blur-md">
+                    <div className="absolute right-0 top-full z-50 min-w-[180px] rounded-2xl border border-ink-100 bg-white/95 p-1.5 pt-2 shadow-[0_18px_40px_rgba(22,18,15,0.12)] backdrop-blur-md">
                       {languageOptions.map((option) => (
                         <button
                           key={option}
                           type="button"
-                          onClick={() => {
-                            onLanguageChange(option);
-                            setLanguageMenuOpen(false);
+                          onClick={(event) => {
+                            event.preventDefault();
+                            event.stopPropagation();
+                            handleLanguageChange(option);
                           }}
                           className={`flex w-full items-center justify-between rounded-xl px-3 py-2 text-left text-[10px] uppercase tracking-[0.18em] transition-colors ${
                             option === language
@@ -255,7 +282,12 @@ export default function Header({
                     </div>
                   )}
                 </div>
-                <div ref={currencyMenuRef} className="relative hidden xl:block">
+                <div
+                  ref={currencyMenuRef}
+                  className="relative hidden xl:block"
+                  onMouseEnter={() => setCurrencyMenuOpen(true)}
+                  onMouseLeave={() => setCurrencyMenuOpen(false)}
+                >
                   <button
                     type="button"
                     onClick={() => setCurrencyMenuOpen((open) => !open)}
@@ -275,7 +307,7 @@ export default function Header({
                   </button>
 
                   {currencyMenuOpen && (
-                    <div className="absolute right-0 top-[calc(100%+8px)] z-50 min-w-[110px] rounded-2xl border border-ink-100 bg-white/95 p-1.5 shadow-[0_18px_40px_rgba(22,18,15,0.12)] backdrop-blur-md">
+                    <div className="absolute right-0 top-full z-50 min-w-[110px] rounded-2xl border border-ink-100 bg-white/95 p-1.5 pt-2 shadow-[0_18px_40px_rgba(22,18,15,0.12)] backdrop-blur-md">
                       {currencyOptions.map((option) => (
                         <button
                           key={option}
@@ -338,21 +370,33 @@ export default function Header({
               <button
                 type="button"
                 onClick={() => setLanguageMenuOpen((open) => !open)}
-                className="text-white hover:text-blush-300 transition-colors"
+                className={`transition-colors ${
+                  isHome && !scrolled
+                    ? 'text-sand-50 hover:text-blush-300'
+                    : 'text-ink-800 hover:text-blush-500'
+                }`}
                 aria-label="Seleccionar idioma"
               >
                 <Globe size={18} strokeWidth={1.7} />
               </button>
               <button
                 onClick={onOpenSearch}
-                className="text-white hover:text-blush-300 transition-colors"
+                className={`transition-colors ${
+                  isHome && !scrolled
+                    ? 'text-sand-50 hover:text-blush-300'
+                    : 'text-ink-800 hover:text-blush-500'
+                }`}
                 aria-label="Buscar"
               >
                 <Search size={19} strokeWidth={1.5} />
               </button>
               <button
                 onClick={onOpenCart}
-                className="relative text-white hover:text-blush-300 transition-colors"
+                className={`relative transition-colors ${
+                  isHome && !scrolled
+                    ? 'text-sand-50 hover:text-blush-300'
+                    : 'text-ink-800 hover:text-blush-500'
+                }`}
                 aria-label="Bolsa de compras"
               >
                 <ShoppingBag size={19} strokeWidth={1.5} />
@@ -364,14 +408,13 @@ export default function Header({
               </button>
             </div>
             {languageMenuOpen && (
-              <div className="lg:hidden absolute right-4 top-[calc(100%+8px)] z-50 w-[180px] rounded-2xl border border-ink-100 bg-white/95 p-1.5 shadow-[0_18px_40px_rgba(22,18,15,0.12)] backdrop-blur-md">
+              <div ref={mobileLanguageMenuRef} className="lg:hidden absolute right-4 top-[calc(100%+8px)] z-50 w-[180px] rounded-2xl border border-ink-100 bg-white/95 p-1.5 shadow-[0_18px_40px_rgba(22,18,15,0.12)] backdrop-blur-md">
                 {languageOptions.map((option) => (
                   <button
                     key={option}
                     type="button"
                     onClick={() => {
-                      onLanguageChange(option);
-                      setLanguageMenuOpen(false);
+                      handleLanguageChange(option);
                     }}
                     className={`flex w-full items-center justify-between rounded-xl px-3 py-2 text-left text-[10px] uppercase tracking-[0.18em] transition-colors ${
                       option === language ? 'bg-ink-900 text-sand-50' : 'text-ink-700 hover:bg-ink-50'
@@ -388,7 +431,7 @@ export default function Header({
 
       {/* Mobile drawer */}
       <div
-        className={`fixed inset-0 z-50 lg:hidden transition-all duration-500 ${
+        className={`fixed inset-0 z-[1200] lg:hidden transition-all duration-500 ${
           mobileOpen ? 'visible' : 'invisible'
         }`}
       >
@@ -464,7 +507,7 @@ export default function Header({
                   link.label === 'Sale' ? 'text-blush-500' : 'text-ink-800 hover:text-blush-500'
                 }`}
               >
-                {link.label === 'Sale' ? translate(language, 'sale') : link.label}
+                {link.label === 'Sale' ? translate(language, 'sale') : translateLabel(language, link.label)}
               </button>
             ))}
             <div className="flex items-center justify-center gap-6 pt-8 text-ink-600">
