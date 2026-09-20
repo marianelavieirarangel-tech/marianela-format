@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { ArrowRight, Check, Instagram, MessageCircle } from 'lucide-react';
+import { ArrowRight, Check, MessageCircle } from 'lucide-react';
 import type { LanguageCode } from '@/lib/language';
 import tripHeroImage from '@/assets/hero-beach.jpg';
 
@@ -313,36 +313,6 @@ export default function GroupTripsPage({ language }: Props) {
             </ul>
           </div>
           <img src={gallery[2]} alt="Amigas compartiendo una experiencia de viaje" className="aspect-[4/3] w-full object-cover" loading="lazy" />
-        </div>
-      </section>
-
-      <section className="overflow-hidden py-20 lg:py-28">
-        <div className="mx-auto max-w-7xl px-6 lg:px-10">
-          <div className="mb-10 flex items-end justify-between gap-6">
-            <div>
-              <p className="mb-4 text-[11px] uppercase tracking-ultra text-blush-500">{localized.sharedMoments}</p>
-              <h2 className="font-serif text-4xl font-light tracking-wide sm:text-5xl">{localized.inspiration}</h2>
-            </div>
-            <Instagram className="hidden text-blush-500 sm:block" size={25} strokeWidth={1.25} />
-          </div>
-          <div className="grid gap-8 md:grid-cols-3 md:gap-6 lg:gap-8">
-            {localizedMoments.map((item) => (
-              <figure key={item.title} className="group">
-                <div className="aspect-[4/5] overflow-hidden rounded-[24px] bg-ink-100 shadow-[0_18px_40px_rgba(22,18,15,0.08)]">
-                  <img
-                    src={item.image}
-                    alt={item.title}
-                    className="h-full w-full object-cover transition-transform duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.04]"
-                    loading="lazy"
-                  />
-                </div>
-                <figcaption className="mt-4 flex items-center gap-3 pl-1">
-                  <span className="h-px w-8 bg-blush-400" />
-                  <p className="text-[10px] uppercase tracking-[0.24em] text-ink-500">{item.title}</p>
-                </figcaption>
-              </figure>
-            ))}
-          </div>
         </div>
       </section>
 
