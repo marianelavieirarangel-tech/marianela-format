@@ -268,17 +268,11 @@ export default function GroupTripsPage({ language }: Props) {
           </p>
         </div>
 
-        <div className="mb-16 grid gap-x-6 gap-y-10 md:grid-cols-12 md:grid-rows-[auto_auto_auto] md:gap-x-8 md:gap-y-0">
-          {localizedMoments.map((item, index) => (
+        <div className="mb-16 grid gap-8 md:grid-cols-3 md:gap-6 lg:gap-8">
+          {localizedMoments.map((item) => (
             <figure
               key={item.title}
-              className={`group ${
-                index === 0
-                  ? 'md:col-span-7 md:col-start-1 md:row-start-1'
-                  : index === 1
-                    ? 'md:col-span-6 md:col-start-7 md:row-start-2 md:mt-[-3rem]'
-                    : 'md:col-span-7 md:col-start-2 md:row-start-3 md:mt-[-1rem]'
-              }`}
+              className="group"
             >
               <div className="overflow-hidden rounded-[28px] bg-ink-100 shadow-[0_24px_55px_rgba(22,18,15,0.12)]">
                 <img
