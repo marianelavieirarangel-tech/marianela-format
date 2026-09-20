@@ -331,8 +331,27 @@ export default function GroupTripsPage({ language }: Props) {
             </div>
             <Instagram className="hidden text-blush-500 sm:block" size={25} strokeWidth={1.25} />
           </div>
-          <div className="grid grid-cols-2 gap-3 md:grid-cols-3 lg:gap-5">
-            {gallery.map((image, index) => <img key={image} src={image} alt={`Viaje grupal, momento ${index + 1}`} className="aspect-[4/5] w-full object-cover" loading="lazy" />)}
+          <div className="grid gap-8 sm:grid-cols-2 md:grid-cols-3 md:gap-x-6 md:gap-y-12 lg:gap-x-8">
+            {gallery.map((image, index) => (
+              <figure key={image} className={`group ${index === 0 ? 'sm:col-span-2 md:col-span-2' : ''}`}>
+                <div className={`overflow-hidden rounded-[24px] bg-ink-100 shadow-[0_18px_40px_rgba(22,18,15,0.08)] ${
+                  index === 0 ? 'aspect-[16/9]' : 'aspect-[4/5]'
+                }`}>
+                  <img
+                    src={image}
+                    alt={`Viaje grupal, momento ${index + 1}`}
+                    className="h-full w-full object-cover transition-transform duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.04]"
+                    loading="lazy"
+                  />
+                </div>
+                <figcaption className="mt-4 flex items-center gap-3 pl-1">
+                  <span className="h-px w-8 bg-blush-400" />
+                  <p className="text-[10px] uppercase tracking-[0.24em] text-ink-500">
+                    {localized.sharedMoments} {String(index + 1).padStart(2, '0')}
+                  </p>
+                </figcaption>
+              </figure>
+            ))}
           </div>
         </div>
       </section>
