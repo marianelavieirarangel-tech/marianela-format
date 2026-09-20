@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { ArrowRight, Check, Instagram, MessageCircle } from 'lucide-react';
 import type { LanguageCode } from '@/lib/language';
 import tripHeroImage from '@/assets/hero-beach.jpg';
@@ -192,6 +193,7 @@ const copy: Record<LanguageCode, GroupTripsCopy> = {
 };
 
 export default function GroupTripsPage({ language }: Props) {
+  const [activeHeroImage, setActiveHeroImage] = useState(0);
   const localized = copy[language];
   const localizedMoments = tripMoments.map((item, index) => ({
     ...item,
@@ -199,14 +201,39 @@ export default function GroupTripsPage({ language }: Props) {
   }));
   const whatsappUrl = `https://wa.me/51949217304?text=${encodeURIComponent(localized.whatsappMessage)}`;
 
+  useEffect(() => {
+    const interval = window.setInterval(() => {
+      setActiveHeroImage((current) => (current + 1) % 2);
+    }, 6500);
+
+    return () => window.clearInterval(interval);
+  }, []);
+
   return (
     <div className="bg-sand-50 text-ink-900">
       <section className="relative min-h-[100svh] overflow-hidden bg-ink-900">
-        <img
-          src="https://6a8377665cc6de03eb430013.imgix.net/sandbox/imagen2.png"
-          alt="Grupo de amigas disfrutando junto al mar"
-          className="absolute inset-0 h-full w-full object-cover object-[center_12%]"
-        />
+        {[ 
+          {
+            src: 'https://6a8377665cc6de03eb430013.imgix.net/sandbox/imagen2.png',
+            alt: 'Grupo de amigas disfrutando junto al mar',
+          },
+          {
+            src: tripHeroImage,
+            alt: 'Experiencia de viaje junto al mar',
+          },
+        ].map((image, index) => (
+          <img
+            key={image.src}
+            src={image.src}
+            alt={image.alt}
+            className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-[1400ms] ease-in-out ${
+              activeHeroImage === index ? 'opacity-100' : 'opacity-0'
+            } ${index === 0 ? 'object-[center_12%]' : 'object-center'}`}
+            loading={index === 0 ? 'eager' : 'lazy'}
+            fetchPriority={index === 0 ? 'high' : 'auto'}
+            decoding="async"
+          />
+        ))}
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(255,255,255,0.12),_transparent_35%),linear-gradient(to_right,rgba(17,13,10,0.58),rgba(17,13,10,0.28),rgba(17,13,10,0.08))]" />
         <div className="relative mx-auto flex min-h-[100svh] max-w-7xl items-end px-5 pb-12 sm:px-6 sm:pb-16 lg:px-10 lg:pb-20">
           <div className="max-w-[42rem] text-sand-50" style={{ textShadow: '0 2px 18px rgba(0, 0, 0, 0.38)' }}>
@@ -230,17 +257,6 @@ export default function GroupTripsPage({ language }: Props) {
             </div>
           </div>
         </div>
-      </section>
-
-      <section className="relative min-h-[100svh] overflow-hidden bg-ink-900">
-        <img
-          src={tripHeroImage}
-          alt="Experiencia de viaje junto al mar"
-          className="absolute inset-0 h-full w-full object-cover object-center"
-          loading="eager"
-          decoding="async"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-ink-900/45 via-transparent to-ink-900/10" />
       </section>
 
       <section className="mx-auto max-w-7xl px-6 py-14 lg:px-10 lg:py-20">
