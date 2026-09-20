@@ -11,11 +11,11 @@ export default function Hero({ language = 'es' }: { language?: LanguageCode }) {
         <img
           src={heroImage}
           alt="Marianela Vieira — nueva editorial"
-          className="h-full w-full object-cover object-center scale-[1.08]"
+          className="h-full w-full object-cover object-center scale-[1.02]"
           loading="eager"
           fetchPriority="high"
           decoding="async"
-          style={{ objectPosition: 'center center' }}
+          style={{ objectPosition: 'center 18%' }}
         />
         <div className="absolute inset-0 bg-gradient-to-r from-ink-900/70 via-ink-900/30 to-transparent" />
         <div className="absolute inset-0 bg-gradient-to-t from-ink-900/60 via-transparent to-ink-900/20" />
