@@ -30,6 +30,51 @@ const tripMoments = [
   },
 ];
 
+const appointmentCopy: Record<LanguageCode, { eyebrow: string; title: string; text: string; action: string }> = {
+  es: {
+    eyebrow: 'Atención personalizada',
+    title: 'Reserva tu cita aquí',
+    text: 'Hablemos de tu próximo viaje y diseñemos una experiencia pensada para ti y tu grupo.',
+    action: 'Reservar por WhatsApp',
+  },
+  en: {
+    eyebrow: 'Personalized attention',
+    title: 'Book your appointment',
+    text: 'Let’s talk about your next trip and create an experience designed for you and your group.',
+    action: 'Book via WhatsApp',
+  },
+  pt: {
+    eyebrow: 'Atendimento personalizado',
+    title: 'Reserve sua consulta',
+    text: 'Vamos conversar sobre sua próxima viagem e criar uma experiência pensada para você e seu grupo.',
+    action: 'Reservar pelo WhatsApp',
+  },
+  fr: {
+    eyebrow: 'Attention personnalisée',
+    title: 'Réservez votre rendez-vous',
+    text: 'Parlons de votre prochain voyage et imaginons une expérience pensée pour vous et votre groupe.',
+    action: 'Réserver sur WhatsApp',
+  },
+  it: {
+    eyebrow: 'Attenzione personalizzata',
+    title: 'Prenota il tuo appuntamento',
+    text: 'Parliamo del tuo prossimo viaggio e creiamo un’esperienza pensata per te e il tuo gruppo.',
+    action: 'Prenota su WhatsApp',
+  },
+  de: {
+    eyebrow: 'Persönliche Beratung',
+    title: 'Termin reservieren',
+    text: 'Sprechen wir über eure nächste Reise und gestalten wir ein Erlebnis für euch und eure Gruppe.',
+    action: 'Über WhatsApp reservieren',
+  },
+  nl: {
+    eyebrow: 'Persoonlijke aandacht',
+    title: 'Plan je afspraak',
+    text: 'Laten we praten over jullie volgende reis en een ervaring voor jullie groep ontwerpen.',
+    action: 'Reserveren via WhatsApp',
+  },
+};
+
 type Props = { language: LanguageCode };
 
 type GroupTripsCopy = {
@@ -199,6 +244,7 @@ export default function GroupTripsPage({ language }: Props) {
     ...item,
     title: localized.moments[index],
   }));
+  const appointment = appointmentCopy[language];
   const whatsappUrl = `https://wa.me/51949217304?text=${encodeURIComponent(localized.whatsappMessage)}`;
 
   useEffect(() => {
@@ -290,14 +336,23 @@ export default function GroupTripsPage({ language }: Props) {
           ))}
         </div>
 
-        <div className="grid gap-px bg-ink-200 md:grid-cols-3">
-          {localized.steps.map((step, index) => (
-            <article key={step.title} className="bg-sand-100 px-7 py-8 lg:px-9 lg:py-10">
-              <span className="font-numeric text-sm text-blush-500">0{index + 1}</span>
-              <h3 className="mt-8 font-serif text-2xl font-light">{step.title}</h3>
-              <p className="mt-4 text-sm font-light leading-relaxed text-ink-600">{step.text}</p>
-            </article>
-          ))}
+        <div className="relative overflow-hidden rounded-[28px] border border-[#d9c4b7] bg-[#f3e8df] px-7 py-10 text-center shadow-[0_20px_50px_rgba(71,45,36,0.08)] sm:px-12 sm:py-14 lg:px-20 lg:py-16">
+          <div className="pointer-events-none absolute left-1/2 top-0 h-px w-24 -translate-x-1/2 bg-blush-400" />
+          <div className="relative mx-auto max-w-2xl">
+            <p className="text-[10px] uppercase tracking-[0.3em] text-blush-600">{appointment.eyebrow}</p>
+            <h2 className="mt-5 font-serif text-4xl font-light tracking-wide text-ink-900 sm:text-5xl lg:text-6xl">{appointment.title}</h2>
+            <p className="mx-auto mt-5 max-w-lg text-sm font-light leading-relaxed text-ink-600 sm:text-base">{appointment.text}</p>
+            <a
+              href={whatsappUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="mt-8 inline-flex items-center rounded-full bg-ink-900 px-7 py-4 text-[10px] uppercase tracking-[0.24em] text-sand-50 shadow-[0_12px_25px_rgba(27,23,20,0.16)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-blush-500"
+            >
+              <MessageCircle size={15} strokeWidth={1.5} className="mr-3" />
+              {appointment.action}
+              <ArrowRight size={14} strokeWidth={1.5} className="ml-3" />
+            </a>
+          </div>
         </div>
       </section>
 
