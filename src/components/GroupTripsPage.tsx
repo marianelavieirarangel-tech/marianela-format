@@ -4,7 +4,6 @@ import tripHeroImage from '@/assets/hero-beach.jpg';
 
 const gallery = [
   'https://images.pexels.com/photos/1268855/pexels-photo-1268855.jpeg?auto=compress&cs=tinysrgb&w=900',
-  tripHeroImage,
   'https://images.pexels.com/photos/1687845/pexels-photo-1687845.jpeg?auto=compress&cs=tinysrgb&w=900',
   'https://images.pexels.com/photos/1450360/pexels-photo-1450360.jpeg?auto=compress&cs=tinysrgb&w=900',
   'https://images.pexels.com/photos/1025469/pexels-photo-1025469.jpeg?auto=compress&cs=tinysrgb&w=900',
@@ -19,7 +18,7 @@ const tripMoments = [
     angle: 'rotate-[-2deg]',
   },
   {
-    image: 'https://6a8377665cc6de03eb430013.imgix.net/sandbox/pexels-yuliia-auer-3541449-5303407.jpg',
+    image: tripHeroImage,
     title: 'Ritmo relajado',
     angle: 'rotate-[2deg]',
   },
