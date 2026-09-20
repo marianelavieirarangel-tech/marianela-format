@@ -18,7 +18,7 @@ const tripMoments = [
     angle: 'rotate-[-2deg]',
   },
   {
-    image: tripHeroImage,
+    image: 'https://6a8377665cc6de03eb430013.imgix.net/sandbox/pexels-yuliia-auer-3541449-5303407.jpg',
     title: 'Ritmo relajado',
     angle: 'rotate-[2deg]',
   },
@@ -230,6 +230,17 @@ export default function GroupTripsPage({ language }: Props) {
             </div>
           </div>
         </div>
+      </section>
+
+      <section className="relative min-h-[100svh] overflow-hidden bg-ink-900">
+        <img
+          src={tripHeroImage}
+          alt="Experiencia de viaje junto al mar"
+          className="absolute inset-0 h-full w-full object-cover object-center"
+          loading="eager"
+          decoding="async"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-ink-900/45 via-transparent to-ink-900/10" />
       </section>
 
       <section className="mx-auto max-w-7xl px-6 py-14 lg:px-10 lg:py-20">
