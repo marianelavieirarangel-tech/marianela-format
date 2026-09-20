@@ -1,16 +1,7 @@
 import { useEffect, useState } from 'react';
-import { ArrowRight, Check, MessageCircle } from 'lucide-react';
+import { ArrowRight, MessageCircle } from 'lucide-react';
 import type { LanguageCode } from '@/lib/language';
 import tripHeroImage from '@/assets/hero-beach.jpg';
-
-const gallery = [
-  'https://images.pexels.com/photos/1268855/pexels-photo-1268855.jpeg?auto=compress&cs=tinysrgb&w=900',
-  'https://images.pexels.com/photos/1687845/pexels-photo-1687845.jpeg?auto=compress&cs=tinysrgb&w=900',
-  'https://images.pexels.com/photos/1450360/pexels-photo-1450360.jpeg?auto=compress&cs=tinysrgb&w=900',
-  'https://images.pexels.com/photos/1025469/pexels-photo-1025469.jpeg?auto=compress&cs=tinysrgb&w=900',
-  'https://images.pexels.com/photos/3155666/pexels-photo-3155666.jpeg?auto=compress&cs=tinysrgb&w=900',
-  'https://images.pexels.com/photos/1450353/pexels-photo-1450353.jpeg?auto=compress&cs=tinysrgb&w=900',
-];
 
 const tripMoments = [
   {
@@ -353,21 +344,6 @@ export default function GroupTripsPage({ language }: Props) {
               <ArrowRight size={14} strokeWidth={1.5} className="ml-3" />
             </a>
           </div>
-        </div>
-      </section>
-
-      <section className="bg-blush-100 py-20 lg:py-24">
-        <div className="mx-auto grid max-w-7xl items-center gap-10 px-6 lg:grid-cols-[0.8fr_1.2fr] lg:px-10">
-          <div>
-            <p className="mb-4 text-[11px] uppercase tracking-ultra text-blush-600">{localized.includedLabel}</p>
-            <h2 className="font-serif text-4xl font-light tracking-wide sm:text-5xl">{localized.includedTitle}</h2>
-            <ul className="mt-8 space-y-4 text-sm font-light text-ink-700">
-              {localized.included.map((item) => (
-                <li key={item} className="flex items-center gap-3"><Check size={16} className="text-blush-600" />{item}</li>
-              ))}
-            </ul>
-          </div>
-          <img src={gallery[2]} alt="Amigas compartiendo una experiencia de viaje" className="aspect-[4/3] w-full object-cover" loading="lazy" />
         </div>
       </section>
 
