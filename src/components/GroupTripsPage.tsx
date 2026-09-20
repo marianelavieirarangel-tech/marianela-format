@@ -1,8 +1,10 @@
 import { ArrowRight, Check, Instagram, MessageCircle } from 'lucide-react';
 import type { LanguageCode } from '@/lib/language';
+import tripHeroImage from '@/assets/hero-beach.jpg';
 
 const gallery = [
   'https://images.pexels.com/photos/1268855/pexels-photo-1268855.jpeg?auto=compress&cs=tinysrgb&w=900',
+  tripHeroImage,
   'https://images.pexels.com/photos/1687845/pexels-photo-1687845.jpeg?auto=compress&cs=tinysrgb&w=900',
   'https://images.pexels.com/photos/1450360/pexels-photo-1450360.jpeg?auto=compress&cs=tinysrgb&w=900',
   'https://images.pexels.com/photos/1025469/pexels-photo-1025469.jpeg?auto=compress&cs=tinysrgb&w=900',

@@ -1,48 +1,22 @@
-import { useEffect, useState } from 'react';
 import { ArrowRight } from 'lucide-react';
-import heroImage from '@/assets/hero-beach.jpg';
 import { translate, type LanguageCode } from '@/lib/language';
 
-const heroImages = [
-  {
-    src: heroImage,
-    alt: 'Marianela Vieira — editorial de playa',
-  },
-  {
-    src: 'https://6aa88bf09422e77b387f33c6.imgix.net/sandbox/fashn-export-1789781128500.webp',
-    alt: 'Marianela Vieira — nueva editorial',
-  },
-];
+const heroImage = 'https://6aa88bf09422e77b387f33c6.imgix.net/sandbox/fashn-export-1789781128500.webp';
 
 export default function Hero({ language = 'es' }: { language?: LanguageCode }) {
-  const [activeImage, setActiveImage] = useState(0);
-
-  useEffect(() => {
-    const interval = window.setInterval(() => {
-      setActiveImage((current) => (current + 1) % heroImages.length);
-    }, 6500);
-
-    return () => window.clearInterval(interval);
-  }, []);
-
   return (
     <section id="top" className="relative h-[100vh] min-h-[680px] w-full overflow-hidden bg-ink-900">
       {/* Background image */}
       <div className="absolute inset-0">
-        {heroImages.map((image, index) => (
-          <img
-            key={image.src}
-            src={image.src}
-            alt={image.alt}
-            className={`absolute inset-0 h-full w-full object-cover object-center scale-[1.08] transition-opacity duration-[1400ms] ease-in-out ${
-              activeImage === index ? 'opacity-100' : 'opacity-0'
-            }`}
-            loading="eager"
-            fetchPriority={index === 0 ? 'high' : 'auto'}
-            decoding="async"
-            style={{ objectPosition: 'center center' }}
-          />
-        ))}
+        <img
+          src={heroImage}
+          alt="Marianela Vieira — nueva editorial"
+          className="h-full w-full object-cover object-center scale-[1.08]"
+          loading="eager"
+          fetchPriority="high"
+          decoding="async"
+          style={{ objectPosition: 'center center' }}
+        />
         <div className="absolute inset-0 bg-gradient-to-r from-ink-900/70 via-ink-900/30 to-transparent" />
         <div className="absolute inset-0 bg-gradient-to-t from-ink-900/60 via-transparent to-ink-900/20" />
       </div>
