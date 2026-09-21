@@ -121,6 +121,28 @@ const colorHexByName: Record<string, string> = {
   silver: '#aeb8bd',
 };
 
+const colorKeywordHex: Array<[string, string]> = [
+  ['jardin', '#87956a'],
+  ['romero', '#87956a'],
+  ['sage', '#87956a'],
+  ['lavanda', '#9b82b7'],
+  ['lila', '#9b82b7'],
+  ['violeta', '#76547f'],
+  ['malva', '#a47f96'],
+  ['terracota', '#b7654d'],
+  ['arena', '#c9ad8c'],
+  ['champagne', '#d6bd9b'],
+  ['cielo', '#8bb9cf'],
+  ['marino', '#263f59'],
+  ['oceano', '#2e6375'],
+  ['menta', '#8db9a3'],
+  ['pistacho', '#b1bd78'],
+  ['chocolate', '#5b392d'],
+  ['caramelo', '#b98254'],
+  ['vino', '#713d4b'],
+  ['mostaza', '#c29a3b'],
+];
+
 function normalizeColorName(colorName: string) {
   return colorName
     .trim()
@@ -137,12 +159,15 @@ function swatchHex(colorName: string) {
   const matchingColor = Object.entries(colorHexByName).find(([name]) => normalizedName.includes(name));
   if (matchingColor) return matchingColor[1];
 
+  const matchingKeyword = colorKeywordHex.find(([keyword]) => normalizedName.includes(keyword));
+  if (matchingKeyword) return matchingKeyword[1];
+
+  const fallbackPalette = ['#8c7568', '#6f7c72', '#7a7184', '#9a7c65', '#687d89', '#8b6d73'];
   let hash = 0;
   for (let index = 0; index < normalizedName.length; index += 1) {
     hash = (hash * 31 + normalizedName.charCodeAt(index)) | 0;
   }
-  const hue = Math.abs(hash) % 360;
-  return `hsl(${hue} 34% 67%)`;
+  return fallbackPalette[Math.abs(hash) % fallbackPalette.length];
 }
 
 
