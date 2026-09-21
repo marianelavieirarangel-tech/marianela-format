@@ -269,8 +269,11 @@ function ProductCard({
             {product.swatches.map((swatch) => (
               <div
                 key={swatch.name}
-                className="h-6 w-6 rounded-full border-2 border-[#fffdfb] shadow-md transition-transform hover:scale-110"
-                style={{ backgroundColor: swatch.hex }}
+                className="h-6 w-6 rounded-full border-2 border-[#fffdfb] bg-cover bg-center shadow-md transition-transform hover:scale-110"
+                style={{
+                  backgroundColor: swatch.hex,
+                  ...(swatch.image ? { backgroundImage: `url("${swatch.image}")` } : {}),
+                }}
                 title={swatch.name}
               />
             ))}
