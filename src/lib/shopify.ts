@@ -86,18 +86,63 @@ const colorHexByName: Record<string, string> = {
   blanco: '#f5f0ea',
   white: '#f5f0ea',
   beige: '#e8dfd6',
+  crema: '#f0e2cf',
+  cream: '#f0e2cf',
+  marfil: '#f5f0e5',
+  ivory: '#f5f0e5',
   rosa: '#e9b0a3',
+  rosado: '#e9b0a3',
   rose: '#e9b0a3',
+  nude: '#d9b2a7',
+  coral: '#e88978',
   rojo: '#a33b2b',
   red: '#a33b2b',
+  naranja: '#d9783f',
+  orange: '#d9783f',
+  amarillo: '#e6b84f',
+  yellow: '#e6b84f',
   azul: '#2f4a6d',
   blue: '#2f4a6d',
+  celeste: '#88c4d9',
+  turquesa: '#35aeb0',
+  turquoise: '#35aeb0',
+  morado: '#76547f',
+  purple: '#76547f',
+  lila: '#aa8ab6',
   verde: '#2f725d',
   green: '#2f725d',
+  oliva: '#78804a',
+  olive: '#78804a',
+  marron: '#704633',
+  brown: '#704633',
+  dorado: '#c59b4b',
+  gold: '#c59b4b',
+  plateado: '#aeb8bd',
+  silver: '#aeb8bd',
 };
 
+function normalizeColorName(colorName: string) {
+  return colorName
+    .trim()
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '');
+}
+
 function swatchHex(colorName: string) {
-  return colorHexByName[colorName.trim().toLowerCase()] ?? '#d9b2a7';
+  const normalizedName = normalizeColorName(colorName);
+  const exactColor = colorHexByName[normalizedName];
+  if (exactColor) return exactColor;
+
+  const matchingColor = Object.entries(colorHexByName).find(([name]) => normalizedName.includes(name));
+  if (matchingColor) return matchingColor[1];
+
+  let hash = 0;
+  for (let index = 0; index < normalizedName.length; index += 1) {
+    hash = (hash * 31 + normalizedName.charCodeAt(index)) | 0;
+  }
+  const hue = Math.abs(hash) % 360;
+  return `hsl(${hue} 34% 67%)`;
 }
 
 

@@ -171,9 +171,17 @@ export default function ProductDetail({
                           ? 'border-[#1b1714] ring-2 ring-[#d9bca9] ring-offset-2 ring-offset-[#f8f4ef]'
                           : 'border-[#d9c9be] hover:border-[#8f7e76]'
                       }`}
-                      style={{ backgroundColor: swatch.hex }}
+                      style={{
+                        backgroundColor: swatch.hex,
+                        ...(swatch.image
+                          ? {
+                              backgroundImage: `url("${swatch.image}")`,
+                              backgroundPosition: 'center',
+                              backgroundSize: 'cover',
+                            }
+                          : {}),
+                      }}
                       title={swatch.name}
-                      aria-label={swatch.name}
                     />
                   ))}
                 </div>
