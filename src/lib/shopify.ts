@@ -93,6 +93,7 @@ const colorHexByName: Record<string, string> = {
   rosa: '#e9b0a3',
   rosado: '#e9b0a3',
   rose: '#e9b0a3',
+  gaia: '#b51f91',
   nude: '#d9b2a7',
   coral: '#e88978',
   rojo: '#a33b2b',
