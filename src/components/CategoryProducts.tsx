@@ -70,7 +70,7 @@ export default function CategoryProducts({
   const isEmptyCollection = categoryName === 'Colección 2026' && filtered.length === 0;
 
   return (
-    <section className={`min-h-screen ${isEmptyCollection ? 'bg-ink-900' : 'bg-sand-50'}`}>
+    <section className={`min-h-screen ${isEmptyCollection ? 'bg-ink-900' : 'bg-white'}`}>
       <div className={isEmptyCollection ? 'w-full px-0 pb-0' : 'mx-auto w-full max-w-[1560px] px-4 pt-6 pb-20 lg:px-5 lg:pt-8 xl:px-6'}>
         <div className={`grid gap-10 ${isEmptyCollection ? '' : 'lg:grid-cols-[230px_minmax(0,1fr)] xl:gap-12'}`}>
           {!isEmptyCollection && <aside className="lg:sticky lg:top-24 lg:h-fit">
@@ -102,7 +102,7 @@ export default function CategoryProducts({
                   <select
                     value={sortBy}
                     onChange={(event) => setSortBy(event.target.value as 'featured' | 'price-asc' | 'price-desc')}
-                    className="w-full appearance-none rounded-sm border border-ink-200 bg-sand-50 px-4 py-3 pr-9 text-[11px] font-medium uppercase tracking-[0.18em] text-ink-800 outline-none transition-all duration-200 hover:border-ink-400 focus:border-ink-900 focus:ring-1 focus:ring-ink-900/10"
+                    className="w-full appearance-none rounded-sm border border-ink-200 bg-white px-4 py-3 pr-9 text-[11px] font-medium uppercase tracking-[0.18em] text-ink-800 outline-none transition-all duration-200 hover:border-ink-400 focus:border-ink-900 focus:ring-1 focus:ring-ink-900/10"
                   >
                     <option value="featured">{translateLabel(language, 'Destacados')}</option>
                     <option value="price-asc">{translateLabel(language, 'Menor precio')}</option>
@@ -127,11 +127,11 @@ export default function CategoryProducts({
                         className={`w-full px-3.5 py-2.5 text-left text-[10px] font-medium uppercase tracking-[0.18em] border transition-all duration-200 rounded-sm ${
                           isSelected
                             ? isSaleFilter
-                              ? 'bg-[#c62828] text-sand-50 border-[#c62828] shadow-[0_6px_16px_rgba(198,40,40,0.2)]'
-                              : 'bg-ink-900 text-sand-50 border-ink-900 shadow-[0_6px_16px_rgba(27,23,20,0.12)]'
+                              ? 'bg-[#c62828] text-white border-[#c62828] shadow-[0_6px_16px_rgba(198,40,40,0.2)]'
+                              : 'bg-ink-900 text-white border-ink-900 shadow-[0_6px_16px_rgba(27,23,20,0.12)]'
                             : isSaleFilter
-                              ? 'bg-sand-50 text-[#c62828] border-[#e7b4b4] hover:border-[#d38383] hover:bg-[#fff5f5]'
-                              : 'bg-sand-50 text-ink-700 border-ink-200 hover:border-ink-400 hover:bg-ink-50'
+                              ? 'bg-white text-[#c62828] border-[#e7b4b4] hover:border-[#d38383] hover:bg-[#fff5f5]'
+                              : 'bg-white text-ink-700 border-ink-200 hover:border-ink-400 hover:bg-ink-50'
                         }`}
                       >
                         {translateLabel(language, filter)}
@@ -206,7 +206,7 @@ function ProductCard({
 
   return (
     <div
-      className="group flex flex-col rounded-[18px] border border-[#eadfce] bg-[#fffdfb] p-3 shadow-[0_18px_40px_rgba(56,35,26,0.05)] transition-shadow duration-500 hover:shadow-[0_22px_48px_rgba(56,35,26,0.08)] xl:rounded-none xl:border-0 xl:p-0 xl:shadow-none"
+      className="group flex flex-col rounded-[18px] border border-[#eadfce] bg-white p-3 shadow-[0_18px_40px_rgba(56,35,26,0.05)] transition-shadow duration-500 hover:shadow-[0_22px_48px_rgba(56,35,26,0.08)] xl:rounded-none xl:border-0 xl:p-0 xl:shadow-none"
     >
       {/* Image */}
       <div 

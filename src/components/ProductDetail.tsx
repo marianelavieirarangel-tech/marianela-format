@@ -99,7 +99,7 @@ export default function ProductDetail({
   };
 
   return (
-    <div className="min-h-screen bg-[#f8f4ef]">
+    <div className="min-h-screen bg-white">
       <div className="mx-auto max-w-7xl px-6 pt-6 pb-10 lg:px-10 lg:pt-8 lg:pb-16">
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-2 lg:gap-16">
           {/* Gallery */}
