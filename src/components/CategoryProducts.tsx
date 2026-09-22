@@ -144,7 +144,7 @@ export default function CategoryProducts({
           </aside>}
 
           <div className={isEmptyCollection ? 'min-w-0' : ''}>
-            <div className="grid grid-cols-1 gap-x-5 gap-y-12 md:grid-cols-2 xl:grid-cols-3 xl:gap-x-px xl:bg-[#e7ddd3]">
+            <div className="grid grid-cols-1 gap-x-5 gap-y-12 md:grid-cols-2 xl:grid-cols-3 xl:gap-x-px">
               {filtered.map((product) => (
                 <ProductCard
                   key={product.id}
@@ -210,7 +210,7 @@ function ProductCard({
     >
       {/* Image */}
       <div 
-        className="relative mb-4 aspect-[4/5] cursor-pointer overflow-hidden rounded-[22px] bg-[#f4efe9] xl:mb-0 xl:aspect-[2/3] xl:rounded-none"
+        className="relative mb-4 aspect-[4/5] cursor-pointer overflow-hidden rounded-[22px] bg-white xl:mb-0 xl:aspect-[2/3] xl:rounded-none"
         onClick={() => navigate(`/product/${product.id}`)}
       >
         <img
