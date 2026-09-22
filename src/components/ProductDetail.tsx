@@ -16,7 +16,7 @@ type Props = {
   initialColor?: string;
 };
 
-const fallbackSizes = ['XS', 'S', 'M', 'L', 'XL'] as const;
+const fallbackSizes = ['S', 'M', 'L'] as const;
 
 export default function ProductDetail({
   product,
@@ -34,8 +34,8 @@ export default function ProductDetail({
   const [selectedColor, setSelectedColor] = useState<string>(initialSwatch?.name || '');
   const [showAllColors, setShowAllColors] = useState(false);
   const [openInfo, setOpenInfo] = useState<'description' | 'material' | 'care' | null>(null);
-  const sizes = product.sizes ?? fallbackSizes;
-  const availableSizes = new Set(product.sizes ?? fallbackSizes);
+  const sizes = product.sizes?.length ? product.sizes : fallbackSizes;
+  const availableSizes = new Set(sizes);
   const gallery = product.images?.length ? product.images : [product.image];
   const [selectedImage, setSelectedImage] = useState(gallery[0]);
   const displayName = localizedProductName(product.name, language);

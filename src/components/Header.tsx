@@ -129,7 +129,7 @@ export default function Header({
         className={`${
           isHome && !scrolled
             ? 'fixed left-0 right-0 top-[37px] bg-transparent text-sand-50 shadow-none'
-            : 'fixed left-0 right-0 top-[37px] bg-sand-50 shadow-[0_1px_0_0_rgba(26,22,17,0.08)] text-ink-800'
+            : 'fixed left-0 right-0 top-[37px] bg-white shadow-[0_1px_0_0_rgba(26,22,17,0.08)] text-ink-800'
         } z-[1000] transition-[background-color,color,box-shadow,backdrop-filter] duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] will-change-[background-color,box-shadow,backdrop-filter]`}
       >
           <div className="relative flex h-[72px] items-center lg:h-[84px]">
@@ -164,7 +164,7 @@ export default function Header({
                     className={`min-w-max rounded-sm border py-4 px-6 shadow-[0_18px_40px_rgba(17,13,10,0.16)] backdrop-blur-md transition-colors ${
                       isHome && !scrolled
                         ? 'border-white/25 bg-ink-900/50 text-sand-100'
-                        : 'border-ink-100 bg-sand-50/95 text-ink-700'
+                        : 'border-ink-100 bg-white text-ink-700'
                     }`}
                   >
                     {womenMenuSubcategories.map((cat) => (
@@ -251,7 +251,7 @@ export default function Header({
                     className={`flex items-center gap-2 rounded-full border px-3 py-1.5 pr-2 text-[10px] uppercase tracking-[0.18em] shadow-[0_8px_24px_rgba(17,13,10,0.06)] backdrop-blur-sm transition-all duration-200 ${
                       isHome && !scrolled
                         ? 'border-white/35 bg-white/10 text-sand-50 hover:bg-white/15'
-                        : 'border-ink-200 bg-sand-50 text-ink-700 hover:border-ink-300 hover:bg-sand-100'
+                        : 'border-ink-200 bg-white text-ink-700 hover:border-ink-300 hover:bg-white'
                     }`}
                     aria-label="Seleccionar idioma"
                   >
@@ -300,7 +300,7 @@ export default function Header({
                     className={`flex items-center gap-2 rounded-full border px-3 py-1.5 pr-2 text-[10px] uppercase tracking-[0.2em] shadow-[0_8px_24px_rgba(17,13,10,0.06)] backdrop-blur-sm transition-all duration-200 ${
                       isHome && !scrolled
                         ? 'border-white/35 bg-white/10 text-sand-50 hover:bg-white/15'
-                        : 'border-ink-200 bg-sand-50 text-ink-700 hover:border-ink-300 hover:bg-sand-100'
+                        : 'border-ink-200 bg-white text-ink-700 hover:border-ink-300 hover:bg-white'
                     }`}
                     aria-label="Seleccionar moneda"
                   >
@@ -448,7 +448,7 @@ export default function Header({
           onClick={() => setMobileOpen(false)}
         />
         <div
-          className={`absolute left-0 top-0 h-full w-[78%] max-w-sm bg-sand-50 shadow-2xl transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+          className={`absolute left-0 top-0 h-full w-[78%] max-w-sm bg-white shadow-2xl transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
             mobileOpen ? 'translate-x-0' : '-translate-x-full'
           }`}
         >
