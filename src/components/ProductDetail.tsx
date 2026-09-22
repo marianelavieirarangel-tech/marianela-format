@@ -54,7 +54,7 @@ export default function ProductDetail({
     setSelectedImage(product.images?.length ? product.images[0] : product.image);
     const selectedSwatch = product.swatches.find((swatch) => swatch.name === initialColor) ?? product.swatches[0];
     setSelectedColor(selectedSwatch?.name || '');
-    if (selectedSwatch?.image) setSelectedImage(selectedSwatch.image);
+    if (initialColor && selectedSwatch?.image) setSelectedImage(selectedSwatch.image);
     setSelectedSize('');
     setSizeError(false);
     setQuantity(1);
