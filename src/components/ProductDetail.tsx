@@ -279,23 +279,6 @@ export default function ProductDetail({
               </button>
             </div>
 
-            {/* Trust near CTA */}
-            <div className="mb-8 grid gap-3 rounded-[22px] border border-[#eadfce] bg-white p-4 sm:grid-cols-2">
-              <div>
-                <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-[#1b1714]">Envío cuidado</p>
-                <p className="mt-1 text-sm font-light text-[#8f7e76]">Gratis en compras desde S/ 159</p>
-              </div>
-              <div>
-                <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-[#1b1714]">Cambios</p>
-                <p className="mt-1 text-sm font-light text-[#8f7e76]">
-                  30 días ·{' '}
-                  <Link to="/pages/envios-y-devoluciones" className="underline-offset-2 hover:underline">
-                    ver política
-                  </Link>
-                </p>
-              </div>
-            </div>
-
             <div className="mb-8 border-t border-[#e3d8ce]">
               {[
                 { key: 'description' as const, label: 'Descripción', value: product.description },
