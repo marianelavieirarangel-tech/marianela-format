@@ -172,11 +172,12 @@ export default function ProductDetail({
 
             {product.swatches.length > 0 && (
               <div className="mb-8">
-                <div className="mb-4 flex items-baseline justify-between">
+                <div className="mb-4 flex items-baseline gap-2">
                   <p className="text-[11px] font-medium uppercase tracking-[0.22em] text-[#1b1714]">{translateLabel(language, 'Color')}</p>
-                  <p className="text-sm font-light text-[#8f7e76]">{selectedColor}</p>
+                  <span className="text-[11px] uppercase tracking-[0.18em] text-[#8f7e76]">·</span>
+                  <p className="text-[11px] uppercase tracking-[0.18em] text-[#8f7e76]">{selectedColor}</p>
                 </div>
-                <div className="flex flex-wrap gap-3">
+                <div className="flex max-w-full flex-nowrap gap-3 overflow-x-auto pb-1">
                   {product.swatches.map((swatch) => (
                     <button
                       key={swatch.name}
