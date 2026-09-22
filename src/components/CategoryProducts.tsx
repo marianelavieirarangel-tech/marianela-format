@@ -246,15 +246,6 @@ function ProductCard({
           </>
         )}
 
-        {/* Tags */}
-        {badgeText && (
-          <div className="absolute left-4 top-4">
-            <span className="inline-block rounded-full bg-[#c88f7a] px-3 py-1.5 text-[10px] font-medium uppercase tracking-[0.18em] text-[#fffaf7] shadow-sm">
-              {badgeText}
-            </span>
-          </div>
-        )}
-
         {/* Wishlist button */}
         <button
           onClick={() => onToggleWishlist(product.id)}
@@ -284,6 +275,11 @@ function ProductCard({
 
       {/* Info */}
       <div className="flex-1 xl:px-2 xl:pb-5 xl:pt-3">
+        {badgeText && (
+          <span className="mb-2 inline-flex h-6 min-w-10 items-center justify-center bg-[#1b1714] px-2 text-[9px] font-medium uppercase tracking-[0.12em] text-[#fffaf7]">
+            {badgeText}
+          </span>
+        )}
         <h3 
           className="mb-2 cursor-pointer font-serif text-[1.35rem] leading-tight text-[#1b1714] transition-colors hover:text-[#ba826b]"
           onClick={() => navigate(`/product/${product.id}`)}

@@ -177,8 +177,8 @@ export default function ProductDetail({
                   <span className="text-[11px] uppercase tracking-[0.18em] text-[#8f7e76]">·</span>
                   <p className="text-[11px] uppercase tracking-[0.18em] text-[#8f7e76]">{selectedColor}</p>
                 </div>
-                <div className="grid max-w-[22rem] grid-cols-5 gap-0 border-l border-t border-[#d9d0c8]">
-                  {(showAllColors ? product.swatches : product.swatches.slice(0, 9)).map((swatch) => (
+                <div className="grid max-w-[20rem] grid-cols-4 gap-0 border-l border-t border-[#d9d0c8]">
+                  {(showAllColors ? product.swatches : product.swatches.slice(0, 8)).map((swatch) => (
                     <button
                       key={swatch.name}
                       type="button"
@@ -195,14 +195,14 @@ export default function ProductDetail({
                       title={swatch.name}
                     />
                   ))}
-                  {!showAllColors && product.swatches.length > 9 && (
+                  {!showAllColors && product.swatches.length > 8 && (
                     <button
                       type="button"
                       onClick={() => setShowAllColors(true)}
                       className="aspect-square border-b border-r border-[#1b1714] bg-[#050505] text-xs font-medium text-white transition-colors hover:bg-[#242424]"
-                      aria-label={`Mostrar ${product.swatches.length - 9} colores más`}
+                      aria-label={`Mostrar ${product.swatches.length - 8} colores más`}
                     >
-                      +{product.swatches.length - 9}
+                      +{product.swatches.length - 8}
                     </button>
                   )}
                 </div>
