@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { X, Trash2 } from 'lucide-react';
 import type { CartItem } from '@/components/QuickAddModal';
+import { formatProductName } from '@/data/catalog';
 import { createShopifyCheckout } from '@/lib/shopify';
 import { formatPrice, type CurrencyCode } from '@/lib/currency';
 
@@ -274,12 +275,12 @@ export default function CheckoutPage({ items, currency, onClose, onUpdateQty, on
                   <div key={index} className="flex gap-4 mb-6 pb-6 border-b border-ink-100 last:border-0">
                     <img
                       src={item.product.image}
-                      alt={item.product.name}
+                      alt={formatProductName(item.product.name)}
                       className="w-20 h-20 object-cover bg-ink-50"
                     />
                     <div className="flex-1">
                       <p className="text-sm text-ink-900 font-medium mb-1 line-clamp-2">
-                        {item.product.name}
+                        {formatProductName(item.product.name)}
                       </p>
                       <p className="text-xs text-ink-500 mb-2">
                         {item.size ? `Talla: ${item.size}` : ''}

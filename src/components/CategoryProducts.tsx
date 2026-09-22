@@ -1,7 +1,7 @@
 import { Heart, ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import type { Product } from '@/data/catalog';
+import { formatProductName, type Product } from '@/data/catalog';
 import { hiddenCategoryNames } from '@/data/catalog';
 import { formatPrice, type CurrencyCode } from '@/lib/currency';
 import { translateLabel, type LanguageCode } from '@/lib/language';
@@ -215,7 +215,7 @@ function ProductCard({
       >
         <img
           src={displayedImage}
-          alt={product.name}
+          alt={formatProductName(product.name)}
           className="absolute inset-0 h-full w-full object-cover transition-opacity duration-500 ease-in-out group-hover:scale-[1.02]"
         />
 
@@ -228,7 +228,7 @@ function ProductCard({
                 setImageIndex((current) => (current - 1 + images.length) % images.length);
               }}
               className="absolute left-3 top-1/2 z-10 flex -translate-y-1/2 items-center justify-center bg-transparent p-1 text-white mix-blend-difference transition-transform hover:scale-125"
-              aria-label={`Foto anterior de ${product.name}`}
+              aria-label={`Foto anterior de ${formatProductName(product.name)}`}
             >
               <ChevronLeft size={16} strokeWidth={1.5} />
             </button>
@@ -239,7 +239,7 @@ function ProductCard({
                 setImageIndex((current) => (current + 1) % images.length);
               }}
               className="absolute right-3 top-1/2 z-10 flex -translate-y-1/2 items-center justify-center bg-transparent p-1 text-white mix-blend-difference transition-transform hover:scale-125"
-              aria-label={`Siguiente foto de ${product.name}`}
+              aria-label={`Siguiente foto de ${formatProductName(product.name)}`}
             >
               <ChevronRight size={16} strokeWidth={1.5} />
             </button>
@@ -276,7 +276,7 @@ function ProductCard({
           className="mb-2 cursor-pointer font-serif text-[1.35rem] leading-tight text-[#1b1714] transition-colors hover:text-[#ba826b]"
           onClick={() => navigate(`/product/${product.id}`)}
         >
-          {product.name}
+          {formatProductName(product.name)}
         </h3>
         <p className="mb-3 min-h-[2.5rem] text-sm font-light leading-relaxed text-[#6c5f59] line-clamp-2 xl:hidden">
           {product.description}
@@ -303,7 +303,7 @@ function ProductCard({
                   backgroundColor: swatch.hex,
                 }}
                 title={swatch.name}
-                aria-label={`Ver ${product.name} en color ${swatch.name}`}
+                aria-label={`Ver ${formatProductName(product.name)} en color ${swatch.name}`}
                 onClick={() => navigate(`/product/${product.id}?color=${encodeURIComponent(swatch.name)}`)}
               />
             ))}

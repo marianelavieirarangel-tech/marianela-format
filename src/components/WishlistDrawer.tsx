@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { X, Heart } from 'lucide-react';
-import type { Product } from '@/data/catalog';
+import { formatProductName, type Product } from '@/data/catalog';
 import { formatPrice, type CurrencyCode } from '@/lib/currency';
 import type { LanguageCode } from '@/lib/language';
 
@@ -77,7 +77,7 @@ export default function WishlistDrawer({ products, open, wishlist, currency, onC
                   <div className="aspect-[3/4] bg-ink-100 overflow-hidden mb-2 relative">
                     <img
                       src={p.image}
-                      alt={p.name}
+                      alt={formatProductName(p.name)}
                       className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
                       loading="lazy"
                     />
@@ -85,7 +85,7 @@ export default function WishlistDrawer({ products, open, wishlist, currency, onC
                       <Heart size={13} className="fill-blush-500 text-blush-500" />
                     </div>
                   </div>
-                  <h3 className="font-serif text-sm text-ink-900 leading-tight">{p.name}</h3>
+                  <h3 className="font-serif text-sm text-ink-900 leading-tight">{formatProductName(p.name)}</h3>
                   <p className="font-numeric text-xs text-ink-500 mt-0.5">{formatPrice(p.price, currency)}</p>
                 </button>
               ))}

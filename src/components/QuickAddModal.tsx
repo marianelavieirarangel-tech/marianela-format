@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { X, Plus, Minus, ShoppingBag } from 'lucide-react';
-import type { Product } from '@/data/catalog';
+import { formatProductName, type Product } from '@/data/catalog';
 import { formatPrice, type CurrencyCode } from '@/lib/currency';
 
 export type CartItem = {
@@ -66,7 +66,7 @@ export default function QuickAddModal({ product, currency, onClose, onAddToCart 
           <div className="aspect-[3/4] md:aspect-auto md:h-full bg-ink-100 overflow-hidden">
             <img
               src={product.image}
-              alt={product.name}
+              alt={formatProductName(product.name)}
               className="h-full w-full object-cover"
             />
           </div>
@@ -74,7 +74,7 @@ export default function QuickAddModal({ product, currency, onClose, onAddToCart 
           {/* Details */}
           <div className="p-8 lg:p-10 flex flex-col">
             <p className="text-[10px] uppercase tracking-widest text-ink-400 mb-2">{product.category}</p>
-            <h2 className="font-serif text-3xl text-ink-900 font-light leading-tight mb-3">{product.name}</h2>
+            <h2 className="font-serif text-3xl text-ink-900 font-light leading-tight mb-3">{formatProductName(product.name)}</h2>
 
             <div className="flex items-baseline gap-2 mb-6">
               <span className="font-numeric text-ink-900 text-xl font-medium">{formatPrice(product.price, currency)}</span>
