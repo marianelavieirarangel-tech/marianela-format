@@ -71,7 +71,7 @@ export default function CategoryProducts({
 
   return (
     <section className={`min-h-screen ${isEmptyCollection ? 'bg-ink-900' : 'bg-sand-50'}`}>
-      <div className={isEmptyCollection ? 'w-full px-0 pb-0' : 'mx-auto w-full max-w-[1480px] px-6 pt-6 pb-20 lg:px-8 lg:pt-8 xl:px-10'}>
+      <div className={isEmptyCollection ? 'w-full px-0 pb-0' : 'mx-auto w-full max-w-[1560px] px-4 pt-6 pb-20 lg:px-5 lg:pt-8 xl:px-6'}>
         <div className={`grid gap-10 ${isEmptyCollection ? '' : 'lg:grid-cols-[230px_minmax(0,1fr)] xl:gap-12'}`}>
           {!isEmptyCollection && <aside className="lg:sticky lg:top-24 lg:h-fit">
             <button
@@ -210,7 +210,7 @@ function ProductCard({
     >
       {/* Image */}
       <div 
-        className="relative mb-4 aspect-[4/5] cursor-pointer overflow-hidden rounded-[22px] bg-[#f4efe9] xl:mb-0 xl:aspect-[3/4] xl:rounded-none"
+        className="relative mb-4 aspect-[4/5] cursor-pointer overflow-hidden rounded-[22px] bg-[#f4efe9] xl:mb-0 xl:aspect-[2/3] xl:rounded-none"
         onClick={() => navigate(`/product/${product.id}`)}
       >
         <img
@@ -304,7 +304,7 @@ function ProductCard({
 
         {product.swatches.length > 0 && (
           <div className="mt-3 flex flex-wrap gap-1.5" aria-label="Colores disponibles">
-            {product.swatches.map((swatch) => (
+            {product.swatches.slice(0, 2).map((swatch) => (
               <div
                 key={swatch.name}
                 className="h-3.5 w-3.5 border border-[#cfc2b7] bg-cover bg-center transition-transform hover:scale-110"
