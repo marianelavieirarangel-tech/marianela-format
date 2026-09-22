@@ -37,7 +37,17 @@ export default function ProductDetail({
   const gallery = product.images?.length ? product.images : [product.image];
   const [selectedImage, setSelectedImage] = useState(gallery[0]);
   const displayName = localizedProductName(product.name, language);
-  const waMessage = `Hola, me gustaría consultar el producto *${displayName}* y quisiera más información.`;
+  const productUrl = typeof window !== 'undefined' ? window.location.href : '';
+  const waMessage = [
+    'Hola Marianela, quiero consultar este producto:',
+    '',
+    `*${displayName}*`,
+    `Precio: ${formatPrice(product.price, currency)}`,
+    selectedColor ? `Color: ${selectedColor}` : '',
+    selectedSize ? `Talla: ${selectedSize}` : '',
+    '',
+    `URL: ${productUrl}`,
+  ].filter(Boolean).join('\n');
   const waLink = `https://wa.me/51949217304?text=${encodeURIComponent(waMessage)}`;
 
   useEffect(() => {
