@@ -144,7 +144,7 @@ export default function CategoryProducts({
           </aside>}
 
           <div className={isEmptyCollection ? 'min-w-0' : ''}>
-            <div className="grid grid-cols-1 gap-x-5 gap-y-12 md:grid-cols-2 xl:grid-cols-3 xl:gap-x-px">
+            <div className="grid grid-cols-1 gap-x-5 gap-y-12 bg-white md:grid-cols-2 xl:grid-cols-3 xl:gap-x-px">
               {filtered.map((product) => (
                 <ProductCard
                   key={product.id}
