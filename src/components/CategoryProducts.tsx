@@ -227,7 +227,7 @@ function ProductCard({
                 event.stopPropagation();
                 setImageIndex((current) => (current - 1 + images.length) % images.length);
               }}
-              className="absolute left-3 top-1/2 z-10 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full bg-[#fffdfb]/90 text-[#1b1714] opacity-100 shadow-sm transition-colors hover:bg-[#fffdfb]"
+              className="absolute left-3 top-1/2 z-10 flex -translate-y-1/2 items-center justify-center bg-transparent p-1 text-white mix-blend-difference transition-transform hover:scale-125"
               aria-label={`Foto anterior de ${product.name}`}
             >
               <ChevronLeft size={16} strokeWidth={1.5} />
@@ -238,7 +238,7 @@ function ProductCard({
                 event.stopPropagation();
                 setImageIndex((current) => (current + 1) % images.length);
               }}
-              className="absolute right-3 top-1/2 z-10 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full bg-[#fffdfb]/90 text-[#1b1714] opacity-100 shadow-sm transition-colors hover:bg-[#fffdfb]"
+              className="absolute right-3 top-1/2 z-10 flex -translate-y-1/2 items-center justify-center bg-transparent p-1 text-white mix-blend-difference transition-transform hover:scale-125"
               aria-label={`Siguiente foto de ${product.name}`}
             >
               <ChevronRight size={16} strokeWidth={1.5} />
@@ -305,13 +305,16 @@ function ProductCard({
         {product.swatches.length > 0 && (
           <div className="mt-3 flex flex-wrap gap-1.5" aria-label="Colores disponibles">
             {product.swatches.slice(0, 2).map((swatch) => (
-              <div
+              <button
+                type="button"
                 key={swatch.name}
                 className="h-3.5 w-3.5 border border-[#cfc2b7] bg-cover bg-center transition-transform hover:scale-110"
                 style={{
                   backgroundColor: swatch.hex,
                 }}
                 title={swatch.name}
+                aria-label={`Ver ${product.name} en color ${swatch.name}`}
+                onClick={() => navigate(`/product/${product.id}?color=${encodeURIComponent(swatch.name)}`)}
               />
             ))}
           </div>

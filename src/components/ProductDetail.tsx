@@ -14,6 +14,7 @@ type Props = {
   isWishlisted: boolean;
   onToggleWishlist: (productId: string) => void;
   language: LanguageCode;
+  initialColor?: string;
 };
 
 const sizes = ['XS', 'S', 'M', 'L', 'XL'] as const;
@@ -26,11 +27,13 @@ export default function ProductDetail({
   isWishlisted,
   onToggleWishlist,
   language,
+  initialColor,
 }: Props) {
   const [quantity, setQuantity] = useState(1);
   const [selectedSize, setSelectedSize] = useState<string>('');
   const [sizeError, setSizeError] = useState(false);
-  const [selectedColor, setSelectedColor] = useState<string>(product.swatches[0]?.name || '');
+  const initialSwatch = product.swatches.find((swatch) => swatch.name === initialColor) ?? product.swatches[0];
+  const [selectedColor, setSelectedColor] = useState<string>(initialSwatch?.name || '');
   const gallery = product.images?.length ? product.images : [product.image];
   const [selectedImage, setSelectedImage] = useState(gallery[0]);
   const displayName = localizedProductName(product.name, language);
@@ -39,11 +42,13 @@ export default function ProductDetail({
 
   useEffect(() => {
     setSelectedImage(product.images?.length ? product.images[0] : product.image);
-    setSelectedColor(product.swatches[0]?.name || '');
+    const selectedSwatch = product.swatches.find((swatch) => swatch.name === initialColor) ?? product.swatches[0];
+    setSelectedColor(selectedSwatch?.name || '');
+    if (selectedSwatch?.image) setSelectedImage(selectedSwatch.image);
     setSelectedSize('');
     setSizeError(false);
     setQuantity(1);
-  }, [product]);
+  }, [initialColor, product]);
 
   const handleSelectColor = (swatch: Product['swatches'][number]) => {
     setSelectedColor(swatch.name);

@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from 'react';
-import { Routes, Route, useParams, useNavigate, useLocation } from 'react-router-dom';
+import { Routes, Route, useParams, useNavigate, useLocation, useSearchParams } from 'react-router-dom';
 import Header from '@/components/Header';
 import Hero from '@/components/Hero';
 import CategoryGrid from '@/components/CategoryGrid';
@@ -236,6 +236,7 @@ export default function App() {
   function ProductPage() {
     const { id } = useParams();
     const navigate = useNavigate();
+    const [searchParams] = useSearchParams();
     const product = catalogProducts.find((p) => p.id === id);
     if (!product) return <div className="p-8">Producto no encontrado.</div>;
     return (
@@ -247,6 +248,7 @@ export default function App() {
         isWishlisted={wishlist.has(product.id)}
         onToggleWishlist={toggleWishlist}
         language={language}
+        initialColor={searchParams.get('color') ?? undefined}
       />
     );
   }
