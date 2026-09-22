@@ -71,8 +71,8 @@ export default function CategoryProducts({
 
   return (
     <section className={`min-h-screen ${isEmptyCollection ? 'bg-ink-900' : 'bg-sand-50'}`}>
-      <div className={isEmptyCollection ? 'w-full px-0 pb-0' : 'mx-auto w-full max-w-[1600px] px-6 pt-6 pb-20 lg:px-10 lg:pt-8 xl:px-12'}>
-        <div className={`grid gap-8 ${isEmptyCollection ? '' : 'lg:grid-cols-[220px_minmax(0,1fr)]'}`}>
+      <div className={isEmptyCollection ? 'w-full px-0 pb-0' : 'mx-auto w-full max-w-[1480px] px-6 pt-6 pb-20 lg:px-8 lg:pt-8 xl:px-10'}>
+        <div className={`grid gap-10 ${isEmptyCollection ? '' : 'lg:grid-cols-[230px_minmax(0,1fr)] xl:gap-12'}`}>
           {!isEmptyCollection && <aside className="lg:sticky lg:top-24 lg:h-fit">
             <button
               type="button"
@@ -144,7 +144,7 @@ export default function CategoryProducts({
           </aside>}
 
           <div className={isEmptyCollection ? 'min-w-0' : ''}>
-            <div className="grid grid-cols-1 gap-7 md:grid-cols-2 xl:grid-cols-3">
+            <div className="grid grid-cols-1 gap-x-5 gap-y-12 md:grid-cols-2 xl:grid-cols-3 xl:gap-x-7">
               {filtered.map((product) => (
                 <ProductCard
                   key={product.id}
@@ -208,7 +208,7 @@ function ProductCard({
     >
       {/* Image */}
       <div 
-        className="relative mb-4 aspect-[2/3] cursor-pointer overflow-hidden rounded-[22px] bg-[#f4efe9]"
+        className="relative mb-4 aspect-[4/5] cursor-pointer overflow-hidden rounded-[22px] bg-[#f4efe9]"
         onClick={() => navigate(`/product/${product.id}`)}
         onMouseEnter={() => setIsHovering(true)}
         onMouseLeave={() => setIsHovering(false)}
