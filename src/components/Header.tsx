@@ -187,6 +187,12 @@ export default function Header({
                 </div>
               </div>
               <button
+                onClick={() => goToCategory('Kids')}
+                className="text-[11px] uppercase tracking-widest text-current hover:text-blush-300 link-underline"
+              >
+                {translateLabel(language, 'Kids')}
+              </button>
+              <button
                 onClick={() => navigate('/pages/viajes-grupales')}
                 className="text-[11px] uppercase tracking-widest text-current hover:text-blush-300 link-underline"
               >
@@ -487,6 +493,15 @@ export default function Header({
                 ))}
               </div>
             )}
+            <button
+              onClick={() => {
+                goToCategory('Kids');
+                setMobileOpen(false);
+              }}
+              className="w-full py-4 font-serif text-2xl border-b border-ink-100 text-ink-800 hover:text-blush-500 transition-colors text-center"
+            >
+              {translateLabel(language, 'Kids')}
+            </button>
             <button
               onClick={() => {
                 navigate('/pages/viajes-grupales');
