@@ -222,7 +222,7 @@ export default function ProductDetail({
                     }}
                     className={`relative w-14 border-b border-r px-2 py-2.5 text-xs font-medium uppercase tracking-[0.18em] transition-all ${
                       !availableSizes.has(size)
-                        ? 'cursor-default border-[#e4ddd6] bg-[#eeeae6] text-[#aaa19a]'
+                        ? 'cursor-default border-[#d6d1cc] bg-[#e8e5e2] text-[#98918b]'
                         : selectedSize === size
                         ? 'border-[#1b1714] bg-[#1b1714] text-[#f8f3ef]'
                         : 'border-[#d9d0c8] bg-white/60 text-[#1b1714] hover:bg-[#f3eee9]'
@@ -235,7 +235,7 @@ export default function ProductDetail({
                         aria-hidden="true"
                         className="pointer-events-none absolute inset-0"
                         style={{
-                          background: 'linear-gradient(to top right, transparent 47%, #aaa19a 48%, #aaa19a 52%, transparent 53%)',
+                          background: 'linear-gradient(to top right, transparent 46%, #98918b 47%, #98918b 53%, transparent 54%)',
                         }}
                       />
                     )}
