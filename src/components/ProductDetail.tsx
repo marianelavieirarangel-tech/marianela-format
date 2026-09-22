@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Heart, Minus, Plus, MessageCircle } from 'lucide-react';
+import { Heart, Minus, Plus } from 'lucide-react';
 import { localizedProductName, type Product } from '@/data/catalog';
 import type { CartItem } from '@/components/QuickAddModal';
 import { formatPrice, type CurrencyCode } from '@/lib/currency';
@@ -54,19 +54,6 @@ export default function ProductDetail({
   const gallery = product.images?.length ? product.images : [product.image];
   const [selectedImage, setSelectedImage] = useState(gallery[0]);
   const displayName = localizedProductName(product.name, language);
-  const productUrl = typeof window !== 'undefined' ? window.location.href : '';
-  const waMessage = [
-    'Hola Marianela, quiero consultar este producto:',
-    '',
-    `*${displayName}*`,
-    `Precio: ${formatPrice(product.price, currency)}`,
-    selectedColor ? `Color: ${selectedColor}` : '',
-    selectedSize ? `Talla: ${selectedSize}` : '',
-    '',
-    `URL: ${productUrl}`,
-  ].filter(Boolean).join('\n');
-  const waLink = `https://wa.me/51949217304?text=${encodeURIComponent(waMessage)}`;
-
   useEffect(() => {
     setSelectedImage(product.images?.length ? product.images[0] : product.image);
     const selectedSwatch = product.swatches.find((swatch) => swatch.name === initialColor) ?? product.swatches[0];
@@ -313,7 +300,7 @@ export default function ProductDetail({
               {[
                 { key: 'description' as const, label: 'Descripción', value: product.description },
                 ...(product.material ? [{ key: 'material' as const, label: 'Materiales', value: product.material }] : []),
-                ...(product.care ? [{ key: 'care' as const, label: 'Guía de cuidados', value: product.care }] : []),
+                { key: 'care' as const, label: 'Instrucciones de cuidado', value: product.care ?? 'Sigue las instrucciones de cuidado indicadas en la etiqueta de la prenda.' },
               ].map((item) => {
                 const isOpen = openInfo === item.key;
                 return (
@@ -337,15 +324,6 @@ export default function ProductDetail({
               })}
             </div>
 
-            <a
-              href={waLink}
-              target="_blank"
-              rel="noreferrer"
-              className="mb-2 flex items-center justify-center gap-3 rounded-full border border-[#cfe9d8] bg-[#f7fcf8] px-4 py-3.5 text-[11px] font-medium uppercase tracking-[0.18em] text-[#1b1714] transition-all hover:bg-[#eef8f1]"
-            >
-              <MessageCircle size={17} className="text-[#25D366]" />
-              Consultar por WhatsApp
-            </a>
           </div>
         </div>
       </div>

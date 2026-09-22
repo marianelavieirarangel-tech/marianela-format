@@ -12,6 +12,13 @@ const query = `query Catalog {
       id
       title
       description
+      metafields(identifiers: [
+        { namespace: "custom", key: "material" },
+        { namespace: "custom", key: "materiales" },
+        { namespace: "custom", key: "care" },
+        { namespace: "custom", key: "cuidado" },
+        { namespace: "custom", key: "cuidados" }
+      ]) { namespace key value }
       productType
       tags
       collections(first: 20) { nodes { handle title } }
