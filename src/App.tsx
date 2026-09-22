@@ -294,7 +294,7 @@ export default function App() {
   );
 
   return (
-    <div className="min-h-screen bg-sand-50">
+    <div className="min-h-screen bg-white">
       <Header
         cartCount={cartCount}
         currency={currency}

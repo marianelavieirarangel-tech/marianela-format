@@ -161,6 +161,23 @@ function normalizeColorName(colorName: string) {
     .replace(/[\u0300-\u036f]/g, '');
 }
 
+function normalizeOptionName(optionName: string) {
+  return optionName
+    .trim()
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '');
+}
+
+function isSizeOption(optionName: string, value: string) {
+  const normalizedName = normalizeOptionName(optionName);
+  if (normalizedName === 'color' || normalizedName === 'colour') return false;
+  if (normalizedName === 'size' || normalizedName === 'talla' || normalizedName === 'tamano' || normalizedName.includes('size')) {
+    return true;
+  }
+  return ['xs', 's', 'm', 'l', 'xl', 'xxl'].includes(value.trim().toLowerCase());
+}
+
 function swatchHex(colorName: string) {
   const normalizedName = normalizeColorName(colorName);
   const exactColor = colorHexByName[normalizedName];
@@ -225,7 +242,7 @@ export async function fetchShopifyProducts() {
       const sizes = Array.from(new Set(
         product.variants.nodes.flatMap((productVariant) =>
           productVariant.selectedOptions
-            .filter((option) => option.name.toLowerCase() === 'size' || option.name.toLowerCase() === 'talla')
+            .filter((option) => isSizeOption(option.name, option.value))
             .map((option) => option.value),
         ),
       ));

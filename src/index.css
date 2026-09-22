@@ -12,7 +12,7 @@
     scrollbar-gutter: stable;
   }
   body {
-    @apply bg-sand-50 text-ink-800 font-sans antialiased;
+    @apply bg-white text-ink-800 font-sans antialiased;
     font-weight: 300;
     overflow-x: hidden;
   }
@@ -102,11 +102,11 @@
     animation: pageContentFadeIn 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
   }
     .page-route-enter {
-      background: #f8f3ed;
+      background: #ffffff;
       animation: pageRouteEnter 700ms cubic-bezier(0.22, 1, 0.36, 1) both;
     }
     .page-route-immersive {
-      background: #f8f3ed;
+      background: #ffffff;
     }
     @keyframes pageRouteEnter {
       from {

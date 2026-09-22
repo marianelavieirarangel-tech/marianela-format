@@ -34,8 +34,8 @@ export default function ProductDetail({
   const [selectedColor, setSelectedColor] = useState<string>(initialSwatch?.name || '');
   const [showAllColors, setShowAllColors] = useState(false);
   const [openInfo, setOpenInfo] = useState<'description' | 'material' | 'care' | null>(null);
-  const sizes = fallbackSizes;
-  const availableSizes = new Set(product.sizes?.length ? product.sizes : fallbackSizes);
+  const sizes = product.sizes ?? fallbackSizes;
+  const availableSizes = new Set(product.sizes ?? fallbackSizes);
   const gallery = product.images?.length ? product.images : [product.image];
   const [selectedImage, setSelectedImage] = useState(gallery[0]);
   const displayName = localizedProductName(product.name, language);
@@ -104,7 +104,7 @@ export default function ProductDetail({
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-2 lg:gap-16">
           {/* Gallery */}
           <div className="space-y-4">
-            <div className="overflow-hidden rounded-[28px] bg-[#f3eee9] shadow-[0_18px_40px_rgba(56,35,26,0.06)]">
+            <div className="overflow-hidden rounded-[28px] bg-white shadow-[0_18px_40px_rgba(56,35,26,0.06)]">
               <div className="aspect-[3/4]">
                 <img
                   src={selectedImage}
@@ -225,7 +225,7 @@ export default function ProductDetail({
                         ? 'cursor-default border-[#d6d1cc] bg-[#e8e5e2] text-[#98918b]'
                         : selectedSize === size
                         ? 'border-[#1b1714] bg-[#1b1714] text-[#f8f3ef]'
-                        : 'border-[#d9d0c8] bg-white/60 text-[#1b1714] hover:bg-[#f3eee9]'
+                        : 'border-[#d9d0c8] bg-white text-[#1b1714] hover:bg-white'
                     }`}
                     aria-label={!availableSizes.has(size) ? `Talla ${size} agotada` : `Seleccionar talla ${size}`}
                   >
@@ -253,7 +253,7 @@ export default function ProductDetail({
                 <button
                   type="button"
                   onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                  className="flex h-9 w-9 items-center justify-center rounded-full transition-colors hover:bg-[#f3eee9]"
+                  className="flex h-9 w-9 items-center justify-center rounded-full transition-colors hover:bg-white"
                   aria-label="Disminuir cantidad"
                 >
                   <Minus size={15} strokeWidth={1.8} />
@@ -262,7 +262,7 @@ export default function ProductDetail({
                 <button
                   type="button"
                   onClick={() => setQuantity(quantity + 1)}
-                  className="flex h-9 w-9 items-center justify-center rounded-full transition-colors hover:bg-[#f3eee9]"
+                  className="flex h-9 w-9 items-center justify-center rounded-full transition-colors hover:bg-white"
                   aria-label="Aumentar cantidad"
                 >
                   <Plus size={15} strokeWidth={1.8} />
@@ -307,7 +307,7 @@ export default function ProductDetail({
             </div>
 
             {/* Trust near CTA */}
-            <div className="mb-8 grid gap-3 rounded-[22px] border border-[#eadfce] bg-white/70 p-4 sm:grid-cols-2">
+            <div className="mb-8 grid gap-3 rounded-[22px] border border-[#eadfce] bg-white p-4 sm:grid-cols-2">
               <div>
                 <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-[#1b1714]">Envío cuidado</p>
                 <p className="mt-1 text-sm font-light text-[#8f7e76]">Gratis en compras desde S/ 159</p>
