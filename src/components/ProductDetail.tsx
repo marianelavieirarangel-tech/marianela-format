@@ -220,9 +220,9 @@ export default function ProductDetail({
                       setSelectedSize(size);
                       setSizeError(false);
                     }}
-                    className={`w-14 border-b border-r px-2 py-2.5 text-xs font-medium uppercase tracking-[0.18em] transition-all ${
+                    className={`relative w-14 border-b border-r px-2 py-2.5 text-xs font-medium uppercase tracking-[0.18em] transition-all ${
                       !availableSizes.has(size)
-                        ? 'cursor-not-allowed border-[#e4ddd6] bg-[#eeeae6] text-[#aaa19a] line-through'
+                        ? 'cursor-default border-[#e4ddd6] bg-[#eeeae6] text-[#aaa19a]'
                         : selectedSize === size
                         ? 'border-[#1b1714] bg-[#1b1714] text-[#f8f3ef]'
                         : 'border-[#d9d0c8] bg-white/60 text-[#1b1714] hover:bg-[#f3eee9]'
@@ -230,6 +230,15 @@ export default function ProductDetail({
                     aria-label={!availableSizes.has(size) ? `Talla ${size} agotada` : `Seleccionar talla ${size}`}
                   >
                     {size}
+                    {!availableSizes.has(size) && (
+                      <span
+                        aria-hidden="true"
+                        className="pointer-events-none absolute inset-0"
+                        style={{
+                          background: 'linear-gradient(to top right, transparent 47%, #aaa19a 48%, #aaa19a 52%, transparent 53%)',
+                        }}
+                      />
+                    )}
                   </button>
                 ))}
               </div>
