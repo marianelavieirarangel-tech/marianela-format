@@ -1,4 +1,4 @@
-import { Plus, Heart, ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Heart, ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import type { Product } from '@/data/catalog';
@@ -246,6 +246,12 @@ function ProductCard({
           </>
         )}
 
+        {badgeText && (
+          <span className="absolute bottom-3 left-3 z-10 inline-flex h-6 min-w-10 items-center justify-center bg-[#1b1714] px-2 text-[9px] font-medium uppercase tracking-[0.12em] text-[#fffaf7]">
+            {badgeText}
+          </span>
+        )}
+
         {/* Wishlist button */}
         <button
           onClick={() => onToggleWishlist(product.id)}
@@ -259,27 +265,10 @@ function ProductCard({
           />
         </button>
 
-        {/* Quick add button */}
-        <button
-          onClick={(event) => {
-            event.stopPropagation();
-            onQuickAdd(product);
-          }}
-          className="absolute bottom-4 left-4 flex h-10 w-10 items-center justify-center rounded-full bg-[#1b1714] text-[#f9f3ee] opacity-0 transition-all duration-300 hover:bg-[#2a2220] group-hover:opacity-100"
-          aria-label="Agregar al carrito"
-        >
-          <Plus size={18} strokeWidth={2} />
-        </button>
-
       </div>
 
       {/* Info */}
       <div className="flex-1 xl:px-2 xl:pb-5 xl:pt-3">
-        {badgeText && (
-          <span className="mb-2 inline-flex h-6 min-w-10 items-center justify-center bg-[#1b1714] px-2 text-[9px] font-medium uppercase tracking-[0.12em] text-[#fffaf7]">
-            {badgeText}
-          </span>
-        )}
         <h3 
           className="mb-2 cursor-pointer font-serif text-[1.35rem] leading-tight text-[#1b1714] transition-colors hover:text-[#ba826b]"
           onClick={() => navigate(`/product/${product.id}`)}
