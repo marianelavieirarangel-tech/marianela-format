@@ -209,7 +209,7 @@ export default function ProductDetail({
               </div>
             )}
 
-            <div className="mb-8">
+            <div className="mb-7">
               <div className="mb-4 flex items-baseline justify-between gap-4">
                 <p className="text-[11px] font-medium uppercase tracking-[0.22em] text-[#1b1714]">{translateLabel(language, 'Talla')}</p>
                 <Link
@@ -219,7 +219,7 @@ export default function ProductDetail({
                   {translateLabel(language, 'Guía de tallas')}
                 </Link>
               </div>
-              <div className="flex flex-wrap gap-2">
+              <div className="grid grid-cols-5 border-l border-t border-[#d9d0c8]">
                 {sizes.map((size) => (
                   <button
                     key={size}
@@ -228,10 +228,10 @@ export default function ProductDetail({
                       setSelectedSize(size);
                       setSizeError(false);
                     }}
-                    className={`min-w-[3.25rem] rounded-full border px-4 py-3 text-xs font-medium uppercase tracking-[0.18em] transition-all ${
+                    className={`border-b border-r px-3 py-3 text-xs font-medium uppercase tracking-[0.18em] transition-all ${
                       selectedSize === size
                         ? 'border-[#1b1714] bg-[#1b1714] text-[#f8f3ef]'
-                        : 'border-[#e0d4c8] bg-white/60 text-[#1b1714] hover:border-[#1b1714]'
+                        : 'border-[#d9d0c8] bg-white/60 text-[#1b1714] hover:bg-[#f3eee9]'
                     }`}
                   >
                     {size}
@@ -270,7 +270,7 @@ export default function ProductDetail({
               <button
                 type="button"
                 onClick={handleAddToCart}
-                className="w-full rounded-full bg-[#1b1714] py-4 text-sm font-medium uppercase tracking-[0.22em] text-[#f8f3ef] transition-all hover:bg-[#ba826b] hover:shadow-[0_14px_28px_rgba(186,130,107,0.28)]"
+                className="w-full bg-[#1b1714] py-4 text-sm font-medium uppercase tracking-[0.22em] text-[#f8f3ef] transition-all hover:bg-[#ba826b] hover:shadow-[0_14px_28px_rgba(186,130,107,0.28)]"
               >
                 {translateLabel(language, 'Agregar al carrito')}
               </button>
