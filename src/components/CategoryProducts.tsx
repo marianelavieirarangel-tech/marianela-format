@@ -254,7 +254,10 @@ function ProductCard({
 
         {/* Wishlist button */}
         <button
-          onClick={() => onToggleWishlist(product.id)}
+          onClick={(event) => {
+            event.stopPropagation();
+            onToggleWishlist(product.id);
+          }}
           className="absolute bottom-4 right-4 flex h-10 w-10 items-center justify-center rounded-full border border-[#f0e5dd] bg-[#fffdfb]/95 shadow-sm transition-colors duration-200 hover:bg-[#fffaf7]"
           aria-label="Agregar a favoritos"
         >
