@@ -71,7 +71,7 @@ export default function CategoryProducts({
 
   return (
     <section className={`min-h-screen ${isEmptyCollection ? 'bg-ink-900' : 'bg-sand-50'}`}>
-      <div className={isEmptyCollection ? 'w-full px-0 pb-0' : 'mx-auto max-w-7xl px-6 pt-6 pb-20 lg:px-10 lg:pt-8'}>
+      <div className={isEmptyCollection ? 'w-full px-0 pb-0' : 'mx-auto w-full max-w-[1600px] px-6 pt-6 pb-20 lg:px-10 lg:pt-8 xl:px-12'}>
         <div className={`grid gap-8 ${isEmptyCollection ? '' : 'lg:grid-cols-[220px_minmax(0,1fr)]'}`}>
           {!isEmptyCollection && <aside className="lg:sticky lg:top-24 lg:h-fit">
             <button
@@ -144,7 +144,7 @@ export default function CategoryProducts({
           </aside>}
 
           <div className={isEmptyCollection ? 'min-w-0' : ''}>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="grid grid-cols-1 gap-7 md:grid-cols-2 xl:grid-cols-3">
               {filtered.map((product) => (
                 <ProductCard
                   key={product.id}
