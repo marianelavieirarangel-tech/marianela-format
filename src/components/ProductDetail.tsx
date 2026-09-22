@@ -123,8 +123,6 @@ export default function ProductDetail({
 
           {/* Info */}
           <div className="flex flex-col lg:pt-2">
-            <p className="mb-3 text-[11px] uppercase tracking-[0.28em] text-[#bb8a7d]">{product.category}</p>
-
             {product.tag && (
               <div className="mb-4">
                 <span className="inline-block rounded-full bg-[#1b1714] px-3 py-1.5 text-[10px] font-medium uppercase tracking-[0.18em] text-[#f8f1eb]">

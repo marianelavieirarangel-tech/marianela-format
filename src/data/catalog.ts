@@ -119,9 +119,7 @@ export const footerLinks = {
 };
 
 export function formatProductName(name: string) {
-  return name
-    .replace(/^bikini\s+/i, '')
-    .replace(/\bTriangulo\b/gi, 'Triángulo');
+  return name.replace(/\bTriangulo\b/gi, 'Triángulo');
 }
 
 export function localizedProductName(name: string, language: 'pt' | 'en' | 'es' | 'fr' | 'it' | 'de' | 'nl') {

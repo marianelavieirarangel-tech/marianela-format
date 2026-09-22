@@ -262,7 +262,7 @@ export async function fetchShopifyProducts() {
 
       return {
         id: product.id.split('/').pop() ?? product.id,
-        name: product.title.replace(/^bikini\s+/i, ''),
+        name: product.title,
         category,
         collectionHandles: product.collections.nodes.map((collection) => collection.handle),
         price,
