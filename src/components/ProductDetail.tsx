@@ -16,7 +16,22 @@ type Props = {
   initialColor?: string;
 };
 
-const fallbackSizes = ['S', 'M', 'L'] as const;
+const displaySizes = ['XS', 'S', 'M', 'L', 'XL'] as const;
+const defaultBikiniSizes = ['S', 'M', 'L'] as const;
+
+function getAvailableSizes(product: Product) {
+  const shopifySizes = new Set(
+    (product.sizes ?? [])
+      .map((size) => size.trim().toUpperCase())
+      .filter((size): size is (typeof displaySizes)[number] => displaySizes.includes(size as (typeof displaySizes)[number])),
+  );
+
+  if (shopifySizes.has('S') && shopifySizes.has('M') && shopifySizes.has('L')) {
+    return shopifySizes;
+  }
+
+  return new Set(defaultBikiniSizes);
+}
 
 export default function ProductDetail({
   product,
@@ -34,8 +49,8 @@ export default function ProductDetail({
   const [selectedColor, setSelectedColor] = useState<string>(initialSwatch?.name || '');
   const [showAllColors, setShowAllColors] = useState(false);
   const [openInfo, setOpenInfo] = useState<'description' | 'material' | 'care' | null>(null);
-  const sizes = product.sizes?.length ? product.sizes : fallbackSizes;
-  const availableSizes = new Set(sizes);
+  const sizes = displaySizes;
+  const availableSizes = getAvailableSizes(product);
   const gallery = product.images?.length ? product.images : [product.image];
   const [selectedImage, setSelectedImage] = useState(gallery[0]);
   const displayName = localizedProductName(product.name, language);
@@ -235,7 +250,7 @@ export default function ProductDetail({
                         aria-hidden="true"
                         className="pointer-events-none absolute inset-0"
                         style={{
-                          background: 'linear-gradient(to top right, transparent 46%, #98918b 47%, #98918b 53%, transparent 54%)',
+                          background: 'linear-gradient(to top right, transparent 49%, #98918b 49.5%, #98918b 50.5%, transparent 51%)',
                         }}
                       />
                     )}
