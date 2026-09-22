@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Heart, Share2, ArrowLeft, Minus, Plus, MessageCircle } from 'lucide-react';
+import { Heart, Share2, Minus, Plus, MessageCircle } from 'lucide-react';
 import { formatProductName, localizedProductName, type Product } from '@/data/catalog';
 import type { CartItem } from '@/components/QuickAddModal';
 import { formatPrice, type CurrencyCode } from '@/lib/currency';
@@ -9,7 +9,6 @@ import { translateLabel, type LanguageCode } from '@/lib/language';
 type Props = {
   product: Product;
   currency: CurrencyCode;
-  onBack: () => void;
   onAddToCart: (item: CartItem) => void;
   isWishlisted: boolean;
   onToggleWishlist: (productId: string) => void;
@@ -22,7 +21,6 @@ const fallbackSizes = ['XS', 'S', 'M', 'L', 'XL'] as const;
 export default function ProductDetail({
   product,
   currency,
-  onBack,
   onAddToCart,
   isWishlisted,
   onToggleWishlist,
@@ -103,14 +101,6 @@ export default function ProductDetail({
   return (
     <div className="min-h-screen bg-[#f8f4ef]">
       <div className="mx-auto max-w-7xl px-6 pt-6 pb-10 lg:px-10 lg:pt-8 lg:pb-16">
-        <button
-          type="button"
-          onClick={onBack}
-          className="mb-8 flex items-center gap-2 text-[#5b4f49] transition-colors hover:text-[#ba826b]"
-        >
-          <ArrowLeft size={18} strokeWidth={1.5} />
-          <span className="text-[11px] uppercase tracking-[0.22em]">{translateLabel(language, 'Volver')}</span>
-        </button>
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-2 lg:gap-16">
           {/* Gallery */}
           <div className="space-y-4">
@@ -220,7 +210,7 @@ export default function ProductDetail({
                   {translateLabel(language, 'Guía de tallas')}
                 </Link>
               </div>
-              <div className="grid grid-cols-5 border-l border-t border-[#d9d0c8]">
+              <div className="grid w-fit grid-cols-5 border-l border-t border-[#d9d0c8]">
                 {sizes.map((size) => (
                   <button
                     key={size}
@@ -230,7 +220,7 @@ export default function ProductDetail({
                       setSelectedSize(size);
                       setSizeError(false);
                     }}
-                    className={`border-b border-r px-3 py-3 text-xs font-medium uppercase tracking-[0.18em] transition-all ${
+                    className={`w-14 border-b border-r px-2 py-2.5 text-xs font-medium uppercase tracking-[0.18em] transition-all ${
                       !availableSizes.has(size)
                         ? 'cursor-not-allowed border-[#e4ddd6] bg-[#eeeae6] text-[#aaa19a] line-through'
                         : selectedSize === size

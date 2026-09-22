@@ -235,7 +235,6 @@ export default function App() {
 
   function ProductPage() {
     const { id } = useParams();
-    const navigate = useNavigate();
     const [searchParams] = useSearchParams();
     const product = catalogProducts.find((p) => p.id === id);
     if (!product) return <div className="p-8">Producto no encontrado.</div>;
@@ -243,7 +242,6 @@ export default function App() {
       <ProductDetail
         product={product}
         currency={currency}
-        onBack={() => navigate(-1)}
         onAddToCart={handleAddToCart}
         isWishlisted={wishlist.has(product.id)}
         onToggleWishlist={toggleWishlist}
