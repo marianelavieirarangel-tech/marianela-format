@@ -170,10 +170,6 @@ export default function ProductDetail({
               )}
             </div>
 
-            <p className="mb-10 text-base font-light leading-relaxed text-[#5b4f49]">
-              {product.description}
-            </p>
-
             {product.swatches.length > 0 && (
               <div className="mb-8">
                 <div className="mb-4 flex items-baseline gap-2">
