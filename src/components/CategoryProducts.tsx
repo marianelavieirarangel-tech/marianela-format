@@ -304,7 +304,9 @@ function ProductCard({
 
         {product.swatches.length > 0 && (
           <div className="mt-3 flex flex-wrap gap-1.5" aria-label="Colores disponibles">
-            {product.swatches.slice(0, 2).map((swatch) => (
+            {product.swatches
+              .filter((swatch) => swatch.hex.toLowerCase() !== '#e8dfd6' && swatch.name.trim().toLowerCase() !== 'beige')
+              .map((swatch) => (
               <button
                 type="button"
                 key={swatch.name}
