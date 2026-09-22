@@ -1,4 +1,4 @@
-import { Plus, Heart, ArrowLeft } from 'lucide-react';
+import { Plus, Heart, ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import type { Product } from '@/data/catalog';
@@ -199,8 +199,10 @@ function ProductCard({
 }) {
   const navigate = useNavigate();
   const badgeText = getProductBadge(product);
-  const [isHovering, setIsHovering] = useState(false);
-  const previewImage = product.images && product.images.length > 1 ? product.images[1] : product.image;
+  const [imageIndex, setImageIndex] = useState(0);
+  const images = [product.image, ...(product.images ?? []).filter((image) => image !== product.image)];
+  const displayedImage = images[imageIndex] ?? product.image;
+  const hasMultipleImages = images.length > 1;
 
   return (
     <div
@@ -210,23 +212,38 @@ function ProductCard({
       <div 
         className="relative mb-4 aspect-[4/5] cursor-pointer overflow-hidden rounded-[22px] bg-[#f4efe9]"
         onClick={() => navigate(`/product/${product.id}`)}
-        onMouseEnter={() => setIsHovering(true)}
-        onMouseLeave={() => setIsHovering(false)}
       >
         <img
-          src={product.image}
+          src={displayedImage}
           alt={product.name}
-          className="absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ease-in-out group-hover:scale-105"
+          className="absolute inset-0 h-full w-full object-cover transition-opacity duration-500 ease-in-out group-hover:scale-[1.02]"
         />
-        {previewImage !== product.image && (
-          <img
-            src={previewImage}
-            alt=""
-            aria-hidden="true"
-            className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ease-in-out group-hover:scale-105 ${
-              isHovering ? 'opacity-100' : 'opacity-0'
-            }`}
-          />
+
+        {hasMultipleImages && (
+          <>
+            <button
+              type="button"
+              onClick={(event) => {
+                event.stopPropagation();
+                setImageIndex((current) => (current - 1 + images.length) % images.length);
+              }}
+              className="absolute left-3 top-1/2 z-10 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full bg-[#fffdfb]/90 text-[#1b1714] opacity-100 shadow-sm transition-colors hover:bg-[#fffdfb]"
+              aria-label={`Foto anterior de ${product.name}`}
+            >
+              <ChevronLeft size={16} strokeWidth={1.5} />
+            </button>
+            <button
+              type="button"
+              onClick={(event) => {
+                event.stopPropagation();
+                setImageIndex((current) => (current + 1) % images.length);
+              }}
+              className="absolute right-3 top-1/2 z-10 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full bg-[#fffdfb]/90 text-[#1b1714] opacity-100 shadow-sm transition-colors hover:bg-[#fffdfb]"
+              aria-label={`Siguiente foto de ${product.name}`}
+            >
+              <ChevronRight size={16} strokeWidth={1.5} />
+            </button>
+          </>
         )}
 
         {/* Tags */}
@@ -263,28 +280,12 @@ function ProductCard({
           <Plus size={18} strokeWidth={2} />
         </button>
 
-        {/* Swatches */}
-        {product.swatches.length > 0 && (
-          <div className="absolute right-4 top-4 flex gap-2">
-            {product.swatches.map((swatch) => (
-              <div
-                key={swatch.name}
-                className="h-6 w-6 rounded-full border-2 border-[#fffdfb] bg-cover bg-center shadow-md transition-transform hover:scale-110"
-                style={{
-                  backgroundColor: swatch.hex,
-                  ...(swatch.image ? { backgroundImage: `url("${swatch.image}")` } : {}),
-                }}
-                title={swatch.name}
-              />
-            ))}
-          </div>
-        )}
       </div>
 
       {/* Info */}
       <div className="flex-1">
         <h3 
-          className="mb-2 cursor-pointer font-serif text-[1.6rem] leading-none text-[#1b1714] transition-colors hover:text-[#ba826b]"
+          className="mb-2 cursor-pointer font-serif text-[1.35rem] leading-tight text-[#1b1714] transition-colors hover:text-[#ba826b]"
           onClick={() => navigate(`/product/${product.id}`)}
         >
           {product.name}
@@ -300,6 +301,22 @@ function ProductCard({
             <span className="font-numeric text-sm font-medium text-[#8f7e76] line-through">{formatPrice(product.originalPrice, currency)}</span>
           )}
         </div>
+
+        {product.swatches.length > 0 && (
+          <div className="mt-3 flex flex-wrap gap-1.5" aria-label="Colores disponibles">
+            {product.swatches.map((swatch) => (
+              <div
+                key={swatch.name}
+                className="h-3.5 w-3.5 border border-[#cfc2b7] bg-cover bg-center transition-transform hover:scale-110"
+                style={{
+                  backgroundColor: swatch.hex,
+                  ...(swatch.image ? { backgroundImage: `url("${swatch.image}")` } : {}),
+                }}
+                title={swatch.name}
+              />
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );
