@@ -36,7 +36,7 @@ type ShopifyCatalogResponse = {
       id: string;
       title: string;
       description: string;
-      metafields: { nodes: Array<{ namespace: string; key: string; value: string }> };
+      metafields?: { nodes: Array<{ namespace: string; key: string; value: string }> };
       productType: string;
       tags: string[];
       collections: { nodes: Array<{ handle: string; title: string }> };
@@ -213,7 +213,7 @@ export async function fetchShopifyProducts() {
       const compareAtPrice = Number(product.compareAtPriceRange.minVariantPrice.amount);
       const category = getCategory(product.productType, product.tags, product.collections.nodes);
       const metadata = new Map(
-        product.metafields.nodes.map((field) => [field.key.toLowerCase(), field.value]),
+        (product.metafields?.nodes ?? []).map((field) => [field.key.toLowerCase(), field.value]),
       );
       const images = Array.from(new Set([
         product.featuredImage?.url,
