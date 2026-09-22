@@ -1,7 +1,7 @@
 export type Product = {
   id: string;
   name: string;
-  category: 'Bikini' | 'Traje de Baño' | 'Tankini' | 'Trikini' | 'Fuera del Agua' | 'Accesorios';
+  category: 'Bikini' | 'Traje de Baño' | 'Tankini' | 'Trikini' | 'Kids' | 'Fuera del Agua' | 'Accesorios';
   price: number;
   originalPrice?: number;
   image: string;
@@ -68,6 +68,7 @@ export const categorySlugs: Record<string, string> = {
   'Traje de Baño': 'trajes-de-bano',
   Tankini: 'tankinis',
   Trikini: 'trikinis',
+  Kids: 'kids',
   'Fuera del Agua': 'fuera-del-agua',
   Accesorios: 'accesorios',
   Novedades: 'novedades',
@@ -82,6 +83,7 @@ export const womenSubcategories = [
   'Traje de Baño',
   'Tankini',
   'Trikini',
+  'Kids',
   'Fuera del Agua',
   'Accesorios',
   'Sale',
