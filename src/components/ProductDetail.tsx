@@ -165,7 +165,7 @@ export default function ProductDetail({
               {displayName}
             </h1>
 
-            <div className="mb-8 flex items-baseline gap-3 border-b border-[#eadfce] pb-8">
+            <div className="mb-8 flex items-baseline gap-3 pb-8">
               <span className="font-numeric text-3xl font-medium text-[#1b1714]">
                 {formatPrice(product.price, currency)}
               </span>
@@ -183,7 +183,7 @@ export default function ProductDetail({
                   <span className="text-[11px] uppercase tracking-[0.18em] text-[#8f7e76]">·</span>
                   <p className="text-[11px] uppercase tracking-[0.18em] text-[#8f7e76]">{selectedColor}</p>
                 </div>
-                <div className="grid max-w-[20rem] grid-cols-4 gap-0 border-l border-t border-[#d9d0c8]">
+                <div className="grid max-w-[20rem] grid-cols-4 gap-0">
                   {(showAllColors ? product.swatches : product.swatches.slice(0, 8)).map((swatch) => (
                     <button
                       key={swatch.name}
