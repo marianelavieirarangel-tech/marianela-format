@@ -206,11 +206,11 @@ function ProductCard({
 
   return (
     <div
-      className="group flex flex-col rounded-[18px] border border-[#eadfce] bg-[#fffdfb] p-3 shadow-[0_18px_40px_rgba(56,35,26,0.05)] transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_22px_48px_rgba(56,35,26,0.08)] xl:rounded-none xl:border-0 xl:shadow-none"
+      className="group flex flex-col rounded-[18px] border border-[#eadfce] bg-[#fffdfb] p-3 shadow-[0_18px_40px_rgba(56,35,26,0.05)] transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_22px_48px_rgba(56,35,26,0.08)] xl:rounded-none xl:border-0 xl:p-0 xl:shadow-none"
     >
       {/* Image */}
       <div 
-        className="relative mb-4 aspect-[4/5] cursor-pointer overflow-hidden rounded-[22px] bg-[#f4efe9]"
+        className="relative mb-4 aspect-[4/5] cursor-pointer overflow-hidden rounded-[22px] bg-[#f4efe9] xl:mb-0 xl:aspect-[3/4] xl:rounded-none"
         onClick={() => navigate(`/product/${product.id}`)}
       >
         <img
@@ -283,14 +283,14 @@ function ProductCard({
       </div>
 
       {/* Info */}
-      <div className="flex-1">
+      <div className="flex-1 xl:px-2 xl:pb-5 xl:pt-3">
         <h3 
           className="mb-2 cursor-pointer font-serif text-[1.35rem] leading-tight text-[#1b1714] transition-colors hover:text-[#ba826b]"
           onClick={() => navigate(`/product/${product.id}`)}
         >
           {product.name}
         </h3>
-        <p className="mb-3 min-h-[2.5rem] text-sm font-light leading-relaxed text-[#6c5f59] line-clamp-2">
+        <p className="mb-3 min-h-[2.5rem] text-sm font-light leading-relaxed text-[#6c5f59] line-clamp-2 xl:hidden">
           {product.description}
         </p>
 
@@ -310,7 +310,6 @@ function ProductCard({
                 className="h-3.5 w-3.5 border border-[#cfc2b7] bg-cover bg-center transition-transform hover:scale-110"
                 style={{
                   backgroundColor: swatch.hex,
-                  ...(swatch.image ? { backgroundImage: `url("${swatch.image}")` } : {}),
                 }}
                 title={swatch.name}
               />
