@@ -7,6 +7,7 @@ export type Product = {
   image: string;
   images?: string[];
   swatches: { name: string; hex: string; image?: string; variantId?: string }[];
+  sizes?: string[];
   tag?: 'Novedades' | 'Sale' | 'Bestseller';
   description: string;
   collectionHandles?: string[];
