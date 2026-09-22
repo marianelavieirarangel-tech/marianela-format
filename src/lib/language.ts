@@ -136,7 +136,9 @@ export function translate(language: LanguageCode, key: TranslationKey): string {
 }
 
 const labelTranslations: Record<LanguageCode, Record<string, string>> = {
-  es: {},
+  es: {
+    'Kids': 'Niños',
+  },
   en: {
     'Hombres': 'Men', 'Kids': 'Kids', 'Volver': 'Back', 'Producto': 'Product', 'Productos': 'Products',
     'Ordenar por': 'Sort by', 'Destacados': 'Featured', 'Menor precio': 'Lowest price', 'Mayor precio': 'Highest price',
