@@ -34,6 +34,7 @@ export default function ProductDetail({
   const [sizeError, setSizeError] = useState(false);
   const initialSwatch = product.swatches.find((swatch) => swatch.name === initialColor) ?? product.swatches[0];
   const [selectedColor, setSelectedColor] = useState<string>(initialSwatch?.name || '');
+  const [showAllColors, setShowAllColors] = useState(false);
   const sizes = product.sizes?.length ? product.sizes : fallbackSizes;
   const gallery = product.images?.length ? product.images : [product.image];
   const [selectedImage, setSelectedImage] = useState(gallery[0]);
@@ -56,6 +57,7 @@ export default function ProductDetail({
     const selectedSwatch = product.swatches.find((swatch) => swatch.name === initialColor) ?? product.swatches[0];
     setSelectedColor(selectedSwatch?.name || '');
     if (initialColor && selectedSwatch?.image) setSelectedImage(selectedSwatch.image);
+    setShowAllColors(false);
     setSelectedSize('');
     setSizeError(false);
     setQuantity(1);
@@ -177,16 +179,16 @@ export default function ProductDetail({
                   <span className="text-[11px] uppercase tracking-[0.18em] text-[#8f7e76]">·</span>
                   <p className="text-[11px] uppercase tracking-[0.18em] text-[#8f7e76]">{selectedColor}</p>
                 </div>
-                <div className="flex max-w-full flex-nowrap gap-3 overflow-x-auto pb-1">
-                  {product.swatches.map((swatch) => (
+                <div className="grid max-w-[22rem] grid-cols-5 gap-0 border-l border-t border-[#d9d0c8]">
+                  {(showAllColors ? product.swatches : product.swatches.slice(0, 9)).map((swatch) => (
                     <button
                       key={swatch.name}
                       type="button"
                       onClick={() => handleSelectColor(swatch)}
-                      className={`relative h-16 w-16 overflow-hidden rounded-none border bg-cover bg-center transition-all ${
+                      className={`relative aspect-square overflow-hidden border-b border-r bg-cover bg-center transition-all ${
                         selectedColor === swatch.name
                           ? 'border-2 border-[#1b1714]'
-                          : 'border-[#d9c9be] hover:border-[#8f7e76]'
+                          : 'border-[#d9d0c8] hover:border-[#8f7e76]'
                       }`}
                       style={{
                         backgroundColor: swatch.hex,
@@ -195,6 +197,16 @@ export default function ProductDetail({
                       title={swatch.name}
                     />
                   ))}
+                  {!showAllColors && product.swatches.length > 9 && (
+                    <button
+                      type="button"
+                      onClick={() => setShowAllColors(true)}
+                      className="aspect-square border-b border-r border-[#1b1714] bg-[#050505] text-xs font-medium text-white transition-colors hover:bg-[#242424]"
+                      aria-label={`Mostrar ${product.swatches.length - 9} colores más`}
+                    >
+                      +{product.swatches.length - 9}
+                    </button>
+                  )}
                 </div>
               </div>
             )}
