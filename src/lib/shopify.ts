@@ -36,6 +36,7 @@ type ShopifyCatalogResponse = {
       id: string;
       title: string;
       description: string;
+      metafields: { nodes: Array<{ namespace: string; key: string; value: string }> };
       productType: string;
       tags: string[];
       collections: { nodes: Array<{ handle: string; title: string }> };
@@ -211,6 +212,9 @@ export async function fetchShopifyProducts() {
       const price = Number(product.priceRange.minVariantPrice.amount);
       const compareAtPrice = Number(product.compareAtPriceRange.minVariantPrice.amount);
       const category = getCategory(product.productType, product.tags, product.collections.nodes);
+      const metadata = new Map(
+        product.metafields.nodes.map((field) => [field.key.toLowerCase(), field.value]),
+      );
       const images = Array.from(new Set([
         product.featuredImage?.url,
         ...product.images.nodes.map((image) => image.url),
@@ -248,6 +252,8 @@ export async function fetchShopifyProducts() {
         images,
         swatches: Array.from(swatchesByColor.values()),
         sizes,
+        material: metadata.get('material') ?? metadata.get('materiales'),
+        care: metadata.get('care') ?? metadata.get('cuidados') ?? metadata.get('cuidado'),
         tag: getTag(category, product.tags, compareAtPrice > price),
         description: product.description || 'Una pieza de Marianela Vieira.',
         shopifyVariantId: variant?.id,

@@ -12,6 +12,7 @@ const query = `query Catalog {
       id
       title
       description
+      metafields(first: 30) { nodes { namespace key value } }
       productType
       tags
       collections(first: 20) { nodes { handle title } }

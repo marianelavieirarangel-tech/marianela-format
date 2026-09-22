@@ -35,6 +35,7 @@ export default function ProductDetail({
   const initialSwatch = product.swatches.find((swatch) => swatch.name === initialColor) ?? product.swatches[0];
   const [selectedColor, setSelectedColor] = useState<string>(initialSwatch?.name || '');
   const [showAllColors, setShowAllColors] = useState(false);
+  const [openInfo, setOpenInfo] = useState<'description' | 'material' | 'care' | null>(null);
   const sizes = product.sizes?.length ? product.sizes : fallbackSizes;
   const gallery = product.images?.length ? product.images : [product.image];
   const [selectedImage, setSelectedImage] = useState(gallery[0]);
@@ -58,6 +59,7 @@ export default function ProductDetail({
     setSelectedColor(selectedSwatch?.name || '');
     if (initialColor && selectedSwatch?.image) setSelectedImage(selectedSwatch.image);
     setShowAllColors(false);
+    setOpenInfo(null);
     setSelectedSize('');
     setSizeError(false);
     setQuantity(1);
@@ -319,6 +321,34 @@ export default function ProductDetail({
                   </Link>
                 </p>
               </div>
+            </div>
+
+            <div className="mb-8 border-t border-[#e3d8ce]">
+              {[
+                { key: 'description' as const, label: 'Descripción', value: product.description },
+                ...(product.material ? [{ key: 'material' as const, label: 'Materiales', value: product.material }] : []),
+                ...(product.care ? [{ key: 'care' as const, label: 'Guía de cuidados', value: product.care }] : []),
+              ].map((item) => {
+                const isOpen = openInfo === item.key;
+                return (
+                  <div key={item.key} className="border-b border-[#e3d8ce]">
+                    <button
+                      type="button"
+                      onClick={() => setOpenInfo(isOpen ? null : item.key)}
+                      className="flex w-full items-center justify-between py-4 text-left text-[11px] font-medium uppercase tracking-[0.2em] text-[#1b1714]"
+                      aria-expanded={isOpen}
+                    >
+                      {item.label}
+                      <span className="text-xl font-light leading-none">{isOpen ? '−' : '+'}</span>
+                    </button>
+                    {isOpen && (
+                      <p className="pb-4 text-sm font-light leading-relaxed text-[#6c5f59]">
+                        {item.value}
+                      </p>
+                    )}
+                  </div>
+                );
+              })}
             </div>
 
             <a
