@@ -36,7 +36,8 @@ export default function ProductDetail({
   const [selectedColor, setSelectedColor] = useState<string>(initialSwatch?.name || '');
   const [showAllColors, setShowAllColors] = useState(false);
   const [openInfo, setOpenInfo] = useState<'description' | 'material' | 'care' | null>(null);
-  const sizes = product.sizes?.length ? product.sizes : fallbackSizes;
+  const sizes = fallbackSizes;
+  const availableSizes = new Set(product.sizes?.length ? product.sizes : fallbackSizes);
   const gallery = product.images?.length ? product.images : [product.image];
   const [selectedImage, setSelectedImage] = useState(gallery[0]);
   const displayName = localizedProductName(product.name, language);
@@ -224,15 +225,19 @@ export default function ProductDetail({
                   <button
                     key={size}
                     type="button"
+                    disabled={!availableSizes.has(size)}
                     onClick={() => {
                       setSelectedSize(size);
                       setSizeError(false);
                     }}
                     className={`border-b border-r px-3 py-3 text-xs font-medium uppercase tracking-[0.18em] transition-all ${
-                      selectedSize === size
+                      !availableSizes.has(size)
+                        ? 'cursor-not-allowed border-[#e4ddd6] bg-[#eeeae6] text-[#aaa19a] line-through'
+                        : selectedSize === size
                         ? 'border-[#1b1714] bg-[#1b1714] text-[#f8f3ef]'
                         : 'border-[#d9d0c8] bg-white/60 text-[#1b1714] hover:bg-[#f3eee9]'
                     }`}
+                    aria-label={!availableSizes.has(size) ? `Talla ${size} agotada` : `Seleccionar talla ${size}`}
                   >
                     {size}
                   </button>
