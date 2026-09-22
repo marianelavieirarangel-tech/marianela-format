@@ -206,7 +206,7 @@ function ProductCard({
 
   return (
     <div
-      className="group flex flex-col rounded-[18px] border border-[#eadfce] bg-[#fffdfb] p-3 shadow-[0_18px_40px_rgba(56,35,26,0.05)] transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_22px_48px_rgba(56,35,26,0.08)] xl:rounded-none xl:border-0 xl:p-0 xl:shadow-none"
+      className="group flex flex-col rounded-[18px] border border-[#eadfce] bg-[#fffdfb] p-3 shadow-[0_18px_40px_rgba(56,35,26,0.05)] transition-shadow duration-500 hover:shadow-[0_22px_48px_rgba(56,35,26,0.08)] xl:rounded-none xl:border-0 xl:p-0 xl:shadow-none"
     >
       {/* Image */}
       <div 
