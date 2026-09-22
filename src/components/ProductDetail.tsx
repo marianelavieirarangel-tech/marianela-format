@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Heart, Share2, Minus, Plus, MessageCircle } from 'lucide-react';
-import { formatProductName, localizedProductName, type Product } from '@/data/catalog';
+import { Heart, Minus, Plus, MessageCircle } from 'lucide-react';
+import { localizedProductName, type Product } from '@/data/catalog';
 import type { CartItem } from '@/components/QuickAddModal';
 import { formatPrice, type CurrencyCode } from '@/lib/currency';
 import { translateLabel, type LanguageCode } from '@/lib/language';
@@ -98,21 +98,6 @@ export default function ProductDetail({
     });
   };
 
-  const handleShare = async () => {
-    const url = window.location.href;
-    const title = formatProductName(product.name);
-    try {
-      if (navigator.share) {
-        await navigator.share({ title, url });
-        return;
-      }
-      await navigator.clipboard.writeText(url);
-      alert('Enlace copiado');
-    } catch {
-      // user cancelled share
-    }
-  };
-
   return (
     <div className="min-h-screen bg-white">
       <div className="mx-auto max-w-7xl px-6 pt-6 pb-10 lg:px-10 lg:pt-8 lg:pb-16">
@@ -165,7 +150,7 @@ export default function ProductDetail({
               {displayName}
             </h1>
 
-            <div className="mb-8 flex items-baseline gap-3 pb-8">
+            <div className="mb-8 flex items-center gap-3 pb-8">
               <span className="font-numeric text-3xl font-medium text-[#1b1714]">
                 {formatPrice(product.price, currency)}
               </span>
@@ -174,6 +159,18 @@ export default function ProductDetail({
                   {formatPrice(product.originalPrice, currency)}
                 </span>
               )}
+              <button
+                type="button"
+                onClick={() => onToggleWishlist(product.id)}
+                className="ml-auto flex h-9 w-9 items-center justify-center rounded-full border border-[#e0d4c8] text-[#1b1714] transition-colors hover:border-[#ba826b] hover:text-[#ba826b]"
+                aria-label={isWishlisted ? 'Quitar de favoritos' : 'Agregar a favoritos'}
+              >
+                <Heart
+                  size={18}
+                  strokeWidth={1.7}
+                  className={isWishlisted ? 'fill-[#ba826b] text-[#ba826b]' : ''}
+                />
+              </button>
             </div>
 
             {product.swatches.length > 0 && (
@@ -285,7 +282,7 @@ export default function ProductDetail({
               </div>
             </div>
 
-            <div className="mb-6 flex flex-col gap-3">
+            <div className="mb-6">
               <button
                 type="button"
                 onClick={handleAddToCart}
@@ -293,32 +290,6 @@ export default function ProductDetail({
               >
                 {translateLabel(language, 'Agregar al carrito')}
               </button>
-              <div className="flex gap-3">
-                <button
-                  type="button"
-                  onClick={() => onToggleWishlist(product.id)}
-                  className={`flex flex-1 items-center justify-center gap-2 rounded-full border py-3.5 text-[11px] font-medium uppercase tracking-[0.18em] transition-colors ${
-                    isWishlisted
-                      ? 'border-[#ba826b] bg-[#f9f1ec] text-[#ba826b]'
-                      : 'border-[#e0d4c8] text-[#1b1714] hover:border-[#ba826b]'
-                  }`}
-                >
-                  <Heart
-                    size={16}
-                    strokeWidth={1.7}
-                    className={isWishlisted ? 'fill-[#ba826b] text-[#ba826b]' : ''}
-                  />
-                  {translateLabel(language, 'Favoritos')}
-                </button>
-                <button
-                  type="button"
-                  onClick={handleShare}
-                  className="flex flex-1 items-center justify-center gap-2 rounded-full border border-[#e0d4c8] py-3.5 text-[11px] font-medium uppercase tracking-[0.18em] text-[#1b1714] transition-colors hover:border-[#1b1714]"
-                >
-                  <Share2 size={16} strokeWidth={1.7} />
-                  {translateLabel(language, 'Compartir')}
-                </button>
-              </div>
             </div>
 
             {/* Trust near CTA */}
