@@ -181,13 +181,14 @@ export default function ProductDetail({
                       key={swatch.name}
                       type="button"
                       onClick={() => handleSelectColor(swatch)}
-                      className={`relative h-10 w-10 rounded-full border-2 transition-all ${
+                      className={`relative h-16 w-16 overflow-hidden rounded-none border bg-cover bg-center transition-all ${
                         selectedColor === swatch.name
-                          ? 'border-[#1b1714] ring-2 ring-[#d9bca9] ring-offset-2 ring-offset-[#f8f4ef]'
+                          ? 'border-2 border-[#1b1714]'
                           : 'border-[#d9c9be] hover:border-[#8f7e76]'
                       }`}
                       style={{
                         backgroundColor: swatch.hex,
+                        ...(swatch.image ? { backgroundImage: `url("${swatch.image}")` } : {}),
                       }}
                       title={swatch.name}
                     />
