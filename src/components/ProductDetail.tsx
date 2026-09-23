@@ -117,7 +117,7 @@ export default function ProductDetail({
           </div>
 
           {/* Info */}
-          <div className="flex h-fit w-full max-w-[380px] flex-col bg-white lg:sticky lg:top-24 lg:max-h-[calc(100vh-7rem)] lg:self-start lg:justify-self-end lg:overflow-y-auto lg:pt-2">
+          <div className="flex h-fit w-full max-w-[380px] flex-col bg-white lg:sticky lg:top-[10.5rem] lg:self-start lg:justify-self-end lg:pt-2">
             {product.tag && (
               <div className="mb-4">
                 <span className="inline-block rounded-full bg-[#1b1714] px-3 py-1.5 text-[10px] font-medium uppercase tracking-[0.18em] text-[#f8f1eb]">
