@@ -91,8 +91,8 @@ export default function ProductDetail({
 
   return (
     <div className="min-h-screen bg-white">
-      <div className="mx-auto max-w-[1500px] px-6 pt-6 pb-10 lg:px-10 lg:pt-8 lg:pb-16">
-        <div className="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,1.15fr)_minmax(400px,0.85fr)] lg:gap-14">
+      <div className="mx-auto max-w-[1800px] px-4 pt-6 pb-10 lg:px-6 lg:pt-8 lg:pb-16">
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,1.5fr)_minmax(360px,0.65fr)] lg:gap-10">
           {/* Gallery */}
           <div className="grid grid-cols-1 gap-2 sm:grid-cols-2" aria-label="Galería de imágenes">
             {galleryImages.map((image, index) => (
@@ -101,7 +101,7 @@ export default function ProductDetail({
                 type="button"
                 onClick={() => setSelectedImage(image)}
                 className={`group relative overflow-hidden bg-white ${
-                  index === 0 ? 'sm:col-span-2 aspect-[1.5]' : 'aspect-[1.08]'
+                  index === 0 ? 'sm:col-span-2 aspect-[1.6]' : 'aspect-[1.08]'
                 }`}
                 aria-label={`Ver imagen ${index + 1}`}
               >
@@ -115,7 +115,7 @@ export default function ProductDetail({
           </div>
 
           {/* Info */}
-          <div className="flex w-full max-w-[430px] flex-col lg:justify-self-end lg:pt-2">
+          <div className="flex w-full max-w-[380px] flex-col lg:justify-self-end lg:pt-2">
             {product.tag && (
               <div className="mb-4">
                 <span className="inline-block rounded-full bg-[#1b1714] px-3 py-1.5 text-[10px] font-medium uppercase tracking-[0.18em] text-[#f8f1eb]">
