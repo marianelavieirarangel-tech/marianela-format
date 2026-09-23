@@ -54,6 +54,10 @@ export default function ProductDetail({
   const gallery = product.images?.length ? product.images : [product.image];
   const [selectedImage, setSelectedImage] = useState(gallery[0]);
   const displayName = localizedProductName(product.name, language);
+  const galleryImages = [
+    selectedImage,
+    ...gallery.filter((image) => image !== selectedImage),
+  ];
   useEffect(() => {
     setSelectedImage(product.images?.length ? product.images[0] : product.image);
     const selectedSwatch = product.swatches.find((swatch) => swatch.name === initialColor) ?? product.swatches[0];
@@ -90,35 +94,24 @@ export default function ProductDetail({
       <div className="mx-auto max-w-[1500px] px-6 pt-6 pb-10 lg:px-10 lg:pt-8 lg:pb-16">
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,1.15fr)_minmax(400px,0.85fr)] lg:gap-14">
           {/* Gallery */}
-          <div className="space-y-3">
-            <div className="overflow-hidden bg-white">
-              <div className="aspect-square">
+          <div className="grid grid-cols-1 gap-2 sm:grid-cols-2" aria-label="Galería de imágenes">
+            {galleryImages.map((image, index) => (
+              <button
+                key={`${image}-${index}`}
+                type="button"
+                onClick={() => setSelectedImage(image)}
+                className={`group relative overflow-hidden bg-white ${
+                  index === 0 ? 'sm:col-span-2 aspect-[1.5]' : 'aspect-[1.08]'
+                }`}
+                aria-label={`Ver imagen ${index + 1}`}
+              >
                 <img
-                  src={selectedImage}
-                  alt={displayName}
-                  className="h-full w-full object-contain"
+                  src={image}
+                  alt={index === 0 ? displayName : ''}
+                  className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
                 />
-              </div>
-            </div>
-            {gallery.length > 1 && (
-              <div className="flex gap-3 overflow-x-auto pb-1" aria-label="Galería de imágenes">
-                {gallery.map((image, index) => (
-                  <button
-                    key={`${image}-${index}`}
-                    type="button"
-                    onClick={() => setSelectedImage(image)}
-                    className={`h-24 w-24 shrink-0 overflow-hidden border bg-white transition-all sm:h-28 sm:w-28 ${
-                      selectedImage === image
-                        ? 'border-[#1b1714] ring-1 ring-[#1b1714]/20'
-                        : 'border-[#d9d0c8] opacity-80 hover:opacity-100'
-                    }`}
-                    aria-label={`Ver imagen ${index + 1}`}
-                  >
-                    <img src={image} alt="" className="h-full w-full object-cover" />
-                  </button>
-                ))}
-              </div>
-            )}
+              </button>
+            ))}
           </div>
 
           {/* Info */}
