@@ -93,7 +93,7 @@ export const womenSubcategories = [
 ].filter((category) => !hiddenCategoryNames.has(category));
 
 export const womenMenuSubcategories = womenSubcategories.filter(
-  (category) => !['Novedades'].includes(category),
+  (category) => !['Novedades', 'Kids'].includes(category),
 );
 
 export const footerLinks = {
