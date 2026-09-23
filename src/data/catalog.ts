@@ -63,7 +63,7 @@ export const collection2026Slug = 'coleccion-2026';
 export const navLinks = [
   { label: 'Colección 2026', href: `/collections/${collection2026Slug}` },
   { label: 'Mujeres', href: '#categorias' },
-  { label: 'Sale', href: '/collections/sale' },
+  { label: 'Hombres', href: '/collections/hombres' },
 ];
 
 export const categorySlugs: Record<string, string> = {
