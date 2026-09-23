@@ -89,7 +89,7 @@ export default function ProductDetail({
 
   return (
     <div className="min-h-screen bg-white">
-      <div className="mx-auto max-w-none px-4 pt-6 pb-10 lg:px-0 lg:pt-8 lg:pb-16">
+      <div className="mx-auto max-w-none px-4 pt-0 pb-10 lg:px-0 lg:pb-16">
         <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-2 lg:gap-0">
           {/* Gallery */}
           <div className="grid grid-cols-1 gap-2 sm:grid-cols-2" aria-label="Galería de imágenes">

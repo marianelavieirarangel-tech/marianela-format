@@ -306,7 +306,13 @@ export default function App() {
         onOpenWishlist={() => setWishlistOpen(true)}
       />
 
-      <main className={`${location.pathname === '/' || location.pathname === '/pages/viajes-grupales' || location.pathname === '/collections/coleccion-2026' ? 'pt-0' : 'pt-[128px] lg:pt-[140px]'}`}>
+      <main className={`${
+        location.pathname === '/' || location.pathname === '/pages/viajes-grupales' || location.pathname === '/collections/coleccion-2026'
+          ? 'pt-0'
+          : location.pathname.startsWith('/product/')
+            ? 'pt-[109px] lg:pt-[121px]'
+            : 'pt-[128px] lg:pt-[140px]'
+      }`}>
         <div
           key={location.pathname}
           className={`page-route-enter ${location.pathname === '/pages/viajes-grupales' ? 'page-route-immersive' : ''}`}
