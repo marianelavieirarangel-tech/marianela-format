@@ -88,7 +88,7 @@ export default function ProductDetail({
   return (
     <div className="min-h-screen bg-white">
       <div className="mx-auto max-w-7xl px-6 pt-6 pb-10 lg:px-10 lg:pt-8 lg:pb-16">
-        <div className="grid grid-cols-1 gap-10 lg:grid-cols-2 lg:gap-16">
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-12">
           {/* Gallery */}
           <div className="space-y-4">
             <div className="overflow-hidden rounded-[28px] bg-white shadow-[0_18px_40px_rgba(56,35,26,0.06)]">
@@ -96,7 +96,7 @@ export default function ProductDetail({
                 <img
                   src={selectedImage}
                   alt={displayName}
-                  className="h-full w-full object-contain"
+                  className="h-full w-full object-contain p-8 sm:p-10 lg:p-12"
                 />
               </div>
             </div>
@@ -131,27 +131,27 @@ export default function ProductDetail({
               </div>
             )}
 
-            <h1 className="mb-5 font-serif text-4xl font-light tracking-wide text-[#1b1714] lg:text-5xl">
+            <h1 className="mb-2 font-serif text-2xl font-light tracking-wide text-[#1b1714] lg:text-3xl">
               {displayName}
             </h1>
 
-            <div className="mb-8 flex items-center gap-3 pb-8">
-              <span className="font-numeric text-3xl font-medium text-[#1b1714]">
+            <div className="mb-6 flex items-center gap-3 pb-4">
+              <span className="font-numeric text-2xl font-medium text-[#1b1714]">
                 {formatPrice(product.price, currency)}
               </span>
               {product.originalPrice && (
-                <span className="font-numeric text-lg font-medium text-[#8f7e76] line-through">
+                <span className="font-numeric text-base font-medium text-[#8f7e76] line-through">
                   {formatPrice(product.originalPrice, currency)}
                 </span>
               )}
               <button
                 type="button"
                 onClick={() => onToggleWishlist(product.id)}
-                className="ml-auto flex h-9 w-9 items-center justify-center rounded-full border border-[#e0d4c8] text-[#1b1714] transition-colors hover:border-[#ba826b] hover:text-[#ba826b]"
+                className="ml-auto flex h-8 w-8 items-center justify-center rounded-full border border-[#e0d4c8] text-[#1b1714] transition-colors hover:border-[#ba826b] hover:text-[#ba826b]"
                 aria-label={isWishlisted ? 'Quitar de favoritos' : 'Agregar a favoritos'}
               >
                 <Heart
-                  size={18}
+                  size={16}
                   strokeWidth={1.7}
                   className={isWishlisted ? 'fill-[#ba826b] text-[#ba826b]' : ''}
                 />
@@ -159,7 +159,7 @@ export default function ProductDetail({
             </div>
 
             {product.swatches.length > 0 && (
-              <div className="mb-8">
+              <div className="mb-6">
                 <div className="mb-4 flex items-baseline gap-2">
                   <p className="text-[11px] font-medium uppercase tracking-[0.22em] text-[#1b1714]">{translateLabel(language, 'Color')}</p>
                   <span className="text-[11px] uppercase tracking-[0.18em] text-[#8f7e76]">·</span>
