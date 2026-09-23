@@ -90,7 +90,7 @@ export default function ProductDetail({
       <div className="mx-auto max-w-[1500px] px-6 pt-6 pb-10 lg:px-10 lg:pt-8 lg:pb-16">
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,1.15fr)_minmax(400px,0.85fr)] lg:gap-14">
           {/* Gallery */}
-          <div className="space-y-4">
+          <div className="space-y-3">
             <div className="overflow-hidden bg-white">
               <div className="aspect-square">
                 <img
@@ -101,16 +101,16 @@ export default function ProductDetail({
               </div>
             </div>
             {gallery.length > 1 && (
-              <div className="grid grid-cols-4 gap-3" aria-label="Galería de imágenes">
+              <div className="flex gap-3 overflow-x-auto pb-1" aria-label="Galería de imágenes">
                 {gallery.map((image, index) => (
                   <button
                     key={`${image}-${index}`}
                     type="button"
                     onClick={() => setSelectedImage(image)}
-                    className={`aspect-square overflow-hidden border transition-all ${
+                    className={`h-24 w-24 shrink-0 overflow-hidden border bg-white transition-all sm:h-28 sm:w-28 ${
                       selectedImage === image
                         ? 'border-[#1b1714] ring-1 ring-[#1b1714]/20'
-                        : 'border-transparent opacity-80 hover:opacity-100'
+                        : 'border-[#d9d0c8] opacity-80 hover:opacity-100'
                     }`}
                     aria-label={`Ver imagen ${index + 1}`}
                   >
