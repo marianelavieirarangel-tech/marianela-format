@@ -87,8 +87,8 @@ export default function ProductDetail({
 
   return (
     <div className="min-h-screen bg-white">
-      <div className="mx-auto max-w-7xl px-6 pt-6 pb-10 lg:px-10 lg:pt-8 lg:pb-16">
-        <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-12">
+      <div className="mx-auto max-w-[1500px] px-6 pt-6 pb-10 lg:px-10 lg:pt-8 lg:pb-16">
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,1.15fr)_minmax(400px,0.85fr)] lg:gap-14">
           {/* Gallery */}
           <div className="space-y-4">
             <div className="overflow-hidden bg-white">
@@ -131,7 +131,7 @@ export default function ProductDetail({
               </div>
             )}
 
-            <h1 className="mb-2 font-serif text-2xl font-light tracking-wide text-[#1b1714] lg:text-3xl">
+            <h1 className="mb-1 font-serif text-2xl font-light tracking-normal text-[#1b1714] lg:text-[2rem]">
               {displayName}
             </h1>
 
