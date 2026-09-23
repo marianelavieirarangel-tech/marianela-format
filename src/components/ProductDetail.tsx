@@ -101,21 +101,23 @@ export default function ProductDetail({
                 type="button"
                 onClick={() => setSelectedImage(image)}
                 className={`group relative overflow-hidden bg-white ${
-                  index === 0 ? 'sm:col-span-2 aspect-[1.6]' : 'aspect-[1.08]'
+                  index === 0 ? 'sm:col-span-2 aspect-[3/4]' : 'aspect-[1.08]'
                 }`}
                 aria-label={`Ver imagen ${index + 1}`}
               >
                 <img
                   src={image}
                   alt={index === 0 ? displayName : ''}
-                  className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+                  className={`h-full w-full transition-transform duration-500 group-hover:scale-[1.02] ${
+                    index === 0 ? 'object-contain' : 'object-cover'
+                  }`}
                 />
               </button>
             ))}
           </div>
 
           {/* Info */}
-          <div className="flex w-full max-w-[380px] flex-col lg:justify-self-end lg:pt-2">
+          <div className="flex h-fit w-full max-w-[380px] flex-col lg:sticky lg:top-24 lg:justify-self-end lg:pt-2">
             {product.tag && (
               <div className="mb-4">
                 <span className="inline-block rounded-full bg-[#1b1714] px-3 py-1.5 text-[10px] font-medium uppercase tracking-[0.18em] text-[#f8f1eb]">
