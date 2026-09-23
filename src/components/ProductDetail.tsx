@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Heart, Minus, Plus } from 'lucide-react';
+import { Heart } from 'lucide-react';
 import { localizedProductName, type Product } from '@/data/catalog';
 import type { CartItem } from '@/components/QuickAddModal';
 import { formatPrice, type CurrencyCode } from '@/lib/currency';
@@ -42,7 +42,6 @@ export default function ProductDetail({
   language,
   initialColor,
 }: Props) {
-  const [quantity, setQuantity] = useState(1);
   const [selectedSize, setSelectedSize] = useState<string>('');
   const [sizeError, setSizeError] = useState(false);
   const initialSwatch = product.swatches.find((swatch) => swatch.name === initialColor) ?? product.swatches[0];
@@ -67,7 +66,6 @@ export default function ProductDetail({
     setOpenInfo(null);
     setSelectedSize('');
     setSizeError(false);
-    setQuantity(1);
   }, [initialColor, product]);
 
   const handleSelectColor = (swatch: Product['swatches'][number]) => {
@@ -83,7 +81,7 @@ export default function ProductDetail({
     setSizeError(false);
     onAddToCart({
       product,
-      quantity,
+      quantity: 1,
       size: selectedSize,
       color: selectedColor,
     });
@@ -237,29 +235,6 @@ export default function ProductDetail({
               {sizeError && (
                 <p className="mt-3 text-sm font-light text-[#b46b5d]">Elige una talla para continuar.</p>
               )}
-            </div>
-
-            <div className="mb-8">
-              <p className="mb-4 text-[11px] font-medium uppercase tracking-[0.22em] text-[#1b1714]">{translateLabel(language, 'Cantidad')}</p>
-              <div className="flex w-fit items-center gap-3 rounded-full border border-[#e0d4c8] bg-white/70 px-2 py-1.5">
-                <button
-                  type="button"
-                  onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                  className="flex h-9 w-9 items-center justify-center rounded-full transition-colors hover:bg-white"
-                  aria-label="Disminuir cantidad"
-                >
-                  <Minus size={15} strokeWidth={1.8} />
-                </button>
-                <span className="w-8 text-center font-numeric text-sm font-medium text-[#1b1714]">{quantity}</span>
-                <button
-                  type="button"
-                  onClick={() => setQuantity(quantity + 1)}
-                  className="flex h-9 w-9 items-center justify-center rounded-full transition-colors hover:bg-white"
-                  aria-label="Aumentar cantidad"
-                >
-                  <Plus size={15} strokeWidth={1.8} />
-                </button>
-              </div>
             </div>
 
             <div className="mb-6">
