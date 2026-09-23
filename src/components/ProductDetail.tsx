@@ -91,12 +91,12 @@ export default function ProductDetail({
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-12">
           {/* Gallery */}
           <div className="space-y-4">
-            <div className="overflow-hidden rounded-[28px] bg-white shadow-[0_18px_40px_rgba(56,35,26,0.06)]">
-              <div className="aspect-[3/4]">
+            <div className="overflow-hidden bg-white">
+              <div className="aspect-square">
                 <img
                   src={selectedImage}
                   alt={displayName}
-                  className="h-full w-full object-contain p-8 sm:p-10 lg:p-12"
+                  className="h-full w-full object-contain"
                 />
               </div>
             </div>
@@ -107,7 +107,7 @@ export default function ProductDetail({
                     key={`${image}-${index}`}
                     type="button"
                     onClick={() => setSelectedImage(image)}
-                    className={`aspect-[3/4] overflow-hidden rounded-2xl border transition-all ${
+                    className={`aspect-square overflow-hidden border transition-all ${
                       selectedImage === image
                         ? 'border-[#1b1714] ring-1 ring-[#1b1714]/20'
                         : 'border-transparent opacity-80 hover:opacity-100'
