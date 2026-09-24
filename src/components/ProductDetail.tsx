@@ -99,15 +99,19 @@ export default function ProductDetail({
                 type="button"
                 onClick={() => setSelectedImage(image)}
                 className={`group relative overflow-hidden bg-white ${
-                  index === 0 ? 'sm:col-span-2 aspect-[3/4]' : 'aspect-[1.08]'
-                }`}
+                    index === 0
+                      ? 'sm:col-span-2 aspect-[3/4]'
+                      : index === 3
+                        ? 'sm:col-span-2 aspect-square'
+                        : 'aspect-[1.08]'
+                  }`}
                 aria-label={`Ver imagen ${index + 1}`}
               >
                 <img
                   src={image}
                   alt={index === 0 ? displayName : ''}
                   className={`h-full w-full transition-transform duration-500 group-hover:scale-[1.02] ${
-                    index === 0 ? 'object-contain' : 'object-cover'
+                    index === 0 || index === 3 ? 'object-contain' : 'object-cover'
                   }`}
                 />
               </button>
