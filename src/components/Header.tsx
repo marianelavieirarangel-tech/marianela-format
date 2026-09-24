@@ -187,6 +187,12 @@ export default function Header({
                 </div>
               </div>
               <button
+                onClick={() => goToCategory('Hombres')}
+                className="text-[11px] uppercase tracking-widest text-current hover:text-blush-300 link-underline"
+              >
+                {translateLabel(language, 'Hombres')}
+              </button>
+              <button
                 onClick={() => goToCategory('Kids')}
                 className="text-[11px] uppercase tracking-widest text-current hover:text-blush-300 link-underline"
               >
@@ -198,15 +204,6 @@ export default function Header({
               >
                 {translate(language, 'groupTrips')}
               </button>
-              {navLinks.slice(2).map((link) => (
-                <button
-                  key={link.label}
-                  onClick={() => goToCategory(link.label)}
-                  className={`text-[11px] uppercase tracking-widest link-underline ${link.label === 'Sale' ? 'sale-pulse' : 'text-current hover:text-blush-300'}`}
-                >
-                  {link.label === 'Sale' ? translate(language, 'sale') : translateLabel(language, link.label)}
-                </button>
-              ))}
             </nav>
 
             {/* Mobile menu button */}
@@ -495,6 +492,15 @@ export default function Header({
             )}
             <button
               onClick={() => {
+                goToCategory('Hombres');
+                setMobileOpen(false);
+              }}
+              className="w-full py-4 font-serif text-2xl border-b border-ink-100 text-ink-800 hover:text-blush-500 transition-colors text-center"
+            >
+              {translateLabel(language, 'Hombres')}
+            </button>
+            <button
+              onClick={() => {
                 goToCategory('Kids');
                 setMobileOpen(false);
               }}
@@ -511,20 +517,6 @@ export default function Header({
             >
               {translate(language, 'groupTrips')}
             </button>
-            {navLinks.slice(2).map((link) => (
-              <button
-                key={link.label}
-                onClick={() => {
-                  goToCategory(link.label);
-                  setMobileOpen(false);
-                }}
-                className={`w-full py-4 font-serif text-2xl border-b border-ink-100 transition-colors text-center ${
-                  link.label === 'Sale' ? 'text-blush-500' : 'text-ink-800 hover:text-blush-500'
-                }`}
-              >
-                {link.label === 'Sale' ? translate(language, 'sale') : translateLabel(language, link.label)}
-              </button>
-            ))}
             <div className="flex items-center justify-center gap-6 pt-8 text-ink-600">
               <a
                 href={getShopifyAccountLoginUrl()}
