@@ -111,7 +111,7 @@ export default function ProductDetail({
                   src={image}
                   alt={index === 0 ? displayName : ''}
                   className={`h-full w-full transition-transform duration-500 group-hover:scale-[1.02] ${
-                    index === 0 ? 'object-contain' : 'object-cover'
+                    index === 0 ? 'object-contain object-top' : 'object-cover'
                   }`}
                 />
               </button>
