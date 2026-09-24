@@ -92,7 +92,7 @@ export default function ProductDetail({
       <div className="mx-auto max-w-none px-4 pt-0 pb-10 lg:px-0 lg:pb-16">
         <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-2 lg:gap-0">
           {/* Gallery */}
-          <div className="grid grid-cols-1 gap-2 sm:grid-cols-2" aria-label="Galería de imágenes">
+          <div className="grid grid-cols-1 gap-0 sm:grid-cols-2" aria-label="Galería de imágenes">
             {galleryImages.map((image, index) => (
               <button
                 key={`${image}-${index}`}
@@ -111,7 +111,7 @@ export default function ProductDetail({
                   src={image}
                   alt={index === 0 ? displayName : ''}
                   className={`h-full w-full transition-transform duration-500 group-hover:scale-[1.02] ${
-                    index === 0 || index === 3 ? 'object-contain' : 'object-cover'
+                    index === 0 ? 'object-contain' : 'object-cover'
                   }`}
                 />
               </button>
