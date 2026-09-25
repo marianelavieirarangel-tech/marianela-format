@@ -153,6 +153,8 @@ const colorKeywordHex: Array<[string, string]> = [
   ['mostaza', '#c29a3b'],
 ];
 
+const jardinRomeroPatternImage = 'https://6aa88bf09422e77b387f33c6.imgix.net/sandbox/3d0e5e1c-404a-4e07-9d46-78172638d8bd.png';
+
 function normalizeColorName(colorName: string) {
   return colorName
     .trim()
@@ -240,7 +242,7 @@ export async function fetchShopifyProducts() {
         ...product.variants.nodes.map((productVariant) => productVariant.image?.url).filter(Boolean),
       ].filter(Boolean))) as string[];
 
-      const swatchesByColor = new Map<string, { name: string; hex: string; image?: string; variantId?: string }>();
+      const swatchesByColor = new Map<string, { name: string; hex: string; image?: string; patternImage?: string; variantId?: string }>();
       const sizes = Array.from(new Set(
         product.variants.nodes.flatMap((productVariant) =>
           productVariant.selectedOptions
@@ -252,10 +254,14 @@ export async function fetchShopifyProducts() {
         const colorOption = productVariant.selectedOptions.find((option) => option.name.toLowerCase() === 'color');
         if (!colorOption) continue;
         if (swatchesByColor.has(colorOption.value)) continue;
+        const normalizedColor = normalizeColorName(colorOption.value);
         swatchesByColor.set(colorOption.value, {
           name: colorOption.value,
           hex: swatchHex(colorOption.value),
           image: productVariant.image?.url ?? undefined,
+          patternImage: normalizedColor.includes('jardin') && normalizedColor.includes('romero')
+            ? jardinRomeroPatternImage
+            : undefined,
           variantId: productVariant.id,
         });
       }

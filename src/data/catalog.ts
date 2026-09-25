@@ -6,7 +6,7 @@ export type Product = {
   originalPrice?: number;
   image: string;
   images?: string[];
-  swatches: { name: string; hex: string; image?: string; variantId?: string }[];
+  swatches: { name: string; hex: string; image?: string; patternImage?: string; variantId?: string }[];
   sizes?: string[];
   material?: string;
   care?: string;

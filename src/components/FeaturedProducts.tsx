@@ -199,10 +199,13 @@ function ProductCard({
                   e.stopPropagation();
                   setActiveSwatch(i);
                 }}
-                className={`h-4 w-4 rounded-full border transition-all duration-300 ${
+                className={`h-4 w-4 rounded-full border bg-cover bg-center transition-all duration-300 ${
                   activeSwatch === i ? 'border-[#f5f0ea] ring-2 ring-[#d9bca9] ring-offset-1 ring-offset-[#fffdfb]' : 'border-[#d9c9be]'
                 }`}
-                style={{ backgroundColor: sw.hex }}
+                style={{
+                  backgroundColor: sw.hex,
+                  ...(sw.patternImage ? { backgroundImage: `url("${sw.patternImage}")` } : {}),
+                }}
                 aria-label={sw.name}
                 title={sw.name}
               />

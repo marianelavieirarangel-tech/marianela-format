@@ -301,6 +301,7 @@ function ProductCard({
                 className="h-3.5 w-3.5 border border-[#cfc2b7] bg-cover bg-center transition-transform hover:scale-110"
                 style={{
                   backgroundColor: swatch.hex,
+                  ...(swatch.patternImage ? { backgroundImage: `url("${swatch.patternImage}")` } : {}),
                 }}
                 title={swatch.name}
                 aria-label={`Ver ${formatProductName(product.name)} en color ${swatch.name}`}

@@ -95,10 +95,13 @@ export default function QuickAddModal({ product, currency, onClose, onAddToCart 
                   <button
                     key={sw.name}
                     onClick={() => setColor(sw.name)}
-                    className={`w-8 h-8 rounded-full border-2 transition-all ${
+                    className={`w-8 h-8 rounded-full border-2 bg-cover bg-center transition-all ${
                       color === sw.name ? 'border-ink-800 ring-1 ring-offset-2 ring-offset-sand-50 ring-ink-400' : 'border-ink-200'
                     }`}
-                    style={{ backgroundColor: sw.hex }}
+                    style={{
+                      backgroundColor: sw.hex,
+                      ...(sw.patternImage ? { backgroundImage: `url("${sw.patternImage}")` } : {}),
+                    }}
                     aria-label={sw.name}
                   />
                 ))}
