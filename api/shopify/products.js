@@ -19,7 +19,18 @@ const query = `query Catalog {
         { namespace: "custom", key: "cuidado" },
         { namespace: "custom", key: "cuidados" },
         { namespace: "shopify", key: "care-instructions" }
-      ]) { namespace key value }
+      ]) {
+        namespace
+        key
+        value
+        references(first: 20) {
+          nodes {
+            ... on Metaobject {
+              fields { key value }
+            }
+          }
+        }
+      }
       productType
       tags
       collections(first: 20) { nodes { handle title } }

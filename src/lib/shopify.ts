@@ -36,7 +36,16 @@ type ShopifyCatalogResponse = {
       id: string;
       title: string;
       description: string;
-      metafields?: Array<{ namespace: string; key: string; value: string } | null>;
+      metafields?: Array<{
+        namespace: string;
+        key: string;
+        value: string;
+        references?: {
+          nodes: Array<{
+            fields?: Array<{ key: string; value: string | null }>;
+          } | null>;
+        };
+      } | null>;
       productType: string;
       tags: string[];
       collections: { nodes: Array<{ handle: string; title: string }> };
@@ -199,14 +208,35 @@ function swatchHex(colorName: string) {
   return fallbackPalette[Math.abs(hash) % fallbackPalette.length];
 }
 
-function formatCareInstructions(value?: string) {
-  if (!value) return undefined;
+function formatCareInstructions(
+  value?: string,
+  references: Array<{ fields?: Array<{ key: string; value: string | null }> } | null> = [],
+) {
+  const isShopifyId = (text: string) => /^gid:\/\/shopify\//i.test(text.trim());
+  const preferredFieldKeys = ['label', 'name', 'care_instruction', 'instruction', 'title', 'value'];
+  const referencedInstructions = references.flatMap((reference) => {
+    const fields = reference?.fields ?? [];
+    const preferredField = preferredFieldKeys
+      .map((key) => fields.find((field) => field.key.toLowerCase() === key)?.value?.trim())
+      .find((fieldValue) => fieldValue && !isShopifyId(fieldValue));
+    const readableField = fields
+      .map((field) => field.value?.trim())
+      .find((fieldValue) => fieldValue && !isShopifyId(fieldValue));
+    const instruction = preferredField ?? readableField;
+    return instruction ? [instruction] : [];
+  });
+  if (referencedInstructions.length > 0) return referencedInstructions.join('\n');
+
+  if (!value || isShopifyId(value)) return undefined;
 
   if (value.trim().startsWith('[')) {
     try {
       const instructions: unknown = JSON.parse(value);
       if (Array.isArray(instructions) && instructions.every((instruction) => typeof instruction === 'string')) {
-        return instructions.join('\n');
+        const readableInstructions = instructions
+          .map((instruction: string) => instruction.trim())
+          .filter((instruction: string) => instruction.length > 0 && !isShopifyId(instruction));
+        return readableInstructions.length > 0 ? readableInstructions.join('\n') : undefined;
       }
     } catch {
       return value;
@@ -250,8 +280,8 @@ export async function fetchShopifyProducts() {
       const category = getCategory(product.productType, product.tags, product.collections.nodes);
       const metadata = new Map(
         (product.metafields ?? [])
-          .filter((field): field is { namespace: string; key: string; value: string } => Boolean(field))
-          .map((field) => [field.key.toLowerCase(), field.value]),
+          .filter((field): field is NonNullable<typeof field> => Boolean(field))
+          .map((field) => [field.key.toLowerCase(), field]),
       );
       const images = Array.from(new Set([
         product.featuredImage?.url,
@@ -294,13 +324,14 @@ export async function fetchShopifyProducts() {
         images,
         swatches: Array.from(swatchesByColor.values()),
         sizes,
-        material: metadata.get('material') ?? metadata.get('materiales'),
-        care: formatCareInstructions(
-          metadata.get('care-instructions')
+        material: metadata.get('material')?.value ?? metadata.get('materiales')?.value,
+        care: (() => {
+          const careMetafield = metadata.get('care-instructions')
             ?? metadata.get('care')
             ?? metadata.get('cuidados')
-            ?? metadata.get('cuidado'),
-        ),
+            ?? metadata.get('cuidado');
+          return formatCareInstructions(careMetafield?.value, careMetafield?.references?.nodes);
+        })(),
         tag: getTag(category, product.tags, compareAtPrice > price),
         description: product.description || 'Una pieza de Marianela Vieira.',
         shopifyVariantId: variant?.id,
