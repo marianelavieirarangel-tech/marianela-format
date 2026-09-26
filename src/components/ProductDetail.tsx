@@ -175,8 +175,8 @@ export default function ProductDetail({
                       }`}
                       style={{
                         backgroundColor: swatch.hex,
-                        ...((swatch.patternImage ?? swatch.image)
-                          ? { backgroundImage: `url("${swatch.patternImage ?? swatch.image}")` }
+                        ...((swatch.image ?? swatch.patternImage)
+                          ? { backgroundImage: `url("${swatch.image ?? swatch.patternImage}")` }
                           : {}),
                       }}
                       title={swatch.name}
