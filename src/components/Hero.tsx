@@ -23,22 +23,34 @@ export default function Hero({ language = 'es' }: { language?: LanguageCode }) {
       {/* Background image */}
       <div className="absolute inset-0">
         {heroImages.map((image, index) => (
-          <img
+          <div
             key={image}
-            src={image}
-            alt=""
-            aria-hidden="true"
-            className={`absolute inset-0 h-full w-full scale-[1.02] object-cover object-center transition-opacity duration-1000 ${
+            className={`absolute inset-0 transition-opacity duration-1000 ${
               activeHeroImage === index ? 'opacity-100' : 'opacity-0'
             }`}
-            loading={index === 0 ? 'eager' : 'lazy'}
-            fetchPriority={index === 0 ? 'high' : 'auto'}
-            decoding="async"
-            style={{ objectPosition: 'center 18%' }}
-          />
+          >
+            <img
+              src={image}
+              alt=""
+              aria-hidden="true"
+              className="h-full w-full scale-[1.02] object-cover object-center"
+              loading={index === 0 ? 'eager' : 'lazy'}
+              fetchPriority={index === 0 ? 'high' : 'auto'}
+              decoding="async"
+              style={{ objectPosition: 'center 18%' }}
+            />
+            <div className={`absolute inset-0 bg-gradient-to-r ${
+              index === 0
+                ? 'from-ink-900/70 via-ink-900/30 to-transparent'
+                : 'from-ink-900/40 via-ink-900/10 to-transparent'
+            }`} />
+            <div className={`absolute inset-0 bg-gradient-to-t ${
+              index === 0
+                ? 'from-ink-900/60 via-transparent to-ink-900/20'
+                : 'from-ink-900/20 via-transparent to-ink-900/5'
+            }`} />
+          </div>
         ))}
-        <div className="absolute inset-0 bg-gradient-to-r from-ink-900/70 via-ink-900/30 to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-t from-ink-900/60 via-transparent to-ink-900/20" />
       </div>
 
       {/* Content */}
