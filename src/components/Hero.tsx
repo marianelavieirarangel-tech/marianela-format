@@ -1,22 +1,42 @@
+import { useEffect, useState } from 'react';
 import { ArrowRight } from 'lucide-react';
 import { translate, type LanguageCode } from '@/lib/language';
 
-const heroImage = 'https://6aa88bf09422e77b387f33c6.imgix.net/sandbox/fashn-export-1789781128500.webp';
+const heroImages = [
+  'https://6aa88bf09422e77b387f33c6.imgix.net/sandbox/fashn-export-1789781128500.webp',
+  'https://6aa88bf09422e77b387f33c6.imgix.net/sandbox/ChatGPT%20Image%2026%20sept%202026,%2015_30_12.png',
+];
 
 export default function Hero({ language = 'es' }: { language?: LanguageCode }) {
+  const [activeHeroImage, setActiveHeroImage] = useState(0);
+
+  useEffect(() => {
+    const interval = window.setInterval(() => {
+      setActiveHeroImage((current) => (current + 1) % heroImages.length);
+    }, 7000);
+
+    return () => window.clearInterval(interval);
+  }, []);
+
   return (
     <section id="top" className="relative h-[100vh] min-h-[680px] w-full overflow-hidden bg-ink-900">
       {/* Background image */}
       <div className="absolute inset-0">
-        <img
-          src={heroImage}
-          alt="Marianela Vieira — nueva editorial"
-          className="h-full w-full object-cover object-center scale-[1.02]"
-          loading="eager"
-          fetchPriority="high"
-          decoding="async"
-          style={{ objectPosition: 'center 18%' }}
-        />
+        {heroImages.map((image, index) => (
+          <img
+            key={image}
+            src={image}
+            alt=""
+            aria-hidden="true"
+            className={`absolute inset-0 h-full w-full scale-[1.02] object-cover object-center transition-opacity duration-1000 ${
+              activeHeroImage === index ? 'opacity-100' : 'opacity-0'
+            }`}
+            loading={index === 0 ? 'eager' : 'lazy'}
+            fetchPriority={index === 0 ? 'high' : 'auto'}
+            decoding="async"
+            style={{ objectPosition: 'center 18%' }}
+          />
+        ))}
         <div className="absolute inset-0 bg-gradient-to-r from-ink-900/70 via-ink-900/30 to-transparent" />
         <div className="absolute inset-0 bg-gradient-to-t from-ink-900/60 via-transparent to-ink-900/20" />
       </div>
