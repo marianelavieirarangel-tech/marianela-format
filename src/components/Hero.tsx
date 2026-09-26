@@ -4,7 +4,7 @@ import { translate, type LanguageCode } from '@/lib/language';
 
 const heroImages = [
   'https://6aa88bf09422e77b387f33c6.imgix.net/sandbox/fashn-export-1789781128500.webp',
-  'https://6aa88bf09422e77b387f33c6.imgix.net/sandbox/ChatGPT%20Image%2026%20sept%202026,%2015_30_12.png',
+  'https://6aa88bf09422e77b387f33c6.imgix.net/sandbox/ChatGPT%20Image%2026%20sept%202026,%2016_02_51.png',
 ];
 
 export default function Hero({ language = 'es' }: { language?: LanguageCode }) {
