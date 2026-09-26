@@ -272,7 +272,7 @@ export default function ProductDetail({
                       <span className="text-xl font-light leading-none">{isOpen ? '−' : '+'}</span>
                     </button>
                     {isOpen && (
-                      <p className="pb-4 text-sm font-light leading-relaxed text-[#6c5f59]">
+                      <p className="whitespace-pre-line pb-4 text-sm font-light leading-relaxed text-[#6c5f59]">
                         {item.value}
                       </p>
                     )}

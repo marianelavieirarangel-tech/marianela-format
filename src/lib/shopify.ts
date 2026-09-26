@@ -199,6 +199,23 @@ function swatchHex(colorName: string) {
   return fallbackPalette[Math.abs(hash) % fallbackPalette.length];
 }
 
+function formatCareInstructions(value?: string) {
+  if (!value) return undefined;
+
+  if (value.trim().startsWith('[')) {
+    try {
+      const instructions: unknown = JSON.parse(value);
+      if (Array.isArray(instructions) && instructions.every((instruction) => typeof instruction === 'string')) {
+        return instructions.join('\n');
+      }
+    } catch {
+      return value;
+    }
+  }
+
+  return value;
+}
+
 
 function getCategory(productType: string, tags: string[], collections: Array<{ handle: string; title: string }>): Product['category'] {
   const values = [productType, ...tags, ...collections.flatMap((collection) => [collection.handle, collection.title])]
@@ -278,7 +295,12 @@ export async function fetchShopifyProducts() {
         swatches: Array.from(swatchesByColor.values()),
         sizes,
         material: metadata.get('material') ?? metadata.get('materiales'),
-        care: metadata.get('care') ?? metadata.get('cuidados') ?? metadata.get('cuidado'),
+        care: formatCareInstructions(
+          metadata.get('care-instructions')
+            ?? metadata.get('care')
+            ?? metadata.get('cuidados')
+            ?? metadata.get('cuidado'),
+        ),
         tag: getTag(category, product.tags, compareAtPrice > price),
         description: product.description || 'Una pieza de Marianela Vieira.',
         shopifyVariantId: variant?.id,

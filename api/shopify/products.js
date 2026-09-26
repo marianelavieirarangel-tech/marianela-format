@@ -17,7 +17,8 @@ const query = `query Catalog {
         { namespace: "custom", key: "materiales" },
         { namespace: "custom", key: "care" },
         { namespace: "custom", key: "cuidado" },
-        { namespace: "custom", key: "cuidados" }
+        { namespace: "custom", key: "cuidados" },
+        { namespace: "shopify", key: "care-instructions" }
       ]) { namespace key value }
       productType
       tags
