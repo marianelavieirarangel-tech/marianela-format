@@ -271,7 +271,7 @@ export async function fetchShopifyProducts() {
   }
   if (!response.ok) throw new Error(result.error || `Vercel respondió con ${response.status}.`);
 
-  return result.products.nodes
+  const products = result.products.nodes
     .filter((product) => product.featuredImage || product.images.nodes[0])
     .map((product): Product => {
       const variant = product.variants.nodes[0];
@@ -337,6 +337,21 @@ export async function fetchShopifyProducts() {
         shopifyVariantId: variant?.id,
       };
     });
+
+  const careByCategory = new Map<Product['category'], string>();
+  for (const product of products) {
+    if (product.care && !careByCategory.has(product.category)) {
+      careByCategory.set(product.category, product.care);
+    }
+  }
+  const sharedCareInstructions = products.find((product) => product.care)?.care;
+
+  return products.map((product) => {
+    if (product.care) return product;
+    const categoryCare = careByCategory.get(product.category);
+    const care = categoryCare ?? sharedCareInstructions;
+    return care ? { ...product, care } : product;
+  });
 }
 
 export async function findVariantGidByTitle(name: string) {
